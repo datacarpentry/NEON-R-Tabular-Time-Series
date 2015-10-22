@@ -95,3 +95,18 @@ yr.09.11 %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
+#Plotting Time Series Data
+From our descriptives we can visualize in our minds what the general temperature flucturation across each year looks like, but it would be a lot nicer if we created a plot to visually show this. To do this, we're going to use `ggplot2` to plot the air temperature across our 2 year span time span for each 15 minute data point.
+
+```{r basic plotting}
+#plot Some Air Temperature Data
+myPlot <- ggplot(yr.09.11,aes(datetime, airt)) +
+           geom_point() +
+           ggtitle("15 min Avg Air Temperature\nHarvard Forest") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) +
+           xlab("Time") + ylab("Mean Air Temperature")
+
+#format x axis with dates
+myPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
+```
