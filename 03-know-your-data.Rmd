@@ -58,21 +58,7 @@ After completing this activity, you will know:
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
-
-<h4>Data to Download</h4>
-
-Download the raster and *in situ* collected vegetation structure data:
-<ul>
-<li><a href="http://neonhighered.org/Data/LidarActivity/CHM_InSitu_Data.zip" class="btn btn-success"> DOWNLOAD Sample NEON LiDAR data in Raster Format & Vegetation Sampling Data</a></li>
-<li><a href="{{ site.baseurl }}/data/rasterLayers_tif.zip" class="btn btn-success"> DOWNLOAD NEON imagery data (tiff format) California Domain 17 (D17)</a></li>
-</ul>
-
-<p>The LiDAR and imagery data used to create the rasters in this dataset were 
-collected over the San Joaquin field site located in California (NEON Domain 17) 
-and processed at <a href="http://www.neoninc.org" target="_blank" >NEON </a> 
-headquarters. The entire dataset can be accessed by request from the NEON website.</p>  
-
-#About Raster Data
+#Manipulating Data
 Now that we have our data loaded into R and into the correct formats, we want to start looking at some basic descriptives and plots. This will help us start to familiarize ourselves with our data, as well as do some basic sanity checks on our data to make sure we haven't missed anything when importing our data.
 
 One thing we may want to do is to calculate some basic descriptives, for example means and sdevs. Calculating these values for each year probably won't give us a lot of useful information, so instead we're going to break out data up by months so we can look at the mean temperature for each month for each year. 
@@ -84,12 +70,28 @@ yr.09.11$year <- year(as.Date(yr.09.11$datetime, "%y-%b-%d"))
 yr.09.11$month <- month(as.Date(yr.09.11$datetime, "%y-%b-%d"))
 ```
 
-Now that we have our year and month variables, we want to calculate the mean air temperatue for each month for each year. We talked a bit about the dplyr package before, and we'll use it here again. In particular, we're going to use a "split-apply-combine" technique. We'll split the datafile into groups, apply the same function to each group, and then combine the results back together. 
+Now that we have our year and month variables, we want to calculate the mean air temperatue for each month for each year. We talked a bit about the dplyr package before, and we'll use it here again. In particular, we're going to use a "split-apply-combine" technique. We'll split the datafile into groups, apply the same function to each group, and then combine the results. 
 
+We use the `group-by()` function to determine how we split up our data. For example, if we wanted to count up the number of observations per year, we would do:
+
+```{r-chunk}
+yr.09.11 %>%
+  group_by(year) %>%
+  tally()
+```
+
+We're more interested though in calculting single values by year. We can use the `summarize()` function for this. To get the mean air temperature for each year, we would write:
 ```{r chunk-1}
 yr.09.11 %>%
-  group_by(year, month) %>%
-  summarize(mean_airt = mean(airt, na.rm = TRUE)) %>%
-  filter(!is.nan(mean_airt))
-
+  group_by(year) %>%
+  summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
+
+We can also group by more than one variable at once. So, to get the mean air temperature for each month for each year, we would write:
+
+```{r chunk}
+yr.09.11 %>%
+  group_by(year, month) %>%
+  summarize(mean_airt = mean(airt, na.rm = TRUE))
+```
+
