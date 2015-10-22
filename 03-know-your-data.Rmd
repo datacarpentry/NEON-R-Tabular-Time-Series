@@ -49,6 +49,7 @@ After completing this activity, you will know:
 <h3>R Libraries to Install:</h3>
 <ul>
 <li><strong>raster:</strong> <code> install.packages("dplyr")</code></li>
+<li><strong>rgdal:</strong> <code> install.packages("lubridate")</code></li>
 <li><strong>rgdal:</strong> <code> install.packages("ggplot2")</code></li>
 
 </ul>
@@ -72,14 +73,23 @@ and processed at <a href="http://www.neoninc.org" target="_blank" >NEON </a>
 headquarters. The entire dataset can be accessed by request from the NEON website.</p>  
 
 #About Raster Data
-Raster or "gridded" data are data that are saved in pixels. In the spatial world, 
-each pixel represents an area on the Earth's surface. For example in the raster 
-below, each pixel represents a particular land cover class that would be found in 
-that location in the real world. 
-<a href="{{ site.baseurl }}/GIS-Spatial-Data/Working-With-Rasters/"> More on 
-rasters here</a>. 
+Now that we have our data loaded into R and into the correct formats, we want to start looking at some basic descriptives and plots. This will help us start to familiarize ourselves with our data, as well as do some basic sanity checks on our data to make sure we haven't missed anything when importing our data.
+
+One thing we may want to do is to calculate some basic descriptives, for example means and sdevs. Calculating these values for each year probably won't give us a lot of useful information, so instead we're going to break out data up by months so we can look at the mean temperature for each month for each year. 
+
+The first thing we need to do is create year and month variables so that we can aggregate our data in the way we want. To do this we're going to use a package called `lubridate`. We need to tell it the order of our date information in our datetime variable, and then the type of data information, e.g. year,that we want to pull out and put into a new variable. We'll do this for year and month
 
 ```{r chunk-1}
-#code will go here! 
+yr.09.11$year <- year(as.Date(yr.09.11$datetime, "%y-%b-%d"))
+yr.09.11$month <- month(as.Date(yr.09.11$datetime, "%y-%b-%d"))
+```
+
+Now that we have our year and month variables, we want to calculate the mean air temperatue for each month for each year. We talked a bit about the dplyr package before, and we'll use it here again. In particular, we're going to use a "split-apply-combine" technique. We'll split the datafile into groups, apply the same function to each group, and then combine the results back together. 
+
+```{r chunk-1}
+yr.09.11 %>%
+  group_by(year, month) %>%
+  summarize(mean_airt = mean(airt, na.rm = TRUE)) %>%
+  filter(!is.nan(mean_airt))
 
 ```
