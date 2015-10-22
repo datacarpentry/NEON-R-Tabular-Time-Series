@@ -1,8 +1,8 @@
 ---
+title: 'Spatio-Temporal / NEON Data Workshop '
 layout: post
-title:  "Spatio-Temporal / NEON Data Workshop "
-date:   2015-10-15 10:00:00
-output: html_document
+date: "2015-10-15 10:00:00"
+output: pdf_document
 permalink: /R/spatio-temporal/
 ---
 
@@ -49,7 +49,7 @@ Look at Metadata & Data Structure
 Metadata in text file.  Look for temp, precip, and daylength in the file.  One is missing.  
 
 ```{Data Structure}
-#Check the variable types.  Are they the type you think they should be. Int, num,  (EXPAND IF NOT PREVIOUSLY DISCUSSED BY RASTER GROUP)
+#Check the variable types. Are they the type you think they should be. Int, num,  (EXPAND IF NOT PREVIOUSLY DISCUSSED BY RASTER GROUP)
 
 #
 
