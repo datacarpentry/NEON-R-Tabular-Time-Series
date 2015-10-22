@@ -9,17 +9,8 @@ image:
 ---
 
 
-##Welcome to the NEON / Data Carpentry Hackathon ! 
+##Tabular Time Series Lessons
 
-###October 21-23 2015
-
-
-Welcome to the hackathon landing page!
-
-
-###Agenda
-
-[AGENDA here]({{ site_baseurl }}/agenda/)
 
 ###Link to sample lesson shell
 
@@ -28,6 +19,3 @@ The page below illustrates what the code might look like for the lessons that we
 [Sample Lesson Shell]({{ site_baseurl }}R/spatio-temporal/)
 
 
-###Participants
-
-To be added here

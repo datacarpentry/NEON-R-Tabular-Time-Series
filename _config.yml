@@ -1,10 +1,10 @@
-title: 	Spatio-Temporal Data Hackathon
+title: 	NEON Tabular Time Series Lessons
 description: 	Hackathon held October 21-23 in Boulder, CO at NEON headquarters.
 #Comment out url when working locally to resolve base urls correctly ok
 #use this when pushing to git for live version
 
-url:      http://lwasser.github.io/NEON-DC-DataLesson-Hackathon
-baseurl:	http://lwasser.github.io/NEON-DC-DataLesson-Hackathon
+url:      http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
+baseurl:   http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
 
 #use this when working locally
 #just uncomment the first localhost.
@@ -12,7 +12,7 @@ baseurl:	http://lwasser.github.io/NEON-DC-DataLesson-Hackathon
 #baseurl: http://localhost:4000
 
 #we might not need comments here???
-disqus_shortname: neondataskills
+disqus_shortname: 
 
 # Social networking links are used in author-bio sidebar. Update and remove as you like.
 
@@ -23,14 +23,14 @@ owner:
   bio: "Devoted to open data and open source in science and education."
   email: "lwasser@neoninc.org"
 #  twitter: "leahawasser"
-  github: "lwasser"
+  github: "data-lessons"
 #  youtube: " "
 # instagram:      " "
 # For Google Authorship https://plus.google.com/authorship
 # google_plus:    
 
 # Analytics and webmaster tools stuff goes here
-google_analytics:   UA-52746937-1
+google_analytics:   
 #google_verify:      UQj93ERU9zgECodaaXgVpkjrFn9UrDMEzVamacSoQ8Y
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
 #bing_verify:        D81F4C18A6CB3018F64D7C827D953DFD
@@ -42,9 +42,6 @@ google_analytics:   UA-52746937-1
 links:  
   - title: About
     url: /about/
-    
-  - title: Agenda
-    url: /agenda/
     
   - title: NEON Website
     url: http://www.neoninc.org
