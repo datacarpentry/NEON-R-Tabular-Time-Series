@@ -1,2 +1,2 @@
-# NEON-R-Tabular-Time-Series
-A repo for the tabular time series data lessons
+# NEON-DC-DataLesson-Hackathon
+A repo for the spatio-temporal data lesson hackathon.
