@@ -1,0 +1,118 @@
+---
+layout: post
+title: "Lesson 1: Load and Understand Your Data"
+date:   2015-10-22 13:12:38 PDT
+authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+dateCreated:  2015-10-22 13:51:20 PDT
+lastModified: 2015-10-22 13:51:20 PDT
+category: Working with Tabular Time Series Data
+tags: [module-1]
+mainTag: Time-Series-Data
+description: "This lesson will teach students how to import tabular data from a CSV file into R. Students will examine the structure of the dataset and get information from a related metadata text file."
+code1: 
+image:
+  feature: 
+  credit: 
+  creditlink: http://www.neoninc.org
+permalink: /R/Time-Series-Data/
+code2: /R/2015-10-22-Time-Series-Data
+comments: true
+
+---
+
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
+
+##About
+This lesson will teach students how to import tabular data from a CSV file into R. Students will examine the structure of the dataset and get information from a related metadata text file.
+
+**R Skill Level:** Intermediate - you've got the basics of `R` down and understand the general structure of tabular data.
+
+<div id="objectives">
+
+<h3>Goals / Objectives</h3>
+After completing this activity, you will know:
+<ol>
+<li>Open a csv file in R and why we are using that format in this training</li>
+<li>Examine data structures and types</li>
+<li>Use metadata to get more information about input data</li>
+</ol>
+
+<h3>Things You'll Need To Complete This Lesson</h3>
+
+<h3>R Libraries to Install:</h3>
+<ul>
+<li><strong>No additional libraries are needed for this lesson</code></li>
+
+</ul>
+<h4>Tools To Install</h4>
+
+Please be sure you have the most current version of `R` and preferably
+R studio to write your code.
+
+<h4>Data to Download</h4>
+
+Make sure you have downloaded the data that includes the AtmosData folder from the raster and *in situ* collected vegetation structure data provided in this dataset:
+<ul>
+<li><a href="http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068"" class="btn btn-success"> DOWNLOAD Sample NEON LiDAR data in Raster Format & Vegetation Sampling Data</a></li>
+</ul>
+
+<h4>Recommended Pre-Lesson Reading</h4>
+
+</div>
+
+## Lesson One: Load and Understand Your Data
+We don't need any additional packages for this lesson, but typically when you initiate a workflow you always want to load a package prior to importing and working with your data. If you need another package later, you will also add it here. It is also good practice to include a short note in your code comments that gives each library's purpose in your script. This will help you later when you write new scripts for other projects.
+
+```{r load-libraries-date-function}
+# Load packages required for entire script
+#library(nameOfLibrary)  #purpose of libraray
+
+#set working directory
+setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
+
+# Load CSV file of 15 min meterological data from Harvard Forest
+# don't load strings as factors
+harMet15 <- read.csv(file="data/AtmosData/HARV/hf001-10-15min-m.csv", stringsAsFactors = FALSE)
+```
+
+
+Now it is time to look at our data and information about how R 'sees' our data. There are two options for how we can look at our data, in the console using head() or by opening the object using View() or clicking on the object in the Environment pane. Once we open the data, we will look at the structure of the data as interpreted by R.
+
+```{r Data Structure}
+
+head(harMet15)
+#if you want to see it in spreadsheet form and scroll
+View(harMet15)
+
+#Check how R is seeing my data. Is it what I expect to see?
+str(harMet15)
+
+```
+
+These commands let you see the data and get some information about it, but there is other information we need to know. Can you think of any examples? To get some of this information, or clues to this information, we will open the metadata text file that is in the AtmosData folder. Navigate to this file and open it in your text editor of choice.
+
+Remember we will be looking at air temperature, precipitation, and, if we have time, photosynthetically active radiation or PAR. Find these variables and identify what information the metadata tells you about these variables. We will show what we think is important from this metadata to our analysis here as comments. These can be helpful if we share the R file with others or with your future self. Make notes that are intuitive and make sense to you but that others can read and understand as well.
+
+```{r metadata debrief}
+# column names for variables we are going to use: date, airt, prec, part
+# units for quantitative variables: celsius, millimeters, molePerMeterSquared
+# for quantitative variables missing values are given as NA
+```
+
+Is there information provided here that doesn't match what you see in the data? Is there information you want to know that is not provided in this metadata file? Do you have ideas for how you might find that information?
+
+```{r metadata debrief 2}
+# says average of daily averages for airt, but this is 15 min data, so that doesn't make sense; perhaps this is a carry over from copy/paste from daily metadata file?
+# no information is given for date besides that it is a date. It would be nice to know if it was recorded in UTC, GMT, or local time.
+# perhaps check out the link at the top http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
+
+# note in the metadata file "hf001-02: annual (metric) since 2002" and on the website there is both "hf001-02: annual (metric) since 2002 (preview)" and "hf001-10: 15-minute (metric) since 2005 (preview)" which is the csv file we are using. #preview tab will give us plots of all variables.
+```
