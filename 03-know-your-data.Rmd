@@ -87,7 +87,7 @@ We use the `group-by()` function to determine how we split up our data. For exam
 
 ```{r dplyr group}
 yr.09.11 %>%
-  group_by(jd) %>%
+  group_by(julian) %>%
   tally()
 ```
 The `%>%` at the end of the lines are 'pipes'. They allow you to take the output of one function and send it to the next function. This means you don't have to save the intermediate steps between functions.
@@ -95,7 +95,7 @@ The `%>%` at the end of the lines are 'pipes'. They allow you to take the output
 We're more interested though in calculting single values by julian day. We can use the `summarize()` function for this. To get the mean air temperature for each julian day, we would write:
 ```{r dplyr summarize}
 yr.09.11 %>%
-  group_by(jd) %>%
+  group_by(julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
@@ -115,7 +115,7 @@ Now we have our two variables. So, to get the mean air temperature for each day 
 
 ```{r dplyr full}
 yr.09.11 %>%
-  group_by(year, jd) %>%
+  group_by(year, julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
@@ -125,7 +125,7 @@ Could we create the year variable within our `dplyr` function call? Yep. We can 
 ```{r dplyr mutate}
 yr.09.11 %>%
   mutate(year = year(datetime)) %>%
-  group_by(year, jd) %>%
+  group_by(year, julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
@@ -136,7 +136,7 @@ We also want to save this information so that we can plot the daily air temperat
 ```{r dplyr saving}
 temp.daily <- yr.09.11 %>%
   mutate(year = year(datetime)) %>%
-  group_by(year, jd) %>%
+  group_by(year, julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
 ```
 
