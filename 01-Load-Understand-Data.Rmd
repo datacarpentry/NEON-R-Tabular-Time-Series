@@ -77,13 +77,16 @@ We don't need any additional packages for this lesson, but typically when you in
 
 #set working directory
 setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
+```
 
+# Import Data
+```{r import csv}
 # Load CSV file of 15 min meterological data from Harvard Forest
 # don't load strings as factors
 harMet15 <- read.csv(file="data/AtmosData/HARV/hf001-10-15min-m.csv", stringsAsFactors = FALSE)
 ```
 
-
+# Data Structure & Metadata
 Now it is time to look at our data and information about how R 'sees' our data. There are two options for how we can look at our data, in the console using head() or by opening the object using View() or clicking on the object in the Environment pane. Once we open the data, we will look at the structure of the data as interpreted by R.
 
 ```{r Data Structure}
@@ -108,6 +111,7 @@ Remember we will be looking at air temperature, precipitation, and, if we have t
 # for quantitative variables missing values are given as NA
 ```
 
+# Metadata Sleuthing
 Is there information provided here that doesn't match what you see in the data? Is there information you want to know that is not provided in this metadata file? Do you have ideas for how you might find that information?
 Again, it is a good practice to make relevant notes from the metadata in your R script so that you can easily refer to it as you actually work with the data.
 
