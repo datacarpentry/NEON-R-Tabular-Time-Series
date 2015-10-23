@@ -52,7 +52,7 @@ After completing this activity, you will know:
 
 <h3>R Libraries to Install:</h3>
 <ul>
-<li><strong>raster:</strong> <code> install.packages("raster")</code></li>
+<li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
 
 </ul>
 <h4>Tools To Install</h4>
@@ -144,3 +144,28 @@ yr.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00', tz = "Am
 as.POSIXct('2011-12-31 23:45', tz = "America/New_York"))
 
 ```
+@Challenge (testing lesson 1 & 2)
+1. Import daily .csv and name it harMet.daily
+2. Check out the data structure
+3. Convert date- time
+4. Add a column and calculate julian day
+
+``` {r challenge code}
+
+#import daily file
+harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", stringsAsFactors = FALSE)
+#check it out
+str(harMet.daily)
+head(harMet.daily)
+
+#convert date
+harMet.daily$date <- as.POSIXct(harMet.daily$date,format = "%Y-%m-%d",tz = "America/New_York")
+#check it out
+str(harMet.daily)
+head(harMet.daily)
+
+#add and calc julian day
+harMet.daily$julian <- yday(harMet.daily$date)
+#check it
+head(harMet.daily)
+str(harMet.daily)
