@@ -105,7 +105,7 @@ These commands let you see the data and get some information about it, but there
 Remember we will be looking at air temperature, precipitation, and, if we have time, photosynthetically active radiation or PAR. Find these variables and identify what information the metadata tells you about these variables. We will show what we think is important from this metadata to our analysis here as comments. These can be helpful if we share the R file with others or with your future self. Make notes that are intuitive and make sense to you but that others can read and understand as well.
 
 ```{r metadata debrief}
-# column names for variables we are going to use: date, airt, prec, parr/part (15min/daily)
+# column names for variables we are going to use: datetime/date, airt, prec, parr/part (15min/daily)
 # units for quantitative variables: celsius, millimeters, molePerMeterSquared
 #airt and parr are averages of measurements taken every 1 sec; precip is total of 15 min period
 # for quantitative variables missing values are given as NA
@@ -123,7 +123,7 @@ Again, it is a good practice to make relevant notes from the metadata in your R 
 
 ```{r metadata}
 # website for more information: http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
-# dates are in Eastern Standard Time
+# date-times are in Eastern Standard Time
 # preview tab give plots of all variables
 ```
 
