@@ -57,10 +57,33 @@ After completing this activity, you will know:
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
-#Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
-
 #Graph precip by total PAR across all seasons
+```{r PAR vs. precip}
+
+part.prec <- ggplot(harMet.daily,aes(prec, part)) +
+           geom_point() +
+           ggtitle("Relationship between precipitation and PART") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) +
+           xlab("Total Precipitation") + ylab("Mean Total PAR")
+
+```
+
+#Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
+```{r subsetting by season}
+
+subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
+
+```
 
 #Use facets in ggplot to create the same graph for each season and display them in a grid
+```{r subsetting by season}
+
+part.prec + facet_grid(. ~ season)
+part.prec + facet_grid(season ~ .)
+
+part.prect + facet_wrap(~season, ncol = 2)
+
+```
 
 #Graph one of those variables and NDVI data together
