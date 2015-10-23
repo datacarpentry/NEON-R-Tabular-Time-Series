@@ -73,7 +73,7 @@ We don't need any additional packages for this lesson, but typically when you in
 
 ```{r load-libraries-date-function}
 # Load packages required for entire script
-#library(nameOfLibrary)  #purpose of libraray
+#library(nameOfLibrary)  #purpose of library
 
 #set working directory
 setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
