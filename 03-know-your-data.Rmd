@@ -39,17 +39,17 @@ This activity will walk you through the fundamentals of data manipulation and ba
 <h3>Goals / Objectives</h3>
 After completing this activity, you will know:
 <ol>
-<li>How to calculate basic descriptive statistics for groups of data.</li>
 <li>How to create basic time series plots in `R`.</li>
+<li>How to manipulate data in `R`.</li>
 </ol>
 
 <h3>Things You'll Need To Complete This Lesson</h3>
 
 <h3>R Libraries to Install:</h3>
 <ul>
-<li><strong>raster:</strong> <code> install.packages("dplyr")</code></li>
-<li><strong>rgdal:</strong> <code> install.packages("lubridate")</code></li>
-<li><strong>rgdal:</strong> <code> install.packages("ggplot2")</code></li>
+<li><code> install.packages("dplyr")</code></li>
+<li><code> install.packages("lubridate")</code></li>
+<li><code> install.packages("ggplot2")</code></li>
 
 </ul>
 <h4>Tools To Install</h4>
@@ -70,10 +70,15 @@ myPlot <- ggplot(yr.09.11,aes(datetime, airt)) +
            theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
            theme(text = element_text(size=20)) +
            xlab("Time") + ylab("Mean Air Temperature")
+```
 
+The dates on the x-axis are not particularly well formatted. We can reformat them so they are in the Month/Day/Year format we're used to.
+```{r nice x-axis}
 #format x axis with dates
 myPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
 ```
+
+#Challenge: Using the daily precipitation data you imported earlier, create a plot with the x-axis in a European Format (Day/Month/Year)
 
 #Manipulating Data
 This plot is interesting, and we can see that there is a clear seasonal trend, unsurprisingly. But the air temperature data at 15 minute intervals might be more granular than we want. Instead, we may want to look at how daily average temperature changes over time. To do this we first need to learn a bit about how to manipulate data in R. We'll use the `dplyr` package and a "split-apply-combine" technique.
@@ -85,6 +90,7 @@ yr.09.11 %>%
   group_by(jd) %>%
   tally()
 ```
+The `%>%` at the end of the lines are 'pipes'. They allow you to take the output of one function and send it to the next function. This means you don't have to save the intermediate steps between functions.
 
 We're more interested though in calculting single values by julian day. We can use the `summarize()` function for this. To get the mean air temperature for each julian day, we would write:
 ```{r dplyr summarize}
@@ -105,8 +111,6 @@ This code will work, but we previously already set up datetime as a time variabl
 yr.09.11$year <- year(yr.09.11$datetime)
 ```
 
-Challenge: Can you do this for month as well?
-
 Now we have our two variables. So, to get the mean air temperature for each day for each year, we would write:
 
 ```{r dplyr full}
@@ -114,6 +118,7 @@ yr.09.11 %>%
   group_by(year, jd) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
+
 
 Could we create the year variable within our `dplyr` function call? Yep. We can use the `mutate()` function, and include our `lubridate` function within the `mutate()` call.
 
@@ -124,7 +129,10 @@ yr.09.11 %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
-We also want to save this information so that we can plot the daily air temperature as well. So, we save the output of our dplyr function as a new dataframe.
+#Challenge: Can you get the average air temperate for each month?
+
+We also want to save this information so that we can plot the daily air temperature as well. So, we save the output of our dplyr function as a new dataframe. Since we're going to plot this, we also want to retain the datetime information so that we can have our nicely formatted x-axis. But, we only want one datetime entry per air temperature measurement. So, we ask R to give us the first datetime entry for each day for each year in the `summarize()` function.
+
 ```{r dplyr saving}
 temp.daily <- yr.09.11 %>%
   mutate(year = year(datetime)) %>%
@@ -132,7 +140,7 @@ temp.daily <- yr.09.11 %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
 ```
 
-Since we're going to plot this, we also want to retain the datetime information. But, we only want one datetime entry per air temperature measurement. So, we ask R to give us the first datetime entry for each day for each year.
+#Challenge: Using the daily preceptitation datafile, what is the precipitation for each year? Does it make more sense to get the total precepitation for each year, or the average percipitation for each year?
 
 Now that we have our new data file, we want to plot the daily averages.
 
