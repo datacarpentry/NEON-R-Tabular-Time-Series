@@ -102,17 +102,31 @@ These commands let you see the data and get some information about it, but there
 Remember we will be looking at air temperature, precipitation, and, if we have time, photosynthetically active radiation or PAR. Find these variables and identify what information the metadata tells you about these variables. We will show what we think is important from this metadata to our analysis here as comments. These can be helpful if we share the R file with others or with your future self. Make notes that are intuitive and make sense to you but that others can read and understand as well.
 
 ```{r metadata debrief}
-# column names for variables we are going to use: date, airt, prec, part
+# column names for variables we are going to use: date, airt, prec, parr/part (15min/daily)
 # units for quantitative variables: celsius, millimeters, molePerMeterSquared
+#airt and parr are averages of measurements taken every 1 sec; precip is total of 15 min period
 # for quantitative variables missing values are given as NA
 ```
 
 Is there information provided here that doesn't match what you see in the data? Is there information you want to know that is not provided in this metadata file? Do you have ideas for how you might find that information?
+Again, it is a good practice to make relevant notes from the metadata in your R script so that you can easily refer to it as you actually work with the data.
 
-```{r metadata debrief 2}
-# says average of daily averages for airt, but this is 15 min data, so that doesn't make sense; perhaps this is a carry over from copy/paste from daily metadata file?
-# no information is given for date besides that it is a date. It would be nice to know if it was recorded in UTC, GMT, or local time.
-# perhaps check out the link at the top http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
+Answer: No information is given for date besides that it is a date. It would be nice to know if it was recorded in UTC, GMT, or local time. Hopefully you noticed that there is a link at the top. Check it out to see if you can get the answer to your question.
 
-# note in the metadata file "hf001-02: annual (metric) since 2002" and on the website there is both "hf001-02: annual (metric) since 2002 (preview)" and "hf001-10: 15-minute (metric) since 2005 (preview)" which is the csv file we are using. #preview tab will give us plots of all variables.
+Website gives more information that we have in our metadata file. And it gives us important information about date- all are in Eastern Standard Time.
+
+Again, it is a good practice to make relevant notes from the metadata in your R script so that you can easily refer to it as you actually work with the data.
+
+```{r metadata}
+# website for more information: http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
+# dates are in Eastern Standard Time
+# preview tab give plots of all variables
 ```
+
+Bonus: Do you see anything else that might be related to metadata? EML file. This is the official standards based metadata file using the Ecological Metadata Language (EML). Download this to your data folder. EML seems like an odd choice- but seeing this is an LTER site it makes sense because LTER uses EML extensively in their projects.
+
+```{r metadata}
+# EML file in the data folder now - all metadata information in there.
+```
+
+Now we have important information that will help us to use these data for time series analysis.
