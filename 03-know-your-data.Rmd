@@ -90,6 +90,7 @@ yr.09.11 %>%
   group_by(jd) %>%
   tally()
 ```
+The `%>%` at the end of the lines are 'pipes'. They allow you to take the output of one function and send it to the next function. This means you don't have to save the intermediate steps between functions.
 
 We're more interested though in calculting single values by julian day. We can use the `summarize()` function for this. To get the mean air temperature for each julian day, we would write:
 ```{r dplyr summarize}
