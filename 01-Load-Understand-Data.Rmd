@@ -111,7 +111,7 @@ Remember we will be looking at air temperature, precipitation, and, if we have t
 Is there information provided here that doesn't match what you see in the data? Is there information you want to know that is not provided in this metadata file? Do you have ideas for how you might find that information?
 Again, it is a good practice to make relevant notes from the metadata in your R script so that you can easily refer to it as you actually work with the data.
 
-Answer: No information is given for date besides that it is a date. It would be nice to know if it was recorded in UTC, GMT, or local time. Hopefully you noticed that there is a link at the top. Check it out to see if you can get the answer to your question.
+Answer: No information is given for date besides that it is a date. It would be nice to know if it was recorded in UTC/GMT, or local time. Hopefully you noticed that there is a link at the top. Check it out to see if you can get the answer to your question.
 
 Website gives more information that we have in our metadata file. And it gives us important information about date- all are in Eastern Standard Time.
 
