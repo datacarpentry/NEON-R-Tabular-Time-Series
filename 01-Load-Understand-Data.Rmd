@@ -49,7 +49,7 @@ After completing this activity, you will know:
 
 <h3>R Libraries to Install:</h3>
 <ul>
-<li><strong>No additional libraries are needed for this lesson</code></li>
+<li>No additional libraries are needed for this lesson</code></li>
 
 </ul>
 <h4>Tools To Install</h4>
