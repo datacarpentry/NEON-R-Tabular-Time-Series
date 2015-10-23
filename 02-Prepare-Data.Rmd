@@ -72,11 +72,11 @@ Make sure you have downloaded the data that includes the AtmosData folder from t
 </div>
 
 ## Lesson Two: Prepare your data so you can work with it
-We don't need any additional packages for this lesson. We will use basic R for working with date-time formats. However, there are a few options for working with date-time formats (lubridate, readr, zoo), which are based on similar concepts, so you will be able to use help text to explore those on your own as you choose. You will use lubridate later in this training module.
+We don't need any additional packages for this lesson. We will use basic R for working with date-time formats. However, there are a few options for working with date-time formats (lubridate, readr, zoo), which are based on similar concepts, so you will be able to use help text to explore those on your own as you choose. You will use lubridate in this training module.
 
 ```{r load-libraries-date-function}
 # Load packages required for entire script
-#library(nameofLibrary)  #purpose of library
+library(lubridate)  #working with dates
 
 ```
 
@@ -115,37 +115,32 @@ str(harMet15)
 
 ```
 
-So, what is this POSIXct we used? R recognizes two different .....
-
+So, what is this POSIXct we used? R recognizes two different classes for this: POSIXct and POSIXlt.
+NEED A GOOD DESCRIPTION HERE
 
 #Convert to Julian days
 
-Note: this could be turned into a function to do multiple files.
+In some cases you might want to use Julian days, which gives each day of the year a number starting with 1 on Jan 1 and counting up to 365 or 366 on December 31 depending on if it is a leap year or not. Reasons you might want to convert to Julian days are for smoother plotting and manipulation of data.
 
 ```{r plot-daylength }
 
 #convert to julian days
-
-#stack the data frame
-dayLengthHar2011.st <- stack(dayLengthHar2011[2:13])
-#remove NA values
-dayLengthHar2011.st <- dayLengthHar2011.st[complete.cases(dayLengthHar2011.st),]
-#add julian days (count)
-dayLengthHar2011.st$JulianDay<-seq.int(nrow(dayLengthHar2011.st))
-#fix names
-names(dayLengthHar2011.st) <- c("Hours","Month","JulianDay")
+#here we will use yday, which is a function from the lubridate package; to learn more about it type
+?yday
+harMet15$julian <- yday(harMet15$datetime)  
+#make sure it worked
+head(harMet15) 
+tail(harMet15)
 
 ```
-
 
 
 #Subsetting
+To take a smaller subset of data to work with, let's just take 3 years 2009-2011. We need to include the time zone to get this to work correctly.
+``` {r  subsetting}
 
-``` {dply subsetting}
-#subset out some of the data - 2010-2013 
-yr.09.11 <- subset(harMet, datetime >= as.POSIXct('2009-01-01 00:00') & datetime <=
-as.POSIXct('2011-01-01 00:00'))
+#subset out some of the data - 2009-2011
+yr.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00', tz = "America/New_York") & datetime <=
+as.POSIXct('2011-12-31 23:45', tz = "America/New_York"))
 
 ```
-
-@LearningCheck
