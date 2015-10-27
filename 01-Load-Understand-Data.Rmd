@@ -46,11 +46,11 @@ After completing this lesson, you will know how to:
 </ol>
 
 <h3>Things You'll Need To Complete This Lesson</h3>
-
-Please be sure you have the most current version of `R` and preferably
+<ul>
+Please be sure you have the most current version of R and preferably
 R studio to write your code.
 
-<h4>R Libraries to Install:</h4>
+<h4>R Libraries to Install</h4>
 <ul>
 <li>No additional libraries are needed for this lesson</code></li>
 
@@ -66,7 +66,9 @@ None
 </div>
 
 ## Lesson One: Load and Understand Your Data
-We don't need any additional packages for this lesson, but typically when you initiate a workflow you always want to load a package prior to importing and working with your data. If you need another package later, you will also add it here. It is also good practice to include a short note in your code comments that gives each library's purpose in your script. This will help you later when you write new scripts for other projects.
+We don't need any additional packages for this lesson, but typically when you initiate a workflow you always want to load any packages prior to importing and working with your data. If you need another package later, you will also add it here. It is also good practice to include a short note in your code comments that gives each library's purpose in your script. This will help you later when you write new scripts for other projects.
+
+You should then set your working directory to  where ever you have just downloaded the data files.
 
 ```{r load-libraries-date-function}
 # Load packages required for entire script
@@ -76,23 +78,23 @@ We don't need any additional packages for this lesson, but typically when you in
 setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
 ```
 
-# Import Data
+# You are now ready to import the data.  This data is a csv or comma seperated value file.  This file format is an excellent way to store tabular data in a plain text format that can be read by many different programs including R.  
 ```{r import csv}
-# Load CSV file of 15 min meterological data from Harvard Forest
-# don't load strings as factors
+# Load csv file of 15 min meterological data from Harvard Forest
+# don't load strings (a series of letters or numerals) as factors so they remain characters
 harMet15 <- read.csv(file="data/AtmosData/HARV/hf001-10-15min-m.csv", stringsAsFactors = FALSE)
 ```
 
 # Data Structure & Metadata
-Now it is time to look at our data and information about how R 'sees' our data. There are two options for how we can look at our data, in the console using head() or by opening the object using View() or clicking on the object in the Environment pane. Once we open the data, we will look at the structure of the data as interpreted by R.
+Now it is time to look at our data and information about how R 'sees' our data. There are three options for how we can look at our data, in the console using head() or by opening the object using View(), or clicking on the object in the Environment pane of RStudio. Once we open the data, we will look at the structure of the data as interpreted by R.
 
 ```{r Data Structure}
-
+#to see first few lines of data file
 head(harMet15)
 #if you want to see it in spreadsheet form and scroll
 View(harMet15)
 
-#Check how R is seeing my data. Is it what I expect to see?
+#Check how R is seeing my data. What is the structure (str) of the data? Is it what I expect to see?  
 str(harMet15)
 
 ```
