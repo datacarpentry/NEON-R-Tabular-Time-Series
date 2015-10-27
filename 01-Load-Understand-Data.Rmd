@@ -38,7 +38,7 @@ This lesson will teach students how to import tabular data from a CSV file into 
 <div id="objectives">
 
 <h3>Goals / Objectives</h3>
-After completing this activity, you will know:
+After completing this lesson, you will know how to:
 <ol>
 <li>Open a csv file in R and why we are using that format in this training</li>
 <li>Examine data structures and types</li>
@@ -47,15 +47,12 @@ After completing this activity, you will know:
 
 <h3>Things You'll Need To Complete This Lesson</h3>
 
+Please be sure you have the most current version of `R` and preferably
+R studio to write your code.
+
 <h3>R Libraries to Install:</h3>
 <ul>
 <li>No additional libraries are needed for this lesson</code></li>
-
-</ul>
-<h4>Tools To Install</h4>
-
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
 
 <h4>Data to Download</h4>
 
@@ -65,7 +62,7 @@ Make sure you have downloaded the data that includes the AtmosData folder from t
 </ul>
 
 <h4>Recommended Pre-Lesson Reading</h4>
-
+None
 </div>
 
 ## Lesson One: Load and Understand Your Data
