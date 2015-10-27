@@ -8,7 +8,7 @@ lastModified: 2015-10-22 14:42:52
 category: time-series-workshop
 tags: [Time Series, R, .csv]
 mainTag: Temporal-Data
-description: "This post explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
+description: "This learning module explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
 code1: 
 image:
   feature: 
@@ -31,7 +31,7 @@ comments:
 </section><!-- /#table-of-contents -->
 
 ##About
-This activity will walk you through the fundamental principles of working 
+This learning module will walk you through the fundamental principles of working 
 with .csv temporal data in R including how to open, clean, explore, and plot time series data. 
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
