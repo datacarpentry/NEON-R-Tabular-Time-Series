@@ -41,7 +41,7 @@ with .csv temporal data in R including how to open, clean, explore, and plot tim
 <h3>Goals / Objectives</h3>
 After completing this learning module, you will know how to:
 <ol>
-<li>Open a csv file in `R` and why we are using this format.</li>
+<li>Open a csv file in R and why we are using this format.</li>
 <li>Examine data structures and types.</li>
 <li>Prepare data for analysis including cleaning, converting/transfroming, and calculating basic summary statistics for your data.</li>
 <li>Create a basic time-series plot. </li>
@@ -59,7 +59,7 @@ After completing this learning module, you will know how to:
 </ul>
 <h4>Tools To Install</h4>
 
-Please be sure you have the most current version of `R` and, preferably,
+Please be sure you have the most current version of R and, preferably,
 RStudio to write your code.
 
 
@@ -92,4 +92,5 @@ PAR is a measure how much light within the solar radiation spectral range (wave 
 # NDVI
 NDVI is an idex from remote sensing imaging that measures the live vegetation in the target area. 
 
-# You are now ready for Lesson 1 in the Tabular Time Series Module
+
+You are now ready for Lesson 1 in the Tabular Time Series Module
