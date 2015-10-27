@@ -19,7 +19,6 @@ code1:
 comments: 
 
 ---
-options(width = 80)
 
 <section id="table-of-contents" class="toc">
   <header>
