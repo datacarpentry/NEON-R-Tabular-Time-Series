@@ -50,7 +50,7 @@ After completing this lesson, you will know how to:
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
-<h3>R Libraries to Install:</h3>
+<h4>R Libraries to Install:</h4>
 <ul>
 <li>No additional libraries are needed for this lesson</code></li>
 
