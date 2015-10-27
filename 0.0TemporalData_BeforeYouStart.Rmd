@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 00 Before we start"
+title: "Lesson 00 Tabular Time Series Intro"
 date:   2015-10-22 14:42:52
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-22 14:42:52
@@ -8,7 +8,7 @@ lastModified: 2015-10-22 14:42:52
 category: time-series-workshop
 tags: [Time Series, R, .csv]
 mainTag: Temporal-Data
-description: "This post explains the fundamental principles, functions, and metadata that you need to work with .csv temporal data in R."
+description: "This post explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
 code1: 
 image:
   feature: 
@@ -19,6 +19,7 @@ code1:
 comments: 
 
 ---
+options(width = 80)
 
 <section id="table-of-contents" class="toc">
   <header>
@@ -39,21 +40,22 @@ with .csv temporal data in R including how to open, clean, explore, and plot tim
 <div id="objectives">
 
 <h3>Goals / Objectives</h3>
-After completing this activity, you will know how to:
+After completing this learning module, you will know how to:
 <ol>
 <li>Open a csv file in R and why we are using this format.</li>
 <li>Examine data structures and types.</li>
 <li>Prepare data for analysis including cleaning, converting/transfroming, and calculating basic summary statistics for your data.</li>
 <li>Create a basic time-series plot. </li>
 <li>Exploring basic trends in your data. </li>
+<li>Map NDVI data with timeseries data. </li>
 </ol>
 
 <h3>Things You'll Need To Complete This Lesson</h3>
 
 <h3>R Libraries to Install:</h3>
 <ul>
-<li><strong>XXX:</strong> <code> install.packages("ggplot2")</code></li>
-<li><strong>XXX:</strong> <code> install.packages("scales")</code></li>
+<li></strong> <code> install.packages("ggplot2")</code></li>
+<li></strong> <code> install.packages("scales")</code></li>
 
 </ul>
 <h4>Tools To Install</h4>
@@ -69,6 +71,7 @@ Download the  XXX data:
 <li><a href="http://XXX" class="btn btn-success"> XXX</a></li>
 <li><a href="{{ site.baseurl }}/XXX" class="btn btn-success"> XXX</a></li>
 </ul>
+<p>If you are working through the workshop lessons in sequence you will not need to download the following files. If you are doing this module on its own, please download the XXX folder with needed data files including an NDVI file that was created in XXX module. </p>
 
 <p>The data used to create the .csv files in this dataset collected at Harvard Forest.  The entire dataset can be accessed from the XXXX website.</p>  
 
@@ -76,12 +79,10 @@ Download the  XXX data:
 
 
 </div>
-# Working through lesson as an individual, not in a workshop? 
-This .csv time-series learning module was originally build as part of the two day Spatio-Temporal Data Workshop (Link to area for full workshop?). Therefore some background information and basic coding skills have been covered extensively in previous modules and are presented here in a more limited fashion. You should be able to complete this module as long as you are comfortable with basic 'R' skills and a general understanding of spatial data.   
+# Additional inforamation if working through module as an individual, not as part of a workshop. 
+This .csv time-series learning module was build as part of the two day Spatio-Temporal Data Workshop [LINK]XXX. Therefore some background information and basic coding skills have been covered extensively in previous modules and are presented here in a more limited fashion. You should be able to complete this module as long as you are comfortable with basic 'R' skills and have a general understanding of spatial data.   
 
-This workshop is built around Jessica a ecology graduate student interested in exploring some of her field sites to understand how phenology of vegetation (greening in the spring summer and senescence in the winter, varies across multiple sites and through time). Her potential study sites have very different vegetation communities including Harvard Forest (Massachusetts) and San Joaquin Experimental Range (California). The data includes spatial and temporal raster data (Module XXX), vector data (Module XXX), and various atmospheric parameters that are collected over several years (this module) that she would like to be able explore prior to her initial site visits and writing her dissertation proposal. 
-
-In addition to being comfortable with basic skills in 'R', there are several data sets that will be utilized in this module that were previously created.  If you are working through the workshop lessons in sequence you will not need to download the following files. If you are doing this lesson on its own, please download the XXX folder with needed data files including an NDVI file that was created in XXX module. 
+This workshop is built around Jessica, an ecology graduate student interested in exploring some of her field sites to understand how phenology of vegetation (greening in the spring summer and senescence in the winter, varies across multiple sites and through time). Her potential study sites have very different vegetation communities including Harvard Forest (Massachusetts) and San Joaquin Experimental Range (California). The data includes spatial and temporal raster data ([Link] Module XXX), vector data ([Link] Module XXX), and various atmospheric parameters that are collected over several years (this module) that she would like to be able explore prior to her initial site visits and writing her dissertation proposal.
 
 # Time series data
 Time series data can come in many different forms.  At the fundemental level a time series is a series of data points collected at successive time intervals. Lots of data collected can be time series data: heights of ocean tides, the number of toes that different equine species had over the last 60 mya, or daily temperature measures.  This module will specifically look at atmospheric data (temperature, precipitation, and Photosynthetically Active Radiation (PAR) ) and normalized difference vegetative index (NDVI). 
