@@ -41,7 +41,7 @@ with .csv temporal data in R including how to open, clean, explore, and plot tim
 <h3>Goals / Objectives</h3>
 After completing this learning module, you will know how to:
 <ol>
-<li>Open a csv file in R and why we are using this format.</li>
+<li>Open a csv file in `R` and why we are using this format.</li>
 <li>Examine data structures and types.</li>
 <li>Prepare data for analysis including cleaning, converting/transfroming, and calculating basic summary statistics for your data.</li>
 <li>Create a basic time-series plot. </li>
