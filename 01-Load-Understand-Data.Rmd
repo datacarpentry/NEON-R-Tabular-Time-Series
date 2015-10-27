@@ -78,7 +78,7 @@ You should then set your working directory to  where ever you have just download
 setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
 ```
 
-# You are now ready to import the data.  This data is a csv or comma seperated value file.  This file format is an excellent way to store tabular data in a plain text format that can be read by many different programs including R.  
+You are now ready to import the data.  This data is a csv or comma seperated value file.  This file format is an excellent way to store tabular data in a plain text format that can be read by many different programs including R.  
 ```{r import csv}
 # Load csv file of 15 min meterological data from Harvard Forest
 # don't load strings (a series of letters or numerals) as factors so they remain characters
