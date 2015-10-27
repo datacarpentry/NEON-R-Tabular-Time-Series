@@ -75,7 +75,7 @@ Download the  XXX data:
 <p>The data used to create the .csv files in this dataset collected at Harvard Forest.  The entire dataset can be accessed from the XXXX website.</p>  
 
 <h4>Recommended Pre-Module Reading</h4>
-
+<p> None </p>
 
 </div>
 # Additional inforamation if working through module as an individual, not as part of a workshop. 
@@ -91,3 +91,5 @@ PAR is a measure how much light within the solar radiation spectral range (wave 
 
 # NDVI
 NDVI is an idex from remote sensing imaging that measures the live vegetation in the target area. 
+
+# You are now ready for Lesson 1 in the Tabular Time Series Module
