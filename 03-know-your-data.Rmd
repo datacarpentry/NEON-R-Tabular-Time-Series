@@ -9,7 +9,6 @@ category: time-series-workshop
 tags: [module-1]
 mainTag: GIS-Spatial-Data
 description: "This post explains the fundamental principles, functions and metadata that you need to work with raster data in R."
-code1: 
 image:
   feature: lidar_GrandMesa.png
   credit: LiDAR data collected over Grand Mesa, Colorado - National Ecological Observatory Network (NEON)
@@ -40,17 +39,17 @@ This activity will walk you through the fundamentals of data manipulation and ba
 <h3>Goals / Objectives</h3>
 After completing this activity, you will know:
 <ol>
-<li>How to calculate basic descriptive statistics for groups of data.</li>
 <li>How to create basic time series plots in `R`.</li>
+<li>How to manipulate data in `R`.</li>
 </ol>
 
 <h3>Things You'll Need To Complete This Lesson</h3>
 
 <h3>R Libraries to Install:</h3>
 <ul>
-<li><strong>raster:</strong> <code> install.packages("dplyr")</code></li>
-<li><strong>rgdal:</strong> <code> install.packages("lubridate")</code></li>
-<li><strong>rgdal:</strong> <code> install.packages("ggplot2")</code></li>
+<li><code> install.packages("dplyr")</code></li>
+<li><code> install.packages("lubridate")</code></li>
+<li><code> install.packages("ggplot2")</code></li>
 
 </ul>
 <h4>Tools To Install</h4>
@@ -58,40 +57,101 @@ After completing this activity, you will know:
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
-#Manipulating Data
-Now that we have our data loaded into R and into the correct formats, we want to start looking at some basic descriptives and plots. This will help us start to familiarize ourselves with our data, as well as do some basic sanity checks on our data to make sure we haven't missed anything when importing our data.
+#Plotting Time Series Data
+One of the first things that it can often be useful to do once we've loaded our data and cleaned it up is to visualize our data. We can start to get a sense of general trends, and well as see possible outliers or non-sensical values. 
 
-One thing we may want to do is to calculate some basic descriptives, for example means and sdevs. Calculating these values for each year probably won't give us a lot of useful information, so instead we're going to break out data up by months so we can look at the mean temperature for each month for each year. 
+To do this, we're going to use `ggplot2` to plot the air temperature across our 2 year span time span for each 15 minute data point.
 
-The first thing we need to do is create year and month variables so that we can aggregate our data in the way we want. To do this we're going to use a package called `lubridate`. We need to tell it the order of our date information in our datetime variable, and then the type of data information, e.g. year,that we want to pull out and put into a new variable. We'll do this for year and month
-
-```{r chunk-1}
-yr.09.11$year <- year(as.Date(yr.09.11$datetime, "%y-%b-%d"))
-yr.09.11$month <- month(as.Date(yr.09.11$datetime, "%y-%b-%d"))
+```{r basic plotting}
+#plot Some Air Temperature Data
+myPlot <- ggplot(yr.09.11,aes(datetime, airt)) +
+           geom_point() +
+           ggtitle("15 min Avg Air Temperature\nHarvard Forest") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) +
+           xlab("Time") + ylab("Mean Air Temperature")
 ```
 
-Now that we have our year and month variables, we want to calculate the mean air temperatue for each month for each year. We talked a bit about the dplyr package before, and we'll use it here again. In particular, we're going to use a "split-apply-combine" technique. We'll split the datafile into groups, apply the same function to each group, and then combine the results. 
+The dates on the x-axis are not particularly well formatted. We can reformat them so they are in the Month/Day/Year format we're used to.
+```{r nice x-axis}
+#format x axis with dates
+myPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
+```
 
-We use the `group-by()` function to determine how we split up our data. For example, if we wanted to count up the number of observations per year, we would do:
+#Challenge: Using the daily precipitation data you imported earlier, create a plot with the x-axis in a European Format (Day/Month/Year)
 
-```{r-chunk}
+#Manipulating Data
+This plot is interesting, and we can see that there is a clear seasonal trend, unsurprisingly. But the air temperature data at 15 minute intervals might be more granular than we want. Instead, we may want to look at how daily average temperature changes over time. To do this we first need to learn a bit about how to manipulate data in R. We'll use the `dplyr` package and a "split-apply-combine" technique.
+
+We use the `group-by()` function to determine how we split up our data. For example, if we wanted to count up the number of observations per Julian dat, we would do:
+
+```{r dplyr group}
 yr.09.11 %>%
-  group_by(year) %>%
+  group_by(julian) %>%
   tally()
 ```
+The `%>%` at the end of the lines are 'pipes'. They allow you to take the output of one function and send it to the next function. This means you don't have to save the intermediate steps between functions.
 
-We're more interested though in calculting single values by year. We can use the `summarize()` function for this. To get the mean air temperature for each year, we would write:
-```{r chunk-1}
+We're more interested though in calculting single values by julian day. We can use the `summarize()` function for this. To get the mean air temperature for each julian day, we would write:
+```{r dplyr summarize}
 yr.09.11 %>%
-  group_by(year) %>%
+  group_by(julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
-We can also group by more than one variable at once. So, to get the mean air temperature for each month for each year, we would write:
+Julian days repeat though, so if we want to summarize our air temperature data for each day, we actually need to group our data by two different values at once, year and julian day. To do this, we're first going to need to create a new year variable. For this we'll use the `lubridate` package.
 
-```{r chunk}
+```{r dplyr lubridate}
+yr.09.11$year <- year(as.Date(yr.09.11$datetime, "%y-%b-%d", tz = "America/New_York"))
+```
+
+This code will work, but we previously already set up datetime as a time variable, so we can be a bit more efficient an just put:
+
+```{r dplyr lubridate-2}
+yr.09.11$year <- year(yr.09.11$datetime)
+```
+
+Now we have our two variables. So, to get the mean air temperature for each day for each year, we would write:
+
+```{r dplyr full}
 yr.09.11 %>%
-  group_by(year, month) %>%
+  group_by(year, julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
+
+Could we create the year variable within our `dplyr` function call? Yep. We can use the `mutate()` function, and include our `lubridate` function within the `mutate()` call.
+
+```{r dplyr mutate}
+yr.09.11 %>%
+  mutate(year = year(datetime)) %>%
+  group_by(year, julian) %>%
+  summarize(mean_airt = mean(airt, na.rm = TRUE))
+```
+
+#Challenge: Can you get the average air temperate for each month?
+
+We also want to save this information so that we can plot the daily air temperature as well. So, we save the output of our dplyr function as a new dataframe. Since we're going to plot this, we also want to retain the datetime information so that we can have our nicely formatted x-axis. But, we only want one datetime entry per air temperature measurement. So, we ask R to give us the first datetime entry for each day for each year in the `summarize()` function.
+
+```{r dplyr saving}
+temp.daily <- yr.09.11 %>%
+  mutate(year = year(datetime)) %>%
+  group_by(year, julian) %>%
+  summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
+```
+
+#Challenge: Using the daily preceptitation datafile, what is the precipitation for each year? Does it make more sense to get the total precepitation for each year, or the average percipitation for each year?
+
+Now that we have our new data file, we want to plot the daily averages.
+
+```{r daily plot}
+dailyPlot <- ggplot(temp.daily,aes(datetime, mean_airt)) +
+           geom_point() +
+           ggtitle("Daily Avg Air Temperature\nHarvard Forest") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+          theme(text = element_text(size=20)) +
+           xlab("Time") + ylab("Mean Air Temperature")
+
+#format x axis with dates
+dailyPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
+```
