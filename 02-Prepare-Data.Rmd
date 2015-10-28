@@ -38,27 +38,21 @@ This lesson will teach students how to prepare tabular data for further analysis
 <div id="objectives">
 
 <h3>Goals / Objectives</h3>
-After completing this activity, you will know:
+After completing this activity, you will know how to:
 <ol>
 <li>Clean data</li>
-<li>Convert/Transform Time Formats</li>
+<li>Convert/transform time formats</li>
 <li>Subset data</li>
-
 <li>Examine data structures and types</li>
 <li>Use metadata to get more information about input data</li>
 </ol>
 
 <h3>Things You'll Need To Complete This Lesson</h3>
-
+Please be sure you have the most current version of `R` and preferably
+R studio to write your code.
 <h3>R Libraries to Install:</h3>
 <ul>
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
-
-</ul>
-<h4>Tools To Install</h4>
-
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
 
 <h4>Data to Download</h4>
 
@@ -68,18 +62,17 @@ Make sure you have downloaded the data that includes the AtmosData folder from t
 </ul>
 
 <h4>Recommended Pre-Lesson Reading</h4>
-
+None
 </div>
 
 ## Lesson Two: Prepare your data so you can work with it
-We don't need any additional packages for this lesson. We will use basic R for working with date-time formats. However, there are a few options for working with date-time formats (lubridate, readr, zoo), which are based on similar concepts, so you will be able to use help text to explore those on your own as you choose. You will use lubridate in this training module.
+We will use basic R and the lubridate package for working with date-time formats. However, there are a few options for working with date-time formats (readr, zoo), which are based on similar concepts, you will be able to use help text to explore those on your own as you choose. 
 
 ```{r load-libraries-date-function}
 # Load packages required for entire script
 library(lubridate)  #working with dates
 
 ```
-
 
 # Dealing with data gaps
 Recall from our metadata that missing values are given an NA, which means they are treated by R as blanks not as zeros. 
