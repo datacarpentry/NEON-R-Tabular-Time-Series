@@ -91,6 +91,7 @@ First we will reformat the character format of the 'datetime' column
 #datetime input looks like this: 2005-01-01T00:15
 
 #1st remove the "T" and replace it with a space
+#gsub() replaces all occurances; sub() just replaces first occurance
 harMet15$datetime <- gsub("T", " ", harMet15$datetime)
 #make sure it worked
 head(harMet15)
