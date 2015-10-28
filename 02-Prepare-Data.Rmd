@@ -1,0 +1,165 @@
+---
+layout: post
+title: "Lesson 2: Prepare your data so you can work with it"
+date:   2015-10-23 09:47:03 PDT
+authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+dateCreated:  2015-10-23 09:47:03 PDT
+lastModified: 2015-10-23 09:47:03 PDT
+category: Working with Tabular Time Series Data
+tags: [module-1]
+mainTag: Time-Series-Data
+description: "This lesson will teach students how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame."
+code1: 
+image:
+  feature: 
+  credit: 
+  creditlink: http://www.neoninc.org
+permalink: /R/Time-Series-Data/
+code2: /R/2015-10-23-Time-Series-Data
+comments: true
+
+---
+
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
+
+##About
+This lesson will teach students how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame.
+
+**R Skill Level:** Intermediate - you've got the basics of `R` down and understand the general structure of tabular data.
+
+<div id="objectives">
+
+<h3>Goals / Objectives</h3>
+After completing this activity, you will know how to:
+<ol>
+<li>Clean data</li>
+<li>Convert/transform time formats</li>
+<li>Subset data</li>
+<li>Examine data structures and types</li>
+<li>Use metadata to get more information about input data</li>
+</ol>
+
+<h3>Things You'll Need To Complete This Lesson</h3>
+Please be sure you have the most current version of `R` and preferably
+R studio to write your code.
+<h3>R Libraries to Install:</h3>
+<ul>
+<li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
+
+<h4>Data to Download</h4>
+
+Make sure you have downloaded the data that includes the AtmosData folder from the raster and *in situ* collected vegetation structure data provided in this dataset:
+<ul>
+<li><a href="http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068"" class="btn btn-success"> DOWNLOAD Sample NEON LiDAR data in Raster Format & Vegetation Sampling Data</a></li>
+</ul>
+
+<h4>Recommended Pre-Lesson Reading</h4>
+None
+</div>
+
+## Lesson Two: Prepare your data so you can work with it
+We will use basic R and the lubridate package for working with date-time formats. However, there are a few options for working with date-time formats (readr, zoo), which are based on similar concepts, you will be able to use help text to explore those on your own as you choose. 
+
+```{r load-libraries-date-function}
+# Load packages required for entire script
+library(lubridate)  #working with dates
+
+```
+
+# Dealing with data gaps
+Recall from our metadata that missing values are given an NA, which means they are treated by R as blanks not as zeros. 
+
+```{gaps}
+
+```
+
+##Dealing with date and time
+Look back up at the results from str(harMet15) that the 'datetime' is seen as a character type. But to work with this column as a date-time, which is important for the analyses and plotting you will learn, we need to convert it to a time class.
+
+First we will reformat the character format of the 'datetime' column
+
+```{r date-time }
+#convert from character to time type
+#datetime input looks like this: 2005-01-01T00:15
+
+#1st remove the "T" and replace it with a space
+#gsub() replaces all occurances; sub() just replaces first occurance
+harMet15$datetime <- gsub("T", " ", harMet15$datetime)
+#make sure it worked
+head(harMet15)
+```
+
+Now we need to convert from a character to a time class. 
+In this step we need to specific the time zone. Remember these data were recorded in Eastern Standard Time. For R we need to look up the name for the timezone in the 'tz' database. You can find the list here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+In this database, Eastern Standard Time is called "America/New_York".
+
+```{r-POSIX}
+#2nd convert to date-time class
+harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",tz = "America/New_York")
+#make sure it worked
+str(harMet15)
+
+```
+
+So, what is this POSIXct we used? R recognizes two different classes for this: POSIXct and POSIXlt.
+NEED A GOOD DESCRIPTION HERE
+
+#Convert to Julian days
+
+In some cases you might want to use Julian days, which gives each day of the year a number starting with 1 on Jan 1 and counting up to 365 or 366 on December 31 depending on if it is a leap year or not. Reasons you might want to convert to Julian days are for smoother plotting and manipulation of data.
+
+```{r plot-daylength }
+
+#convert to julian days
+#here we will use yday, which is a function from the lubridate package; to learn more about it type
+?yday
+harMet15$julian <- yday(harMet15$datetime)  
+#make sure it worked
+head(harMet15) 
+tail(harMet15)
+
+```
+
+
+#Subsetting
+To take a smaller subset of data to work with, let's just take 3 years 2009-2011. We need to include the time zone to get this to work correctly.
+``` {r  subsetting}
+
+#subset out some of the data - 2009-2011
+yr.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00', tz = "America/New_York") & datetime <=
+as.POSIXct('2011-12-31 23:45', tz = "America/New_York"))
+
+```
+@Challenge (testing lesson 1 & 2)
+1. Import daily .csv and name it harMet.daily
+2. Check out the data structure
+3. Convert date- time
+4. Add a column and calculate julian day
+
+``` {r challenge code}
+
+#import daily file
+harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", stringsAsFactors = FALSE)
+#check it out
+str(harMet.daily)
+head(harMet.daily)
+
+#convert date
+harMet.daily$date <- as.POSIXct(harMet.daily$date,format = "%Y-%m-%d",tz = "America/New_York")
+#check it out
+str(harMet.daily)
+head(harMet.daily)
+
+#add and calc julian day
+harMet.daily$julian <- yday(harMet.daily$date)
+#check it
+head(harMet.daily)
+str(harMet.daily)
