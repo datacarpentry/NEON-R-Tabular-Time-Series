@@ -78,6 +78,7 @@ Download the  XXX data:
 <p> None </p>
 
 </div>
+
 # Additional inforamation if working through module as an individual, not as part of a workshop. 
 This .csv time-series learning module was build as part of the two day Spatio-Temporal Data Workshop [LINK]XXX. Therefore some background information and basic coding skills have been covered extensively in previous modules and are presented here in a more limited fashion. You should be able to complete this module as long as you are comfortable with basic 'R' skills and have a general understanding of spatial data.   
 
