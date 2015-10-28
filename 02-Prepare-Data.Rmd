@@ -75,11 +75,25 @@ library(lubridate)  #working with dates
 ```
 
 # Dealing with data gaps
-Recall from our metadata that missing values are given an NA, which means they are treated by R as blanks not as zeros. 
-
-```{gaps}
+Recall from our metadata that missing values are given an NA. One must always check for missing values in any of the variables one is working with.  Do we have missing values in our data set? An easy way to check for this is the is.na() function. By asking for the sum() of is.na() we can see how many NA / missing values we have. 
+```{r missing values}
+#Check for NA values
+sum(is.na(harMet15$datetime)
+sum(is.na(harMet15$airt)
+sum(is.na(harMet15$prec)
+sum(is.na(harMet15$parr)
 
 ```
+As you can see here we have no NA values for within the Date/Time data but we do have NA values in our other variables.  
+
+When you encounter NA or missing values (blank, NAN, etc) in your data you  need to decide at this point how to deal with them.  By default R treats NA values as blanks not as zeros.  This is good as a value of zero (no rain today) is not the same as lack of data (we didn't measure the rain today). 
+
+The way one deals with missing values and data gaps will depend on what type of data is being dealt with, the analysis done, and the significance of the gap or missing value.  The many issues associated with this can be complex and beyond the scope of this lesson.  As recommendations vary on how to deal with the data you should look up what others recommend for the specific data type you are dealing with.  Other resources included 
+ 1)[LINK http://www.statmethods.net/input/missingdata.html] Quick-R: Missing Data -- R code for dealing with data but not why one should do one technique or another
+ 2) [LINK] XXX article/ site for general recommendations.  Any classics in ecology? 
+
+How should we deal with it in our case?  As the goal of the our current analysis is to get a good feeling about the general patterns of greening up and browning down we can leave the NAs at this point.  Compared to the full dataset (376,800 data points) the few missing values are not going to interfere with our analysis.  However, it is important to remember that there are null values incase you decide to revisit this data set for a more detailed time-series analysis where the data gap would be a problem.  
+
 
 ##Dealing with date and time
 Look back up at the results from str(harMet15) that the 'datetime' is seen as a character type. But to work with this column as a date-time, which is important for the analyses and plotting you will learn, we need to convert it to a time class.
