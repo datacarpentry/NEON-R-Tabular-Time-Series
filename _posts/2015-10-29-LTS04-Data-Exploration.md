@@ -1,22 +1,19 @@
 ---
 layout: post
-title: "More advanced data exploration"
-date:   2015-1-26 20:49:52
-authors: "Courtney Soderberg"
-dateCreated:  2014-11-26 20:49:52
-lastModified: 2015-07-23 14:28:52
-category: time-series-workshop
+title: "Lesson 04 Data Exploration"
+date:   2015-10-24
+authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+dateCreated: 2015-10-22
+lastModified: 2015-10-29
 tags: [module-1]
-mainTag: GIS-Spatial-Data
-description: "This post explains the fundamental principles, functions and metadata that you need to work with raster data in R."
-code1: 
+description: "This lesson will teach individuals how to plot subsetted timeseries
+data (e.g. plot by season) and to plot time series data with NDVI."
+code1:
 image:
-  feature: lidar_GrandMesa.png
-  credit: LiDAR data collected over Grand Mesa, Colorado - National Ecological Observatory Network (NEON)
+  feature: NEONCarpentryHeader_2.png
+  credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Raster-Data-In-R/
-code1: /R/2015-07-22-Introduction-to-Raster-Data-In-R.R
-comments: true
+permalink: 
 
 ---
 
@@ -66,10 +63,17 @@ R studio to write your code.
                theme(text = element_text(size=20)) +
                xlab("Total Precipitation") + ylab("Mean Total PAR")
 
-    ## Error in eval(expr, envir, enclos): could not find function "ggplot"
+    ## Error in ggplot(harMet.daily, aes(prec, part)): object 'harMet.daily' not found
 
 #Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
 
+    #subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
 
+#Use facets in ggplot to create the same graph for each season and display them in a grid
 
+    #part.prec + facet_grid(. ~ season)
+    #part.prec + facet_grid(season ~ .)
+    
+    #part.prect + facet_wrap(~season, ncol = 2)
 
+#Graph one of those variables and NDVI data together

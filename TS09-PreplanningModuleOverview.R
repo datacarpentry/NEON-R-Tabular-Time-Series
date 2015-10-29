@@ -1,36 +1,7 @@
----
-title: 'Spatio-Temporal / NEON Data Workshop '
-layout: post
-date: "2015-10-15 10:00:00"
-output: pdf_document
-permalink: /R/spatio-temporal/
----
-
-```{r project-organization }
-
-```
-
-#M4. Working with Tabular Time Series Data
-
-**Goal:** Participants will know how to open, clean, explore, and  plot time series data
-
-##Learning Objectives:
-
-Participants will know how to open a csv file in R
-*Open a csv file in R and why we are using that format in this training
-*Examine data structures and types
-*Prepare data for analysis
-  *Clean
-  *Convert/Transform
-  *Summarize (looking at basic descriptives)
-*Create a basic plot
-*Exploring trends in data
+## ----project-organization------------------------------------------------
 
 
-#LESSON 1: Load and Understand your Data
-When you initiate a workflow you always want to load a package prior to starting (if you later need another package add it here)
-
-```{r load-libraries-date-function}
+## ----load-libraries-date-function----------------------------------------
 # Load packages
 #load ggplot for plotting 
 library(ggplot2)
@@ -42,41 +13,18 @@ library(scales)
 #read in 15 min average data 
 harMet <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv", stringsAsFactors = FALSE)
 
-```
 
-Look at Metadata & Data Structure
-
-Metadata in text file.  Look for temp, precip, and daylength in the file.  One is missing.  
-
-```{Data Structure}
+## ----Data-Structure------------------------------------------------------
 #Check the variable types. Are they the type you think they should be. Int, num,  (EXPAND IF NOT PREVIOUSLY DISCUSSED BY RASTER GROUP)
 
 #
 
 
-```
+
+## ----gaps----------------------------------------------------------------
 
 
-
-#LESSON 2: Preparing data so you can work with it. 
-## Dealing with NaN, gaps, etc. 
-
-```{gaps}
-
-```
-
-##Dealing with Date AND time
-SUGGESTION - we should subset this out for just a few years to begin with. I'd recommend 2009-2011
-Otherwise it is too big to work with.
-##Dealing with just date.
-
-the POSIX format is good to go over... One option could be to do the averaging to 
-daily on the data above. But you might need to smooth it so it could get complicated?
-
-But calculating a daily average could be very useful! Just in case - we can include the daily average with the data if people get hung up or we need to skip over that part. I think we should do it.
-
-
-```{r import-harvard-met-data-15min }
+## ----import-harvard-met-data-15min---------------------------------------
 #From Character to Time 
 
 #In structure data is NA;  but it isn't.  Fix. 
@@ -99,17 +47,8 @@ attributes(harMet$datetime)$tzone <- "America/New_York"
 
 
 #as.Date("2006-02-01 00:00:00")
-```
 
-
-###Convert to Julian days
-
-###Convert to Julian Days and Plot
-
-Next, plot full year's worth of daylength for 2011.
-Note: this could be turned into a function to do multiple files.
-
-```{r plot-daylength }
+## ----plot-daylength------------------------------------------------------
 
 #convert to julian days
 
@@ -129,35 +68,21 @@ ggplot(dayLengthHar2011.st, aes(JulianDay,Hours)) +
   xlab("Julian Days") + ylab("Day Length (Hours)") +
   theme(text = element_text(size=20))
 
-```
 
-
-
-#Subsetting
-
-``` {dply subsetting}
+## ----dply-subsetting-----------------------------------------------------
 #subset out some of the data - 2010-2013 
 yr.09.11 <- subset(harMet, datetime >= as.POSIXct('2009-01-01 00:00') & datetime <=
 as.POSIXct('2011-01-01 00:00'))
 
-```
 
-@LearningCheck
-
-#LESSSON 3: First look at your data
-
-```{r descriptive stats}
+## ----descriptive-stats---------------------------------------------------
 #basic descriptive stats
 
 
 #aggregating
 
-```
 
-
-
-
-```{r basic plotting}
+## ----basic-plotting------------------------------------------------------
 #plot Some Air Temperature Data
 myPlot <- ggplot(yr.09.11,aes(datetime, airt)) +
            geom_point() +
@@ -171,20 +96,8 @@ myPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
 
 
 
-```
 
-
-#Examine stats and plots:
-  #look for outliers
-  #obvious trends
-  #do you need to re-clean your data? make it more useful to you for analyses?
-
-
-#LESSON 4:Working with Daily Data 
-
-###convert the data to daily average 
-Discussion:  what is the best way to aggregate?  Temp = average, but precip might be total.
-```{r convert-daily }
+## ----convert-daily-------------------------------------------------------
 #convert to daily  julian days
 temp.daily <- aggregate(yr.09.11["airt"], format(yr.09.11["datetime"],"%Y-%j"),
                  mean, na.rm = TRUE) 
@@ -202,19 +115,12 @@ temp.daily <- aggregate(yr.09.11["airt"], format(yr.09.11["datetime"],"%Y-%j"),
 #format x axis with dates
 #myPlot + scale_x_date(labels = date_format("%m/%d/%y"))
 
-```
 
-@Challenge (Multi-lesson)
-1. Import daily .csv
-2. Check out the data structure
-3. Convert time 
-4. Make pretty plot
-
-``` {r Challenge answers --link to it for online in the GitHub rmd}
-1. Import daily .csv
-2. Check out the data structure
-3. Convert time 
-4. Make pretty plot
+## ----Challenge-answers---------------------------------------------------
+#1. Import daily .csv
+#2. Check out the data structure
+#3. Convert time 
+#4. Make pretty plot
 #read in daily data  ->CHANGE TO USING THE AGGREGATE DATA JUST CREATED
 harMetDaily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv")
 
@@ -263,26 +169,4 @@ myPlot <- ggplot(yr.09.11_monAvg,aes(date, part)) +
 #format x axis with dates
 myPlot + scale_x_date(labels = date_format("%m/%d/%y"))
 
-```
-
-#redo precip plot as bar plot
-
-#PAR data (As neeed) and map against bar plot is possible
-
-
-
-#LESSON 5: More advanced Exploration of Data
-
-subsetting by seasons
-plotting by seasons, faceted
-plot var against NDVI 
-
-
-
-#Extras? 
-identify start/end of growing and dormant seasons
-growing degree days [(Tmax-Tmin)/2]
-lag effects
-detrending (e.g., first order differences,
-stochastic events (e.g., wind storms, hurricanes, tornado)
 

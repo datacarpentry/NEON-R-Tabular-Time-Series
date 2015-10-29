@@ -220,10 +220,10 @@ temp.daily <- aggregate(yr.09.11["airt"], format(yr.09.11["datetime"],"%Y-%j"),
 4. Make pretty plot
 
 ``` {r Challenge-answers}
-1. Import daily .csv
-2. Check out the data structure
-3. Convert time 
-4. Make pretty plot
+#1. Import daily .csv
+#2. Check out the data structure
+#3. Convert time 
+#4. Make pretty plot
 #read in daily data  ->CHANGE TO USING THE AGGREGATE DATA JUST CREATED
 harMetDaily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv")
 
