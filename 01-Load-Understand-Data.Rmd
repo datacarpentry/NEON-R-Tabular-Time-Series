@@ -70,7 +70,7 @@ We don't need any additional packages for this lesson, but typically when you in
 
 You should then set your working directory to  where ever you have just downloaded the data files.
 
-```{r load-libraries-date-function}
+```{r load-libraries}
 # Load packages required for entire script
 #library(nameOfLibrary)  #purpose of library
 
@@ -79,7 +79,7 @@ setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
 ```
 
 You are now ready to import the data.  This data is a csv or comma seperated value file.  This file format is an excellent way to store tabular data in a plain text format that can be read by many different programs including R.  
-```{r import csv}
+```{r import-csv}
 # Load csv file of 15 min meterological data from Harvard Forest
 # don't load strings (a series of letters or numerals) as factors so they remain characters
 harMet15 <- read.csv(file="data/AtmosData/HARV/hf001-10-15min-m.csv", stringsAsFactors = FALSE)
@@ -88,7 +88,7 @@ harMet15 <- read.csv(file="data/AtmosData/HARV/hf001-10-15min-m.csv", stringsAsF
 # Data Structure & Metadata
 Now it is time to look at our data and information about how R 'sees' our data. There are three options for how we can look at our data, in the console using head() or by opening the object using View(), or clicking on the object in the Environment pane of RStudio. Once we open the data, we will look at the structure of the data as interpreted by R.
 
-```{r Data Structure}
+```{r look-at-data-structure}
 #to see first few lines of data file
 head(harMet15)
 #if you want to see it in spreadsheet form and scroll
@@ -105,7 +105,7 @@ To get some of this information, or clues to this information, we will open the 
 
 Remember for this module we will be looking at air temperature, precipitation, and photosynthetically active radiation or PAR. Find these variables and identify what information the metadata tells you about these variables. We will show what we think is important from this metadata to our analysis here as comments. These can be helpful if we share the R file with others or with your future self. Make notes that are intuitive and make sense to you but that others can read and understand as well.
 
-```{r metadata debrief}
+```{r metadata-debrief}
 # column names for variables we are going to use (when different the two files--15min/daily): datetime/date, airt, prec, parr/part 
 # units for quantitative variables: celsius, millimeters, molePerMeterSquared
 #airt and parr are averages of measurements taken every 1 sec; precip is total of 15 min period
@@ -123,7 +123,7 @@ The website gives more information that we have in our metadata file. And it giv
 
 Again, it is a good practice to make relevant notes from the metadata in your R script so that you can easily refer to it as you actually work with the data.
 
-```{r metadata}
+```{r metadata-website}
 # website for more information: http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
 # date-times are in Eastern Standard Time
 # preview tab give plots of all variables
@@ -131,7 +131,7 @@ Again, it is a good practice to make relevant notes from the metadata in your R 
 
 Bonus: Do you see anything else that might be related to metadata? EML file. This is the official standards based metadata file using the Ecological Metadata Language (EML). Download this to your data folder. EML seems like an odd choice- but seeing this is an LTER site it makes sense because LTER uses EML extensively in their projects.
 
-```{r metadata}
+```{r metadata-em-file}
 # EML file in the data folder now - all metadata information in there.
 ```
 
