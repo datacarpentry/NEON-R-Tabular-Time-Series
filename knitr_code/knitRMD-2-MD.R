@@ -82,7 +82,7 @@ for (files in rmd.files) {
   #COPY image director, rmd file OVER to the GIT SITE###
   
   #copy image directory over
-  file.copy(paste0(wd,"/",imagePath), paste0(gitRepoPath,"images/"), recursive=TRUE)
+  file.copy(paste0(wd,"/",fig.path), paste0(gitRepoPath,imagePath), recursive=TRUE)
   
   #copy rmd file to the rmd directory on git
   file.copy(paste0(wd,"/",basename(files)), gitRepoPath, recursive=TRUE)
@@ -107,6 +107,6 @@ for (files in rmd.files) {
 }
 
 #clean up images directory (remove all sub dirs)
-unlink(paste0(wd,imagePath,"*"), recursive = TRUE)
+unlink(paste0(wd,"/",imagePath,"*"), recursive = TRUE)
   
 ########################### end script  
