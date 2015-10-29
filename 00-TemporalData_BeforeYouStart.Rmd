@@ -95,11 +95,10 @@ Time series data can come in many different forms.  At the fundemental level a t
 PAR is a measure how much light within the solar radiation spectral range (wave band) from 400 to 700 nanometers occurs at the time when the data is collected.  This wavelength is important for phenology studies as that spectral range is what photosynthetic organisms are able to use in the process of photosynthesis.
 
 # NDVI
-<<<<<<< HEAD:0.0TemporalData_BeforeYouStart.Rmd
 NDVI is an index from remote sensing imaging that measures the live vegetation in the target area. 
 =======
 NDVI is an idex from remote sensing imaging that measures the live vegetation in the target area. 
 
 
 You are now ready for Lesson 1 in the Tabular Time Series Module
->>>>>>> refs/remotes/origin/gh-pages:00-TemporalData_BeforeYouStart.Rmd
+
