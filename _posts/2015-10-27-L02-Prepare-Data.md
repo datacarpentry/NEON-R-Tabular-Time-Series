@@ -120,7 +120,7 @@ First we will reformat the character format of the 'datetime' column
     #make sure it worked
     head(harMet15)
 
-    ## Error in head(harMet15): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'harMet15' not found
+    ## Error in head(harMet15): object 'harMet15' not found
 
 Now we need to convert from a character to a time class. 
 In this step we need to specific the time zone. Remember these data were recorded in Eastern Standard Time. For R we need to look up the name for the timezone in the 'tz' database. You can find the list here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
@@ -157,11 +157,11 @@ In some cases you might want to use Julian days, which gives each day of the yea
     #make sure it worked
     head(harMet15) 
 
-    ## Error in head(harMet15): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'harMet15' not found
+    ## Error in head(harMet15): object 'harMet15' not found
 
     tail(harMet15)
 
-    ## Error in tail(harMet15): error in evaluating the argument 'x' in selecting a method for function 'tail': Error: object 'harMet15' not found
+    ## Error in tail(harMet15): object 'harMet15' not found
 
 
 #Subsetting
@@ -171,7 +171,7 @@ To take a smaller subset of data to work with, let's just take 3 years 2009-2011
     yr.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00', tz = "America/New_York") & datetime <=
     as.POSIXct('2011-12-31 23:45', tz = "America/New_York"))
 
-    ## Error in subset(harMet15, datetime >= as.POSIXct("2009-01-01 00:00", tz = "America/New_York") & : error in evaluating the argument 'x' in selecting a method for function 'subset': Error: object 'harMet15' not found
+    ## Error in subset(harMet15, datetime >= as.POSIXct("2009-01-01 00:00", tz = "America/New_York") & : object 'harMet15' not found
 @Challenge (testing lesson 1 & 2)
 1. Import daily .csv and name it harMet.daily
 2. Check out the data structure
@@ -194,7 +194,7 @@ To take a smaller subset of data to work with, let's just take 3 years 2009-2011
 
     head(harMet.daily)
 
-    ## Error in head(harMet.daily): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'harMet.daily' not found
+    ## Error in head(harMet.daily): object 'harMet.daily' not found
 
     #convert date
     harMet.daily$date <- as.POSIXct(harMet.daily$date,format = "%Y-%m-%d",tz = "America/New_York")
@@ -208,7 +208,7 @@ To take a smaller subset of data to work with, let's just take 3 years 2009-2011
 
     head(harMet.daily)
 
-    ## Error in head(harMet.daily): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'harMet.daily' not found
+    ## Error in head(harMet.daily): object 'harMet.daily' not found
 
     #add and calc julian day
     harMet.daily$julian <- yday(harMet.daily$date)
@@ -218,7 +218,7 @@ To take a smaller subset of data to work with, let's just take 3 years 2009-2011
     #check it
     head(harMet.daily)
 
-    ## Error in head(harMet.daily): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'harMet.daily' not found
+    ## Error in head(harMet.daily): object 'harMet.daily' not found
 
     str(harMet.daily)
 

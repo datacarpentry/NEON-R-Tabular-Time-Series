@@ -97,7 +97,7 @@ Now it is time to look at our data and information about how R 'sees' our data. 
     #to see first few lines of data file
     head(harMet15)
 
-    ## Error in head(harMet15): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'harMet15' not found
+    ## Error in head(harMet15): object 'harMet15' not found
 
     #if you want to see it in spreadsheet form and scroll
     View(harMet15)

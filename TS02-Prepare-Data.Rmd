@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Lesson 2: Prepare your data so you can work with it"
-date:   2015-10-23 09:47:03 PDT
+title: "Lesson 02 Prepare your data so you can work with it"
+date:   2015-10-23
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-23 09:47:03 PDT
 lastModified: 2015-10-23 09:47:03 PDT
-category: Working with Tabular Time Series Data
+category: 
 tags: [module-1]
 mainTag: Time-Series-Data
 description: "This lesson will teach students how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame."
@@ -15,8 +15,6 @@ image:
   credit: 
   creditlink: http://www.neoninc.org
 permalink: /R/Time-Series-Data/
-code2: /R/2015-10-23-Time-Series-Data
-comments: true
 
 ---
 
