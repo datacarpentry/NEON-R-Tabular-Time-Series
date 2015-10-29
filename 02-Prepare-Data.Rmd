@@ -124,8 +124,10 @@ str(harMet15)
 
 ```
 
-So, what is this POSIXct we used? R recognizes two different classes for this: POSIXct and POSIXlt.
-NEED A GOOD DESCRIPTION HERE
+So, what is this POSIXct we used? 
+
+R recognizes two different classes for time: POSIXct and POSIXlt.  POSIXct is easier to use in dataframes and is stored as the number of seconds since 1 January 1970 (negative numbers are used for dates before 1970).  However, for us we are used to seeing dates by day month year and hours of the day not elapsed seconds. POSIXlt instead stores date time information in a more human friendly format we are used to seeing (e.g. second, min, hour, day of month, month, year, numeric day of year, etc). However, this makes it difficult to use in dataframes and to manipulate, which is why we didn't use POSIXlt here.  Instead we specified which format (year-month-day hour:minute) we wanted to see the date and time when using POSIXct.  This way we know what the date is and the programs can still work with the date/time in a single format.  
+
 
 #Convert to Julian days
 
