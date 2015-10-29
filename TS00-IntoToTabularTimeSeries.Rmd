@@ -6,10 +6,13 @@ authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
 tags: [module-1]
-description: "This learning module explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
+description: "This learning module explains the fundamental principles, 
+functions, and metadata that you need to work with tabular (.csv) temporal data
+in R."
 image:
   feature: NEONCarpentryHeader_2.png
-  credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
+  credit: A collaboration between the National Ecological Observatory Network
+  (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
 permalink: 
 ---
@@ -37,7 +40,8 @@ After completing this learning module, you will know how to:
 <ol>
 <li>Open a csv file in R and why we are using this format.</li>
 <li>Examine data structures and types.</li>
-<li>Prepare data for analysis including cleaning, converting/transfroming, and calculating basic summary statistics for your data.</li>
+<li>Prepare data for analysis including cleaning, converting/transfroming, and
+calculating basic summary statistics for your data.</li>
 <li>Create a basic time-series plot. </li>
 <li>Exploring basic trends in your data. </li>
 <li>Map NDVI data with timeseries data. </li>

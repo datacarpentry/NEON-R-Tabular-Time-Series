@@ -1,20 +1,22 @@
 ---
 layout: post
-title: "Lesson 02 Prepare your data so you can work with it"
-date:   2015-10-23
+title: "Lesson 02 Preparing Data to Work With"
+date:   2015-10-22
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
-dateCreated:  2015-10-23 09:47:03 PDT
-lastModified: 2015-10-23 09:47:03 PDT
-category: 
+dateCreated:  2015-10-22
+lastModified: 2015-10-29
 tags: [module-1]
-mainTag: Time-Series-Data
-description: "This lesson will teach students how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame."
-code1: 
+description: "This lesson will teach individuals how to prepare tabular data for
+further analysis in R, addressing missing values and date-time formats. Students
+will also learn how to convert characters to a time class, to convert date-time
+to Julian day, and how to subset the data into a new data frame."
+code1:
 image:
-  feature: 
-  credit: 
+  feature: NEONCarpentryHeader_2.png
+  credit: A collaboration between the National Ecological Observatory Network
+  (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Time-Series-Data/
+permalink: 
 
 ---
 
@@ -29,9 +31,13 @@ permalink: /R/Time-Series-Data/
 </section><!-- /#table-of-contents -->
 
 ##About
-This lesson will teach students how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame.
+This lesson will teach students how to prepare tabular data for further analysis
+in R, addressing missing values and date-time formats. Students will also learn
+how to convert characters to a time class, to convert date-time to Julian day, 
+and how to subset the data into a new data frame.
 
-**R Skill Level:** Intermediate - you've got the basics of `R` down and understand the general structure of tabular data.
+**R Skill Level:** Intermediate - you've got the basics of `R` down and 
+understand the general structure of tabular data.
 
 <div id="objectives">
 
@@ -54,7 +60,9 @@ R studio to write your code.
 
 <h4>Data to Download</h4>
 
-Make sure you have downloaded the data that includes the AtmosData folder from the raster and *in situ* collected vegetation structure data provided in this dataset:
+Make sure you have downloaded the data that includes the AtmosData folder from 
+the raster and *in situ* collected vegetation structure data provided in this 
+dataset:
 <ul>
 <li><a href="http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068"" class="btn btn-success"> DOWNLOAD Sample NEON LiDAR data in Raster Format & Vegetation Sampling Data</a></li>
 </ul>
@@ -64,7 +72,10 @@ None
 </div>
 
 ## Lesson Two: Prepare your data so you can work with it
-We will use basic R and the lubridate package for working with date-time formats. However, there are a few options for working with date-time formats (readr, zoo), which are based on similar concepts, you will be able to use help text to explore those on your own as you choose. 
+We will use basic R and the lubridate package for working with date-time formats.
+However, there are a few options for working with date-time formats
+(readr, zoo), which are based on similar concepts, you will be able to use help
+text to explore those on your own as you choose. 
 
 ```{r load-libraries}
 # Load packages required for entire script
@@ -73,7 +84,11 @@ library(lubridate)  #working with dates
 ```
 
 # Dealing with data gaps
-Recall from our metadata that missing values are given an NA. One must always check for missing values in any of the variables one is working with.  Do we have missing values in our data set? An easy way to check for this is the is.na() function. By asking for the sum() of is.na() we can see how many NA / missing values we have. 
+Recall from our metadata that missing values are given an NA. One must always 
+check for missing values in any of the variables one is working with.  Do we 
+have missing values in our data set? An easy way to check for this is the
+is.na() function. By asking for the sum() of is.na() we can see how many 
+NA/missing values we have. 
 ```{r missing values}
 #Check for NA values
 sum(is.na(harMet15$datetime))
@@ -83,19 +98,38 @@ sum(is.na(harMet15$parr))
     
 
 ```
-As you can see here we have no NA values for within the Date/Time data but we do have NA values in our other variables.  
+As you can see here we have no NA values for within the Date/Time data but we do
+have NA values in our other variables.  
 
-When you encounter NA or missing values (blank, NAN, etc) in your data you  need to decide at this point how to deal with them.  By default R treats NA values as blanks not as zeros.  This is good as a value of zero (no rain today) is not the same as lack of data (we didn't measure the rain today). 
+When you encounter NA or missing values (blank, NAN, etc) in your data you  need
+to decide at this point how to deal with them.  By default R treats NA values as
+blanks not as zeros.  This is good as a value of zero (no rain today) is not the
+same as lack of data (we didn't measure the rain today). 
 
-The way one deals with missing values and data gaps will depend on what type of data is being dealt with, the analysis done, and the significance of the gap or missing value.  The many issues associated with this can be complex and beyond the scope of this lesson.  As recommendations vary on how to deal with the data you should look up what others recommend for the specific data type you are dealing with.  Other resources included 
- 1)[LINK http://www.statmethods.net/input/missingdata.html] Quick-R: Missing Data -- R code for dealing with data but not why one should do one technique or another
+The way one deals with missing values and data gaps will depend on what type of 
+data is being dealt with, the analysis done, and the significance of the gap or 
+missing value.  The many issues associated with this can be complex and beyond 
+the scope of this lesson.  As recommendations vary on how to deal with the data 
+you should look up what others recommend for the specific data type you are 
+dealing with.  Other resources included 
+ 1)[LINK http://www.statmethods.net/input/missingdata.html] Quick-R: Missing 
+ Data -- R code for dealing with data but not why one should use a specific technique 
  2) [LINK] XXX article/ site for general recommendations.  Any classics in ecology? 
 
-How should we deal with it in our case?  As the goal of the our current analysis is to get a good feeling about the general patterns of greening up and browning down we can leave the NAs at this point.  Compared to the full dataset (376,800 data points) the few missing values are not going to interfere with our analysis.  However, it is important to remember that there are null values incase you decide to revisit this data set for a more detailed time-series analysis where the data gap would be a problem.  
+How should we deal with it in our case?  As the goal of the our current analysis
+is to get a good feeling about the general patterns of greening up and browning 
+down we can leave the NAs at this point.  Compared to the full dataset (376,800 
+data points) the few missing values are not going to interfere with our analysis.
+However, it is important to remember that there are null values incase you 
+decide to revisit this data set for a more detailed time-series analysis where 
+the data gap would be a problem.  
 
 
 ##Dealing with date and time
-Look back up at the results from str(harMet15) that the 'datetime' is seen as a character type. But to work with this column as a date-time, which is important for the analyses and plotting you will learn, we need to convert it to a time class.
+Look back up at the results from str(harMet15) that the 'datetime' is seen as a 
+character type. But to work with this column as a date-time, which is important 
+for the analyses and plotting you will learn, we need to convert it to a time 
+class.
 
 First we will reformat the character format of the 'datetime' column
 
@@ -111,12 +145,15 @@ head(harMet15)
 ```
 
 Now we need to convert from a character to a time class. 
-In this step we need to specific the time zone. Remember these data were recorded in Eastern Standard Time. For R we need to look up the name for the timezone in the 'tz' database. You can find the list here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+In this step we need to specific the time zone. Remember these data were 
+recorded in Eastern Standard Time. For R we need to look up the name for the 
+timezone in the 'tz' database. You can find the list here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 In this database, Eastern Standard Time is called "America/New_York".
 
 ```{r POSIX}
 #2nd convert to date-time class
-harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",tz = "America/New_York")
+harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",
+    tz = "America/New_York")
 #make sure it worked
 str(harMet15)
 
@@ -124,17 +161,31 @@ str(harMet15)
 
 So, what is this POSIXct we used? 
 
-R recognizes two different classes for time: POSIXct and POSIXlt.  POSIXct is easier to use in dataframes and is stored as the number of seconds since 1 January 1970 (negative numbers are used for dates before 1970).  However, for us we are used to seeing dates by day month year and hours of the day not elapsed seconds. POSIXlt instead stores date time information in a more human friendly format we are used to seeing (e.g. second, min, hour, day of month, month, year, numeric day of year, etc). However, this makes it difficult to use in dataframes and to manipulate, which is why we didn't use POSIXlt here.  Instead we specified which format (year-month-day hour:minute) we wanted to see the date and time when using POSIXct.  This way we know what the date is and the programs can still work with the date/time in a single format.  
+R recognizes two different classes for time: POSIXct and POSIXlt.  POSIXct is 
+easier to use in dataframes and is stored as the number of seconds since 
+1 January 1970 (negative numbers are used for dates before 1970).  However, for 
+us we are used to seeing dates by day month year and hours of the day not 
+elapsed seconds. POSIXlt instead stores date time information in a more human 
+friendly format we are used to seeing (e.g. second, min, hour, day of month, 
+month, year, numeric day of year, etc). However, this makes it difficult to use 
+in dataframes and to manipulate, which is why we didn't use POSIXlt here.  
+Instead we specified which format (year-month-day hour:minute) we wanted to see
+the date and time when using POSIXct.  This way we know what the date is and the
+programs can still work with the date/time in a single format.  
 
 
 #Convert to Julian days
 
-In some cases you might want to use Julian days, which gives each day of the year a number starting with 1 on Jan 1 and counting up to 365 or 366 on December 31 depending on if it is a leap year or not. Reasons you might want to convert to Julian days are for smoother plotting and manipulation of data.
+In some cases you might want to use Julian days, which gives each day of the 
+year a number starting with 1 on Jan 1 and counting up to 365 or 366 on 
+December 31 depending on if it is a leap year or not. Reasons you might want to 
+convert to Julian days are for smoother plotting and manipulation of data.
 
 ```{r julian-day-convert }
 
 #convert to julian days
-#here we will use yday, which is a function from the lubridate package; to learn more about it type
+#here we will use yday, which is a function from the lubridate package; to learn
+# more about it type
 ?yday
 harMet15$julian <- yday(harMet15$datetime)  
 #make sure it worked
@@ -145,7 +196,8 @@ tail(harMet15)
 
 
 #Subsetting
-To take a smaller subset of data to work with, let's just take 3 years 2009-2011. We need to include the time zone to get this to work correctly.
+To take a smaller subset of data to work with, let's just take 3 years 2009-2011.
+We need to include the time zone to get this to work correctly.
 ``` {r  subsetting}
 
 #subset out some of the data - 2009-2011
