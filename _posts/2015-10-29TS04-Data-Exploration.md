@@ -33,26 +33,20 @@ with raster data in R.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-<div id="objectives">
 
-<h3>Goals / Objectives</h3>
+###Goals / Objectives
 After completing this activity, you will know:
-<ol>
-<li>How to use facets in ggplot</li>
-<li>How to combine different types of data into one plot.</li>
-</ol>
+* How to use facets in ggplot
+* How to combine different types of data into one plot.
 
-<h3>Things You'll Need To Complete This Lesson</h3>
 
-<h3>R Libraries to Install:</h3>
-<ul>
-<li><strong>raster:</strong> <code> install.packages("ggplot2")</code></li>
-
-</ul>
-<h4>Tools To Install</h4>
-
+###hings You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
+
+####R Libraries to Install
+<li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
+
 
 #Graph precip by total PAR across all seasons
 
@@ -63,7 +57,7 @@ R studio to write your code.
                theme(text = element_text(size=20)) +
                xlab("Total Precipitation") + ylab("Mean Total PAR")
 
-    ## Error in eval(expr, envir, enclos): could not find function "ggplot"
+    ## Error in ggplot(harMet.daily, aes(prec, part)): object 'harMet.daily' not found
 
 #Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
 

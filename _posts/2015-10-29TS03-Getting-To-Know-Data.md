@@ -33,28 +33,20 @@ basic plotting.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-<div id="objectives">
-
-<h3>Goals / Objectives</h3>
+### Goals / Objectives
 After completing this activity, you will know:
-<ol>
-<li>How to create basic time series plots in `R`.</li>
-<li>How to manipulate data in `R`.</li>
-</ol>
+* How to create basic time series plots in `R`.
+* How to manipulate data in `R`.
 
-<h3>Things You'll Need To Complete This Lesson</h3>
 
-<h3>R Libraries to Install:</h3>
-<ul>
+###Things You'll Need To Complete This Lesson
+Please be sure you have the most current version of `R` and preferably
+R studio to write your code.
+
+####R Libraries to Install
 <li><code> install.packages("dplyr")</code></li>
 <li><code> install.packages("lubridate")</code></li>
 <li><code> install.packages("ggplot2")</code></li>
-
-</ul>
-<h4>Tools To Install</h4>
-
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
 
 #Plotting Time Series Data
 One of the first things that it can often be useful to do once we've loaded our 
@@ -73,15 +65,15 @@ To do this, we're going to use `ggplot2` to plot the air temperature across our
                theme(text = element_text(size=20)) +
                xlab("Time") + ylab("Mean Air Temperature")
 
-    ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-
 The dates on the x-axis are not particularly well formatted. We can reformat them 
 so they are in the Month/Day/Year format we're used to.
 
     #format x axis with dates
     myPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
 
-    ## Error in eval(expr, envir, enclos): object 'myPlot' not found
+    ## Warning: Removed 2 rows containing missing values (geom_point).
+
+![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/nice-x-axis-1.png) 
 
 #Challenge: Using the daily precipitation data you imported earlier, create a 
 #plot with the x-axis in a European Format (Day/Month/Year)
@@ -126,15 +118,11 @@ variable. For this we'll use the `lubridate` package.
     yr.09.11$year <- year(as.Date(yr.09.11$datetime, "%y-%b-%d",
           tz = "America/New_York"))
 
-    ## Error in as.Date(yr.09.11$datetime, "%y-%b-%d", tz = "America/New_York"): object 'yr.09.11' not found
-
 This code will work, but we previously already set up datetime as a time variable,
 so we can be a bit more efficient an just put:
 
 
     yr.09.11$year <- year(yr.09.11$datetime)
-
-    ## Error in year(yr.09.11$datetime): object 'yr.09.11' not found
 
 Now we have our two variables. So, to get the mean air temperature for each day
 for each year, we would write:
@@ -189,10 +177,8 @@ Now that we have our new data file, we want to plot the daily averages.
                theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
               theme(text = element_text(size=20)) +
                xlab("Time") + ylab("Mean Air Temperature")
-
-    ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-
+    
     #format x axis with dates
     dailyPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
 
-    ## Error in eval(expr, envir, enclos): object 'dailyPlot' not found
+    ## Error in eval(expr, envir, enclos): object 'mean_airt' not found

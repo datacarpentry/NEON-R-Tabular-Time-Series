@@ -39,37 +39,29 @@ and how to subset the data into a new data frame.
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
 
-<div id="objectives">
-
-<h3>Goals / Objectives</h3>
+### Goals / Objectives
 After completing this activity, you will know how to:
-<ol>
-<li>Clean data</li>
-<li>Convert/transform time formats</li>
-<li>Subset data</li>
-<li>Examine data structures and types</li>
-<li>Use metadata to get more information about input data</li>
-</ol>
+* Clean data
+* Convert/transform time formats
+* Subset data
+* Examine data structures and types
+* Use metadata to get more information about input data
 
-<h3>Things You'll Need To Complete This Lesson</h3>
+
+###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
-<h3>R Libraries to Install:</h3>
-<ul>
+
+####R Libraries to Install
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
 
-<h4>Data to Download</h4>
+####Data to Download
 
-Make sure you have downloaded the data that includes the AtmosData folder from 
-the raster and *in situ* collected vegetation structure data provided in this 
-dataset:
-<ul>
-<li><a href="http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068"" class="btn btn-success"> DOWNLOAD Sample NEON LiDAR data in Raster Format & Vegetation Sampling Data</a></li>
-</ul>
+Make sure you have downloaded the AtmosData folder from
+http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
-<h4>Recommended Pre-Lesson Reading</h4>
+####Recommended Pre-Lesson Reading
 None
-</div>
 
 ## Lesson Two: Prepare your data so you can work with it
 We will use basic R and the lubridate package for working with date-time formats.
