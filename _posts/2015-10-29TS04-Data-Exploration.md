@@ -63,7 +63,7 @@ R studio to write your code.
                theme(text = element_text(size=20)) +
                xlab("Total Precipitation") + ylab("Mean Total PAR")
 
-    ## Error in ggplot(harMet.daily, aes(prec, part)): object 'harMet.daily' not found
+    ## Error in eval(expr, envir, enclos): could not find function "ggplot"
 
 #Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
 

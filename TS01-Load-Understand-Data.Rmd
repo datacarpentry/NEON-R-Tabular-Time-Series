@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 01 Load and Understand Your Data"
+title: "Lesson 01: Load and Understand Your Data"
 date:   2015-10-21
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-22
@@ -36,37 +36,29 @@ related metadata text file.
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
 
-<div id="objectives">
-
-<h3>Goals / Objectives</h3>
+###Goals / Objectives
 After completing this lesson, you will know how to:
-<ol>
-<li>Open a csv file in R and why we are using that format in this training</li>
-<li>Examine data structures and types</li>
-<li>Use metadata to get more information about input data</li>
-</ol>
 
-<h3>Things You'll Need To Complete This Lesson</h3>
-<ul>
+*Open a csv file in R and why we are using that format in this training
+*Examine data structures and types
+*Use metadata to get more information about input data
+
+
+###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of R and preferably
 R studio to write your code.
 
-<h4>R Libraries to Install</h4>
-<ul>
-<li>No additional libraries are needed for this lesson</code></li>
+####R Libraries to Install
+No additional libraries are needed for this lesson
 
-<h4>Data to Download</h4>
+####Data to Download
 
-Make sure you have downloaded the data that includes the AtmosData folder from
-the raster and *in situ* collected vegetation structure data provided in this 
-dataset:
-<ul>
-<li><a href="http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068"" class="btn btn-success"> DOWNLOAD Sample NEON LiDAR data in Raster Format & Vegetation Sampling Data</a></li>
-</ul>
+Make sure you have downloaded the AtmosData folder from
+http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
-<h4>Recommended Pre-Lesson Reading</h4>
+
+####Recommended Pre-Lesson Reading
 None
-</div>
 
 ## Lesson One: Load and Understand Your Data
 We don't need any additional packages for this lesson, but typically when you 
