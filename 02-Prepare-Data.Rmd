@@ -68,7 +68,7 @@ None
 ## Lesson Two: Prepare your data so you can work with it
 We will use basic R and the lubridate package for working with date-time formats. However, there are a few options for working with date-time formats (readr, zoo), which are based on similar concepts, you will be able to use help text to explore those on your own as you choose. 
 
-```{r load-libraries-date-function}
+```{r load-libraries}
 # Load packages required for entire script
 library(lubridate)  #working with dates
 
@@ -77,7 +77,7 @@ library(lubridate)  #working with dates
 # Dealing with data gaps
 Recall from our metadata that missing values are given an NA, which means they are treated by R as blanks not as zeros. 
 
-```{gaps}
+```{r data-gaps}
 
 ```
 
@@ -101,7 +101,7 @@ Now we need to convert from a character to a time class.
 In this step we need to specific the time zone. Remember these data were recorded in Eastern Standard Time. For R we need to look up the name for the timezone in the 'tz' database. You can find the list here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 In this database, Eastern Standard Time is called "America/New_York".
 
-```{r-POSIX}
+```{r POSIX}
 #2nd convert to date-time class
 harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",tz = "America/New_York")
 #make sure it worked
@@ -116,7 +116,7 @@ NEED A GOOD DESCRIPTION HERE
 
 In some cases you might want to use Julian days, which gives each day of the year a number starting with 1 on Jan 1 and counting up to 365 or 366 on December 31 depending on if it is a leap year or not. Reasons you might want to convert to Julian days are for smoother plotting and manipulation of data.
 
-```{r plot-daylength }
+```{r julian-day-convert }
 
 #convert to julian days
 #here we will use yday, which is a function from the lubridate package; to learn more about it type
@@ -144,7 +144,7 @@ as.POSIXct('2011-12-31 23:45', tz = "America/New_York"))
 3. Convert date- time
 4. Add a column and calculate julian day
 
-``` {r challenge code}
+``` {r challenge-code}
 
 #import daily file
 harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", stringsAsFactors = FALSE)
