@@ -33,28 +33,20 @@ basic plotting.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-<div id="objectives">
-
-<h3>Goals / Objectives</h3>
+### Goals / Objectives
 After completing this activity, you will know:
-<ol>
-<li>How to create basic time series plots in `R`.</li>
-<li>How to manipulate data in `R`.</li>
-</ol>
+* How to create basic time series plots in `R`.
+* How to manipulate data in `R`.
 
-<h3>Things You'll Need To Complete This Lesson</h3>
 
-<h3>R Libraries to Install:</h3>
-<ul>
+###Things You'll Need To Complete This Lesson
+Please be sure you have the most current version of `R` and preferably
+R studio to write your code.
+
+####R Libraries to Install
 <li><code> install.packages("dplyr")</code></li>
 <li><code> install.packages("lubridate")</code></li>
 <li><code> install.packages("ggplot2")</code></li>
-
-</ul>
-<h4>Tools To Install</h4>
-
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
 
 #Plotting Time Series Data
 One of the first things that it can often be useful to do once we've loaded our 
