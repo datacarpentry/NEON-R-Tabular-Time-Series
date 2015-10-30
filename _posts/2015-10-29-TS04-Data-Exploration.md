@@ -13,7 +13,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: 
+permalink: m
 
 ---
 
@@ -26,6 +26,10 @@ permalink:
 {:toc}
 </div>
 </section><!-- /#table-of-contents -->
+
+
+    # output will have width of 80 max
+    options(width=80)
 
 ##About
 This activity will walk you through the fundamental principles of working 
@@ -57,7 +61,7 @@ R studio to write your code.
                theme(text = element_text(size=20)) +
                xlab("Total Precipitation") + ylab("Mean Total PAR")
 
-    ## Error in eval(expr, envir, enclos): could not find function "ggplot"
+    ## Error in ggplot(harMet.daily, aes(prec, part)): object 'harMet.daily' not found
 
 #Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
 

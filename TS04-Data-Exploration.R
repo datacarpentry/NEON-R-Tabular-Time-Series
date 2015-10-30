@@ -1,3 +1,7 @@
+## ----set-width-----------------------------------------------------------
+# output will have width of 80 max
+options(width=80)
+
 ## ----PAR-v-precip--------------------------------------------------------
 
 part.prec <- ggplot(harMet.daily,aes(prec, part)) +

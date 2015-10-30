@@ -1,3 +1,7 @@
+## ----set-width-----------------------------------------------------------
+# output will have width of 80 max
+options(width=80)
+
 ## ----load-libraries------------------------------------------------------
 # Load packages required for entire script
 #library(nameOfLibrary)  #purpose of library

@@ -27,6 +27,11 @@ permalink:
 </div>
 </section><!-- /#table-of-contents -->
 
+``` {r set-width}
+# output will have width of 80 max
+options(width=80)
+```
+
 ##About
 This activity will walk you through the fundamentals of data manipulation and 
 basic plotting.

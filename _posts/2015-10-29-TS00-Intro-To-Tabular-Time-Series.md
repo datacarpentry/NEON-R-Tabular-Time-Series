@@ -11,10 +11,9 @@ functions, and metadata that you need to work with tabular (.csv) temporal data
 in R."
 image:
   feature: NEONCarpentryHeader_2.png
-  credit: A collaboration between the National Ecological Observatory Network
-  (NEON) and Data Carpentry
+  credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: 
+permalink: m
 ---
 <section id="table-of-contents" class="toc">
   <header>
@@ -25,6 +24,11 @@ permalink:
 {:toc}
 </div>
 </section><!-- /#table-of-contents -->
+
+
+    # output will have width of 80 max
+    options(width=80)
+
 
 ##About
 This learning module will walk you through the fundamental principles of working 

@@ -13,10 +13,9 @@ to Julian day, and how to subset the data into a new data frame."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
-  credit: A collaboration between the National Ecological Observatory Network
-  (NEON) and Data Carpentry
+  credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: 
+permalink: mm
 
 ---
 
@@ -29,6 +28,9 @@ permalink:
 {:toc}
 </div>
 </section><!-- /#table-of-contents -->
+
+    # output will have with of 80
+    options(width=80)
 
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
@@ -224,8 +226,8 @@ We need to include the time zone to get this to work correctly.
     #import daily file
     harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", stringsAsFactors = FALSE)
 
-    ## Warning in file(file, "rt"): cannot open file 'data/AtmosData/HARV/
-    ## hf001-06-daily-m.csv': No such file or directory
+    ## Warning in file(file, "rt"): cannot open file 'data/AtmosData/HARV/hf001-06-
+    ## daily-m.csv': No such file or directory
 
     ## Error in file(file, "rt"): cannot open the connection
 

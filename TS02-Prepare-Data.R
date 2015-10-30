@@ -1,3 +1,7 @@
+## ----set-width-----------------------------------------------------------
+# output will have with of 80
+options(width=80)
+
 ## ----load-libraries------------------------------------------------------
 # Load packages required for entire script
 library(lubridate)  #working with dates
