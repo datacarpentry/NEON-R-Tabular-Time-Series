@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "GREPL, Filter and Piping Using R DPLYR - An Intro"
-date:   2015-1-28 20:49:52
-dateCreated:   2014-11-17 20:49:52
-lastModified:   2015-05-21 20:49:52
+date:   2015-1-28
+dateCreated:   2014-11-17
+lastModified:   2015-05-21 
 estimatedTime: 1.0 - 1.5 Hours
 packagesLibraries: dplyr
 authors: Natalie Robinson, Kate Thibault
@@ -25,7 +25,7 @@ comments: true
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 
-```{r pleaseNameEachChunk}
+```{r pleaseNameEachChunk-no-spaces}
 
 #code goes here
 
@@ -36,7 +36,7 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 Another section follows
 
-```{r anotherName}
+```{r EachGetsUniqueName}
 
 ```
 
