@@ -1,19 +1,18 @@
 ---
 layout: post
-title: "Lesson 00 Intro to Tabular Time Series "
-date:   2015-10-20
+title: "Lesson 00: Intro to Tabular Time Series "
+date:   2015-10-25
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
 tags: [module-1]
-description: "This learning module explains the fundamental principles, 
-functions, and metadata that you need to work with tabular (.csv) temporal data
-in R."
+description: "This learning module explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
 permalink: m
+
 ---
 <section id="table-of-contents" class="toc">
   <header>
@@ -24,10 +23,6 @@ permalink: m
 {:toc}
 </div>
 </section><!-- /#table-of-contents -->
-
-
-    # output will have width of 80 max
-    options(width=80)
 
 
 ##About
@@ -50,7 +45,7 @@ calculating basic summary statistics for your data.
 
 ###Things You'll Need To Complete This Lesson
 
-###R Libraries to Install
+####R Libraries to Install
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
 <li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
 <li><strong>scales:</strong> <code> install.packages("scales")</code></li>
@@ -73,9 +68,9 @@ The data used to create the .csv files in this dataset collected at Harvard
 Forest.  The entire dataset can be accessed from their website 
 (http://harvardforest.fas.harvard.edu).
 
-Recommended Pre-Module Reading
+#Recommended Pre-Module Reading
 
-# Time series data
+## Time series data
 Time series data can come in many different forms.  At the fundemental level a 
 time series is a series of data points collected at successive time intervals. 
 Lots of data collected can be time series data: heights of ocean tides, the 
@@ -84,20 +79,19 @@ temperature measures.  This module will specifically look at atmospheric data
 (temperature, precipitation, and Photosynthetically Active Radiation (PAR) ) and
 normalized difference vegetative index (NDVI). 
  
-# PAR
+## PAR
 PAR is a measure how much light within the solar radiation spectral range 
 (wave band) from 400 to 700 nanometers occurs at the time when the data is 
 collected.  This wavelength is important for phenology studies as that spectral
 range is what photosynthetic organisms are able to use in the process of 
 photosynthesis.
 
-# NDVI
+## NDVI
 NDVI is an index from remote sensing imaging that measures the live vegetation 
 in the target area. 
 
 
-# Additional inforamation if working through module as an individual, not as
-# part of a workshop. 
+# Additional inforamation if working through module as an individual, not as part of a workshop. 
 This .csv time-series learning module was build as part of the two day Spatio-
 Temporal Data Workshop [LINK]XXX. Therefore some background information and 
 basic coding skills have been covered extensively in previous modules and are
@@ -109,7 +103,8 @@ This workshop is built around Jessica, an ecology graduate student interested in
 exploring some of her field sites to understand how phenology of vegetation 
 (greening in the spring summer and senescence in the winter, varies across 
 multiple sites and through time). Her potential study sites have very different 
-vegetation communities including Harvard Forest (Massachusetts) and San Joaquin Experimental Range (California). The data includes spatial and temporal raster 
+vegetation communities including Harvard Forest (Massachusetts) and San Joaquin 
+Experimental Range (California). The data includes spatial and temporal raster 
 data ([Link] Module XXX), vector data ([Link] Module XXX), and various 
 atmospheric parameters that are collected over several years (this module) that 
 she would like to be able explore prior to her initial site visits and writing 

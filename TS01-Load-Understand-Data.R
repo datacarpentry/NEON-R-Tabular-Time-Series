@@ -1,7 +1,3 @@
-## ----set-width-----------------------------------------------------------
-# output will have width of 80 max
-options(width=80)
-
 ## ----load-libraries------------------------------------------------------
 # Load packages required for entire script
 #library(nameOfLibrary)  #purpose of library
@@ -28,8 +24,7 @@ str(harMet15)
 
 
 ## ----metadata-debrief----------------------------------------------------
-# column names for variables we are going to use (when different the two
-# files--15min/daily): datetime/date, airt, prec, parr/part 
+# column names for variables we are going to use datetime, airt, prec, parr 
 # units for quantitative variables: celsius, millimeters, molePerMeterSquared
 # airt and parr are averages of measurements taken every 1 sec; precip is total 
 # of 15 min period for quantitative variables missing values are given as NA

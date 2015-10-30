@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lesson 01: Load and Understand Your Data"
-date:   2015-10-21
+date:   2015-10-24
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
@@ -27,10 +27,6 @@ permalink: m
 </div>
 </section><!-- /#table-of-contents -->
 
-
-    # output will have width of 80 max
-    options(width=80)
-
 ##About
 This lesson will teach students how to import tabular data from a CSV file into
 R. Students will examine the structure of the dataset and get information from a
@@ -55,15 +51,13 @@ R studio to write your code.
 No additional libraries are needed for this lesson
 
 ####Data to Download
-
 Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
-
 
 ####Recommended Pre-Lesson Reading
 None
 
-## Lesson One: Load and Understand Your Data
+#Lesson One: Load and Understand Your Data
 We don't need any additional packages for this lesson, but typically when you 
 initiate a workflow you always want to load any packages prior to importing and
 working with your data. If you need another package later, you will also add it
@@ -109,18 +103,67 @@ structure of the data as interpreted by R.
     #to see first few lines of data file
     head(harMet15)
 
-    ## Error in head(harMet15): object 'harMet15' not found
+    ##              datetime jd airt f.airt rh f.rh dewp f.dewp prec f.prec slrr
+    ## 1 2005-01-01 00:15:00  1  5.1        84       2.5           0           0
+    ## 2 2005-01-01 00:30:00  1  5.0        84       2.5           0           0
+    ## 3 2005-01-01 00:45:00  1  4.9        85       2.6           0           0
+    ## 4 2005-01-01 01:00:00  1  4.7        86       2.6           0           0
+    ## 5 2005-01-01 01:15:00  1  4.5        87       2.6           0           0
+    ## 6 2005-01-01 01:30:00  1  4.6        87       2.7           0           0
+    ##   f.slrr parr f.parr netr f.netr  bar f.bar wspd f.wspd wres f.wres wdir
+    ## 1           0         -58        1017        2.6         2.4         205
+    ## 2           0         -59        1017        2.3         2.1         213
+    ## 3           0         -59        1017        2.1         1.8         217
+    ## 4           0         -58        1017        1.8         1.6         226
+    ## 5           0         -58        1017        1.4         1.2         224
+    ## 6           0         -58        1017        1.6         1.4         214
+    ##   f.wdir wdev f.wdev gspd f.gspd s10t f.s10t julian
+    ## 1          26         7.2         0.7             1
+    ## 2          25         5.9         0.7             1
+    ## 3          27         5.8         0.7             1
+    ## 4          26         5.1         0.7             1
+    ## 5          29         4.6         0.7             1
+    ## 6          30         4.4         0.7             1
 
     #if you want to see it in spreadsheet form and scroll
     View(harMet15)
-
-    ## Error in View : object 'harMet15' not found
-
+    
     #Check how R is seeing my data. What is the structure (str) of the data? 
     #Is it what I expect to see?  
     str(harMet15)
 
-    ## Error in str(harMet15): object 'harMet15' not found
+    ## 'data.frame':	376800 obs. of  31 variables:
+    ##  $ datetime: POSIXct, format: "2005-01-01 00:15:00" "2005-01-01 00:30:00" ...
+    ##  $ jd      : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ airt    : num  5.1 5 4.9 4.7 4.5 4.6 4.6 4.7 4.6 4.6 ...
+    ##  $ f.airt  : chr  "" "" "" "" ...
+    ##  $ rh      : int  84 84 85 86 87 87 87 88 88 88 ...
+    ##  $ f.rh    : chr  "" "" "" "" ...
+    ##  $ dewp    : num  2.5 2.5 2.6 2.6 2.6 2.7 2.7 2.8 2.8 2.8 ...
+    ##  $ f.dewp  : chr  "" "" "" "" ...
+    ##  $ prec    : num  0 0 0 0 0 0 0 0 0 0 ...
+    ##  $ f.prec  : chr  "" "" "" "" ...
+    ##  $ slrr    : int  0 0 0 0 0 0 0 0 0 0 ...
+    ##  $ f.slrr  : chr  "" "" "" "" ...
+    ##  $ parr    : int  0 0 0 0 0 0 0 0 0 0 ...
+    ##  $ f.parr  : chr  "" "" "" "" ...
+    ##  $ netr    : int  -58 -59 -59 -58 -58 -58 -57 -57 -59 -62 ...
+    ##  $ f.netr  : chr  "" "" "" "" ...
+    ##  $ bar     : int  1017 1017 1017 1017 1017 1017 1017 1017 1017 1016 ...
+    ##  $ f.bar   : chr  "" "" "" "" ...
+    ##  $ wspd    : num  2.6 2.3 2.1 1.8 1.4 1.6 1.5 1.5 1.6 1.7 ...
+    ##  $ f.wspd  : chr  "" "" "" "" ...
+    ##  $ wres    : num  2.4 2.1 1.8 1.6 1.2 1.4 1.3 1.4 1.4 1.6 ...
+    ##  $ f.wres  : chr  "" "" "" "" ...
+    ##  $ wdir    : int  205 213 217 226 224 214 214 213 217 214 ...
+    ##  $ f.wdir  : chr  "" "" "" "" ...
+    ##  $ wdev    : int  26 25 27 26 29 30 30 27 27 25 ...
+    ##  $ f.wdev  : chr  "" "" "" "" ...
+    ##  $ gspd    : num  7.2 5.9 5.8 5.1 4.6 4.4 5 4.2 4.2 4.6 ...
+    ##  $ f.gspd  : chr  "" "" "" "" ...
+    ##  $ s10t    : num  0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 ...
+    ##  $ f.s10t  : chr  "" "" "" "" ...
+    ##  $ julian  : num  1 1 1 1 1 1 1 1 1 1 ...
 
 These commands let you see the data and get some information about it, but there
 is other information we need to know. Can you think of any examples? 
@@ -129,18 +172,19 @@ To get some of this information, or clues to this information, we will open the
 metadata text file that is in the AtmosData folder. Navigate to this file and 
 open it in your text editor of choice.
 
+INSERT SCREENSHOT
+
 Remember for this module we will be looking at air temperature, precipitation, 
-and photosynthetically active radiation or PAR. Find these variables and 
-identifywhat information the metadata tells you about these variables. We will
-show what
-we think is important from this metadata to our analysis here as comments. These
-can be helpful if we share the R file with others or with your future self. Make
-notes that are intuitive and make sense to you but that others can read and 
-understand as well.
+and photosynthetically active radiation (PAR). Find these variables and 
+identify what information the metadata tells you about these variables. 
+
+We add what we think is important from this metadata to our analysis here as 
+comments. These can be helpful if we share the R file with others or with 
+our future self. Make notes that are intuitive and intelligible not only to 
+yourself but colleageus or collaborators as well.
 
 
-    # column names for variables we are going to use (when different the two
-    # files--15min/daily): datetime/date, airt, prec, parr/part 
+    # column names for variables we are going to use datetime, airt, prec, parr 
     # units for quantitative variables: celsius, millimeters, molePerMeterSquared
     # airt and parr are averages of measurements taken every 1 sec; precip is total 
     # of 15 min period for quantitative variables missing values are given as NA
