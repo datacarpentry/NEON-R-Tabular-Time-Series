@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lesson 01: Load and Understand Your Data"
-date:   2015-10-21
+date:   2015-10-24
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
@@ -27,11 +27,6 @@ permalink: m
 </div>
 </section><!-- /#table-of-contents -->
 
-``` {r set-width}
-# output will have width of 80 max
-options(width=80)
-```
-
 ##About
 This lesson will teach students how to import tabular data from a CSV file into
 R. Students will examine the structure of the dataset and get information from a
@@ -56,15 +51,13 @@ R studio to write your code.
 No additional libraries are needed for this lesson
 
 ####Data to Download
-
 Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
-
 
 ####Recommended Pre-Lesson Reading
 None
 
-## Lesson One: Load and Understand Your Data
+#Lesson One: Load and Understand Your Data
 We don't need any additional packages for this lesson, but typically when you 
 initiate a workflow you always want to load any packages prior to importing and
 working with your data. If you need another package later, you will also add it
@@ -120,18 +113,19 @@ To get some of this information, or clues to this information, we will open the
 metadata text file that is in the AtmosData folder. Navigate to this file and 
 open it in your text editor of choice.
 
+INSERT SCREENSHOT
+
 Remember for this module we will be looking at air temperature, precipitation, 
-and photosynthetically active radiation or PAR. Find these variables and 
-identifywhat information the metadata tells you about these variables. We will
-show what
-we think is important from this metadata to our analysis here as comments. These
-can be helpful if we share the R file with others or with your future self. Make
-notes that are intuitive and make sense to you but that others can read and 
-understand as well.
+and photosynthetically active radiation (PAR). Find these variables and 
+identify what information the metadata tells you about these variables. 
+
+We add what we think is important from this metadata to our analysis here as 
+comments. These can be helpful if we share the R file with others or with 
+our future self. Make notes that are intuitive and intelligible not only to 
+yourself but colleageus or collaborators as well.
 
 ```{r metadata-debrief}
-# column names for variables we are going to use (when different the two
-# files--15min/daily): datetime/date, airt, prec, parr/part 
+# column names for variables we are going to use datetime, airt, prec, parr 
 # units for quantitative variables: celsius, millimeters, molePerMeterSquared
 # airt and parr are averages of measurements taken every 1 sec; precip is total 
 # of 15 min period for quantitative variables missing values are given as NA
