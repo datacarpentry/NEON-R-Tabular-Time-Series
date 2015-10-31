@@ -146,12 +146,14 @@ differently. Some are within the core R and others are available through package
 ### Exploring Time and Data classes
 Let's explore a few date and time formats before continuing on our with our 
 analysis. A common format for data that consists of only dates is Date.
+
 ```{r explore-as_date }
 #Convert char data to date (no time) 
 date <- as.Date("2015-10-19 10:15")   
 str(date)
 head(date)
 ```
+
 Here we can see that the date is now not a character but is now date `str(date)` 
 and that we only have the calender date with all time information stripped away 
 `head(Date)`.  If we only had date information to start with it is a good idea 
@@ -170,6 +172,7 @@ Bonus: If you have to use time without dates attached look into the chron packag
 Within the core R there are two closely related classes for date and time:
 POSIXct and POSIXlt.  Let's explore both of these before choosing which one
 to use with our data.
+
 ```{r explore-POSIXct }
 #Convert char data to date and time.
 TimeDate <- as.POSIXct("2015-10-19 10:15")   
@@ -177,6 +180,7 @@ str(TimeDate)
 head(TimeDate)
 
 ```
+
 Here we can see that the date is now not a character but is now POSIXct. When
 looking at the data we see the date and time with time zone designation. 
 
@@ -184,9 +188,11 @@ POSIXct stores date and time as the number of seconds since 1 January 1970
 (negative numbers are used for dates before 1970). As each date and time is 
 just a single number this format is easy to use in dataframes and to convert
 from one format to another. 
+
 ```{r explore-POSIXct2 }
 unclass(TimeDate)
 ```
+
 Here we see the number of seconds from 1 January 1970 and 9 October 2015 and
 see that it has a time zone attribute stored with it. 
 
@@ -203,6 +209,7 @@ head(TimeDatelt)
 
 unclass(TimeDatelt)
 ```
+
 Here we can see that the date is now not a character but is now POSIXlt. When
 looking at the data we see the date and time with time zone designation
 (same as POSIXct). But when we look at the components we can see the seperate 
@@ -260,6 +267,7 @@ The file contains nearly a decades worth of data.  However, we are more
 interested in recent patterns, let's just take three years 2009-2011. To do this we
 need to subset the data so that we have just the three years we are interested in.
 We need to include the time zone to get this to work correctly.
+
 ``` {r  subsetting}
 
 #subset out some of the data - 2009-2011
@@ -284,6 +292,7 @@ minute data is.
 
 Let's import the Daily Meteorological data from the Harvard Forest using the
 skills we have recently learned. 
+
 ``` {r synthesis1-code}
 
 #import daily file
