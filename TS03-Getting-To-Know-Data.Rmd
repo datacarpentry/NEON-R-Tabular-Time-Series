@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "Lesson 03 Getting to Know Your Data"
-date:   2015-10-23
+date:   2015-10-22
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated: 2015-10-22
-lastModified: 2015-10-29
+lastModified: 2015-11-02
 tags: [module-1]
 description: "This lesson will teach individuals how to conduct basic data 
 manipulation and create basic plots of time series data."
@@ -27,10 +27,6 @@ permalink:
 </div>
 </section><!-- /#table-of-contents -->
 
-``` {r set-width}
-# output will have width of 80 max
-options(width=80)
-```
 
 ##About
 This activity will walk you through the fundamentals of data manipulation and 
@@ -54,43 +50,70 @@ R studio to write your code.
 <li><code> install.packages("ggplot2")</code></li>
 
 #Plotting Time Series Data
-One of the first things that it can often be useful to do once we've loaded our 
-data and cleaned it up is to visualize our data. We can start to get a sense of 
+One of the first things that can often be useful to do once we've loaded our 
+data and cleaned it up is to visualize the data. We can start to get a sense of 
 general trends, and well as see possible outliers or non-sensical values. 
 
-To do this, we're going to use `ggplot2` to plot the air temperature across our
-2 year span time span for each 15 minute data point.
+To do this, we're going to use the package `ggplot2` to plot the air temperature across our
+3 year span time span for each 15 minute data point.
 
 ```{r basic-plotting}
-#plot Some Air Temperature Data
-myPlot <- ggplot(yr.09.11,aes(datetime, airt)) +
+#Remember it is good coding technique to add additional libraries to the top of your script (we started this section in Lesson 02)
+library (ggplot2)  #for creating graphs
+library (scales)   #to access breaks/formatting functions
+
+#plot Air Temperature Data across 2009-2011 using 15-minute data
+AirTemp15m <- ggplot(Har15min.09.11, aes(datetime, airt)) +
            geom_point() +
-           ggtitle("15 min Avg Air Temperature\nHarvard Forest") +
+           ggtitle("Air Temperature At Harvard Forest (15 min. interval)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
            theme(text = element_text(size=20)) +
-           xlab("Time") + ylab("Mean Air Temperature")
+           xlab("Date") + ylab("Air Temperature (C)")
+AirTemp15m
 ```
+Here we see that we get a warning message saying that two rows were removed due to missing values.  Those are the two rows that still had NA in the air temperature data.  
 
-The dates on the x-axis are not particularly well formatted. We can reformat them 
-so they are in the Month/Day/Year format we're used to.
+The dates on the x-axis are unreadable and not particularly well formatted. We can reformat them 
+so they are in the Month/Day/Year format we are used to.
 ```{r nice-x-axis}
 #format x axis with dates
-myPlot + scale_x_datetime(labels = date_format("%m/%d/%y"))
+AirTemp15m + scale_x_datetime(labels=date_format ("%m/%d/%y") )
 ```
 
-#Challenge: Using the daily precipitation data you imported earlier, create a 
-#plot with the x-axis in a European Format (Day/Month/Year)
+#Challenge: Plotting daily precipitaiton data
+
+Using the daily precipitation data you imported earlier, create a plot with the
+x-axis in a European Format (Day/Month/Year)
+``` {r challenge-2}
+Date<-as.Date(harDaily.09.11$date)
+
+PrecipDaily <- ggplot(harDaily.09.11, aes(Date, prec)) +
+           geom_point() +
+           ggtitle("Daily Precipitation at Harvard Forest") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) +
+           xlab("Date") + ylab("Precipitation (mm)") +
+          scale_x_date(labels=date_format ("%d/%m/%y"))
+
+PrecipDaily
+```
+
 
 #Manipulating Data
-This plot is interesting, and we can see that there is a clear seasonal trend, unsurprisingly. But the air temperature data at 15 minute intervals might be 
-more granular than we want. Instead, we may want to look at how daily average 
-temperature changes over time. To do this we first need to learn a bit about how 
-to manipulate data in R. We'll use the `dplyr` package and a "split-apply-combine"
-technique.
+Looking back at the 15 minute air temperature plot, the date is interesting and
+we can, unsurprisingly,see a clear seasonal trend. Yet the air temperature data
+at 15 minute intervals might be more granular than we want. Instead, we may want
+to look at how daily average temperature changes over time. To do this we first 
+need to learn a bit about how to manipulate data in R. We'll use the `dplyr` 
+package and a "split-apply-combine" technique.
+
+``` {r load-dplyr}
+library (dplyr)   #aid in manipulating data
+```
 
 We use the `group-by()` function to determine how we split up our data. For 
-example, if we wanted to count up the number of observations per Julian dat, 
-we would do:
+example, if we wanted to count up the number of observations per Julian date, 
+we would do
 
 ```{r dplyr-group}
 yr.09.11 %>%
