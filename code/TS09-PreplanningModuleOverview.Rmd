@@ -1,9 +1,18 @@
 ---
-title: 'Spatio-Temporal / NEON Data Workshop '
 layout: post
-date: "2015-10-15 10:00:00"
-output: pdf_document
-permalink: /R/spatio-temporal/
+title: "Tabular Time Series Module Overview - Planning materials "
+date:   2015-10-26
+authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+dateCreated:  2015-10-22
+lastModified: 2015-10-29
+tags: [module-1]
+description: "This was original document to view the flow of the lessons prior to breakign each apart."
+image:
+  feature: NEONCarpentryHeader_2.png
+  credit: A collaboration between the National Ecological Observatory Network
+  (NEON) and Data Carpentry
+  creditlink: http://www.neoninc.org
+permalink: 
 ---
 
 ```{r project-organization }
@@ -48,7 +57,7 @@ Look at Metadata & Data Structure
 
 Metadata in text file.  Look for temp, precip, and daylength in the file.  One is missing.  
 
-```{Data Structure}
+```{r Data-Structure}
 #Check the variable types. Are they the type you think they should be. Int, num,  (EXPAND IF NOT PREVIOUSLY DISCUSSED BY RASTER GROUP)
 
 #
@@ -61,7 +70,7 @@ Metadata in text file.  Look for temp, precip, and daylength in the file.  One i
 #LESSON 2: Preparing data so you can work with it. 
 ## Dealing with NaN, gaps, etc. 
 
-```{gaps}
+```{r gaps}
 
 ```
 
@@ -135,7 +144,7 @@ ggplot(dayLengthHar2011.st, aes(JulianDay,Hours)) +
 
 #Subsetting
 
-``` {dply subsetting}
+``` {r dply-subsetting}
 #subset out some of the data - 2010-2013 
 yr.09.11 <- subset(harMet, datetime >= as.POSIXct('2009-01-01 00:00') & datetime <=
 as.POSIXct('2011-01-01 00:00'))
@@ -146,7 +155,7 @@ as.POSIXct('2011-01-01 00:00'))
 
 #LESSSON 3: First look at your data
 
-```{r descriptive stats}
+```{r descriptive-stats}
 #basic descriptive stats
 
 
@@ -157,7 +166,7 @@ as.POSIXct('2011-01-01 00:00'))
 
 
 
-```{r basic plotting}
+```{r basic-plotting}
 #plot Some Air Temperature Data
 myPlot <- ggplot(yr.09.11,aes(datetime, airt)) +
            geom_point() +
@@ -210,11 +219,11 @@ temp.daily <- aggregate(yr.09.11["airt"], format(yr.09.11["datetime"],"%Y-%j"),
 3. Convert time 
 4. Make pretty plot
 
-``` {r Challenge answers --link to it for online in the GitHub rmd}
-1. Import daily .csv
-2. Check out the data structure
-3. Convert time 
-4. Make pretty plot
+``` {r Challenge-answers}
+#1. Import daily .csv
+#2. Check out the data structure
+#3. Convert time 
+#4. Make pretty plot
 #read in daily data  ->CHANGE TO USING THE AGGREGATE DATA JUST CREATED
 harMetDaily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv")
 
