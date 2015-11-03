@@ -2,7 +2,7 @@
 layout: post
 title: "Lesson 01: Load and Understand Your Data"
 date:   2015-10-24
-authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+authors: [Marisa Guarinello, Megan Jones, Courtney Soderberg]
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
 tags: [module-1]
@@ -14,7 +14,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: m
+comments: false
 ---
 
 <section id="table-of-contents" class="toc">
