@@ -174,9 +174,9 @@ Julian date using the `group-by()` function to determine how we split up our
 data. Remember we created a column named "julian" for our Julian Day data.
 
 ```{r dplyr-group}
-harMet15.09.11 %>%
-  group_by(julian) %>%
-  tally()
+harMet15.09.11 %>%          #Within the harMet15.09.11 data
+  group_by(julian) %>%      #group the data by the julian day
+  tally()                   #and tally how many observations per julian day
 ```
 
 The `%>%` at the end of the lines are 'pipes', pipes are an important tool in
@@ -185,7 +185,7 @@ like the name implies, allow us to take the output of one function and send
 (pipe) it directly to the next function. We don't have to save the intermediate
 steps between functions. The above code essentially says: go into the
 harMet15.09.11 dataframe, find the julian dates, group by them, and then count
-(tally) how many values for each of the grouped dates.  
+(tally) how many values for each of the grouped days.  
 
 Bonus: Older `dplyr` coded pipes as %.% and you may still see that format in some
 older Stack Overflow answers and other tutuorials. 

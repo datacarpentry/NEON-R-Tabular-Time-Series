@@ -28,7 +28,7 @@ comments: false
 
 
 ##About
-This lesson will teach individuals how to plot subsetted timeseries data (e.g. plot by season) and to plot time series data with NDVI
+This lesson will teach individuals how to plot subsetted timeseries data (e.g. plot by season) and to plot time series data with NDVI.
 
 <div id="objectives" markdown="1">
 
@@ -36,7 +36,7 @@ This lesson will teach individuals how to plot subsetted timeseries data (e.g. p
 
 ###Goals / Objectives
 After completing this activity, you will know:
- * How to use facets in ggplot
+ * How to use facets in ggplot,
  * How to combine different types of data into one plot.
 
 
@@ -55,7 +55,6 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
 Lessons 00-03 in this Time Series learning module
-
 </div>
 
 #Lesson 04: Further Exploration of the Data
@@ -90,15 +89,45 @@ While there is a lot of noise in the data, there does seem to be a trend of
 lower PAR when precipitation is high. Yet in this data we don't tease apart any 
 of annual patterns as date isn't any part of this figure.  
 
-##Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
+##Use daily data and subset by seasons (retaining PAR, precip, & temp variables)
+One way to add a time component to this figure is to subset the data by season 
+and tehn to plot a facetted graph showing the data by season.  
+
+The first step to doing this is to subset by season.  First, we have to switch 
+away from coding and data analysis and think about ecology.  What is the best
+way to break a year apart into seasons?  
+
+The divisions will change depending on on the geography and climate where the
+data were collected.  We are using data from Harvard Forest in Massachusettes in
+in the northeastern United States.  Given the strong seasonal affects in this 
+area dividing the year into 4 seasons is ecologically relevant.  Based on
+general knowledge of the area it is also plausible to group the months as 
+
+ * Winter: December - February
+ * Spring: March - May 
+ * Summer: June - August
+ * Fall: September - November 
+ 
+In order to subset the data by season we will again use the `dplyr` package.
 
 ```{r subsetting-by-season}
-
 #subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
+
+#Inelegant and not working
+winter<-harMet.daily%>%      
+mutate(month=format(date, "%m")) %>%
+  subset(month == 12 )
+
+summer<-harMet.daily%>%      
+mutate(month=format(date, "%m")) %>%
+  subset(month==c(06,07,08))
+
+
 
 ```
 
-##Use facets in ggplot to create the same graph for each season and display them in a grid
+##Use facets in ggplot to create the same graph for each season and
+#display them in a grid
 ```{r plot-by-season}
 
 #part.prec + facet_grid(. ~ season)
@@ -109,3 +138,12 @@ of annual patterns as date isn't any part of this figure.
 ```
 
 #Graph one of those variables and NDVI data together
+
+
+#Polishing your ggPlot graphs
+Throughout this module we have been creating plots using ggplot.  We've covered
+the basics of adding axis labels and titles but using ggplot you can do so much 
+more.  If you are interested in making your graphs look better consider reading
+
+1) ggplot2 Cheatsheet from Zev Ross:  http://neondataskills.org/cheatsheets/R-GGPLOT2/
+2) ggplot 2 documentation index: http://docs.ggplot2.org/current/index.html#

@@ -259,10 +259,12 @@ str(harMet15[1])
 ##Convert to Julian days
 In some cases you might want to use Julian days, which gives each day of the 
 year a number starting with 1 on Jan 1 and counting up to 365 or 366 on 
-December 31 depending on if it is a leap year or not. (Note: This format can 
-also be called ordinal day and, ocassionally, Julian day can refer to a numeric
-count since 1 January 4713 BC.)  Reasons you might want to convert to Julian days
-are for smoother plotting and manipulation of data.
+December 31 depending on if it is a leap year or not. 
+
+Note: This format can also be called ordinal day or year day, and, ocassionally,
+Julian day can refer to a numeric count since 1 January 4713 BC.
+
+Reasons you might want to convert to Julian days are for smoother plotting and manipulation of data.
 
 ```{r julian-day-convert }
 # convert to julian days
