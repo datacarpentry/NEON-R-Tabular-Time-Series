@@ -6,7 +6,7 @@ authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
 tags: [module-1]
-description: "This lesson explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
+description: "This learning module explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -25,6 +25,7 @@ comments: false
 </section><!-- /#table-of-contents -->
 
 <div id=“objectives” markdown=“1”>
+
 ##About
 This learning module will walk you through the fundamental principles of working 
 with .csv temporal data in R including how to open, clean, explore, and plot 
@@ -46,10 +47,13 @@ calculating basic summary statistics for your data.
 ###Things You'll Need To Complete This Lesson
 
 ####R Libraries to Install
+
 Lesson 02
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
+
 Lesson 03
 <li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
+<li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 <li><strong>scales:</strong> <code> install.packages("scales")</code></li>
 <li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
 
