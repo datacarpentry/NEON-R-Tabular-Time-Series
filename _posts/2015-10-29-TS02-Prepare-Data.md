@@ -6,16 +6,16 @@ authors: [Marisa Guarinello, Megan Jones, Courtney Soderberg]
 dateCreated: 2015-10-22
 lastModified: 2015-10-29
 tags: module-1
-description: This lesson will teach individuals how to prepare tabular data for further
+description: "This lesson will teach individuals how to prepare tabular data for further
   analysis in R, addressing missing values and date-time formats. Students will also
   learn how to convert characters to a time class, to convert date-time to Julian
-  day, and how to subset the data into a new data frame.
+  day, and how to subset the data into a new data frame."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink:m 
+comments: false 
 
 ---
 
