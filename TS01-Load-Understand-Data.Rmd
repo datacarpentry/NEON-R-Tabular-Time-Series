@@ -2,13 +2,11 @@
 layout: post
 title: "Lesson 01: Load and Understand Your Data"
 date:   2015-10-24
-authors: [Marisa Guarinello, Megan Jones, Courtney Soderberg]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 dateCreated:  2015-10-22
 lastModified: 2015-10-29
 tags: [module-1]
-description: "This lesson will teach individuals how to import tabular data from
-a CSV file into R. Students will examine the structure of the dataset and get 
-information from a related metadata text file."
+description: "This lesson will teach individuals how to import tabular data from a CSV file into R. Students will examine the structure of the dataset and get information from a related metadata text file."
 code1: 
 image:
   feature: NEONCarpentryHeader_2.png
@@ -27,6 +25,7 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
+<div id=“objectives” markdown=“1”>
 ##About
 This lesson will teach students how to import tabular data from a CSV file into
 R. Students will examine the structure of the dataset and get information from a
@@ -57,6 +56,7 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 ####Recommended Pre-Lesson Reading
 None
 
+</div>
 
 #Lesson One: Load and Understand Your Data
 We don't need any additional packages for this lesson, but typically when you 

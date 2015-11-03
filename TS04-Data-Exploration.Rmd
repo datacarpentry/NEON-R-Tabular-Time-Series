@@ -1,13 +1,12 @@
 ---
 layout: post
-title: "Lesson 04 Data Exploration"
+title: "Lesson 04: Data Exploration"
 date:   2015-10-21
-authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+authors: "Megan A. Jones, Marisa Guarinello, Courtney Soderberg"
 dateCreated: 2015-10-22
 lastModified: 2015-10-29
 tags: [module-1]
-description: "This lesson will teach individuals how to plot subsetted timeseries
-data (e.g. plot by season) and to plot time series data with NDVI."
+description: "This lesson will teach individuals how to plot subsetted timeseries data (e.g. plot by season) and to plot time series data with NDVI."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
@@ -25,6 +24,8 @@ comments: false
 {:toc}
 </div>
 </section><!-- /#table-of-contents -->
+
+<div id=“objectives” markdown=“1”>
 
 ##About
 This activity will walk you through the fundamental principles of working 
@@ -46,6 +47,7 @@ R studio to write your code.
 ####R Libraries to Install
 <li><strong>ggplot</strong> <code> install.packages("ggplot2")</code></li>
 
+</div>
 
 #Graph precip by total PAR across all seasons
 ```{r PAR-v-precip}
