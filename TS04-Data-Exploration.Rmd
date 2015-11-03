@@ -25,50 +25,80 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
-<div id=“objectives” markdown=“1”>
+
 
 ##About
-This activity will walk you through the fundamental principles of working 
-with raster data in R.
+This lesson will teach individuals how to plot subsetted timeseries data (e.g. plot by season) and to plot time series data with NDVI
+
+<div id=“objectives” markdown=“1”>
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-
 ###Goals / Objectives
 After completing this activity, you will know:
-* How to use facets in ggplot
-* How to combine different types of data into one plot.
+ * How to use facets in ggplot
+ * How to combine different types of data into one plot.
 
 
-###hings You'll Need To Complete This Lesson
+###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
 ####R Libraries to Install
 <li><strong>ggplot</strong> <code> install.packages("ggplot2")</code></li>
+<li><strong>scales:</strong> <code> install.packages("scales")</code></li>
+<li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
+
+####Data to Download
+Make sure you have downloaded the AtmosData folder from
+http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
+
+####Recommended Pre-Lesson Reading
+Lessons 00-03 in this Time Series learning module
 
 </div>
 
-#Graph precip by total PAR across all seasons
-```{r PAR-v-precip}
+#Lesson 04: Further Exploration of the Data
+Up until this point in the lesson we have been looking at how a single variable 
+changes across time. In the interest of studying phenology it is likely that 
+some combination of precipitation, temperature, and solar radiation (PAR) plays
+a role in the annual greening and browning of plants.  
 
-part.prec <- ggplot(harMet.daily,aes(prec, part)) +
-           geom_point() +
-           ggtitle("Relationship between precipitation and PART") +
+Let's look at interactions between several of the variables to each other across
+the seasons before adding the NDVI data into the mix.  Using the NDVI data we
+can finally directly compare the observed plant phenology with patterns we've 
+already been looking at.  
+
+##Graph precip by total PAR across all seasons
+PAR a measure of solar radiation is less on cloudy days and precipitation is
+also more likely when clouds are present.  We will use `ggplot` to graph PAR
+and precipitation from the daily Harvard Meterological data.  We can simply do
+this using the code we previously learned and substituatuing precipitation
+(prec) in for time on the x axis.  
+```{r PAR-v-precip}
+#PAR v precip 
+par.precip <- ggplot(harMet.daily,aes(prec, part)) +
+           geom_point(na.rm=TRUE) +    #removing the NA values
+           ggtitle("Daily Precipitation and PAR at Harvard Forest") +
            theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
            theme(text = element_text(size=20)) +
-           xlab("Total Precipitation") + ylab("Mean Total PAR")
-
+           xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+par.precip
 ```
 
-#Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
+While there is a lot of noise in the data, there does seem to be a trend of 
+lower PAR when precipitation is high. Yet in this data we don't tease apart any 
+of annual patterns as date isn't any part of this figure.  
+
+##Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
+
 ```{r subsetting-by-season}
 
 #subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
 
 ```
 
-#Use facets in ggplot to create the same graph for each season and display them in a grid
+##Use facets in ggplot to create the same graph for each season and display them in a grid
 ```{r plot-by-season}
 
 #part.prec + facet_grid(. ~ season)

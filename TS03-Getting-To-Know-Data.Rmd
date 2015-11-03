@@ -32,12 +32,14 @@ comments: false
 This activity will walk you through the fundamentals of data manipulation and 
 basic plotting.
 
+<div id=“objectives” markdown=“1”>
+
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
 ### Goals / Objectives
 After completing this activity, you will know:
-* How to create basic time series plots in `R`.
-* How to manipulate data in `R`.
+ * How to create basic time series plots in `R`.
+ * How to manipulate data in `R`.
 
 
 ###Things You'll Need To Complete This Lesson
@@ -51,14 +53,12 @@ R studio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 <li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
 
-
-
 ####Data to Download
 Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
-None
+Lessons 00-02 in this Time Series learning module
 
 </div>
 

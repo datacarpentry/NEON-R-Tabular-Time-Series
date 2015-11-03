@@ -31,18 +31,20 @@ This learning module will walk you through the fundamental principles of working
 with .csv temporal data in R including how to open, clean, explore, and plot 
 time series data. 
 
+<div id=“objectives” markdown=“1”>
+
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
 ###Goals / Objectives
 After completing this learning module, you will know how to:
 
-* Open a csv file in R and why we are using this format
-* Examine data structures and types
-* Prepare data for analysis including cleaning, converting/transfroming, and
+  * Open a csv file in R and why we are using this format
+  * Examine data structures and types
+  * Prepare data for analysis including cleaning, converting/transfroming, and
 calculating basic summary statistics for your data.
-* Create a basic time-series plot. 
-* Exploring basic trends in your data.
-* Map NDVI data with timeseries data.
+  * Create a basic time-series plot. 
+  * Exploring basic trends in your data.
+  * Map NDVI data with timeseries data.
 
 ###Things You'll Need To Complete This Lesson
 

@@ -25,12 +25,12 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
-<div id=“objectives” markdown=“1”>
-
 ##About
 This lesson will teach students how to import tabular data from a CSV file into
 R. Students will examine the structure of the dataset and get information from a
 related metadata text file.
+
+<div id=“objectives” markdown=“1”>
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
@@ -38,9 +38,9 @@ understand the general structure of tabular data.
 ###Goals / Objectives
 After completing this lesson, you will know how to:
 
-*Open a csv file in R and why we are using that format in this training
-*Examine data structures and types
-*Use metadata to get more information about input data
+ * Open a csv file in R and why we are using that format in this training
+ * Examine data structures and types
+ * Use metadata to get more information about input data
 
 
 ###Things You'll Need To Complete This Lesson
