@@ -57,6 +57,7 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 ####Recommended Pre-Lesson Reading
 None
 
+
 #Lesson One: Load and Understand Your Data
 We don't need any additional packages for this lesson, but typically when you 
 initiate a workflow you always want to load any packages prior to importing and
@@ -106,14 +107,18 @@ str(harMet15)
 
 ```
 
-These commands let you see the data and get some information about it, but there
-is other information we need to know. Can you think of any examples? 
+These commands let you see the data and get some information about it. Notice
+that data types that are not numbers or integers are classified as characters 
+(chr), you specificed for R to recognize these as characters instead as factors
+when you loaded the files by using the`stringsAsFactors=FALSE` command.  
+However, there is information other than how R reads our data that we need to 
+know. Can you think of any examples? 
 
 To get some of this information, or clues to this information, we will open the
 metadata text file that is in the AtmosData folder. Navigate to this file and 
 open it in your text editor of choice.
 
-INSERT SCREENSHOT
+![Harvard Forest 15 min Atmospheric Data Screenshot] (/Users/mjones01/Documents/Git_Repositories/NEON-R-Tabular-Time-Series/images)
 
 Remember for this module we will be looking at air temperature, precipitation, 
 and photosynthetically active radiation (PAR). Find these variables and 

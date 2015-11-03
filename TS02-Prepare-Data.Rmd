@@ -1,23 +1,22 @@
 ---
+layout: post
 title: 'Lesson 02: Preparing the Data to Work With'
-code1: null
-date: '2015-10-23'
-output: pdf_document
+date: 2015-10-23
+authors: [Marisa Guarinello, Megan Jones, Courtney Soderberg]
+dateCreated: 2015-10-22
+lastModified: 2015-10-29
+tags: module-1
 description: This lesson will teach individuals how to prepare tabular data for further
   analysis in R, addressing missing values and date-time formats. Students will also
   learn how to convert characters to a time class, to convert date-time to Julian
   day, and how to subset the data into a new data frame.
+code1:
 image:
-  credit: A collaboration between the National Ecological Observatory Network (NEON)
-    and Data Carpentry
-  creditlink: http://www.neoninc.org
   feature: NEONCarpentryHeader_2.png
-lastModified: '2015-10-29'
-layout: post
-dateCreated: '2015-10-22'
-permalink: mm
-tags: module-1
-authors: Marisa Guarinello, Megan Jones, Courtney Soderberg
+  credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
+  creditlink: http://www.neoninc.org
+permalink:m 
+
 ---
 
 <section id="table-of-contents" class="toc">
@@ -64,6 +63,7 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 None
 
 #Lesson Two: Prepare your data so you can work with it
+
 We will use basic R and the lubridate package for working with date-time formats.
 However, there are a few options for working with date-time formats
 (readr, zoo), which are based on similar concepts, you will be able to use help
@@ -75,7 +75,7 @@ library(lubridate)  #working with dates
 
 ```
 
-# Dealing with data gaps
+## Dealing with data gaps
 Recall from our metadata that missing values are given an NA. One must always 
 check for missing values in any of the variables one is working with.  Do we 
 have missing values in our data set? An easy way to check for this is the
@@ -241,7 +241,7 @@ str(harMet15)
 
 ```
 
-#Convert to Julian days
+##Convert to Julian days
 In some cases you might want to use Julian days, which gives each day of the 
 year a number starting with 1 on Jan 1 and counting up to 365 or 366 on 
 December 31 depending on if it is a leap year or not. (Note: This format can 
@@ -262,7 +262,7 @@ tail(harMet15)
 
 ```
 
-#Subsetting
+##Subsetting
 The file contains nearly a decades worth of data.  However, we are more 
 interested in recent patterns, let's just take three years 2009-2011. To do this we
 need to subset the data so that we have just the three years we are interested in.
@@ -271,16 +271,17 @@ We need to include the time zone to get this to work correctly.
 ``` {r  subsetting}
 
 #subset out some of the data - 2009-2011
-Har15min.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
+harMet15.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
         tz = "America/New_York") & datetime <=
         as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
 
 #check to make sure it worked.  Min/max of datetime
-summary(Har15min.09.11)
+summary(harMet15.09.11)
 ```
 
 
 # Challenge: Using skills from Lessons 1 and 2
+# Load daily .csv datafile from Harvard Forest
 
 Currently we have been using the 15 minute data from the Harvard Forest.  However, 
 overall we are interested in larger scale patterns of greening-up and browning-down.  
@@ -290,7 +291,7 @@ minute data is.
 Let's import the Daily Meteorological data from the Harvard Forest using the
 skills we have recently learned. 
 
-``` {r synthesis1-code}
+``` {r Challenge1-code}
 
 #import daily file
 harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", 
@@ -319,13 +320,13 @@ head(harMet.daily)
 #julian data - already in file. Field jd
 
 #subset out some of the data - 2009-2011
-harDaily.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
+harMetDaily.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
         tz = "America/New_York") & date <=
         as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
 
 #check it
-summary(harDaily.09.11$date)
+summary(harMetDaily.09.11$date)
 
 #do we still have the NA in part?
-sum(is.na(harDaily.09.11$part))
+sum(is.na(harMetDaily.09.11$part))
 #Output note: now only 1 NA!
