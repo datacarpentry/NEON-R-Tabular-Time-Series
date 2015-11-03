@@ -13,8 +13,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink:m 
-
+comments: false
 ---
 
 <section id="table-of-contents" class="toc">
