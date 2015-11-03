@@ -35,9 +35,9 @@ PrecipDaily
 library (dplyr)   #aid with manipulating data
 
 ## ----dplyr-group---------------------------------------------------------
-harMet15.09.11 %>%
-  group_by(julian) %>%
-  tally()
+harMet15.09.11 %>%          #Within the harMet15.09.11 data
+  group_by(julian) %>%      #group the data by the julian day
+  tally()                   #and tally how many observations per julian day
 
 ## ----simple-math---------------------------------------------------------
 3*24*4  # 3 years * 24 hours/day * 4 15-min data points/hour

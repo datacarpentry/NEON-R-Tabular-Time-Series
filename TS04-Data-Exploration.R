@@ -9,8 +9,18 @@ par.precip <- ggplot(harMet.daily,aes(prec, part)) +
 par.precip
 
 ## ----subsetting-by-season------------------------------------------------
-
 #subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
+
+#Inelegant and not working
+winter<-harMet.daily%>%      
+mutate(month=format(date, "%m")) %>%
+  subset(month == 12 )
+
+summer<-harMet.daily%>%      
+mutate(month=format(date, "%m")) %>%
+  subset(month==c(06,07,08))
+
+
 
 
 ## ----plot-by-season------------------------------------------------------

@@ -58,9 +58,9 @@ Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
-None
+Lessons 00-01 in this Time Series learning module
 
-<div id=“objectives” markdown=“1”>
+</div>
 
 #Lesson Two: Prepare your data so you can work with it
 
@@ -320,10 +320,12 @@ In this database, Eastern Standard Time is called "America/New_York".
 ##Convert to Julian days
 In some cases you might want to use Julian days, which gives each day of the 
 year a number starting with 1 on Jan 1 and counting up to 365 or 366 on 
-December 31 depending on if it is a leap year or not. (Note: This format can 
-also be called ordinal day and, ocassionally, Julian day can refer to a numeric
-count since 1 January 4713 BC.)  Reasons you might want to convert to Julian days
-are for smoother plotting and manipulation of data.
+December 31 depending on if it is a leap year or not. 
+
+Note: This format can also be called ordinal day or year day, and, ocassionally,
+Julian day can refer to a numeric count since 1 January 4713 BC.
+
+Reasons you might want to convert to Julian days are for smoother plotting and manipulation of data.
 
 
     # convert to julian days
@@ -403,7 +405,7 @@ skills we have recently learned.
     #check it out
     str(harMet.daily)
 
-    ## 'data.frame':	5345 obs. of  46 variables:
+    ## 'data.frame':	5345 obs. of  47 variables:
     ##  $ date     : POSIXct, format: "2001-02-11" "2001-02-12" ...
     ##  $ jd       : int  42 43 44 45 46 47 48 49 50 51 ...
     ##  $ airt     : num  -10.7 -9.8 -2 -0.5 -0.4 -3 -4.5 -9.9 -4.5 3.2 ...
@@ -450,6 +452,7 @@ skills we have recently learned.
     ##  $ f.s10tmax: chr  "M" "M" "M" "M" ...
     ##  $ s10tmin  : num  NA NA NA NA NA NA NA NA NA NA ...
     ##  $ f.s10tmin: chr  "M" "M" "M" "M" ...
+    ##  $ winter   : logi  FALSE FALSE TRUE FALSE FALSE TRUE ...
 
     #Metadata
     #Differences in 2 variable names PAR=part, DateTime=date
