@@ -46,13 +46,18 @@ head(TimeDatelt)
 
 unclass(TimeDatelt)
 
+## ----POSIX-lookup--------------------------------------------------------
+#help for POSIXlt
+?POSIXlt
+
 ## ----POSIX-convert-------------------------------------------------------
 #convert to date-time class
 harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",
     tz = "America/New_York")
-#make sure it worked
-str(harMet15)
 
+#make sure it worked.  Adding [1] allows us to just look at structure for first
+#variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+str(harMet15[1])
 
 ## ----julian-day-convert--------------------------------------------------
 # convert to julian days
@@ -61,9 +66,9 @@ str(harMet15)
 ?yday
 
 harMet15$julian <- yday(harMet15$datetime)  
-#make sure it worked all the way through
-head(harMet15) 
-tail(harMet15)
+#make sure it worked all the way through.  Dataframe was 30 variables so julian should be 31st.
+head(harMet15[31]) 
+tail(harMet15[31])
 
 
 ## ----subsetting----------------------------------------------------------
@@ -73,8 +78,8 @@ harMet15.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
         tz = "America/New_York") & datetime <=
         as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
 
-#check to make sure it worked.  Min/max of datetime
-summary(harMet15.09.11)
+#check to make sure it worked.
+summary(harMet15.09.11[1])
 
 ## ----Challenge1-code-----------------------------------------------------
 
@@ -83,7 +88,6 @@ harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv",
       stringsAsFactors = FALSE)
 #check it out
 str(harMet.daily)
-head(harMet.daily)
 
 #Metadata
 #Differences in 2 variable names PAR=part, DateTime=date
@@ -97,10 +101,10 @@ sum(is.na(harMet.daily$part))
 #OuputNote: PART is missing 1032 values
 
 #convert date 
-harMet.daily$date <- as.POSIXct(harMet.daily$date,format = "%Y-%m-%d",tz = "America/New_York")
+harMet.daily$date <- as.POSIXct(harMet.daily$date,format = "%Y-%m-%d",
+      tz = "America/New_York")
 #check it out
-str(harMet.daily)
-head(harMet.daily)
+str(harMet.daily [1])
 
 #julian data - already in file. Field jd
 
