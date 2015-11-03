@@ -32,7 +32,7 @@ comments: false
 This activity will walk you through the fundamentals of data manipulation and 
 basic plotting.
 
-<div id=“objectives” markdown=“1”>
+<div id="objectives" markdown="1">
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 

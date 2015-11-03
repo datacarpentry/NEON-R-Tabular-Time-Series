@@ -31,7 +31,7 @@ in R, addressing missing values and date-time formats. Students will also learn
 how to convert characters to a time class, to convert date-time to Julian day, 
 and how to subset the data into a new data frame.
 
-<div id=“objectives” markdown=“1”>
+<div id="objectives" markdown="1">
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
