@@ -57,7 +57,7 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 ####Recommended Pre-Lesson Reading
 None
 
-</div>
+<div id=“objectives” markdown=“1”>
 
 #Lesson One: Load and Understand Your Data
 We don't need any additional packages for this lesson, but typically when you 
@@ -75,7 +75,7 @@ downloaded the data files.
 #library(nameOfLibrary)  #purpose of library
 
 #set working directory
-setwd("~/Documents/FILES/Learning/R/NEON_wrkshp")
+setwd("~/Documents/data/Spatio_TemporalWorkshop/1_WorkshopData")
 ```
 
 You are now ready to import the data.  This data is a csv or comma seperated
@@ -85,7 +85,7 @@ plain text format that can be read by many different programs including R.
 # Load csv file of 15 min meterological data from Harvard Forest
 # don't load strings (a series of letters or numerals) as factors so they remain
 #characters
-harMet15 <- read.csv(file="data/AtmosData/HARV/hf001-10-15min-m.csv",
+harMet15 <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
       stringsAsFactors = FALSE)
 ```
 
