@@ -25,6 +25,8 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
+<div id=“objectives” markdown=“1”>
+
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
 in R, addressing missing values and date-time formats. Students will also learn
@@ -57,6 +59,8 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
 None
+
+<div id=“objectives” markdown=“1”>
 
 #Lesson Two: Prepare your data so you can work with it
 
@@ -131,8 +135,9 @@ and time are seperated by a 'T'.  Let's remove that.
 #remove the "T" and replace it with a space
 #gsub() replaces all occurances; sub() just replaces first occurance in the set
 harMet15$datetime <- gsub("T", " ", harMet15$datetime)
-#make sure it worked
-head(harMet15)
+#make sure it worked.  Adding [1] allows us to just look at structure for first
+#variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+head(harMet15[1])
 ```
 
 Now we need to convert from a character to a time class.  R recognizes several 
@@ -210,8 +215,9 @@ Here we can see that the date is now not a character but is now POSIXlt. When
 looking at the data we see the date and time with time zone designation
 (same as POSIXct). But when we look at the components using `unclass()` we can
 see the seperate sections of the date and time.  Two components may appear wrong
-1) #mon =9, but October is the 10th month and 2) $year = 115 not 2015.  We need
-to look at the POSIXlt documentation to figure out why this is happening. 
+1) $mon = , but October is the 10th month and 
+2) $year = 115, not 2015.  
+We need to look at the POSIXlt documentation to figure out why this is happening. 
 
 ```{r POSIX-lookup}
 #help for POSIXlt
@@ -246,8 +252,7 @@ In this database, Eastern Standard Time is called "America/New_York".
 harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",
     tz = "America/New_York")
 
-#make sure it worked.  Adding [1] allows us to just look at structure for first
-#variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+#make sure it worked. 
 str(harMet15[1])
 ```
 
@@ -292,8 +297,8 @@ summary(harMet15.09.11[1])
 It worked, the first (min) day is 1 Jan 2009 and the last day (max) is 31 Dec
 2011. 
 
-# Challenge: Uploading and Preparing Data
-# Load daily .csv datafile from Harvard Forest
+# Challenge 1: Uploading and Preparing Data
+Load daily .csv datafile from Harvard Forest
 
 Currently we have been using the 15 minute data from the Harvard Forest. 
 However, overall we are interested in larger scale patterns of greening-up and
