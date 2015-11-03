@@ -26,7 +26,6 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
-<div id=“objectives” markdown=“1”>
 
 ##About
 This activity will walk you through the fundamentals of data manipulation and 

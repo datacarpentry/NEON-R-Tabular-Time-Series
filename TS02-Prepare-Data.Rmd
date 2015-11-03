@@ -58,9 +58,9 @@ Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
-None
+Lessons 00-01 in this Time Series learning module
 
-<div id=“objectives” markdown=“1”>
+</div>
 
 #Lesson Two: Prepare your data so you can work with it
 
