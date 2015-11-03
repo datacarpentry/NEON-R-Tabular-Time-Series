@@ -25,24 +25,24 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
-<div id=“objectives” markdown=“1”>
-
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
 in R, addressing missing values and date-time formats. Students will also learn
 how to convert characters to a time class, to convert date-time to Julian day, 
 and how to subset the data into a new data frame.
 
+<div id=“objectives” markdown=“1”>
+
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
 
 ### Goals / Objectives
 After completing this activity, you will know how to:
-* Clean data
-* Convert/transform time formats
-* Subset data
-* Examine data structures and types
-* Use metadata to get more information about input data
+ * Clean data
+ * Convert/transform time formats
+ * Subset data
+ * Examine data structures and types
+ * Use metadata to get more information about input data
 
 
 ###Things You'll Need To Complete This Lesson

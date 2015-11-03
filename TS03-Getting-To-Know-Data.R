@@ -1,5 +1,6 @@
 ## ----basic-plotting------------------------------------------------------
-#Remember it is good coding technique to add additional libraries to the top of your script (we started this section in Lesson 02)
+#Remember it is good coding technique to add additional libraries to the top of
+  #your script (we started this section in Lesson 02)
 library (ggplot2)  #for creating graphs
 library (scales)   #to access breaks/formatting functions
 
@@ -7,7 +8,7 @@ library (scales)   #to access breaks/formatting functions
 AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
            geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
                                       # that 2 NA values were removed.
-           ggtitle("Air Temperature At Harvard Forest (15 min. interval)") +
+           ggtitle("15 min Air Temperature At Harvard Forest") +
            theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
            theme(text = element_text(size=20)) +
            xlab("Date") + ylab("Air Temperature (C)")
@@ -53,6 +54,7 @@ harMet15.09.11$year <- year(as.Date(harMet15.09.11$datetime, "%y-%b-%d",
 ## ----dplyr-lubridate-2---------------------------------------------------
 harMet15.09.11$year <- year(harMet15.09.11$datetime)
 
+## ----dplyr-lubridate-3---------------------------------------------------
 #check to make sure it worked
 names(harMet15.09.11 [32])
 
@@ -67,8 +69,9 @@ harMet15.09.11 %>%
   group_by(year2, julian) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 
-names(harMet15.09.11)
 
+## ----dplyr-mutate-2------------------------------------------------------
+names(harMet15.09.11)
 
 ## ----dplyr-dataframe-----------------------------------------------------
 temp.daily.09.11 <- harMet15.09.11 %>%
@@ -111,7 +114,7 @@ AirTempMonthly
 
 ## ----airTemp-plots-compare-----------------------------------------------
 require(gridExtra)
-grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=3)
+grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
 
 ## ----challenge-4-code----------------------------------------------------
 
@@ -124,12 +127,13 @@ str(prec.monthly)
 
 PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
   geom_point(na.rm=TRUE) +
-  ggtitle("Monthly Precipitation in Harvard Forest (2005 to 2011") +
+  ggtitle("Monthly Precipitation in Harvard Forest (2005-2011") +
   theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
   theme(text = element_text(size=20)) +
   xlab("Month") + ylab("Precipitation (mm)") +
-  scale_x_discrete(labels=month)  #month is no longer datetime, but a discrete number
-
+  scale_x_discrete(labels=month)  
+#month is no longer datetime, but a discrete number. Change from scale_x_datetime()
+  #to scale_x_discrete()
 
 PrecipMonthly
 
@@ -137,4 +141,7 @@ PrecipMonthly
 PrecipMonthly + scale_x_discrete("month", labels = c("1" = "Jan","2" = "Feb",
   "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
 
+
+## ----compare-precip------------------------------------------------------
+grid.arrange(PrecipDaily, PrecipMonthly, ncol=1)
 

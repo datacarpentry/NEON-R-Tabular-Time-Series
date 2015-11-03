@@ -1,12 +1,12 @@
 ## ----PAR-v-precip--------------------------------------------------------
-
-part.prec <- ggplot(harMet.daily,aes(prec, part)) +
-           geom_point() +
-           ggtitle("Relationship between precipitation and PART") +
+#PAR v precip 
+par.precip <- ggplot(harMet.daily,aes(prec, part)) +
+           geom_point(na.rm=TRUE) +    #removing the NA values
+           ggtitle("Daily Precipitation and PAR at Harvard Forest") +
            theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
            theme(text = element_text(size=20)) +
-           xlab("Total Precipitation") + ylab("Mean Total PAR")
-
+           xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+par.precip
 
 ## ----subsetting-by-season------------------------------------------------
 

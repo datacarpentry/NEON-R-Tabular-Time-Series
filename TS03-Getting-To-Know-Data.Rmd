@@ -383,7 +383,7 @@ precipitation using all years (not just 09-11).  Does it make more sense to
 calculate the total precipitation for each month or the average percipitation
 for each month?
 
-```{r message=false,challenge-4-code}
+```{r challenge-4-code}
 
 prec.monthly <- harMet15 %>%
   mutate(month = month(datetime), year= year(datetime)) %>%

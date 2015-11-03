@@ -32,12 +32,14 @@ comments: false
 This activity will walk you through the fundamentals of data manipulation and 
 basic plotting.
 
+<div id=“objectives” markdown=“1”>
+
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
 ### Goals / Objectives
 After completing this activity, you will know:
-* How to create basic time series plots in `R`.
-* How to manipulate data in `R`.
+ * How to create basic time series plots in `R`.
+ * How to manipulate data in `R`.
 
 
 ###Things You'll Need To Complete This Lesson
@@ -51,14 +53,12 @@ R studio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 <li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
 
-
-
 ####Data to Download
 Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
-None
+Lessons 00-02 in this Time Series learning module
 
 </div>
 
@@ -471,6 +471,55 @@ calculate the total precipitation for each month or the average percipitation
 for each month?
 
 
+    prec.monthly <- harMet15 %>%
+      mutate(month = month(datetime), year= year(datetime)) %>%
+      group_by(month, year) %>%
+      summarize(total_prec = sum(prec, na.rm = TRUE), datetime=first(datetime))
+    
+    str(prec.monthly)
+
+    ## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	131 obs. of  4 variables:
+    ##  $ month     : num  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ year      : num  2005 2006 2007 2008 2009 ...
+    ##  $ total_prec: num  120.5 110 82.9 75.7 84.4 ...
+    ##  $ datetime  : POSIXct, format: "2005-01-01 00:15:00" "2006-01-01 00:00:00" ...
+    ##  - attr(*, "vars")=List of 1
+    ##   ..$ : symbol month
+    ##  - attr(*, "drop")= logi TRUE
+
+    PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
+      geom_point(na.rm=TRUE) +
+      ggtitle("Monthly Precipitation in Harvard Forest (2005-2011") +
+      theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+      theme(text = element_text(size=20)) +
+      xlab("Month") + ylab("Precipitation (mm)") +
+      scale_x_discrete(labels=month)  
+    #month is no longer datetime, but a discrete number. Change from scale_x_datetime()
+      #to scale_x_discrete()
+    
+    PrecipMonthly
+
+![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-4-code-1.png) 
+
+    #If we want written out month labels
+    PrecipMonthly + scale_x_discrete("month", labels = c("1" = "Jan","2" = "Feb",
+      "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
+
+    ## Scale for 'x' is already present. Adding another scale for 'x', which will replace the existing scale.
+
+![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-4-code-2.png) 
+
+Is there an obvious annual trend in percipitation at Harvard Forest?  
+
+Compare how you plotted daily (challenge 2: DailyPrecip) and monthly
+precipitation (Challenge 4: PrecipMontly). When would one format be better than 
+another? 
 
 
+    grid.arrange(PrecipDaily, PrecipMonthly, ncol=1)
 
+![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/compare-precip-1.png) 
+
+In the next lesson we will learn to expand our plotting abilities to plot two
+variables side by side and to incorporate values from spacial data sets (NDVI)
+into our phenology related plots. 
