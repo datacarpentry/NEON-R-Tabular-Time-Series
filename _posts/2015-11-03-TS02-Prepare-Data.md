@@ -25,6 +25,8 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
+<div id=“objectives” markdown=“1”>
+
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
 in R, addressing missing values and date-time formats. Students will also learn
@@ -58,6 +60,8 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 ####Recommended Pre-Lesson Reading
 None
 
+<div id=“objectives” markdown=“1”>
+
 #Lesson Two: Prepare your data so you can work with it
 
 We will use basic R and the lubridate package for working with date-time formats.
@@ -79,7 +83,7 @@ NA/missing values we have.
     #Check for NA values
     sum(is.na(harMet15$datetime))
 
-    ## [1] 44
+    ## [1] 0
 
     sum(is.na(harMet15$airt))
 
@@ -137,30 +141,17 @@ and time are seperated by a 'T'.  Let's remove that.
     #remove the "T" and replace it with a space
     #gsub() replaces all occurances; sub() just replaces first occurance in the set
     harMet15$datetime <- gsub("T", " ", harMet15$datetime)
-    #make sure it worked
-    head(harMet15)
+    #make sure it worked.  Adding [1] allows us to just look at structure for first
+    #variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+    head(harMet15[1])
 
-    ##              datetime jd airt f.airt rh f.rh dewp f.dewp prec f.prec slrr
-    ## 1 2005-01-01 00:15:00  1  5.1        84       2.5           0           0
-    ## 2 2005-01-01 00:30:00  1  5.0        84       2.5           0           0
-    ## 3 2005-01-01 00:45:00  1  4.9        85       2.6           0           0
-    ## 4 2005-01-01 01:00:00  1  4.7        86       2.6           0           0
-    ## 5 2005-01-01 01:15:00  1  4.5        87       2.6           0           0
-    ## 6 2005-01-01 01:30:00  1  4.6        87       2.7           0           0
-    ##   f.slrr parr f.parr netr f.netr  bar f.bar wspd f.wspd wres f.wres wdir
-    ## 1           0         -58        1017        2.6         2.4         205
-    ## 2           0         -59        1017        2.3         2.1         213
-    ## 3           0         -59        1017        2.1         1.8         217
-    ## 4           0         -58        1017        1.8         1.6         226
-    ## 5           0         -58        1017        1.4         1.2         224
-    ## 6           0         -58        1017        1.6         1.4         214
-    ##   f.wdir wdev f.wdev gspd f.gspd s10t f.s10t julian
-    ## 1          26         7.2         0.7             1
-    ## 2          25         5.9         0.7             1
-    ## 3          27         5.8         0.7             1
-    ## 4          26         5.1         0.7             1
-    ## 5          29         4.6         0.7             1
-    ## 6          30         4.4         0.7             1
+    ##           datetime
+    ## 1 2005-01-01 00:15
+    ## 2 2005-01-01 00:30
+    ## 3 2005-01-01 00:45
+    ## 4 2005-01-01 01:00
+    ## 5 2005-01-01 01:15
+    ## 6 2005-01-01 01:30
 
 Now we need to convert from a character to a time class.  R recognizes several 
 different date and time classes with formats for date, time, or date and time field
@@ -284,8 +275,9 @@ Here we can see that the date is now not a character but is now POSIXlt. When
 looking at the data we see the date and time with time zone designation
 (same as POSIXct). But when we look at the components using `unclass()` we can
 see the seperate sections of the date and time.  Two components may appear wrong
-1) #mon =9, but October is the 10th month and 2) $year = 115 not 2015.  We need
-to look at the POSIXlt documentation to figure out why this is happening. 
+1) $mon = , but October is the 10th month and 
+2) $year = 115, not 2015.  
+We need to look at the POSIXlt documentation to figure out why this is happening. 
 
 
     #help for POSIXlt
@@ -319,8 +311,7 @@ In this database, Eastern Standard Time is called "America/New_York".
     harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",
         tz = "America/New_York")
     
-    #make sure it worked.  Adding [1] allows us to just look at structure for first
-    #variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+    #make sure it worked. 
     str(harMet15[1])
 
     ## 'data.frame':	376800 obs. of  1 variable:
@@ -388,8 +379,8 @@ We need to include the time zone to get this to work correctly.
 It worked, the first (min) day is 1 Jan 2009 and the last day (max) is 31 Dec
 2011. 
 
-# Challenge: Uploading and Preparing Data
-# Load daily .csv datafile from Harvard Forest
+# Challenge 1: Uploading and Preparing Data
+Load daily .csv datafile from Harvard Forest
 
 Currently we have been using the 15 minute data from the Harvard Forest. 
 However, overall we are interested in larger scale patterns of greening-up and

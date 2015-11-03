@@ -45,11 +45,13 @@ Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
 ####R Libraries to Install
-<li><code> install.packages("ggplot2")</code></li>
-<li><code> install.packages("lubridate")</code></li>
-<li><code> install.packages("dplyr")</code></li>
-<li><code> install.packages("scales")</code></li>
-<li><code> install.packages("gridExtra")</code></li>
+<li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
+<li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
+<li><strong>scales:</strong> <code> install.packages("scales")</code></li>
+<li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
+<li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
+
+
 
 ####Data to Download
 Make sure you have downloaded the AtmosData folder from
@@ -60,7 +62,7 @@ None
 
 </div>
 
-#Lesson 03: Getting to Know Your Data
+#Lesson 03: Getting to Know The Data
 As we continue working with our data we are going to learn the skills that
 enable us get inital visualizations of our data by 
 1) plotting the 15-minute air temperature data across years,
@@ -77,7 +79,8 @@ To do this, we're going to use the package `ggplot2` to plot the air temperature
 3 year span time span for each 15 minute data point.
 
 
-    #Remember it is good coding technique to add additional libraries to the top of your script (we started this section in Lesson 02)
+    #Remember it is good coding technique to add additional libraries to the top of
+      #your script (we started this section in Lesson 02)
     library (ggplot2)  #for creating graphs
     library (scales)   #to access breaks/formatting functions
     
@@ -85,13 +88,14 @@ To do this, we're going to use the package `ggplot2` to plot the air temperature
     AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
                geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
                                           # that 2 NA values were removed.
-               ggtitle("Air Temperature At Harvard Forest (15 min. interval)") +
+               ggtitle("15 min Air Temperature At Harvard Forest") +
                theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
                theme(text = element_text(size=20)) +
                xlab("Date") + ylab("Air Temperature (C)")
     AirTemp15a
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/basic-plotting-1.png) 
+
 Here we see that we get a warning message saying that two rows were removed due
 to missing values.  Those are the two rows that still had NA in the air
 temperature data.  
@@ -105,13 +109,13 @@ can reformat them so they are in the Month/Day/Year format we are used to.
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/nice-x-axis-1.png) 
 
-Bonus: If your x variable is not a datetime class (eg. not POSIX) other 
-`scale_x_...()` exist to help format x (or y) axes. 
+Bonus: If an x variable is not a datetime class (eg. not POSIX), other 
+`scale_x_...()` exist to help format x axes. 
 
 ##Challenge 2: Plotting daily precipitaiton data
 Using the daily precipitation data you imported earlier, create a plot with the
 x-axis in a European Format (Day/Month/Year).  For ease in future activities 
-name your plot 'PrecipDaily".
+name the plot 'PrecipDaily".
 
 
     PrecipDaily <- ggplot(harMetDaily.09.11, aes(date, prec)) +
@@ -148,8 +152,11 @@ databases in the future.
 
 If you are interested in learning more about `dplyr` after this lesson consider
 following up with `dplyr` lessons from 
+
 1) [NEON Data Skills] (http://neondataskills.org/R/GREPL-Filter-Piping-in-DPLYR-Using-R/) or 
+
 2) [Data Carpentry] (http://www.datacarpentry.org/R-ecology/04-dplyr.html)
+
 and reading the CRAN `dplyr` package [description] (https://cran.r-project.org/web/packages/dplyr/dplyr.pdf).
 
 For the purposes of our data in the Harvard Forest we want to be able to split
@@ -242,7 +249,7 @@ any NA values when making the caluculations.
     ## ..    ...       ...
 
 Julian days repeat 1-365 (or 366) each year, therefore what we have here is that
-the mean temperature for all 3 January 1st in 2009, '10,, and '11 was -3.7C. 
+the mean temperature for all 3 January 1st in 2009, 2010, and 2011 was -3.7C. 
 Sometimes this is how we want to summarize our data, however, we may also want 
 to summarize our air temperature data for each day in each of the three years.  
 To do that need to group our data by two different values at once, year and 
@@ -262,13 +269,13 @@ or since our date data is already a POSIX date/time variable, we can be more eff
 
 
     harMet15.09.11$year <- year(harMet15.09.11$datetime)
-    
+
+Using `names()` we can see that we now have a variable named year. 
+
     #check to make sure it worked
     names(harMet15.09.11 [32])
 
     ## [1] "year"
-
-Using `names()` we can see that we now have a variable named year.  
 
 Now we have our two variables: julian and year. To get the mean air temperature
 for each day for each year we can use the `dplyr` pipes to group by year and
@@ -303,6 +310,7 @@ Given just the header in the output we can see the difference between the
 ###Combining functions to increase efficiency
 To create more efficient code, could we create the year variable within our
 `dplyr` function call? 
+
 Yes, we can use the `mutate()` function of `dplyr` and include our `lubridate`
 function within the `mutate()` call. `mutate()` is used to add new data to a
 data frame, this is often new data that is created from a calculation or
@@ -334,6 +342,11 @@ will not do.
     ## 10  2009     10 -11.156250
     ## ..   ...    ...        ...
 
+For illustation purposes, we named the new variable we were creating with
+`mutate()` year2 so we could distinguish it from the year already created by
+`year()`. Notice that that after using this code, we don't see year2 as a column
+in our harMet15.09.11 dataframe.  
+
     names(harMet15.09.11)
 
     ##  [1] "datetime" "jd"       "airt"     "f.airt"   "rh"       "f.rh"    
@@ -342,11 +355,6 @@ will not do.
     ## [19] "wspd"     "f.wspd"   "wres"     "f.wres"   "wdir"     "f.wdir"  
     ## [25] "wdev"     "f.wdev"   "gspd"     "f.gspd"   "s10t"     "f.s10t"  
     ## [31] "julian"   "year"
-
-For illustation purposes we named the new variable we were creating with
-`mutate()` year2 so we could distinguish it from year created by `year()`.  
-Notice that that after using this code, we don't see year2 as a column in our 
-harMet15.09.11 dataframe.  
 
 We want to save this information so that we can plot the daily air temperature
 as well. So, we save the output of our dplyr function as a new data frame. 
@@ -378,8 +386,9 @@ Now we have a dataframe with only values for Year, Julian Day, Mean Air Temp,
 and a Date. 
 
 ##Challenge 3: Applying `dplyr` Skills
-##Calculate and save a data frame of the average air temperate for each month in each year
-For ease with future activities name your new dataframe "temp.monthly.09.11"
+Calculate and save a data frame of the average air temperate for each month in
+each year.  For ease with future activities name your new dataframe
+"temp.monthly.09.11"
 
 
     temp.monthly.09.11 <- harMet15.09.11 %>%
@@ -415,7 +424,7 @@ temp.monthly.09.11 dataframes), let's plot the average daily temperature.
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/plot-airtempDaily-1.png) 
 
-Notice in the code for the x scale, we changed the date format from %m to %b 
+Notice in the code for the x scale (`scale_x_datetime()`), we changed the date format from %m to %b 
 which gives the abreviated month.
 
 Now that we've plotted daily temperature together, plot the monthly on your own
@@ -435,8 +444,8 @@ below.  For ease of future code, name your plot "AirTempMonthly".
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/plot-airtemp-Monthly-1.png) 
 
-Notice in the code for the x scale, we further changed the date format by
-removing the day since we are graphing monthly averages. 
+Notice in the code for the x scale (`scale_x_datetime()`), we further changed
+the date format by removing the day since we are graphing monthly averages. 
 
 Lets compare the two air tempurature figures we have created. Unfortunately
 `ggplot` doesn't recognize `par(mfrow=())` to show side by side figures.
@@ -444,7 +453,7 @@ Instead we can use another package `gridExtra` to do this.
 
 
     require(gridExtra)
-    grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=3)
+    grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/airTemp-plots-compare-1.png) 
 
@@ -454,52 +463,14 @@ small you can use the zoom feature in R Studio to pop the out into a seperate
 window that you can vary the dimensions of.  
 
 ##Challenge 4: Combining `dplyr` and `ggplot` Skills
-## Plot the precipiation by month in all years available. 
-Using Harvard Meterorological 15-min datafile, plot the average monthly 
+Plot the precipiation by month in all years available. 
+
+Using the Harvard Meterorological 15-min datafile, plot the average monthly 
 precipitation using all years (not just 09-11).  Does it make more sense to
-calculate the total precipitation for each month or the average percipitation for
-each month?
+calculate the total precipitation for each month or the average percipitation
+for each month?
 
 
-    prec.monthly <- harMet15 %>%
-      mutate(month = month(datetime), year= year(datetime)) %>%
-      group_by(month, year) %>%
-      summarize(total_prec = sum(prec, na.rm = TRUE), datetime=first(datetime))
-    
-    str(prec.monthly)
 
-    ## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	131 obs. of  4 variables:
-    ##  $ month     : num  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ year      : num  2005 2006 2007 2008 2009 ...
-    ##  $ total_prec: num  120.5 110 82.9 75.7 84.4 ...
-    ##  $ datetime  : POSIXct, format: "2005-01-01 00:15:00" "2006-01-01 00:00:00" ...
-    ##  - attr(*, "vars")=List of 1
-    ##   ..$ : symbol month
-    ##  - attr(*, "drop")= logi TRUE
 
-    PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
-      geom_point(na.rm=TRUE) +
-      ggtitle("Monthly Precipitation in Harvard Forest (2005 to 2011") +
-      theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-      theme(text = element_text(size=20)) +
-      xlab("Month") + ylab("Precipitation (mm)") +
-      scale_x_discrete(labels=month)  #month is no longer datetime, but a discrete number
-    
-    
-    PrecipMonthly
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-4-code-1.png) 
-
-    #If we want written out month labels
-    PrecipMonthly + scale_x_discrete("month", labels = c("1" = "Jan","2" = "Feb",
-      "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
-
-    ## Scale for 'x' is already present. Adding another scale for 'x', which will replace the existing scale.
-
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-4-code-2.png) 
-
-Is there an obvious annual trend in percipitation at Harvard Forest?  
-
-In the next lesson we will learn to expand our plotting abilities to plot two
-variables side by side and to incorporate values from spacial data sets (NDVI)
-into our phenology related plots. 

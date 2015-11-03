@@ -19,8 +19,9 @@ sum(is.na(harMet15$parr))
 #remove the "T" and replace it with a space
 #gsub() replaces all occurances; sub() just replaces first occurance in the set
 harMet15$datetime <- gsub("T", " ", harMet15$datetime)
-#make sure it worked
-head(harMet15)
+#make sure it worked.  Adding [1] allows us to just look at structure for first
+#variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+head(harMet15[1])
 
 ## ----explore-as_date-----------------------------------------------------
 #Convert char data to date (no time) 
@@ -55,8 +56,7 @@ unclass(TimeDatelt)
 harMet15$datetime <- as.POSIXct(harMet15$datetime,format = "%Y-%m-%d %H:%M",
     tz = "America/New_York")
 
-#make sure it worked.  Adding [1] allows us to just look at structure for first
-#variable in dataframe instead of all of them, giving a cleaner output.  If we #wanted the 4th column/variable we would type [4].
+#make sure it worked. 
 str(harMet15[1])
 
 ## ----julian-day-convert--------------------------------------------------
