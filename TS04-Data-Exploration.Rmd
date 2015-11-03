@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lesson 04 Data Exploration"
-date:   2015-10-24
+date:   2015-10-21
 authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
 dateCreated: 2015-10-22
 lastModified: 2015-10-29
