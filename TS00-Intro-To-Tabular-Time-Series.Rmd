@@ -24,14 +24,13 @@ comments: false
 </div>
 </section><!-- /#table-of-contents -->
 
-<div id=“objectives” markdown=“1”>
 
 ##About
 This learning module will walk you through the fundamental principles of working 
 with .csv temporal data in R including how to open, clean, explore, and plot 
 time series data. 
 
-<div id=“objectives” markdown=“1”>
+<div id="objectives" markdown="1">
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 

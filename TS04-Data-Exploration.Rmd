@@ -30,7 +30,7 @@ comments: false
 ##About
 This lesson will teach individuals how to plot subsetted timeseries data (e.g. plot by season) and to plot time series data with NDVI
 
-<div id=“objectives” markdown=“1”>
+<div id="objectives" markdown="1">
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
