@@ -26,6 +26,7 @@ comments: false
 </section><!-- /#table-of-contents -->
 
 <div id=“objectives” markdown=“1”>
+
 ##About
 This lesson will teach students how to import tabular data from a CSV file into
 R. Students will examine the structure of the dataset and get information from a
@@ -130,10 +131,11 @@ our future self. Make notes that are intuitive and intelligible not only to
 yourself but colleageus or collaborators as well.
 
 ```{r metadata-debrief}
+#Metadata Notes
 # column names for variables we are going to use datetime, airt, prec, parr 
 # units for quantitative variables: celsius, millimeters, molePerMeterSquared
 # airt and parr are averages of measurements taken every 1 sec; precip is total 
-# of 15 min period for quantitative variables missing values are given as NA
+  # of 15 min period for quantitative variables missing values are given as NA
 ```
 
 # Metadata Sleuthing
