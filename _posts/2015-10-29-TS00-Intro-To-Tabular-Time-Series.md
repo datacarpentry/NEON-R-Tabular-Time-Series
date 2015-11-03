@@ -32,6 +32,8 @@ time series data.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
+<div id="objectives" markdown="1">
+
 ###Goals / Objectives
 After completing this learning module, you will know how to:
 
@@ -72,6 +74,8 @@ Forest.  The entire dataset can be accessed from their website
 (http://harvardforest.fas.harvard.edu).
 
 #Recommended Pre-Module Reading
+
+</div>
 
 ## Time series data
 Time series data can come in many different forms.  At the fundemental level a 
