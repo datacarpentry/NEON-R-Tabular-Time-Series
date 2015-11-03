@@ -69,14 +69,14 @@ tail(harMet15)
 ## ----subsetting----------------------------------------------------------
 
 #subset out some of the data - 2009-2011
-Har15minyr.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
+harMet15.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
         tz = "America/New_York") & datetime <=
         as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
 
 #check to make sure it worked.  Min/max of datetime
-summary(Har15minyr.09.11)
+summary(harMet15.09.11)
 
-## ----synthesis1-code-----------------------------------------------------
+## ----Challenge1-code-----------------------------------------------------
 
 #import daily file
 harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", 
@@ -105,14 +105,14 @@ head(harMet.daily)
 #julian data - already in file. Field jd
 
 #subset out some of the data - 2009-2011
-harDailyyr.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
+harMetDaily.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
         tz = "America/New_York") & date <=
         as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
 
 #check it
-summary(harDailyyr.09.11$date)
+summary(harMetDaily.09.11$date)
 
 #do we still have the NA in part?
-sum(is.na(harDailyyr.09.11$part))
+sum(is.na(harMetDaily.09.11$part))
 #Output note: now only 1 NA!
 

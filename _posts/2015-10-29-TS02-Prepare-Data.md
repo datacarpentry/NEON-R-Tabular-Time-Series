@@ -1,23 +1,22 @@
 ---
+layout: post
 title: 'Lesson 02: Preparing the Data to Work With'
-code1: null
-date: '2015-10-23'
-output: pdf_document
+date: 2015-10-23
+authors: [Marisa Guarinello, Megan Jones, Courtney Soderberg]
+dateCreated: 2015-10-22
+lastModified: 2015-10-29
+tags: module-1
 description: This lesson will teach individuals how to prepare tabular data for further
   analysis in R, addressing missing values and date-time formats. Students will also
   learn how to convert characters to a time class, to convert date-time to Julian
   day, and how to subset the data into a new data frame.
+code1:
 image:
-  credit: A collaboration between the National Ecological Observatory Network (NEON)
-    and Data Carpentry
-  creditlink: http://www.neoninc.org
   feature: NEONCarpentryHeader_2.png
-lastModified: '2015-10-29'
-layout: post
-dateCreated: '2015-10-22'
-permalink: mm
-tags: module-1
-authors: Marisa Guarinello, Megan Jones, Courtney Soderberg
+  credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
+  creditlink: http://www.neoninc.org
+permalink:m 
+
 ---
 
 <section id="table-of-contents" class="toc">
@@ -64,6 +63,7 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 None
 
 #Lesson Two: Prepare your data so you can work with it
+
 We will use basic R and the lubridate package for working with date-time formats.
 However, there are a few options for working with date-time formats
 (readr, zoo), which are based on similar concepts, you will be able to use help
@@ -73,7 +73,7 @@ text to explore those on your own as you choose.
     # Load packages required for entire script
     library(lubridate)  #working with dates
 
-# Dealing with data gaps
+## Dealing with data gaps
 Recall from our metadata that missing values are given an NA. One must always 
 check for missing values in any of the variables one is working with.  Do we 
 have missing values in our data set? An easy way to check for this is the
@@ -174,6 +174,7 @@ differently. Some are within the core R and others are available through package
 Let's explore a few date and time formats before continuing on our with our 
 analysis. A common format for data that consists of only dates is Date.
 
+
     #Convert char data to date (no time) 
     date <- as.Date("2015-10-19 10:15")   
     str(date)
@@ -183,6 +184,7 @@ analysis. A common format for data that consists of only dates is Date.
     head(date)
 
     ## [1] "2015-10-19"
+
 Here we can see that the date is now not a character but is now date `str(date)` 
 and that we only have the calender date with all time information stripped away 
 `head(Date)`.  If we only had date information to start with it is a good idea 
@@ -202,6 +204,7 @@ Within the core R there are two closely related classes for date and time:
 POSIXct and POSIXlt.  Let's explore both of these before choosing which one
 to use with our data.
 
+
     #Convert char data to date and time.
     TimeDate <- as.POSIXct("2015-10-19 10:15")   
     str(TimeDate)
@@ -211,6 +214,7 @@ to use with our data.
     head(TimeDate)
 
     ## [1] "2015-10-19 10:15:00 MDT"
+
 Here we can see that the date is now not a character but is now POSIXct. When
 looking at the data we see the date and time with time zone designation. 
 
@@ -219,11 +223,13 @@ POSIXct stores date and time as the number of seconds since 1 January 1970
 just a single number this format is easy to use in dataframes and to convert
 from one format to another. 
 
+
     unclass(TimeDate)
 
     ## [1] 1445271300
     ## attr(,"tzone")
     ## [1] ""
+
 Here we see the number of seconds from 1 January 1970 and 9 October 2015 and
 see that it has a time zone attribute stored with it. 
 
@@ -277,6 +283,7 @@ of month, month, year, numeric day of year, etc).
     ## 
     ## $gmtoff
     ## [1] NA
+
 Here we can see that the date is now not a character but is now POSIXlt. When
 looking at the data we see the date and time with time zone designation
 (same as POSIXct). But when we look at the components we can see the seperate 
@@ -339,7 +346,7 @@ In this database, Eastern Standard Time is called "America/New_York".
     ##  $ f.s10t  : chr  "" "" "" "" ...
     ##  $ julian  : num  1 1 1 1 1 1 1 1 1 1 ...
 
-#Convert to Julian days
+##Convert to Julian days
 In some cases you might want to use Julian days, which gives each day of the 
 year a number starting with 1 on Jan 1 and counting up to 365 or 366 on 
 December 31 depending on if it is a leap year or not. (Note: This format can 
@@ -403,19 +410,20 @@ are for smoother plotting and manipulation of data.
     ## 376799         322          37         8.1        19.2           273
     ## 376800         319          34         6.2        19.2           274
 
-#Subsetting
+##Subsetting
 The file contains nearly a decades worth of data.  However, we are more 
 interested in recent patterns, let's just take three years 2009-2011. To do this we
 need to subset the data so that we have just the three years we are interested in.
 We need to include the time zone to get this to work correctly.
 
+
     #subset out some of the data - 2009-2011
-    Har15minyr.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
+    harMet15.09.11 <- subset(harMet15, datetime >= as.POSIXct('2009-01-01 00:00',
             tz = "America/New_York") & datetime <=
             as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
     
     #check to make sure it worked.  Min/max of datetime
-    summary(Har15minyr.09.11)
+    summary(harMet15.09.11)
 
     ##     datetime                         jd           airt        
     ##  Min.   :2009-01-01 00:00:00   Min.   :  1   Min.   :-25.800  
@@ -482,11 +490,9 @@ We need to include the time zone to get this to work correctly.
     ##                     Max.   :25.70                      Max.   :365  
     ## 
 
-Using this subset we will examine basic patterns and create figures in the next 
-lesson.  
-
 
 # Challenge: Using skills from Lessons 1 and 2
+# Load daily .csv datafile from Harvard Forest
 
 Currently we have been using the 15 minute data from the Harvard Forest.  However, 
 overall we are interested in larger scale patterns of greening-up and browning-down.  
@@ -495,6 +501,7 @@ minute data is.
 
 Let's import the Daily Meteorological data from the Harvard Forest using the
 skills we have recently learned. 
+
 
     #import daily file
     harMet.daily <- read.csv("data/AtmosData/HARV/hf001-06-daily-m.csv", 
@@ -711,12 +718,12 @@ skills we have recently learned.
     #julian data - already in file. Field jd
     
     #subset out some of the data - 2009-2011
-    harDailyyr.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
+    harMetDaily.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
             tz = "America/New_York") & date <=
             as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
     
     #check it
-    summary(harDailyyr.09.11$date)
+    summary(harMetDaily.09.11$date)
 
     ##                  Min.               1st Qu.                Median 
     ## "2009-01-01 00:00:00" "2009-10-01 12:00:00" "2010-07-02 00:00:00" 
@@ -724,7 +731,7 @@ skills we have recently learned.
     ## "2010-07-02 00:20:52" "2011-04-01 12:00:00" "2011-12-31 00:00:00"
 
     #do we still have the NA in part?
-    sum(is.na(harDailyyr.09.11$part))
+    sum(is.na(harMetDaily.09.11$part))
 
     ## [1] 1
 

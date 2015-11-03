@@ -380,3 +380,4 @@ In the next lesson we will learn to expand our plotting abilities to plot two
 variables side by side and to incorporate values from spacial data sets (NDVI)
 into our phenology related plots. 
 
+

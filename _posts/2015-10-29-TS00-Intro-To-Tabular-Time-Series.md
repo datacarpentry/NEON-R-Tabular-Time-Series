@@ -46,9 +46,12 @@ calculating basic summary statistics for your data.
 ###Things You'll Need To Complete This Lesson
 
 ####R Libraries to Install
+Lesson 02
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
+Lesson 03
 <li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
 <li><strong>scales:</strong> <code> install.packages("scales")</code></li>
+<li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
 
 
 ####Tools To Install

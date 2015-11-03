@@ -27,10 +27,6 @@ permalink: m
 </div>
 </section><!-- /#table-of-contents -->
 
-
-    # output will have width of 80 max
-    options(width=80)
-
 ##About
 This activity will walk you through the fundamental principles of working 
 with raster data in R.
@@ -49,7 +45,7 @@ Please be sure you have the most current version of `R` and preferably
 R studio to write your code.
 
 ####R Libraries to Install
-<li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
+<li><strong>ggplot</strong> <code> install.packages("ggplot2")</code></li>
 
 
 #Graph precip by total PAR across all seasons
