@@ -4,7 +4,7 @@ title: "Lesson 02: Preparing the Data to Work With"
 date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 dateCreated: 2015-10-22
-lastModified: 2015-10-29
+lastModified: 2015-11-09
 tags: module-1
 description: "This lesson will teach individuals how to prepare tabular data for furtheranalysis in R, addressing missing values and date-time formats. Students will alsolearn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame."
 code1:
@@ -15,15 +15,7 @@ image:
 comments: false
 ---
 
-<section id="table-of-contents" class="toc">
-  <header>
-    <h3>Contents</h3>
-  </header>
-<div id="drawer" markdown="1">
-*  Auto generated table of contents
-{:toc}
-</div>
-</section><!-- /#table-of-contents -->
+{% include _toc.html %}
 
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
@@ -62,7 +54,14 @@ Lessons 00-01 in this Time Series learning module
 
 </div>
 
-#Lesson Two: Prepare your data so you can work with it
+
+NOTE: The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
+available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{: .notice}
+
+#Lesson Two: Prepare the data so it can be worked with 
 
 We will use basic R and the lubridate package for working with date-time formats.
 However, there are a few options for working with date-time formats
@@ -405,54 +404,7 @@ skills we have recently learned.
     #check it out
     str(harMet.daily)
 
-    ## 'data.frame':	5345 obs. of  47 variables:
-    ##  $ date     : POSIXct, format: "2001-02-11" "2001-02-12" ...
-    ##  $ jd       : int  42 43 44 45 46 47 48 49 50 51 ...
-    ##  $ airt     : num  -10.7 -9.8 -2 -0.5 -0.4 -3 -4.5 -9.9 -4.5 3.2 ...
-    ##  $ f.airt   : chr  "" "" "" "" ...
-    ##  $ airtmax  : num  -6.9 -2.4 5.7 1.9 2.4 1.3 -0.7 -3.3 0.7 8.9 ...
-    ##  $ f.airtmax: chr  "" "" "" "" ...
-    ##  $ airtmin  : num  -15.1 -17.4 -7.3 -5.7 -5.7 -9 -12.7 -17.1 -11.7 -1.3 ...
-    ##  $ f.airtmin: chr  "" "" "" "" ...
-    ##  $ rh       : int  40 45 70 78 69 82 66 51 57 62 ...
-    ##  $ f.rh     : chr  "" "" "" "" ...
-    ##  $ rhmax    : int  58 85 100 100 100 100 100 71 81 78 ...
-    ##  $ f.rhmax  : chr  "" "" "" "" ...
-    ##  $ rhmin    : int  22 14 34 59 37 46 30 34 37 42 ...
-    ##  $ f.rhmin  : chr  "" "" "" "" ...
-    ##  $ dewp     : num  -22.2 -20.7 -7.6 -4.1 -6 -5.9 -10.8 -18.5 -12 -3.5 ...
-    ##  $ f.dewp   : chr  "" "" "" "" ...
-    ##  $ dewpmax  : num  -16.8 -9.2 -4.6 1.9 2 -0.4 -0.7 -14.4 -4 0.6 ...
-    ##  $ f.dewpmax: chr  "" "" "" "" ...
-    ##  $ dewpmin  : num  -25.7 -27.9 -10.2 -10.2 -12.1 -10.6 -25.4 -25 -16.5 -5.7 ...
-    ##  $ f.dewpmin: chr  "" "" "" "" ...
-    ##  $ prec     : num  0 0 0 6.9 0 2.3 0 0 0 0 ...
-    ##  $ f.prec   : chr  "" "" "" "" ...
-    ##  $ slrt     : num  14.9 14.8 14.8 2.6 10.5 6.4 10.3 15.5 15 7.7 ...
-    ##  $ f.slrt   : chr  "" "" "" "" ...
-    ##  $ part     : num  NA NA NA NA NA NA NA NA NA NA ...
-    ##  $ f.part   : chr  "M" "M" "M" "M" ...
-    ##  $ netr     : num  NA NA NA NA NA NA NA NA NA NA ...
-    ##  $ f.netr   : chr  "M" "M" "M" "M" ...
-    ##  $ bar      : int  1025 1033 1024 1016 1010 1016 1008 1022 1022 1017 ...
-    ##  $ f.bar    : chr  "" "" "" "" ...
-    ##  $ wspd     : num  3.3 1.7 1.7 2.5 1.6 1.1 3.3 2 2.5 2 ...
-    ##  $ f.wspd   : chr  "" "" "" "" ...
-    ##  $ wres     : num  2.9 0.9 0.9 1.9 1.2 0.5 3 1.9 2.1 1.8 ...
-    ##  $ f.wres   : chr  "" "" "" "" ...
-    ##  $ wdir     : int  287 245 278 197 300 182 281 272 217 218 ...
-    ##  $ f.wdir   : chr  "" "" "" "" ...
-    ##  $ wdev     : int  27 55 53 38 40 56 24 24 31 27 ...
-    ##  $ f.wdev   : chr  "" "" "" "" ...
-    ##  $ gspd     : num  15.4 7.2 9.6 11.2 12.7 5.8 16.9 10.3 11.1 10.9 ...
-    ##  $ f.gspd   : chr  "" "" "" "" ...
-    ##  $ s10t     : num  NA NA NA NA NA NA NA NA NA NA ...
-    ##  $ f.s10t   : chr  "M" "M" "M" "M" ...
-    ##  $ s10tmax  : num  NA NA NA NA NA NA NA NA NA NA ...
-    ##  $ f.s10tmax: chr  "M" "M" "M" "M" ...
-    ##  $ s10tmin  : num  NA NA NA NA NA NA NA NA NA NA ...
-    ##  $ f.s10tmin: chr  "M" "M" "M" "M" ...
-    ##  $ winter   : logi  FALSE FALSE TRUE FALSE FALSE TRUE ...
+    ## Error in str(harMet.daily): object 'harMet.daily' not found
 
     #Metadata
     #Differences in 2 variable names PAR=part, DateTime=date
@@ -461,30 +413,32 @@ skills we have recently learned.
     #Check for NA values
     sum(is.na(harMet.daily$date))
 
-    ## [1] 0
+    ## Error in eval(expr, envir, enclos): object 'harMet.daily' not found
 
     sum(is.na(harMet.daily$airt))
 
-    ## [1] 0
+    ## Error in eval(expr, envir, enclos): object 'harMet.daily' not found
 
     sum(is.na(harMet.daily$prec))
 
-    ## [1] 0
+    ## Error in eval(expr, envir, enclos): object 'harMet.daily' not found
 
     sum(is.na(harMet.daily$part))
 
-    ## [1] 1032
+    ## Error in eval(expr, envir, enclos): object 'harMet.daily' not found
 
     #OuputNote: PART is missing 1032 values
     
     #convert date 
     harMet.daily$date <- as.POSIXct(harMet.daily$date,format = "%Y-%m-%d",
           tz = "America/New_York")
+
+    ## Error in as.POSIXct(harMet.daily$date, format = "%Y-%m-%d", tz = "America/New_York"): object 'harMet.daily' not found
+
     #check it out
     str(harMet.daily [1])
 
-    ## 'data.frame':	5345 obs. of  1 variable:
-    ##  $ date: POSIXct, format: "2001-02-11" "2001-02-12" ...
+    ## Error in str(harMet.daily[1]): object 'harMet.daily' not found
 
     #julian data - already in file. Field jd
     
@@ -492,18 +446,17 @@ skills we have recently learned.
     harMetDaily.09.11 <- subset(harMet.daily, date >= as.POSIXct('2009-01-01 00:00',
             tz = "America/New_York") & date <=
             as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
-    
+
+    ## Error in subset(harMet.daily, date >= as.POSIXct("2009-01-01 00:00", tz = "America/New_York") & : object 'harMet.daily' not found
+
     #check it
     summary(harMetDaily.09.11$date)
 
-    ##                  Min.               1st Qu.                Median 
-    ## "2009-01-01 00:00:00" "2009-10-01 12:00:00" "2010-07-02 00:00:00" 
-    ##                  Mean               3rd Qu.                  Max. 
-    ## "2010-07-02 00:20:52" "2011-04-01 12:00:00" "2011-12-31 00:00:00"
+    ## Error in summary(harMetDaily.09.11$date): object 'harMetDaily.09.11' not found
 
     #do we still have the NA in part?
     sum(is.na(harMetDaily.09.11$part))
 
-    ## [1] 1
+    ## Error in eval(expr, envir, enclos): object 'harMetDaily.09.11' not found
 
     #Output note: now only 1 NA!

@@ -4,7 +4,7 @@ title: "Lesson 00: Intro to Tabular Time Series"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 dateCreated:  2015-10-22
-lastModified: 2015-10-29
+lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 tags: [module-1]
 description: "This learning module explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
 image:
@@ -14,16 +14,7 @@ image:
 comments: false
 ---
 
-<section id="table-of-contents" class="toc">
-  <header>
-    <h3>Contents</h3>
-  </header>
-<div id="drawer" markdown="1">
-*  Auto generated table of contents
-{:toc}
-</div>
-</section><!-- /#table-of-contents -->
-
+{% include _toc.html %}
 
 ##About
 This learning module will walk you through the fundamental principles of working 
@@ -72,11 +63,13 @@ If you are doing this module without first completing the Raster data module,
 please also download  needed data file HARV2011NDVI.csv from 
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
-The data used to create the files in this dataset were collected at Harvard 
-Forest.  The entire dataset can be accessed from their website 
-(http://harvardforest.fas.harvard.edu).
-
 </div>
+
+NOTE: The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
+available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{: .notice}
 
 #Recommended Pre-Module Reading
 

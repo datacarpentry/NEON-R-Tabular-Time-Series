@@ -4,7 +4,7 @@ title: "Lesson 04: Data Exploration"
 date:   2015-10-21
 authors: "Megan A. Jones, Marisa Guarinello, Courtney Soderberg"
 dateCreated: 2015-10-22
-lastModified: 2015-10-29
+lastModified: 2015-11-09
 tags: [module-1]
 description: "This lesson will teach individuals how to plot subsetted timeseries data (e.g. plot by season) and to plot time series data with NDVI."
 code1:
@@ -15,16 +15,7 @@ image:
 comments: false
 ---
 
-<section id="table-of-contents" class="toc">
-  <header>
-    <h3>Contents</h3>
-  </header>
-<div id="drawer" markdown="1">
-*  Auto generated table of contents
-{:toc}
-</div>
-</section><!-- /#table-of-contents -->
-
+{% include _toc.html %}
 
 
 ##About
@@ -57,6 +48,13 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 Lessons 00-03 in this Time Series learning module
 </div>
 
+
+NOTE: The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
+available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{: .notice}
+
 #Lesson 04: Further Exploration of the Data
 Up until this point in the lesson we have been looking at how a single variable 
 changes across time. In the interest of studying phenology it is likely that 
@@ -82,9 +80,12 @@ this using the code we previously learned and substituatuing precipitation
                theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
                theme(text = element_text(size=20)) +
                xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+
+    ## Error in ggplot(harMet.daily, aes(prec, part)): object 'harMet.daily' not found
+
     par.precip
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Data-Exploration/PAR-v-precip-1.png) 
+    ## Error in eval(expr, envir, enclos): object 'par.precip' not found
 
 While there is a lot of noise in the data, there does seem to be a trend of 
 lower PAR when precipitation is high. Yet in this data we don't tease apart any 
@@ -118,13 +119,14 @@ In order to subset the data by season we will again use the `dplyr` package.
     winter<-harMet.daily%>%      
     mutate(month=format(date, "%m")) %>%
       subset(month == 12 )
-    
+
+    ## Error in eval(expr, envir, enclos): object 'harMet.daily' not found
+
     summer<-harMet.daily%>%      
     mutate(month=format(date, "%m")) %>%
       subset(month==c(06,07,08))
 
-    ## Warning in month == c(6, 7, 8): longer object length is not a multiple of
-    ## shorter object length
+    ## Error in eval(expr, envir, enclos): object 'harMet.daily' not found
 
 ##Use facets in ggplot to create the same graph for each season and
 #display them in a grid

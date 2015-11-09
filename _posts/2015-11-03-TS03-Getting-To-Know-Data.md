@@ -5,7 +5,7 @@ date:   2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2015-11-02
+lastModified: 2015-11-09
 tags: [module-1]
 description: "This lesson will teach individuals how to conduct basic data manipulation and create basic plots of time series data."
 code1:
@@ -16,15 +16,7 @@ image:
 comments: false
 ---
 
-<section id="table-of-contents" class="toc">
-  <header>
-    <h3>Contents</h3>
-  </header>
-<div id="drawer" markdown="1">
-*  Auto generated table of contents
-{:toc}
-</div>
-</section><!-- /#table-of-contents -->
+{% include _toc.html %}
 
 
 ##About
@@ -60,6 +52,13 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 Lessons 00-02 in this Time Series learning module
 
 </div>
+
+
+NOTE: The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
+available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{: .notice}
 
 #Lesson 03: Getting to Know The Data
 As we continue working with our data we are going to learn the skills that
@@ -125,10 +124,12 @@ name the plot 'PrecipDaily".
                theme(text = element_text(size=20)) +
                xlab("Date") + ylab("Precipitation (mm)") +
               scale_x_datetime(labels=date_format ("%d/%m/%y"))
-    
+
+    ## Error in ggplot(harMetDaily.09.11, aes(date, prec)): object 'harMetDaily.09.11' not found
+
     PrecipDaily
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-2-code-1.png) 
+    ## Error in eval(expr, envir, enclos): object 'PrecipDaily' not found
 
 We will return to precipitation data in Challenge 4 and discuss this plot. 
 
@@ -142,6 +143,21 @@ package.
 
 
     library (dplyr)   #aid with manipulating data
+
+    ## 
+    ## Attaching package: 'dplyr'
+    ## 
+    ## The following objects are masked from 'package:lubridate':
+    ## 
+    ##     intersect, setdiff, union
+    ## 
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+    ## 
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
 The `dplyr` package is designed to simplify more complicated data manipulations
 in data frames.  Beyond what we are focusing on today, it is also useful
@@ -452,6 +468,9 @@ Instead we can use another package `gridExtra` to do this.
 
 
     require(gridExtra)
+
+    ## Loading required package: gridExtra
+
     grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/airTemp-plots-compare-1.png) 
@@ -517,7 +536,7 @@ another?
 
     grid.arrange(PrecipDaily, PrecipMonthly, ncol=1)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/compare-precip-1.png) 
+    ## Error in arrangeGrob(...): object 'PrecipDaily' not found
 
 In the next lesson we will learn to expand our plotting abilities to plot two
 variables side by side and to incorporate values from spacial data sets (NDVI)
