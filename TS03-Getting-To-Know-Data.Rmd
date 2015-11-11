@@ -136,7 +136,7 @@ need to learn a bit about how to manipulate data in R. We'll use the `dplyr`
 package. 
 
 ``` {r load-dplyr}
-library (dplyr)   #aid with manipulating data
+library (dplyr)   #aid with manipulating data #remember it is good coing practice to load all packages at the beginning of your script
 ```
 
 The `dplyr` package is designed to simplify more complicated data manipulations
