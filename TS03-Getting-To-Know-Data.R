@@ -32,7 +32,7 @@ PrecipDaily <- ggplot(harMetDaily.09.11, aes(date, prec)) +
 PrecipDaily
 
 ## ----load-dplyr----------------------------------------------------------
-library (dplyr)   #aid with manipulating data
+library (dplyr)   #aid with manipulating data #remember it is good coing practice to load all packages at the beginning of your script
 
 ## ----dplyr-group---------------------------------------------------------
 harMet15.09.11 %>%          #Within the harMet15.09.11 data
