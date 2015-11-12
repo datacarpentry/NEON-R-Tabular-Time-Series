@@ -79,10 +79,6 @@ To do this, we're going to use the package `ggplot2` to plot the air temperature
     #Remember it is good coding technique to add additional libraries to the top of
       #your script (we started this section in Lesson 02)
     library (ggplot2)  #for creating graphs
-
-    ## Find out what's changed in ggplot2 with
-    ## news(Version == "1.0.1", package = "ggplot2")
-
     library (scales)   #to access breaks/formatting functions
     
     #plot Air Temperature Data across 2009-2011 using 15-minute data
@@ -144,25 +140,6 @@ package.
 
 
     library (dplyr)   #aid with manipulating data #remember it is good coing practice to load all packages at the beginning of your script
-
-    ## 
-    ## Attaching package: 'dplyr'
-    ## 
-    ## The following objects are masked from 'package:lubridate':
-    ## 
-    ##     intersect, setdiff, union
-    ## 
-    ## The following objects are masked from 'package:raster':
-    ## 
-    ##     intersect, select, union
-    ## 
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-    ## 
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
 
 The `dplyr` package is designed to simplify more complicated data manipulations
 in dataframes.  Beyond what we are focusing on today, it is also useful
@@ -472,9 +449,6 @@ Instead we can use another package, `gridExtra`, to do this.
 
 
     require(gridExtra)
-
-    ## Loading required package: gridExtra
-
     grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/airTemp-plots-compare-1.png) 

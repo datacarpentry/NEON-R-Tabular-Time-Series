@@ -38,12 +38,10 @@ tail(harMet.daily)
 #run this code to plot the same plot as before but with one plot per season
 par.precip + facet_grid(. ~ season)
 
-#Do you know why this didn't work? We added the season variable to harMet.daily after 
-#we created the original par.precip plot. Go back up to the code we used to create
-# par.precip and run it again; now it will include the new version of harMet.daily
-#that has the season variable.
+## ----create-new-par.precip-----------------------------------------------
+#need to add code
 
-#run the code again
+## ----plot-by-season2-----------------------------------------------------
 par.precip + facet_grid(. ~ season)
 # for a landscape orientation of the plots:
 par.precip + facet_grid(season ~ .)

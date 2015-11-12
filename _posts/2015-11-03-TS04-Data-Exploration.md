@@ -2,38 +2,40 @@
 layout: post
 title: "Lesson 04: Data Exploration"
 date:   2015-10-21
-authors: "Megan A. Jones, Marisa Guarinello, Courtney Soderberg"
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
+contributors: [Leah Wasser]
 dateCreated: 2015-10-22
 lastModified: 2015-11-12
+category:  
 tags: [module-1]
+mainTag: GIS-Spatial-Data
 description: "This lesson will teach individuals how to plot subsetted timeseries data (e.g., plot by season) and to plot time series data with NDVI."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
+permalink: /R/Data-Exploration
 comments: false
 ---
 
 {% include _toc.html %}
 
-
 ##About
 This lesson will teach individuals how to plot subsetted timeseries data (e.g., plot by season) and to plot time series data with NDVI.
 
-<div id="objectives" markdown="1">
-
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-###Goals / Objectives
-After completing this activity, you will know:
- * How to use facets in ggplot,
- * How to combine different types of data into one plot.
+<div id="objectives" markdown="1">
 
+###Goals / Objectives
+After completing this activity, you will:
+ * Know how to use facets in ggplot,
+ * Be able to combine different types of data into one plot.
 
 ###Things You'll Need To Complete This Lesson
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
+Please be sure you have the most current version of `R` and, preferably,
+RStudio to write your code.
 
 ####R Libraries to Install
 <li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
@@ -46,6 +48,7 @@ http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
 Lessons 00-03 in this Time Series learning module
+
 </div>
 
 
@@ -66,8 +69,8 @@ the seasons before adding the NDVI data into the mix.  Using the NDVI data we
 can finally directly compare the observed plant phenology with patterns we've 
 already been exploring.  
 
-Note: All the packages we need in this lesson were loaded in previous lessons 00-03,
-the code is not included here.
+All the packages we need in this lesson were loaded in previous lessons
+00-03, the code is not included here.  {: .notice}
 
 ##Graph precip by total PAR across all seasons
 PAR, a measure of solar radiation, is less on cloudy days and precipitation is
@@ -75,6 +78,7 @@ also more likely when clouds are present.  We will use `ggplot` to graph PAR
 and precipitation from the daily Harvard Meterological data.  We can simply do
 this using the code we previously learned and substituting precipitation
 (prec) in for time on the x axis.  
+
 
     #PAR v precip 
     par.precip <- ggplot(harMet.daily,aes(prec, part)) +
@@ -211,20 +215,22 @@ In order to subset the data by season we will again use the `dplyr` package.
     ## 5344        18.1           18.8              17.5              09   fall
     ## 5345        19.3           19.7              18.7              09   fall
 
-##Use facets in ggplot to create the same graph for each season and
-#display them in a grid
+##Use facets in ggplot
+This allows us to create the same graph for each season and display them in a
+grid. Also break up this chunk and move some in code directions to text. 
 
     #run this code to plot the same plot as before but with one plot per season
     par.precip + facet_grid(. ~ season)
 
     ## Error in layout_base(data, cols, drop = drop): At least one layer must contain all variables used for facetting
 
-    #Do you know why this didn't work? We added the season variable to harMet.daily after 
-    #we created the original par.precip plot. Go back up to the code we used to create
-    # par.precip and run it again; now it will include the new version of harMet.daily
-    #that has the season variable.
-    
-    #run the code again
+Why this didn't work? 
+We added the season variable to harMet.daily after we created the original par.precip plot. Go back up to the code we used to create par.precip and run it again; now it will include the new version of harMet.daily that has the season variable.
+
+    #need to add code
+
+Let's try the original code again with the new plot. 
+
     par.precip + facet_grid(. ~ season)
 
     ## Error in layout_base(data, cols, drop = drop): At least one layer must contain all variables used for facetting
@@ -239,7 +245,9 @@ In order to subset the data by season we will again use the `dplyr` package.
 
     ## Error in layout_base(data, vars, drop = drop): At least one layer must contain all variables used for facetting
 
-#Graph one of those variables and NDVI data together
+#Graph variables and NDVI data together
+Add discussion of why you might want to do this. 
+
 
     #first read in the NDVI CSV data
     NDVI.2009 <- read.csv(file="Landsat_NDVI/Harv2009NDVI.csv", stringsAsFactors = FALSE)
@@ -309,7 +317,10 @@ In order to subset the data by season we will again use the `dplyr` package.
 #Polishing your ggPlot graphs
 Throughout this module we have been creating plots using ggplot.  We've covered
 the basics of adding axis labels and titles but using ggplot you can do so much 
-more.  If you are interested in making your graphs look better consider reading
+more.  If you are interested in making your graphs look better consider
+following up with any of these resources:
 
-1) ggplot2 Cheatsheet from Zev Ross:  http://neondataskills.org/cheatsheets/R-GGPLOT2/
-2) ggplot 2 documentation index: http://docs.ggplot2.org/current/index.html#
+1) ggplot2 Cheatsheet from Zev Ross: <a href="http://neondataskills.org/cheatsheets/R-GGPLOT2/" target="_blank"> ggplot2 Cheatsheet</a>  
+2) ggplot2 documentation index: 
+ <a href="http://docs.ggplot2.org/current/index.html#" target="_blank"> ggplot2 Documentation</a>    
+3) NEON's Publishable Maps Tutorial ADD LINK TO PRETTY MAPS TUTORIAL WHEN DONE
