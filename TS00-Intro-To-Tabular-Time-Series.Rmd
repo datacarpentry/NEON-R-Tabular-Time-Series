@@ -22,7 +22,7 @@ comments: false
 
 ##About
 This learning module will walk you through the fundamental principles of working 
-with .csv temporal data in R including how to open, clean, explore, and plot 
+with `.csv` temporal data in `R` including how to open, clean, explore, and plot 
 time series data. 
 
 <div id="objectives" markdown="1">
@@ -32,7 +32,7 @@ time series data.
 ###Goals / Objectives
 After completing this learning module, you will know how to:
 
-  * Open a `.csv` file in R using `read.csv`.
+  * Open a `.csv` file in 'R'using `read.csv`.
   * Work with `date.frame` fields in `R`.
   * Examine data structures and types
   * Convert a date field, stored as a character into an `R` date format.
@@ -47,7 +47,7 @@ After completing this learning module, you will know how to:
 
 ####Tools To Install
 
-Please be sure you have the most current version of R and, preferably,
+Please be sure you have the most current version of 'R'and, preferably,
 RStudio to write your code.
 
 ####Data to Download
@@ -188,13 +188,13 @@ class(harMetdaily$airt)
 ```
 
 Looking at our data, we can see that the datetime field actually imported into
-`R` as a character format. This means that R does not know how to plot these 
+`R` as a character format. This means that `R` does not know how to plot these 
 data as a continuous variable on the X axis. The `airt` field is numeric so that 
 field should plot, just fine.
 
 #Working With Time Formats
 We need to convert our date field, which is currently stored as a character value
-to an actual date format that can be displayed quantitively. Lucky for us, R has 
+to an actual date format that can be displayed quantitively. Lucky for us, `R` has 
 `date` format. We can reassign the `harMetdaily$date` field using `as.date`.
 
 ```{r convert-date-time }
