@@ -55,21 +55,22 @@ RStudio to write your code.
 <a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
 Download Atmospheric Data</a>
 
-</div>
-
 NOTE: The data used in this tutorial were collected at Harvard Forest which is
 a the National Ecological Observatory Network field site 
 <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
 More about the NEON Harvard Forest field site</a>. These data are proxy data for 
 what will be available for 30 years [on the NEON data portal](http://data.neoninc.org/ "NEON data")
 for both Harvard forest and other field sites located across the United States.
-{: .notice}
+
+</div>
+
 
 
 #The Data Approach
 
-In this lesson, we will explore micro-meterology data collected from a flux
-tower at the NEON Harvard Forest field site. We are interested in exploring 
+In this lesson, we will explore micro-meterology data collected from a 
+<a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">flux
+tower</a> at the NEON Harvard Forest field site. We are interested in exploring 
 patterns associated with changes in temperature, precipitation, PAR and day 
 length - metrics that impact changes in plant phenology 
 
@@ -82,7 +83,8 @@ We have received data from a flux tower at Harvard Forest in `.csv` format.
 `.csv` stands for comma separated values. It is a text file based format, where 
 each value in the dataset
 is separate by a comma. Plain text formats are ideal for working both across 
-platforms (MAC, PC, LINUX, etc) and also can be read by many different tools.  
+platforms (MAC, PC, LINUX, etc) and also can be read by many different tools. This
+file format is further less likely to become obsolete over time!
 
 * <a href="" target=_blank"> MORE ON CSV HERE...FIND LINK?**</a>
 
@@ -166,7 +168,7 @@ We will use the `qplot` function in the `ggplot2` library which stands for quick
 are stored in. 
 
 ```{r plot-data}
-#quickly plo the data
+#quickly plot the data
 qplot(x=date,y=airt, data=harMetdaily)
 
 ```
