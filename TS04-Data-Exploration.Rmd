@@ -1,80 +1,229 @@
 ---
 layout: post
-title: "Lesson 04 Data Exploration"
-date:   2015-10-24
-authors: "Marisa Guarinello, Megan Jones, Courtney Soderberg"
+title: "Lesson 04: Data Exploration"
+date:   2015-10-21
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
+contributors: [Leah Wasser]
 dateCreated: 2015-10-22
-lastModified: 2015-10-29
+lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+category:  
 tags: [module-1]
-description: "This lesson will teach individuals how to plot subsetted timeseries
-data (e.g. plot by season) and to plot time series data with NDVI."
+mainTag: GIS-Spatial-Data
+description: "This lesson will teach individuals how to plot subsetted timeseries data (e.g., plot by season) and to plot time series data with NDVI."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: m
-
+permalink: /R/Data-Exploration
+comments: false
 ---
 
-<section id="table-of-contents" class="toc">
-  <header>
-    <h3>Contents</h3>
-  </header>
-<div id="drawer" markdown="1">
-*  Auto generated table of contents
-{:toc}
-</div>
-</section><!-- /#table-of-contents -->
+{% include _toc.html %}
 
 ##About
-This activity will walk you through the fundamental principles of working 
-with raster data in R.
+This lesson will teach individuals how to plot subsetted timeseries data (e.g., plot by season) and to plot time series data with NDVI.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
+<div id="objectives" markdown="1">
 
 ###Goals / Objectives
-After completing this activity, you will know:
-* How to use facets in ggplot
-* How to combine different types of data into one plot.
+After completing this activity, you will:
+ * Know how to use facets in ggplot,
+ * Be able to combine different types of data into one plot.
 
-
-###hings You'll Need To Complete This Lesson
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
+###Things You'll Need To Complete This Lesson
+Please be sure you have the most current version of `R` and, preferably,
+RStudio to write your code.
 
 ####R Libraries to Install
-<li><strong>ggplot</strong> <code> install.packages("ggplot2")</code></li>
+<li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
+<li><strong>scales:</strong> <code> install.packages("scales")</code></li>
+<li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
+
+####Data to Download
+Make sure you have downloaded the Landsat_NDVI folder from
+http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
+
+####Recommended Pre-Lesson Reading
+Lessons 00-03 in this Time Series learning module
+
+</div>
 
 
-#Graph precip by total PAR across all seasons
+NOTE: The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
+available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{: .notice}
+
+#Lesson 04: Further Exploration of the Data
+Up until this point in the lesson we have been looking at how a single variable 
+changes across time. In the interest of studying phenology it is likely that 
+some combination of precipitation, temperature, and solar radiation (PAR) plays
+a role in the annual greening and browning of plants.  
+
+Let's look at interactions between several of the variables to each other across
+the seasons before adding the NDVI data into the mix.  Using the NDVI data we
+can finally directly compare the observed plant phenology with patterns we've 
+already been exploring.  
+
+All the packages we need in this lesson were loaded in previous lessons
+00-03, the code is not included here.  {: .notice}
+
+##Graph precip by total PAR across all seasons
+PAR, a measure of solar radiation, is less on cloudy days and precipitation is
+also more likely when clouds are present.  We will use `ggplot` to graph PAR
+and precipitation from the daily Harvard Meterological data.  We can simply do
+this using the code we previously learned and substituting precipitation
+(prec) in for time on the x axis.  
+
 ```{r PAR-v-precip}
-
-part.prec <- ggplot(harMet.daily,aes(prec, part)) +
-           geom_point() +
-           ggtitle("Relationship between precipitation and PART") +
+#PAR v precip 
+par.precip <- ggplot(harMet.daily,aes(prec, part)) +
+           geom_point(na.rm=TRUE) +    #removing the NA values
+           ggtitle("Daily Precipitation and PAR at Harvard Forest") +
            theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
            theme(text = element_text(size=20)) +
-           xlab("Total Precipitation") + ylab("Mean Total PAR")
-
+           xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+par.precip
 ```
 
-#Use daily data and subset by seasons (retaining PAR, prec, & temp variables)
+While there is a lot of noise in the data, there does seem to be a trend of 
+lower PAR when precipitation is high. Yet in this data we don't tease apart any 
+of annual patterns as date isn't any part of this figure.  
+
+##Use daily data and subset by seasons (retaining PAR, precip, & temp variables)
+One way to add a time component to this figure is to subset the data by season 
+and then to plot a facetted graph showing the data by season.  
+
+The first step to doing this is to subset by season.  First, we have to switch 
+away from coding and data analysis and think about ecology.  What is the best
+way to break a year apart into seasons?  
+
+The divisions will change depending on the geographic location and climate where the
+data were collected.  We are using data from Harvard Forest in Massachusetts in
+in the northeastern United States.  Given the strong seasonal affects in this 
+area dividing the year into 4 seasons is ecologically relevant.  Based on
+general knowledge of the area it is also plausible to group the months as 
+
+ * Winter: December - February
+ * Spring: March - May 
+ * Summer: June - August
+ * Fall: September - November 
+ 
+In order to subset the data by season we will again use the `dplyr` package.
+
 ```{r subsetting-by-season}
-
 #subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
+#add month column
+harMet.daily <- harMet.daily  %>% 
+  mutate(month=format(date,"%m"))
+
+#check structure of this variable
+str(harMet.daily$month)
+
+#notice it is a character
+
+#use mutate to create a new variable for season, because month is a character variable we need to put the month number in quotes in this formula
+# %in% is short-hand for OR, so the 3rd line of code essentially says "If the month variable is equal to 12 or to 01 or to 02, set the season variable to winter.
+harMet.daily <- harMet.daily %>% 
+  mutate(season = 
+           ifelse(month %in% c("12", "01", "02"), "winter",
+           ifelse(month %in% c("03", "04", "05"), "spring",
+           ifelse(month %in% c("06", "07", "08"), "summer",
+           ifelse(month %in% c("09", "10", "11"), "fall", "Error")))))
+
+#check to see if this worked
+head(harMet.daily)
+tail(harMet.daily)
 
 ```
 
-#Use facets in ggplot to create the same graph for each season and display them in a grid
+##Use facets in ggplot
+This allows us to create the same graph for each season and display them in a
+grid. Also break up this chunk and move some in code directions to text. 
 ```{r plot-by-season}
 
-#part.prec + facet_grid(. ~ season)
-#part.prec + facet_grid(season ~ .)
+#run this code to plot the same plot as before but with one plot per season
+par.precip + facet_grid(. ~ season)
+```
 
-#part.prect + facet_wrap(~season, ncol = 2)
+Why this didn't work? 
+We added the season variable to harMet.daily after we created the original par.precip plot. Go back up to the code we used to create par.precip and run it again; now it will include the new version of harMet.daily that has the season variable.
+``` {r create-new-par.precip}
+#need to add code
+```
+
+Let's try the original code again with the new plot. 
+``` {r plot-by-season2}
+par.precip + facet_grid(. ~ season)
+# for a landscape orientation of the plots:
+par.precip + facet_grid(season ~ .)
+#and another arrangementt of plots:
+par.precip + facet_wrap(~season, ncol = 2)
 
 ```
 
-#Graph one of those variables and NDVI data together
+#Graph variables and NDVI data together
+Add discussion of why you might want to do this. 
+
+```{r NDVI plots}
+#first read in the NDVI CSV data
+NDVI.2009 <- read.csv(file="Landsat_NDVI/Harv2009NDVI.csv", stringsAsFactors = FALSE)
+#check out the data
+str(NDVI.2009)
+View(NDVI.2009)
+
+###plot of NDVI vs. PAR using daily data
+#first lets get just 2009 from the harmet.Daily data since that is the only year for which we have NDVI data
+harMet.daily2009 <- harMet.daily %>% 
+  mutate(year = year(date)) %>%   #need to create a year only column first
+  filter(year == "2009")
+
+#ggplot does not provide for two y-axes and the scale for these two variables are vastly different.
+#So we will create a plot for each variable using the same time variable (julian day) as our x-axis.
+#Then we will plot the two plots in the same viewer so we can compare
+
+#create plot of julian day vs. PAR
+par.2009 <- ggplot(harMet.daily2009, aes(jd,part))+
+  geom_point(na.rm=TRUE)+
+  ggtitle("Daily PAR at Harvard Forest, 2009")+
+  theme(legend.position = "none", plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) 
+
+#create plot of julian day vs. NDVI
+NDVI.2009 <- ggplot(NDVI.2009,aes(julianDays, meanNDVI))+
+  geom_point(aes(color = "green", size = 4)) +
+  ggtitle("Daily NDVI at Harvard Forest, 2009")+
+  theme(legend.position = "none", plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) 
+
+#display the plots together
+grid.arrange(par.2009, NDVI.2009) 
+
+#Let's take a look at air temperature too
+airt.2009 <- ggplot(harMet.daily2009, aes(jd,airt))+
+  geom_point(na.rm=TRUE)+
+  ggtitle("Daily Air Temperature at Harvard Forest, 2009")+
+  theme(legend.position = "none", plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+           theme(text = element_text(size=20)) 
+
+grid.arrange(airt.2009, NDVI.2009)
+#all 3 together
+grid.arrange(par.2009, airt.2009, NDVI.2009)
+
+```
+
+
+#Polishing your ggPlot graphs
+Throughout this module we have been creating plots using ggplot.  We've covered
+the basics of adding axis labels and titles but using ggplot you can do so much 
+more.  If you are interested in making your graphs look better consider
+following up with any of these resources:
+
+1) ggplot2 Cheatsheet from Zev Ross: <a href="http://neondataskills.org/cheatsheets/R-GGPLOT2/" target="_blank"> ggplot2 Cheatsheet</a>  
+2) ggplot2 documentation index: 
+ <a href="http://docs.ggplot2.org/current/index.html#" target="_blank"> ggplot2 Documentation</a>    
+3) NEON's Publishable Maps Tutorial ADD LINK TO PRETTY MAPS TUTORIAL WHEN DONE

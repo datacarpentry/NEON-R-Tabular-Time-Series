@@ -10,10 +10,10 @@ require(knitr)
 
 #################### Set up Input Variables #############################
 #Inputs - Where the git repo is on your computer
-gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series/"
+gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series_main/"
 
 #jekyll will only render md posts that begin with a date. Add one.
-add.date <- "2015-10-29-"
+add.date <- "2015-11-03-"
 
 #set working dir - this is where the data are located
 wd <- "~/Documents/data/Spatio_TemporalWorkshop/1_WorkshopData"
@@ -38,7 +38,6 @@ opts_knit$set(base.url = base.url)
 #if it doesn't exist, create it
 #note this will fail if the sub dir doesn't exist
 if (file.exists(paste0(wd,"/","images"))){
-
     print("image dir exists - all good")
 } else {
   #create image directory structure
