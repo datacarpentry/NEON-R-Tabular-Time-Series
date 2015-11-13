@@ -114,7 +114,7 @@ Note that we will use `stringsAsFactors = FALSE`.
 
 ```{r import-csv}
 
-#Load csv file of 15 min meterological data from Harvard Forest
+#Load csv file of daily meterological data from Harvard Forest
 #don't load strings (a series of letters or numerals) as factors so they remain characters
 harMetdaily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
                      stringsAsFactors = FALSE)
