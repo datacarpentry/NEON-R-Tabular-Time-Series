@@ -1,12 +1,16 @@
 ---
 layout: post
-title: "Lesson 00: Intro to Tabular Time Series"
+title: "Lesson 00: Working With Date Formats in R - Intro to Tabular Time Series"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
+contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 tags: [module-1]
-description: "This learning module explains the fundamental principles, functions, and metadata that you need to work with tabular (.csv) temporal data in R."
+description: "This lesson will demonstrate how to import a time series dataset 
+stored in .csv format into R. It will explore column formats and will walk through 
+how to convert a date field, stored as a character string, into a date field that
+R can recogniaze and plot efficiently."
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -18,7 +22,7 @@ comments: false
 
 ##About
 This learning module will walk you through the fundamental principles of working 
-with .csv temporal data in R including how to open, clean, explore, and plot 
+with `.csv` temporal data in `R` including how to open, clean, explore, and plot 
 time series data. 
 
 <div id="objectives" markdown="1">
@@ -28,49 +32,206 @@ time series data.
 ###Goals / Objectives
 After completing this learning module, you will know how to:
 
-  * Open a csv file in R and understand why we are using this format
+  * Open a `.csv` file in 'R'using `read.csv`.
+  * Work with `date.frame` fields in `R`.
   * Examine data structures and types
-  * Prepare data for analysis including cleaning, converting/transfroming, and
-calculating basic summary statistics for your data
-  * Create a basic time-series plot
-  * Exploring basic trends in your data
-  * Map NDVI data with time-series data
+  * Convert a date field, stored as a character into an `R` date format.
+  * Plot a time-series dataset using `qplot` 
 
 ###Things You'll Need To Complete This Lesson
 
 ####R Libraries to Install
 
-Lesson 02
-<li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
-
-Lesson 03
-<li><strong>ggplot:</strong> <code> install.packages("ggplot2")</code></li>
-<li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
-<li><strong>scales:</strong> <code> install.packages("scales")</code></li>
-<li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
+* **ggplot:** `install.packages("ggplot2")`
 
 
 ####Tools To Install
 
-Please be sure you have the most current version of R and, preferably,
+Please be sure you have the most current version of 'R'and, preferably,
 RStudio to write your code.
 
 ####Data to Download
-Make sure you have downloaded the AtmosData folder from
-http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
-If you are doing this module without first completing the Raster data module, 
-please also download  needed data file HARV2011NDVI.csv from 
-http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
+<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
+Download Atmospheric Data</a>
+
+NOTE: The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site 
+<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for 
+what will be available for 30 years [on the NEON data portal](http://data.neoninc.org/ "NEON data")
+for both Harvard forest and other field sites located across the United States.
 
 </div>
 
-NOTE: The data used in this tutorial were collected at Harvard Forest which is
-a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
-More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
-available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
-{: .notice}
 
+
+#The Data Approach
+
+In this lesson, we will explore micro-meterology data collected from a 
+<a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">flux
+tower</a> at the NEON Harvard Forest field site. We are interested in exploring 
+patterns associated with changes in temperature, precipitation, PAR and day 
+length - metrics that impact changes in plant phenology 
+
+<link to phenology as a 
+science topic - pbb??>
+
+#About .csv file format
+
+We have received data from a flux tower at Harvard Forest in `.csv` format.
+`.csv` stands for comma separated values. It is a text file based format, where 
+each value in the dataset
+is separate by a comma. Plain text formats are ideal for working both across 
+platforms (MAC, PC, LINUX, etc) and also can be read by many different tools. This
+file format is further less likely to become obsolete over time!
+
+* <a href="" target=_blank"> MORE ON CSV HERE...FIND LINK?**</a>
+
+Our `.csv` file contains a suite of metrics that we are interested in. To begin 
+exploring  the data, we need to first import it into R. We can use the function `read.csv` 
+to import the data. We can then explore the data structure.
+
+
+```{r load-libraries}
+# Load packages required for entire script
+# what libraries are required for this lesson?
+# library(nameOfLibrary)  #purpose of library
+
+#load ggplot2 - efficient, pretty plotting - required to qplot function
+library(ggplot2)
+
+#set working directory to ensure R can find the file we wish to import
+
+setwd("workingDirHere")
+
+```
+
+Once our working directory is set, we can import import the data using `read.csv`. 
+Note that we will use `stringsAsFactors = FALSE`.
+
+**DO WE NEED TO EXPLAIN FACTORS?? at the least we should link to something on factors**
+
+```{r import-csv}
+
+#Load csv file of daily meterological data from Harvard Forest
+#don't load strings (a series of letters or numerals) as factors so they remain characters
+harMetdaily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+                     stringsAsFactors = FALSE)
+
+#what type of R object is our imported data?
+class(harMetdaily)
+
+```
+
+#Data.Frames in R
+When we use the read.csv function, `R` imports the data in `data.frame` format.
+This format is idea for working with tabular data. It is similar to a spreadsheet.
+
+
+## Data Structure & Metadata
+Once our data are imported, we can explore its structure. Let's have a look 
+at the data structure using the `head()` method. This will show us the first
+6 rows of the data. We can use the `str` method to view the structure of the data.
+
+```{r view-data-structure}
+
+#view first 6 rows of the dataframe 
+head(harMetdaily)
+
+#View the structure (str) of the data 
+str(harMetdaily)
+
+```
+
+##Data Structure - Formats in R
+
+The structure of our data tells us that there the data are stored in several formats
+in our `.csv`:
+
+* **chr** - a few sentences on character strings here
+* **int** - a few sentences...
+* **num** - a few sentences.
+
+Storing variables in different formats is a strategic decision by `R`. ... more
+on why this is efficient here.
+
+#Plot data using qplot
+
+Let's have a look at one of the metrics, stored within our data - `airt` which is
+air temperature. Given this is a time series dataset, we might want to plot
+air temperature as it changes over time. We have a date time field so let's use
+that as our x axis variable, `airt` will be our Y axis variable.
+
+We will use the `qplot` function in the `ggplot2` library which stands for quick plot.
+`qplot` requires the x and y axis variables and then the data that the variables 
+are stored in. 
+
+```{r plot-data}
+#quickly plot the data
+qplot(x=date,y=airt, data=harMetdaily)
+
+```
+
+We have successfully plotted some data. However, what is going on - on the x axis.
+R is trying to plot EVERY date value on the x Axis - so it's not readable? Why?
+Let's have a look at the format of the fields that we are trying to plot.
+
+#NOTE - We might want to subset this to maybe a single year.
+
+```{r view-field-structure }
+# View data structure for each column that we wish to plot
+class(harMetdaily$date)
+
+class(harMetdaily$airt)
+
+```
+
+Looking at our data, we can see that the datetime field actually imported into
+`R` as a character format. This means that `R` does not know how to plot these 
+data as a continuous variable on the X axis. The `airt` field is numeric so that 
+field should plot, just fine.
+
+#Working With Time Formats
+We need to convert our date field, which is currently stored as a character value
+to an actual date format that can be displayed quantitively. Lucky for us, `R` has 
+`date` format. We can reassign the `harMetdaily$date` field using `as.date`.
+
+```{r convert-date-time }
+
+#convert field to date format
+harMetdaily$date <- as.Date(harMetdaily$date)
+
+#view results
+head(harMetdaily$date)
+
+#view structure of field
+class(harMetdaily$date)
+
+```
+
+Now that we have adjusted the date, let's plot again. Notice that it plots
+much more quickly now that R recognizes the date as a date field. R can agregate
+ticks on the x axis by year instead of trying to plot every day!
+
+```{r plot-data}
+#quickly plo the data
+qplot(x=date,y=airt, 
+      data=harMetdaily,
+      main="Daily Air Temperature w Date Assigned\nNEON Harvard Forest")
+```
+
+
+#Challenge
+> 1. Plot something else?? what else should we plot.
+> 2. it could be cool to show them how to aggregate - adjust tick marks by 5 years, 10 years, etc
+> 3. it could be cool to show them how to add x lab and y lab
+> 4. plot on variable vs another??
+
+
+
+
+############## REMOVE STUFF BELOW ??
 #Recommended Pre-Module Reading
 
 ## Time series data
