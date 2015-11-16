@@ -34,6 +34,6 @@ str(harMet15)
 # date-times are in Eastern Standard Time
 # preview tab give plots of all variables
 
-## ----metadata-em-file----------------------------------------------------
+## ----metadata-eml-file---------------------------------------------------
 # EML file in the data folder now - all metadata information in there.
 

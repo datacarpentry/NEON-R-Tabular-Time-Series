@@ -5,7 +5,7 @@ date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+lastModified: 2015-11-16
 tags: module-1
 description: "This lesson will teach individuals how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame."
 code1:
@@ -66,13 +66,10 @@ NOTE: there are a few options for working with date-time formats
 (readr, zoo), which are based on similar concepts, you will be able to use help
 text to explore those on your own as you choose. 
 
-```{r load-libraries}
 
-# Load packages required for entire script
-library(lubridate)  #work with dates
-library(ggplot2)  #efficient plotting
-
-```
+    # Load packages required for entire script
+    library(lubridate)  #work with dates
+    library(ggplot2)  #efficient plotting
 
 In [{{site.baseurl}} / LINKHERE](Lesson 00 - NEED TO ADD LINK) we imported a
 `.csv` time series dataset. We learned how to cleanly plot these data by 
@@ -86,49 +83,80 @@ for Harvard Forest, aggregated at 15 minute intervals.
 
 We will begin by loading the data and viewing its structure in `R`.
 
-```{r import-csv}
 
-#Load csv file of 15 min meterological data from Harvard Forest
-#don't load strings (a series of letters or numerals) as factors so they remain characters
-harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
-                     stringsAsFactors = FALSE)
+    #Load csv file of 15 min meterological data from Harvard Forest
+    #don't load strings (a series of letters or numerals) as factors so they remain characters
+    harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
+                         stringsAsFactors = FALSE)
+    
+    #what type of R object is our imported data?
+    class(harMet_15Min)
 
-#what type of R object is our imported data?
-class(harMet_15Min)
+    ## [1] "data.frame"
 
-#what type of R object is our imported data?
-str(harMet_15Min)
+    #what type of R object is our imported data?
+    str(harMet_15Min)
 
-```
+    ## 'data.frame':	376800 obs. of  30 variables:
+    ##  $ datetime: chr  "2005-01-01T00:15" "2005-01-01T00:30" "2005-01-01T00:45" "2005-01-01T01:00" ...
+    ##  $ jd      : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ airt    : num  5.1 5 4.9 4.7 4.5 4.6 4.6 4.7 4.6 4.6 ...
+    ##  $ f.airt  : chr  "" "" "" "" ...
+    ##  $ rh      : int  84 84 85 86 87 87 87 88 88 88 ...
+    ##  $ f.rh    : chr  "" "" "" "" ...
+    ##  $ dewp    : num  2.5 2.5 2.6 2.6 2.6 2.7 2.7 2.8 2.8 2.8 ...
+    ##  $ f.dewp  : chr  "" "" "" "" ...
+    ##  $ prec    : num  0 0 0 0 0 0 0 0 0 0 ...
+    ##  $ f.prec  : chr  "" "" "" "" ...
+    ##  $ slrr    : int  0 0 0 0 0 0 0 0 0 0 ...
+    ##  $ f.slrr  : chr  "" "" "" "" ...
+    ##  $ parr    : int  0 0 0 0 0 0 0 0 0 0 ...
+    ##  $ f.parr  : chr  "" "" "" "" ...
+    ##  $ netr    : int  -58 -59 -59 -58 -58 -58 -57 -57 -59 -62 ...
+    ##  $ f.netr  : chr  "" "" "" "" ...
+    ##  $ bar     : int  1017 1017 1017 1017 1017 1017 1017 1017 1017 1016 ...
+    ##  $ f.bar   : chr  "" "" "" "" ...
+    ##  $ wspd    : num  2.6 2.3 2.1 1.8 1.4 1.6 1.5 1.5 1.6 1.7 ...
+    ##  $ f.wspd  : chr  "" "" "" "" ...
+    ##  $ wres    : num  2.4 2.1 1.8 1.6 1.2 1.4 1.3 1.4 1.4 1.6 ...
+    ##  $ f.wres  : chr  "" "" "" "" ...
+    ##  $ wdir    : int  205 213 217 226 224 214 214 213 217 214 ...
+    ##  $ f.wdir  : chr  "" "" "" "" ...
+    ##  $ wdev    : int  26 25 27 26 29 30 30 27 27 25 ...
+    ##  $ f.wdev  : chr  "" "" "" "" ...
+    ##  $ gspd    : num  7.2 5.9 5.8 5.1 4.6 4.4 5 4.2 4.2 4.6 ...
+    ##  $ f.gspd  : chr  "" "" "" "" ...
+    ##  $ s10t    : num  0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 ...
+    ##  $ f.s10t  : chr  "" "" "" "" ...
 
 ##Dealing with date and time
 
 Have a look at the datetime field in the `harmet_15Min object`. What format is it 
 in? 
 
-```{r view-date-structure }
-#view field format
-class(harMet_15Min$datetime)
 
-#view sample data
-head(harMet_15Min$datetime)
+    #view field format
+    class(harMet_15Min$datetime)
 
-```
+    ## [1] "character"
+
+    #view sample data
+    head(harMet_15Min$datetime)
+
+    ## [1] "2005-01-01T00:15" "2005-01-01T00:30" "2005-01-01T00:45"
+    ## [4] "2005-01-01T01:00" "2005-01-01T01:15" "2005-01-01T01:30"
 
 
 Similar to lesson one, our data are in a character format. We need to convert
 it to date time. What happens when we use the `as.Date` method on our datetime
 field?
 
-```{r as-date-only, results="hide" }
 
-#convert field to date format
-har_dateOnly <- as.Date(harMet_15Min$datetime)
-
-#view data
-head(har_dateOnly)
-
-```
+    #convert field to date format
+    har_dateOnly <- as.Date(harMet_15Min$datetime)
+    
+    #view data
+    head(har_dateOnly)
 
 ### Exploring Date and Time classes
 
@@ -139,18 +167,26 @@ capture time. That's take a minute to explore the various date/time formats in `
 We can use the as.Date method to convert a date field in string / character format
 to an `R Date` class. It will ignore all values after the date string.
 
-```{r explore-as_date }
-#Convert character data to date (no time) 
-myDate <- as.Date("2015-10-19 10:15")   
-str(myDate)
-head(myDate)
 
-#whhat happens if the date has text at the end?
-myDate2 <- as.Date("2015-10-19Hello")   
-str(myDate2)
-head(myDate2)
+    #Convert character data to date (no time) 
+    myDate <- as.Date("2015-10-19 10:15")   
+    str(myDate)
 
-```
+    ##  Date[1:1], format: "2015-10-19"
+
+    head(myDate)
+
+    ## [1] "2015-10-19"
+
+    #whhat happens if the date has text at the end?
+    myDate2 <- as.Date("2015-10-19Hello")   
+    str(myDate2)
+
+    ##  Date[1:1], format: "2015-10-19"
+
+    head(myDate2)
+
+    ## [1] "2015-10-19"
 
 ###Date and Time - the POSIX class
 
@@ -164,24 +200,27 @@ Base `R` offers two closely related classes for date and time:
 `POSIXct` and `POSIXlt`. Let's explore both of these before choosing which one
 to use with our data.
 
-```{r explore-POSIXct }
-#Convert character data to date and time.
-timeDate <- as.POSIXct("2015-10-19 10:15")   
-str(timeDate)
-head(timeDate)
 
-```
+    #Convert character data to date and time.
+    timeDate <- as.POSIXct("2015-10-19 10:15")   
+    str(timeDate)
+
+    ##  POSIXct[1:1], format: "2015-10-19 10:15:00"
+
+    head(timeDate)
+
+    ## [1] "2015-10-19 10:15:00 MDT"
 
 The `as.POSIXct` method converts a date / time string into a `POSIXct` or date/time
 class.
 
 If we look at the data, we see the date and time with a time zone designation. 
 
-```{r time-zone }
-#view date - notice the time zone - MDT (mountain daily time)
-timeDate
 
-```
+    #view date - notice the time zone - MDT (mountain daily time)
+    timeDate
+
+    ## [1] "2015-10-19 10:15:00 MDT"
 
 #THIS SECTION NEEDS TO BE SIMPLIFIED SIGNIFICANTLY. too verbose
 #just state - there are two date time options
@@ -195,9 +234,12 @@ POSIXct stores date and time as the number of seconds since 1 January 1970
 just a single number this format is easy to use in dataframes and to convert
 from one format to another. 
 
-```{r explore-POSIXct2 }
-unclass(timeDate)
-```
+
+    unclass(timeDate)
+
+    ## [1] 1445271300
+    ## attr(,"tzone")
+    ## [1] ""
 
 Here we see the number of seconds from 1 January 1970 to 9 October 2015 and
 see that it has a time zone attribute stored with it. 
@@ -208,15 +250,51 @@ portion of the data (e.g., months).  POSIXlt stores date and time information in
 more human-friendly format that we are used to seeing (e.g., second, min, hour, day
 of month, month, year, numeric day of year, etc). 
 
-```{r explore-POSIXlt }
 
-#Convert character data to POSIXlt date and time
-timeDatelt<- as.POSIXlt("2015-10-1910:15")  
-str(timeDatelt)
-head(timeDatelt)
+    #Convert character data to POSIXlt date and time
+    timeDatelt<- as.POSIXlt("2015-10-1910:15")  
+    str(timeDatelt)
 
-unclass(timeDatelt)
-```
+    ##  POSIXlt[1:1], format: "2015-10-19 10:15:00"
+
+    head(timeDatelt)
+
+    ## [1] "2015-10-19 10:15:00 MDT"
+
+    unclass(timeDatelt)
+
+    ## $sec
+    ## [1] 0
+    ## 
+    ## $min
+    ## [1] 15
+    ## 
+    ## $hour
+    ## [1] 10
+    ## 
+    ## $mday
+    ## [1] 19
+    ## 
+    ## $mon
+    ## [1] 9
+    ## 
+    ## $year
+    ## [1] 115
+    ## 
+    ## $wday
+    ## [1] 1
+    ## 
+    ## $yday
+    ## [1] 291
+    ## 
+    ## $isdst
+    ## [1] 1
+    ## 
+    ## $zone
+    ## [1] "MDT"
+    ## 
+    ## $gmtoff
+    ## [1] NA
 
 When we a string is convered to `POSIXlt`, it still appears to be a date/time 
 class. However, `unclass()` shows us that the data are stored differently. The 
@@ -231,10 +309,9 @@ components.
 2) $year = 115, not 2015.  
 We need to look at the POSIXlt documentation to figure out why this is happening. 
 
-```{r POSIX-lookup}
-#help for POSIXlt
-?POSIXlt
-```
+
+    #help for POSIXlt
+    ?POSIXlt
 
 Looking at the details we see that POSIXlt $mon is classified from 0-11 so
 October would be the 9th month and $year is the number of years since 1900 so
@@ -265,16 +342,16 @@ for TIME AND DATE FORMAT</a>
 
 
 
-```{r convert-data }
 
-#view one date time entry
-harMet_15Min$datetime[1]
+    #view one date time entry
+    harMet_15Min$datetime[1]
 
-#convert single instance to a date/time
-as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%dT%H:%M")
+    ## [1] "2005-01-01T00:15"
 
+    #convert single instance to a date/time
+    as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%dT%H:%M")
 
-```
+    ## [1] "2005-01-01 00:15:00 MST"
 
 
 #NOTE - MAKE SURE THE DATA ARE IN EST AND NOT UTC. UTC IS OFTEN A DEFAULT
@@ -293,30 +370,29 @@ timeszones</a>
 
 The code for Eastern Standard Time is  `America/New_York`.
 
-```{r assign-time-zone }
 
-#assign time zone to the field
-as.POSIXct(harMet_15Min$datetime[1],
-            format = "%Y-%m-%d %H:%M",
-            tz = "America/New_York")
+    #assign time zone to the field
+    as.POSIXct(harMet_15Min$datetime[1],
+                format = "%Y-%m-%d %H:%M",
+                tz = "America/New_York")
 
-```
+    ## [1] NA
 
 #Reformatting A date/time data.frame field
 
 Now, using the syntax that we learned above, we can reformat the entire datetime 
 format into an `R POSIX` class.
 
-```{r POSIX-convert}
-#convert to date-time class
-harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
-                                format = "%Y-%m-%dT%H:%M",
-                                tz = "America/New_York")
 
-#view format of the newly defined datetime data.frame column 
-str(harMet_15Min$datetime)
+    #convert to date-time class
+    harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
+                                    format = "%Y-%m-%dT%H:%M",
+                                    tz = "America/New_York")
+    
+    #view format of the newly defined datetime data.frame column 
+    str(harMet_15Min$datetime)
 
-```
+    ##  POSIXct[1:376800], format: "2005-01-01 00:15:00" "2005-01-01 00:30:00" ...
 
 ##Converting Between Time Formats - Julian days
 
@@ -336,17 +412,20 @@ Julian day can refer to a numeric count since 1 January 4713 BC.
 To quickly convert from month, day year to Julian days, can we use `yday`, a 
 function from the `lubridate` library.
 
-```{r julian-day-convert }
-# convert to julian days
-# to learn more about it type
-?yday
 
-harMet_15Min$julian <- yday(harMet_15Min$datetime)  
-#make sure it worked all the way through.  Dataframe was 30 variables so julian should be 31st.
-head(harMet_15Min$julian) 
-tail(harMet_15Min$julian)
+    # convert to julian days
+    # to learn more about it type
+    ?yday
+    
+    harMet_15Min$julian <- yday(harMet_15Min$datetime)  
+    #make sure it worked all the way through.  Dataframe was 30 variables so julian should be 31st.
+    head(harMet_15Min$julian) 
 
-```
+    ## [1] 1 1 1 1 1 1
+
+    tail(harMet_15Min$julian)
+
+    ## [1] 273 273 273 273 273 274
 
 #NOTE - doing this here doesn't really make sense fully given it removes time.
 #i will see what happens in the next lesson.
