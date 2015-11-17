@@ -1,18 +1,23 @@
 ---
 layout: post
-title: "Lesson 02: Convert Date/Time Fields from Characters to a Date/time Class (POSIX) in R"
+title: "Lesson 02: Convert Date-Time Fields from Characters to a Date-Time Class (POSIX) in R"
 date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+packagesLibraries: [lubridate]
 tags: module-1
-description: "This lesson will teach individuals how to prepare tabular data for further analysis in R, addressing missing values and date-time formats. Students will also learn how to convert characters to a time class, to convert date-time to Julian day, and how to subset the data into a new data frame."
+description: "This lesson will teach individuals how to prepare tabular data for
+further analysis in R, addressing missing values and date-time formats. Students
+will also learn how to convert characters to a date-time class and to convert
+date-time to Julian day."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
+permalink: /R/Convert-to-Date-Time-Class-POSIX-R
 comments: false
 ---
 
@@ -20,9 +25,9 @@ comments: false
 
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
-in R, addressing missing values and date-time formats. Students will also learn
-how to convert characters to a time class, to convert date-time to Julian day, 
-and how to subset the data into a new data frame.
+in R by addressing missing values and date-time formats. Students will also
+learn how to convert characters to a date-time class and to convert date-time to
+Julian day.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
@@ -30,10 +35,9 @@ understand the general structure of tabular data.
 <div id="objectives" markdown="1">
 
 ### Goals / Objectives
-After completing this activity, you will know how to:
- * Clean data
- * Convert/transform time formats
- * Subset data
+After completing this activity, you will:
+ * Know how to clean data
+ * Be able to convert between date & time formats
  * Examine data structures and types
 
 ###Things You'll Need To Complete This Lesson
@@ -53,61 +57,56 @@ a the National Ecological Observatory Network field site <a href="http://www.neo
 More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
 available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
 
-####Recommended Pre-Lesson Reading
+####Setting the Working Directory
+The code in this lesson assumes that you have set your working directory to the
+location of the unzipped file of data downloaded above.  If you would like a
+refresher on setting the working directory, please view the <a href="XXX" target="_blank">Setting A Working Directory In R</a> lesson prior to beginning the lesson.
 
 </div>
 
-
-In this lesson, we will use functions from both base `R` and the `lubridate` 
-library to work with with date-time formats.
-
-#BELOW is background  - not sure this belongs here.
-NOTE: there are a few options for working with date-time formats
-(readr, zoo), which are based on similar concepts, you will be able to use help
-text to explore those on your own as you choose. 
-
-```{r load-libraries}
-
-# Load packages required for entire script
-library(lubridate)  #work with dates
-library(ggplot2)  #efficient plotting
-
-```
-
 In [{{site.baseurl}} / LINKHERE](Lesson 00 - NEED TO ADD LINK) we imported a
 `.csv` time series dataset. We learned how to cleanly plot these data by 
-converting the date field to an `R` `Date` field
-format. In this lesson we will explore how to work with data that contain both a 
-date AND a time stamp.
+converting the date field to an `R` `Date` data type. In this lesson we will 
+explore how to work with data field that contains both a date AND a time stamp.
 
-We will use the `hf001-10-15min-m.csv` file that file contains micrometereology
+In this lesson, we will use functions from both base `R` and the `lubridate` 
+library learn how to work with date-time data types.
+
+We will use the `hf001-10-15min-m.csv` file that contains micrometereology
 data including our variables of interest: temperature, precipitation and PAR, 
 for Harvard Forest, aggregated at 15 minute intervals.
 
 We will begin by loading the data and viewing its structure in `R`.
 
-```{r import-csv}
+```{r load-libraries}
+
+# Load packages required for entire script
+library(lubridate)  #work with dates
+
+#set working directory to ensure R can find the file we wish to import
+#setwd("working-dir-path-here")
 
 #Load csv file of 15 min meterological data from Harvard Forest
-#don't load strings (a series of letters or numerals) as factors so they remain characters
+#Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
 harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
                      stringsAsFactors = FALSE)
 
 #what type of R object is our imported data?
 class(harMet_15Min)
 
-#what type of R object is our imported data?
+#what data classes are within our R object? 
+#What is our date-time field called?
 str(harMet_15Min)
 
 ```
 
 ##Dealing with date and time
 
-Have a look at the datetime field in the `harmet_15Min object`. What format is it 
-in? 
+Have a look at the `datetime` field in the `harmet_15Min object`. What data type
+is it in? 
 
 ```{r view-date-structure }
-#view field format
+#view field data class
 class(harMet_15Min$datetime)
 
 #view sample data
@@ -115,10 +114,8 @@ head(harMet_15Min$datetime)
 
 ```
 
-
-Similar to lesson one, our data are in a character format. We need to convert
-it to date time. What happens when we use the `as.Date` method on our datetime
-field?
+Our data are in a character data type. We need to convert them to date-time data
+type. What happens when we use the `as.Date` method on our `datetime` field?
 
 ```{r as-date-only, results="hide" }
 
@@ -130,14 +127,15 @@ head(har_dateOnly)
 
 ```
 
-### Exploring Date and Time classes
-
 The `as.Date` method worked great for a field with just dates, but it doesn't 
-capture time. That's take a minute to explore the various date/time formats in `R`.
+store any time information. Let's take a minute to explore the various date/time
+formats in `R`.
+
+## Exploring Date and Time Classes
 
 ###R - Date Class - as.Date
-We can use the as.Date method to convert a date field in string / character format
-to an `R Date` class. It will ignore all values after the date string.
+We can use the`as.Date` method to convert a date field in string/character 
+format to an `R` `Date` class. It will ignore all values after the date string.
 
 ```{r explore-as_date }
 #Convert character data to date (no time) 
@@ -152,17 +150,11 @@ head(myDate2)
 
 ```
 
-###Date and Time - the POSIX class
-
-Given that we do have time data and that it is important for our time series we
-need to use a format that includes time and date.  
-
-NOTE: If you have to use time without dates attached look into the chron package.
-{ : .notice }
-
-Base `R` offers two closely related classes for date and time:
-`POSIXct` and `POSIXlt`. Let's explore both of these before choosing which one
-to use with our data.
+###R - Date-Time - The POSIX classes
+Given that we do have data and time that are both important for our time series 
+we need to use a format that includes time and date.  Base `R` offers two 
+closely related classes for date and time: `POSIXct` and `POSIXlt`. Let's 
+explore both of these before choosing which one to use with our data.
 
 ```{r explore-POSIXct }
 #Convert character data to date and time.
@@ -172,23 +164,16 @@ head(timeDate)
 
 ```
 
-The `as.POSIXct` method converts a date / time string into a `POSIXct` or date/time
-class.
+The `as.POSIXct` method converts a date-time string into a `POSIXct` or 
+date-time class. 
 
 If we look at the data, we see the date and time with a time zone designation. 
 
 ```{r time-zone }
-#view date - notice the time zone - MDT (mountain daily time)
+#view date - notice the time zone - MDT (mountain daylight time)
 timeDate
 
 ```
-
-#THIS SECTION NEEDS TO BE SIMPLIFIED SIGNIFICANTLY. too verbose
-#just state - there are two date time options
-POSIXct vs POSIXlt. the big different is how the data are stored.
-
-#Explain why one might be preferred over the other. As written this is distracting 
-from the lesson - given it's a beginner lesson.
 
 POSIXct stores date and time as the number of seconds since 1 January 1970
 (negative numbers are used for dates before 1970). As each date and time is 
@@ -202,14 +187,13 @@ unclass(timeDate)
 Here we see the number of seconds from 1 January 1970 to 9 October 2015 and
 see that it has a time zone attribute stored with it. 
 
-While easy for data storage and  manipulations, humans aren't so good at working
-with seconds from 1970 to figure out a date. Plus, we often want to pull out some
-portion of the data (e.g., months).  POSIXlt stores date and time information in a
-more human-friendly format that we are used to seeing (e.g., second, min, hour, day
-of month, month, year, numeric day of year, etc). 
+While easy for data storage and manipulations, humans aren't so good at working
+with seconds from 1970 to figure out a date. Plus, we often want to pull out
+some portion of the data (e.g., months).  POSIXlt stores date and time
+information in a format that we are used to seeing (e.g., 
+second, min, hour, day of month, month, year, numeric day of year, etc). 
 
 ```{r explore-POSIXlt }
-
 #Convert character data to POSIXlt date and time
 timeDatelt<- as.POSIXlt("2015-10-1910:15")  
 str(timeDatelt)
@@ -218,40 +202,32 @@ head(timeDatelt)
 unclass(timeDatelt)
 ```
 
-When we a string is convered to `POSIXlt`, it still appears to be a date/time 
-class. However, `unclass()` shows us that the data are stored differently. The 
-`POSIXlt` format stores the hour, minute, second, and month day year as separate 
-components.
+When we converted the string to `POSIXlt`, it still appears to be the same as 
+`POSIXct`. However, `unclass()` shows us that the data are stored differently. 
+The `POSIXlt` format stores the hour, minute, second, and month day year as 
+separate components.
 
-#something about 0 based indexing - but really i think this is getting into the 
-#weeds - it's interesting. Maybe make it a little breakout but it's distracting
-#from the lesson.
+Yet, just like `POSIXct` being based on seconds since 1 Jan. 1970, `POSIXlt` has
+a few quirks.  First, the months use zero based indexing which starts counting
+with zero instead of 1 so October is stored as the 9th month (`$mon = 9`) and 
+the years are base on years since 1900 so 2015 is stored as 115 (`$year = 115`)
+Information like this can always be found in the `R` documentation by using `?`
+or specifically `?POSIXlt`.  
 
-1) $mon = 9, but October is the 10th month and 
-2) $year = 115, not 2015.  
-We need to look at the POSIXlt documentation to figure out why this is happening. 
+Having dates classified as seperate components makes `POSIXlt` a bit more
+difficult to use in data.frames and to manipulate, which is why we won't use
+POSIXlt for this lesson.  
 
-```{r POSIX-lookup}
-#help for POSIXlt
-?POSIXlt
-```
+Instead we can specified which format (year-month-day hour:minute) we wanted to 
+see the date and time when using POSIXct.  This way we know what the date is and
+the program can still work with the date/time in a single format.
 
-Looking at the details we see that POSIXlt $mon is classified from 0-11 so
-October would be the 9th month and $year is the number of years since 1900 so
-2015 is year 115.  The unclassed date components are not incorrect, just not
-what we expected. 
-
-Having dates classified as seperate components makes this time class a bit more
-difficult to use in dataframes and to manipulate, which is why we won't use
-POSIXlt for this lesson.  Instead we can specified which format (year-month-day
-hour:minute) we wanted to see the date and time when using POSIXct.  This way we 
-know what the date is and the program can still work with the date/time in a single format.
-
-
-############# the above text is too much; getting into the weeds for a beginner ####
+###R- Data-Time - Other Classes
+There are a many other options in `R` for working with date-time formats, 
+including packages `readr` and `zoo`. The `chron` package allows the use of time
+without a data attached.  
 
 ##Convert Date Time to a R date/time class 
-
 Let's convert our data to a date/time field. We will use the `as.POSIXct` function.
 We can tell R how our data are formated using a `format=` string as follows
 
@@ -350,4 +326,3 @@ tail(harMet_15Min$julian)
 
 #NOTE - doing this here doesn't really make sense fully given it removes time.
 #i will see what happens in the next lesson.
-
