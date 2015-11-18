@@ -227,63 +227,85 @@ There are a many other options in `R` for working with date-time formats,
 including packages `readr` and `zoo`. The `chron` package allows the use of time
 without a data attached.  
 
-##Convert Date Time to a R date/time class 
-Let's convert our data to a date/time field. We will use the `as.POSIXct` function.
-We can tell R how our data are formated using a `format=` string as follows
+##Convert data.frame Field to a Date-time Class
+
+### Date-Time Formats
+We can tell R how our data are formated (or, in other contexts, how we want to
+view date and time) using a `format=` string.  However, we have to know what
+format our dates are currently in. 
+
+```{r view-date }
+
+#view one date time entry
+harMet_15Min$datetime[1]
+
+```
+
+Our data is in Year-Month-Day "T" Hour:Minute:Second, so we can use the 
+following designations for the parts of the date-time field:
 
 * %Y - year
 * %m - month
 * %d - day
 * %H:%M - hours:minutes
 
-<a href="" target="_blank">ADD LINK TO PAGE WHICH EXPLAINS ALL OF THE OPTIONS
-for TIME AND DATE FORMAT</a>
+A list of options for the date-time formatting are given in the help for the
+`strptime` function (`help(strptime)`).   The "T" inserted into the middle of 
+datetime isn't a standard character for date and time, however we can tell `R`
+where the character is and it will still be able to figure out the date and time
+around it.  
 
-
-
-```{r convert-data }
-
-#view one date time entry
-harMet_15Min$datetime[1]
-
-#convert single instance to a date/time
+```{r format-date}
+#convert single instance of date/time in format year-month-day hour:min:sec
 as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%dT%H:%M")
 
+##The format of date-time MUST match the specified format or the field will not
+# convert
+as.POSIXct(harMet_15Min$datetime[1],format="%m-%d-%YT%H:%M")
 
 ```
 
+Using the syntax we've learned, we can reformat the entire datetime format into 
+an `R POSIX` data type.
 
-#NOTE - MAKE SURE THE DATA ARE IN EST AND NOT UTC. UTC IS OFTEN A DEFAULT
+##Check the Time Zone
+Whenever using a time field it is essential to know what time zone the
+data were collected in and what time zone they are stored with `R` in.  Some 
+data will be collected and stored in thier local time zone but storage in UTC or
+GMT is also a common default. 
 
-###Convert data.frame field to a date/time class
+```{r time-zone-HarMet }
+#checking time zone of data
+tz(harMet_15Min)
+```
 
+`R` currently interprets that the time data are record in Coordinated Universal 
+Time (UTC) . Now that we've found this out we need to make sure it corresponds 
+with what we know is true for the data.  In the <a href="XXX" target="_blank"> Understand The Data</a>
+lesson we viewed the metadata associated with this data and found out that the 
+data were collected in eastern time.  We need to designate the correct time zone
+when convert the field to POSIX. There are individual designations for different
+time zones and time zone variants (e.g., is daylight savings time observed). All
+of the codes can be found <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank"> here</a>. 
 
-We now need to specific the time zone. Remember we learned in the
-metadata (Lesson 01) that these data were recorded in Eastern Standard Time. For use in R 
-we need to look up the name for the timezone in the 'tz' database. You can find the list 
-here:
-
-NOTE: You can look up the time zones here: <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank">
-timeszones</a>
-{ : .notice }
-
-The code for Eastern Standard Time is  `America/New_York`.
+The code for the eastern time zone the is the closest match to the Harvard
+Forest is `America/New_York`. To try this out let's, convert the first entry to 
+POSIX specifying the format and the correct time zone. 
 
 ```{r assign-time-zone }
 
-#assign time zone to the field
+#assign time zone to just the first entry
 as.POSIXct(harMet_15Min$datetime[1],
-            format = "%Y-%m-%d %H:%M",
+            format = "%Y-%m-%dT%H:%M",
             tz = "America/New_York")
 
 ```
 
-#Reformatting A date/time data.frame field
+## Convert to Date-time Format
+Now, using the syntax that we learned above, we can reformat the entire datetime
+field in the data.frame to an `POSIXct` class.
 
-Now, using the syntax that we learned above, we can reformat the entire datetime 
-format into an `R POSIX` class.
-
-```{r POSIX-convert}
+```{r POSIX-convert-best-practice-code}
 #convert to date-time class
 harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
                                 format = "%Y-%m-%dT%H:%M",
@@ -294,35 +316,6 @@ str(harMet_15Min$datetime)
 
 ```
 
-##Converting Between Time Formats - Julian days
-
-Next, we will explore how to convert our time field to a different format. Heterogeneous
-data often use different time formats. Thus, it is useful to know how to convert.
-We will use Julian Days given we have some other data (NDVI) in Julian days that 
-we'd like to compare to our data.
-
-Julian days, as R interprets it, is a continuous count of the number of days 
-beginning at Jan 1, each year. Thus each year will have up to 365 (non leap year)
-or 366 (leap year) days. 
-
-Note: This format can also be called ordinal day or year day, and, occasionally,
-Julian day can refer to a numeric count since 1 January 4713 BC.
-{ : .notice }
-
-To quickly convert from month, day year to Julian days, can we use `yday`, a 
-function from the `lubridate` library.
-
-```{r julian-day-convert }
-# convert to julian days
-# to learn more about it type
-?yday
-
-harMet_15Min$julian <- yday(harMet_15Min$datetime)  
-#make sure it worked all the way through.  Dataframe was 30 variables so julian should be 31st.
-head(harMet_15Min$julian) 
-tail(harMet_15Min$julian)
-
-```
-
-#NOTE - doing this here doesn't really make sense fully given it removes time.
-#i will see what happens in the next lesson.
+Now that our datetime field is properly identified as a `POSIXct` date-time
+class we can continue on and look at the patterns of precipitation,
+temperature, and PAR through time. 

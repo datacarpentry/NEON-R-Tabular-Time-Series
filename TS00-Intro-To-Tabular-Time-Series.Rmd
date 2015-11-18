@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 00: Working With Date Formats in R"
+title: "Lesson 00: Brief Time Series in R"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
