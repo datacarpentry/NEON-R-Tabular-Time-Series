@@ -43,7 +43,7 @@ After completing this activity, you will know how to:
 
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and, preferably,
-R studio to write your code.
+RStudio to write your code.
 
 ####R Libraries to Install
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>

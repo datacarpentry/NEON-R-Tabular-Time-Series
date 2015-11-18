@@ -1,18 +1,21 @@
 ---
 layout: post
-title: "Lesson 03: Getting to Know The Data"
+title: "Lesson 03: Plotting Time Series"
 date:   2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Michael Patterson]
+contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 tags: [module-1]
-description: "This lesson will teach individuals how to conduct basic data manipulation and create basic plots of time series data."
+packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
+category: 
+description: "This lesson will teach individuals how to conduct basic data manipulation and create plots of time series data using ggplot2."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
+permalink: /R/Plotting-Time-Series
 comments: false
 ---
 
@@ -23,19 +26,19 @@ comments: false
 This activity will walk you through the fundamentals of data manipulation and 
 basic plotting.
 
-<div id="objectives" markdown="1">
-
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-### Goals / Objectives
-After completing this activity, you will know:
- * How to create basic time series plots in `R`
- * How to manipulate data in `R`
 
+<div id="objectives" markdown="1">
+
+### Goals / Objectives
+After completing this activity, you will:
+ * Be able to create basic time series plots in `R`
+ * Know several ways to manipulate data in `R`
 
 ###Things You'll Need To Complete This Lesson
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
+Please be sure you have the most current version of `R` and, preferably,
+RStudio to write your code.
 
 ####R Libraries to Install
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
@@ -44,29 +47,36 @@ R studio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 <li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
 
+  <a href="http://neondataskills.org/R/Packages-In-R/" target="_blank">
+More on Packages in R - Adapted from Software Carpentry.</a>
+
 ####Data to Download
 Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
+
+The data used in this tutorial were collected at Harvard Forest which is
+a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
+More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
+available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+
+
+####Setting the Working Directory
+The code in this lesson assumes that you have set your working directory to the
+location of the unzipped file of data downloaded above.  If you would like a
+refresher on setting the working directory, please view the <a href="XXX" target="_blank">Setting A Working Directory In R</a> lesson prior to beginning the lesson.
+
 ####Recommended Pre-Lesson Reading
-Lessons 00-02 in this Time Series learning module
 
 </div>
 
 
-NOTE: The data used in this tutorial were collected at Harvard Forest which is
-a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
-More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
-available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
-{: .notice}
-
-#Lesson 03: Getting to Know The Data
-As we continue working with our data we are going to learn skills that
-will enable us to visualize our data by:
-1) plotting the 15-minute air temperature data across years,
+As we working with micro-meterology data from Harvard Forest, we are going to
+learn skills that will enable us to visualize our data by:
+1) plotting 15-minute air temperature data across years,
 2) manipulating the date to group and summarize by year, daily average, and 
 julian date, and 
-3) compareing plots of 15-minute and daily average air temperature. 
+3) comparing plots of 15-minute and daily average air temperature. 
 
 ##Plotting Time Series Data
 One of the first things that can often be useful once we've loaded our 
@@ -104,8 +114,8 @@ AirTemp15<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
 AirTemp15
 ```
 
-Bonus: If an x variable is not a datetime class (e.g., not POSIX), other 
-`scale_x_...()` exist to help format x axes. 
+Bonus: If an x variable is not a datetime class (e.g., not POSIX),
+`scale_x_...()` exist to help format x-axes. 
 
 ##Challenge 2: Plotting daily precipitaiton data
 Using the daily precipitation data you imported earlier, create a plot with the
