@@ -2,25 +2,25 @@
 
 # Load packages required for entire script
 library(lubridate)  #work with dates
-library(ggplot2)  #efficient plotting
 
-
-## ----import-csv----------------------------------------------------------
+#set working directory to ensure R can find the file we wish to import
+#setwd("working-dir-path-here")
 
 #Load csv file of 15 min meterological data from Harvard Forest
-#don't load strings (a series of letters or numerals) as factors so they remain characters
+#Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
 harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
                      stringsAsFactors = FALSE)
 
 #what type of R object is our imported data?
 class(harMet_15Min)
 
-#what type of R object is our imported data?
+#what data classes are within our R object? 
+#What is our date-time field called?
 str(harMet_15Min)
 
 
 ## ----view-date-structure-------------------------------------------------
-#view field format
+#view field data class
 class(harMet_15Min$datetime)
 
 #view sample data
@@ -56,7 +56,7 @@ head(timeDate)
 
 
 ## ----time-zone-----------------------------------------------------------
-#view date - notice the time zone - MDT (mountain daily time)
+#view date - notice the time zone - MDT (mountain daylight time)
 timeDate
 
 
@@ -64,7 +64,6 @@ timeDate
 unclass(timeDate)
 
 ## ----explore-POSIXlt-----------------------------------------------------
-
 #Convert character data to POSIXlt date and time
 timeDatelt<- as.POSIXlt("2015-10-1910:15")  
 str(timeDatelt)
@@ -72,29 +71,34 @@ head(timeDatelt)
 
 unclass(timeDatelt)
 
-## ----POSIX-lookup--------------------------------------------------------
-#help for POSIXlt
-?POSIXlt
-
-## ----convert-data--------------------------------------------------------
+## ----view-date-----------------------------------------------------------
 
 #view one date time entry
 harMet_15Min$datetime[1]
 
-#convert single instance to a date/time
+
+## ----format-date---------------------------------------------------------
+#convert single instance of date/time in format year-month-day hour:min:sec
 as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%dT%H:%M")
 
+##The format of date-time MUST match the specified format or the field will not
+# convert
+as.POSIXct(harMet_15Min$datetime[1],format="%m-%d-%YT%H:%M")
 
+
+## ----time-zone-HarMet----------------------------------------------------
+#checking time zone of data
+tz(harMet_15Min)
 
 ## ----assign-time-zone----------------------------------------------------
 
-#assign time zone to the field
+#assign time zone to just the first entry
 as.POSIXct(harMet_15Min$datetime[1],
-            format = "%Y-%m-%d %H:%M",
+            format = "%Y-%m-%dT%H:%M",
             tz = "America/New_York")
 
 
-## ----POSIX-convert-------------------------------------------------------
+## ----POSIX-convert-best-practice-code------------------------------------
 #convert to date-time class
 harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
                                 format = "%Y-%m-%dT%H:%M",
@@ -102,16 +106,5 @@ harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
 
 #view format of the newly defined datetime data.frame column 
 str(harMet_15Min$datetime)
-
-
-## ----julian-day-convert--------------------------------------------------
-# convert to julian days
-# to learn more about it type
-?yday
-
-harMet_15Min$julian <- yday(harMet_15Min$datetime)  
-#make sure it worked all the way through.  Dataframe was 30 variables so julian should be 31st.
-head(harMet_15Min$julian) 
-tail(harMet_15Min$julian)
 
 

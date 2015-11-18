@@ -1,9 +1,28 @@
-## ----basic-plotting------------------------------------------------------
+## ----load-data-----------------------------------------------------------
 #Remember it is good coding technique to add additional libraries to the top of
-  #your script (we started this section in Lesson 02)
+  #your script 
 library (ggplot2)  #for creating graphs
 library (scales)   #to access breaks/formatting functions
 
+#set working directory to ensure R can find the file we wish to import
+#setwd("working-dir-path-here")
+
+#15-min Harvard Forest met data, 2009-2011
+harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
+                          stringsAsFactors = FALSE)
+
+#daily HARV met data, 2009-2011
+harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+                     stringsAsFactors = FALSE)
+
+## ----qplot---------------------------------------------------------------
+#qplot (x=datetime, y=airt,
+      # data= harMet15.09.11,
+       #geom="point", na.rm=TRUE,   #prevents a warning about the 2 missing values
+       #main= "Air temperature at the Harvard Forest 2009-2011",
+       #xlab= "Date", ylab= "Temperature (°C)")
+
+## ----basic-ggplot2-------------------------------------------------------
 #plot Air Temperature Data across 2009-2011 using 15-minute data
 AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
            geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
