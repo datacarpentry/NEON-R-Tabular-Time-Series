@@ -32,7 +32,7 @@ basic plotting.
 <div id="objectives" markdown="1">
 
 ### Goals / Objectives
-After completing this activity, you will:
+After completing this lesson, you will:
  * Be able to create basic time series plots in `R`
  * Know several ways to manipulate data in `R`
 
@@ -70,27 +70,66 @@ refresher on setting the working directory, please view the <a href="XXX" target
 
 </div>
 
-
-As we working with micro-meterology data from Harvard Forest, we are going to
+Working with micro-meterology data from Harvard Forest, we are going to
 learn skills that will enable us to visualize our data by:
+
 1) plotting 15-minute air temperature data across years,
 2) manipulating the date to group and summarize by year, daily average, and 
 julian date, and 
 3) comparing plots of 15-minute and daily average air temperature. 
 
-##Plotting Time Series Data
-One of the first things that can often be useful once we've loaded our 
-data and cleaned it up is to visualize it. We can start to get a sense of 
-general trends, as well as see possible outliers or non-sensical values. 
+You will need the daily and 15-minute micro-meteorology data for 2009-2011 from
+the Harvard Forest. If you do not have these data sets as R objects created in
+<a href="XXX" target="_blank">Tabular Time Series Lesson 03: Subset Data and No Data Values</a> 
+please load them from the .csv files in the downloaded data.  
 
-To do this, we're going to use the package `ggplot2` to plot the air temperature across our 3 year time span for each 15 minute data point. We will not cover the details of how to use ggplot to customize your plot, but some of these will be introduced in the last module: Making Pretty Maps.
-
-```{r basic-plotting}
+```{r load-data}
 #Remember it is good coding technique to add additional libraries to the top of
-  #your script (we started this section in Lesson 02)
+  #your script 
 library (ggplot2)  #for creating graphs
 library (scales)   #to access breaks/formatting functions
 
+#set working directory to ensure R can find the file we wish to import
+#setwd("working-dir-path-here")
+
+#15-min Harvard Forest met data, 2009-2011
+harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
+                          stringsAsFactors = FALSE)
+
+#daily HARV met data, 2009-2011
+harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+                     stringsAsFactors = FALSE)
+```
+
+##Plotting Time Series Data
+Visualization of data is important as it allow us to start to get a sense of 
+general trends, as well as see possible outliers or non-sensical values. 
+
+###Intro to ggplot2 
+
+Using the package `ggplot2` we could use the simple `qplot()` function to make a
+quick plot of the air temperature (`airt`) across all three years using the
+15-min data. 
+
+``` {r qplot}
+qplot (x=datetime, y=airt,
+       data= harMet15.09.11,
+       main= "Air temperature at the Harvard Forest 2009-2011",
+       xlab= "Date", ylab= "Temperature (°C)")
+```
+
+We get a warning message reminding us there there are two missing values in the 
+air temperature data and a plot showing the pattern of air temperature across
+the three years.
+
+While `qplot` is a simple way to quickly plot data it is limited in it's ability
+to be modified and customized into professional looking plots.  The `ggplot()` 
+function within `ggplot2` package allows the user to have much more control
+over the appearance of the plot.  
+
+Let's plot the same data again using `ggplot()`.
+
+``` {r basic-ggplot2}
 #plot Air Temperature Data across 2009-2011 using 15-minute data
 AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
            geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
@@ -101,10 +140,6 @@ AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
            xlab("Date") + ylab("Air Temperature (C)")
 AirTemp15a
 ```
-
-Here we see that we get a warning message saying that two rows were removed due
-to missing values.  Those are the two rows that still had NA in the air
-temperature data.  
 
 The dates on the x-axis are unreadable and not particularly well formatted. We 
 can reformat them so they are in the Month/Day/Year format we are used to. 
