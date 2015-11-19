@@ -10,17 +10,23 @@ library (scales)   #to access breaks/formatting functions
 #15-min Harvard Forest met data, 2009-2011
 harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
                           stringsAsFactors = FALSE)
-
+#convert datetime to POSIXct
+harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
+                    format = "%Y-%m-%dT%H:%M",
+                    tz = "America/New_York")
 #daily HARV met data, 2009-2011
 harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
                      stringsAsFactors = FALSE)
 
+#covert date to Date type
+
+harMetDaily.09.11$date<-as.Date(harMetDaily.09.11$date)
+
 ## ----qplot---------------------------------------------------------------
-#qplot (x=datetime, y=airt,
-      # data= harMet15.09.11,
-       #geom="point", na.rm=TRUE,   #prevents a warning about the 2 missing values
-       #main= "Air temperature at the Harvard Forest 2009-2011",
-       #xlab= "Date", ylab= "Temperature (°C)")
+qplot (x=datetime, y=airt,
+      data= harMet15.09.11,
+      main= "Air temperature at the Harvard Forest 2009-2011",
+      xlab= "Date", ylab= "Temperature (°C)")
 
 ## ----basic-ggplot2-------------------------------------------------------
 #plot Air Temperature Data across 2009-2011 using 15-minute data
@@ -28,14 +34,19 @@ AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
            geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
                                       # that 2 NA values were removed.
            ggtitle("15 min Air Temperature At Harvard Forest") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-           theme(text = element_text(size=20)) +
            xlab("Date") + ylab("Air Temperature (C)")
 AirTemp15a
 
 ## ----nice-x-axis---------------------------------------------------------
 #format x axis with dates
-AirTemp15<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
+AirTemp15b<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
+AirTemp15b
+
+## ----nice-font-----------------------------------------------------------
+#format x axis with dates
+AirTemp15<-AirTemp15b +
+  theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+  theme(text = element_text(size=20)) 
 AirTemp15
 
 ## ----challenge-2-code----------------------------------------------------

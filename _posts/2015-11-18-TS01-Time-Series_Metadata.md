@@ -5,7 +5,7 @@ date:   2015-10-24
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
-lastModified: 2015-11-18
+lastModified: 2015-11-19
 category: 
 tags: [module-1]
 description: "This lesson will teach students how to import tabular data from a 
@@ -131,13 +131,13 @@ structure of the data as interpreted by R.
     ## 4           0         -58        1017        1.8         1.6         226
     ## 5           0         -58        1017        1.4         1.2         224
     ## 6           0         -58        1017        1.6         1.4         214
-    ##   f.wdir wdev f.wdev gspd f.gspd s10t f.s10t
-    ## 1          26         7.2         0.7       
-    ## 2          25         5.9         0.7       
-    ## 3          27         5.8         0.7       
-    ## 4          26         5.1         0.7       
-    ## 5          29         4.6         0.7       
-    ## 6          30         4.4         0.7
+    ##   f.wdir wdev f.wdev gspd f.gspd s10t f.s10t julian
+    ## 1          26         7.2         0.7             1
+    ## 2          25         5.9         0.7             1
+    ## 3          27         5.8         0.7             1
+    ## 4          26         5.1         0.7             1
+    ## 5          29         4.6         0.7             1
+    ## 6          30         4.4         0.7             1
 
     #to see it in spreadsheet form and scroll
     #View(harMet15)
@@ -146,7 +146,7 @@ structure of the data as interpreted by R.
     #Is it what we expect to see?  
     str(harMet_15Min)
 
-    ## 'data.frame':	376800 obs. of  30 variables:
+    ## 'data.frame':	376800 obs. of  31 variables:
     ##  $ datetime: POSIXct, format: "2005-01-01 00:15:00" "2005-01-01 00:30:00" ...
     ##  $ jd      : int  1 1 1 1 1 1 1 1 1 1 ...
     ##  $ airt    : num  5.1 5 4.9 4.7 4.5 4.6 4.6 4.7 4.6 4.6 ...
@@ -177,6 +177,7 @@ structure of the data as interpreted by R.
     ##  $ f.gspd  : chr  "" "" "" "" ...
     ##  $ s10t    : num  0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 ...
     ##  $ f.s10t  : chr  "" "" "" "" ...
+    ##  $ julian  : num  1 1 1 1 1 1 1 1 1 1 ...
 
 These commands let us see the data and get some information about it.
 

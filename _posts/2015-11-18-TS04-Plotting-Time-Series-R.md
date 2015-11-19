@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Lesson 03: Plotting Time Series"
-date:   2015-10-22
+title: "Lesson 04: Plotting Time Series"
+date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2015-11-18
+lastModified: 2015-11-19
 tags: [module-1]
 packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
 category: 
@@ -79,8 +79,8 @@ julian date, and
 3) comparing plots of 15-minute and daily average air temperature. 
 
 You will need the daily and 15-minute micro-meteorology data for 2009-2011 from
-the Harvard Forest. If you do not have these data sets as R objects created in
-<a href="XXX" target="_blank">Tabular Time Series Lesson 03: Subset Data and No Data Values</a> 
+the Harvard Forest. If you do not have these data sets, as R objects created in
+<a href="XXX" target="_blank">Tabular Time Series Lesson 03: Subset Data and No Data Values</a>,
 please load them from the .csv files in the downloaded data.  
 
 
@@ -95,10 +95,17 @@ please load them from the .csv files in the downloaded data.
     #15-min Harvard Forest met data, 2009-2011
     harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
                               stringsAsFactors = FALSE)
-    
+    #convert datetime to POSIXct
+    harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
+                        format = "%Y-%m-%dT%H:%M",
+                        tz = "America/New_York")
     #daily HARV met data, 2009-2011
     harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
                          stringsAsFactors = FALSE)
+    
+    #covert date to Date type
+    
+    harMetDaily.09.11$date<-as.Date(harMetDaily.09.11$date)
 
 ##Plotting Time Series Data
 Visualization of data is important as it allow us to start to get a sense of 
@@ -111,11 +118,12 @@ quick plot of the air temperature (`airt`) across all three years using the
 15-min data. 
 
 
-    #qplot (x=datetime, y=airt,
-          # data= harMet15.09.11,
-           #geom="point", na.rm=TRUE,   #prevents a warning about the 2 missing values
-           #main= "Air temperature at the Harvard Forest 2009-2011",
-           #xlab= "Date", ylab= "Temperature (°C)")
+    qplot (x=datetime, y=airt,
+          data= harMet15.09.11,
+          main= "Air temperature at the Harvard Forest 2009-2011",
+          xlab= "Date", ylab= "Temperature (°C)")
+
+    ## Error in seq.int(0, to0 - from, by): 'to' cannot be NA, NaN or infinite
 
 We get a warning message reminding us there there are two missing values in the 
 air temperature data and a plot showing the pattern of air temperature across
@@ -126,32 +134,69 @@ to be modified and customized into professional looking plots.  The `ggplot()`
 function within `ggplot2` package allows the user to have much more control
 over the appearance of the plot.  
 
-Let's plot the same data again using `ggplot()`.
+Let's plot the same data again using `ggplot()`.  While `ggplot()` is based on 
+using much of the information we just used with `qplot` however the syntax is 
+different: 
 
+* the data source is now the first element,
+* `aes` (aesthetics) is where the field names for the x, y (and 
+other) axes are entered,  
+* `geom_XXX`, specifically `geom_point`, is used to define the type of
+demarkation you want to represent the data.  We want a scatterplot so we are
+using geom_point. The default is small round filled circles, 
+* within the parameters for `geom_point` we will specify that all na values 
+shoud be removed `na.rm=TRUE`.  This will prevent the warning messages from 
+showing,
+* `ggtitle` is now how we name the plot,
+* and `xlab` and `ylab` are still how we label the axes.  
+
+Remember `help(ggplot2)` will list the many other parameters that can be 
+defined.  
 
     #plot Air Temperature Data across 2009-2011 using 15-minute data
     AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
                geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
                                           # that 2 NA values were removed.
                ggtitle("15 min Air Temperature At Harvard Forest") +
-               theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-               theme(text = element_text(size=20)) +
                xlab("Date") + ylab("Air Temperature (C)")
     AirTemp15a
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Plotting-Time-Series-R/basic-ggplot2-1.png) 
+    ## Error in seq.int(0, to0 - from, by): 'to' cannot be NA, NaN or infinite
 
-The dates on the x-axis are unreadable and not particularly well formatted. We 
-can reformat them so they are in the Month/Day/Year format we are used to. 
+Notice we created an object (AirTemp15a) that is our plot.  We then have to
+write in the object name to get the plot to appear.  Creating plots as an 
+`R object` has many advantages including being able to simply add to a plot as we
+will do in just a few lines and to be able to recall a plot later on in code as
+we do at the end of this lesson. 
+
+The dates on the x-axis in this last plot are unreadable and not particularly
+well formatted. We can reformat them so they are in the Month/Day/Year format by 
+simply adding onto the `AirTemp15a` plot that we just created. 
 
     #format x axis with dates
-    AirTemp15<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
-    AirTemp15
+    AirTemp15b<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
+    AirTemp15b
 
-    ## Error: Invalid input: time_trans works with objects of class POSIXct only
+    ## Error in seq.int(0, to0 - from, by): 'to' cannot be NA, NaN or infinite
+
+The dates are now legible and in a format that is more common. 
 
 Bonus: If an x variable is not a datetime class (e.g., not POSIX),
-`scale_x_...()` exist to help format x-axes. 
+`scale_x_...()` exist to help format x-axes. {.notice2}
+
+The ability to customize nearly every aspect of the plot is one of the reasons
+to use `ggplot2`. We can make the labels and title look better as well by
+specifying aspects of `theme()`.  
+
+
+    #format x axis with dates
+    AirTemp15<-AirTemp15b +
+      theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+      theme(text = element_text(size=20)) 
+    AirTemp15
+
+    ## Error in seq.int(0, to0 - from, by): 'to' cannot be NA, NaN or infinite
+
 
 ##Challenge 2: Plotting daily precipitaiton data
 Using the daily precipitation data you imported earlier, create a plot with the
@@ -185,21 +230,6 @@ package.
 
     library (dplyr)   #aid with manipulating data #remember it is good coing practice to load all packages at the beginning of your script
 
-    ## 
-    ## Attaching package: 'dplyr'
-    ## 
-    ## The following objects are masked from 'package:lubridate':
-    ## 
-    ##     intersect, setdiff, union
-    ## 
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-    ## 
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
 The `dplyr` package is designed to simplify more complicated data manipulations
 in dataframes.  Beyond what we are focusing on today, it is also useful
 for manipulating data stored in an external database. This is especially useful
@@ -221,7 +251,7 @@ smaller groups (e.g., take the average) before bringing them back together as a
 whole (e.g., to plot the data). This is called using the "split-apply-combine"
 technique, for which `dplyr` is particularly useful. 
 
-### Grouping by a varaible (or two)
+### Grouping by a variable (or two)
 Getting back to our basic question of understanding annual phenology patterns, we 
 would like to look at the daily average temperature throughout the year.  We 
 plotted the 15 minute data across the three years earlier in this lesson, 
@@ -391,11 +421,11 @@ each year.  For ease with future activities name your new dataframe
     
     str(temp.monthly.09.11)
 
-    ## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	36 obs. of  4 variables:
-    ##  $ month    : num  1 1 1 2 2 2 3 3 3 4 ...
-    ##  $ year     : num  2009 2010 2011 2009 2010 ...
-    ##  $ mean_airt: num  -8.24 -4.83 -6.51 -2.88 -3.29 ...
-    ##  $ datetime : chr  "2009-01-01 00:00:00" "2010-01-01 00:00:00" "2011-01-01 00:00:00" "2009-02-01 00:00:00" ...
+    ## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	1 obs. of  4 variables:
+    ##  $ month    : num NA
+    ##  $ year     : num NA
+    ##  $ mean_airt: num 8.47
+    ##  $ datetime : POSIXct, format: NA
     ##  - attr(*, "vars")=List of 1
     ##   ..$ : symbol month
     ##  - attr(*, "drop")= logi TRUE
@@ -437,7 +467,7 @@ below.  For ease of future code, name your plot "AirTempMonthly".
               scale_x_datetime(labels=date_format ("%b%y"))
     AirTempMonthly
 
-    ## Error: Invalid input: time_trans works with objects of class POSIXct only
+    ## Error in seq.int(0, to0 - from, by): 'to' cannot be NA, NaN or infinite
 
 Notice in the code for the x scale (`scale_x_datetime()`), we further changed
 the date format by removing the day since we are graphing monthly averages. 
@@ -448,9 +478,6 @@ Instead we can use another package, `gridExtra`, to do this.
 
 
     require(gridExtra)
-
-    ## Loading required package: gridExtra
-
     grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
 
     ## Error in arrangeGrob(...): object 'AirTempDaily' not found
