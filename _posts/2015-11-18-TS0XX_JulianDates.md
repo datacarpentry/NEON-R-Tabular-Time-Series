@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Lesson XX: Julian Date"
-date:   2015-10-22
+date:   2015-10-19
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: 
 dateCreated: 2015-10-22
-lastModified: 2015-11-18
+lastModified: 2015-11-19
 tags: [module-1]
 packagesLibraries: 
 category: 

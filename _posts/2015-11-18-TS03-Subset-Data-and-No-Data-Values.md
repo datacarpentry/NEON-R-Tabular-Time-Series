@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Lesson 02b: Refining Time Series Data: Subsetting Data by Date and NoData Values in R"
-date: 2015-10-23
+title: "Lesson 03: Refining Time Series Data: Subsetting Data by Date and NoData Values in R"
+date: 2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2015-11-18
+lastModified: 2015-11-19
 tags: module-1
 packagesLibraries: [lubridate, ggplot2]
 category: 
