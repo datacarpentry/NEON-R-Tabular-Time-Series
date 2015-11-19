@@ -5,10 +5,10 @@ date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah Wasser]
 dateCreated: 2015-10-22
-lastModified: 2015-11-16
+lastModified: 2015-11-18
 category:  
 tags: [module-1]
-mainTag: GIS-Spatial-Data
+mainTag: 
 description: "This lesson will teach individuals how to plot subsetted timeseries data (e.g., plot by season) and to plot time series data with NDVI."
 code1:
 image:
@@ -89,7 +89,7 @@ this using the code we previously learned and substituting precipitation
                xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
     par.precip
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Data-Exploration/PAR-v-precip-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Data-Exploration/PAR-v-precip-1.png) 
 
 While there is a lot of noise in the data, there does seem to be a trend of 
 lower PAR when precipitation is high. Yet in this data we don't tease apart any 

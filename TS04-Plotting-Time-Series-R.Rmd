@@ -112,10 +112,11 @@ quick plot of the air temperature (`airt`) across all three years using the
 15-min data. 
 
 ``` {r qplot}
-qplot (x=datetime, y=airt,
-       data= harMet15.09.11,
-       main= "Air temperature at the Harvard Forest 2009-2011",
-       xlab= "Date", ylab= "Temperature (°C)")
+#qplot (x=datetime, y=airt,
+      # data= harMet15.09.11,
+       #geom="point", na.rm=TRUE,   #prevents a warning about the 2 missing values
+       #main= "Air temperature at the Harvard Forest 2009-2011",
+       #xlab= "Date", ylab= "Temperature (°C)")
 ```
 
 We get a warning message reminding us there there are two missing values in the 

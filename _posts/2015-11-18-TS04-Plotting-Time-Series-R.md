@@ -1,18 +1,21 @@
 ---
 layout: post
-title: "Lesson 03: Getting to Know The Data"
+title: "Lesson 03: Plotting Time Series"
 date:   2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Michael Patterson]
+contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2015-11-16
+lastModified: 2015-11-18
 tags: [module-1]
-description: "This lesson will teach individuals how to conduct basic data manipulation and create basic plots of time series data."
+packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
+category: 
+description: "This lesson will teach individuals how to conduct basic data manipulation and create plots of time series data using ggplot2."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
+permalink: /R/Plotting-Time-Series
 comments: false
 ---
 
@@ -23,19 +26,19 @@ comments: false
 This activity will walk you through the fundamentals of data manipulation and 
 basic plotting.
 
-<div id="objectives" markdown="1">
-
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
-### Goals / Objectives
-After completing this activity, you will know:
- * How to create basic time series plots in `R`
- * How to manipulate data in `R`
 
+<div id="objectives" markdown="1">
+
+### Goals / Objectives
+After completing this lesson, you will:
+ * Be able to create basic time series plots in `R`
+ * Know several ways to manipulate data in `R`
 
 ###Things You'll Need To Complete This Lesson
-Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
+Please be sure you have the most current version of `R` and, preferably,
+RStudio to write your code.
 
 ####R Libraries to Install
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
@@ -44,43 +47,88 @@ R studio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 <li><strong>dplyr:</strong> <code> install.packages("dplyr")</code></li>
 
+  <a href="http://neondataskills.org/R/Packages-In-R/" target="_blank">
+More on Packages in R - Adapted from Software Carpentry.</a>
+
 ####Data to Download
 Make sure you have downloaded the AtmosData folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
-####Recommended Pre-Lesson Reading
-Lessons 00-02 in this Time Series learning module
 
-</div>
-
-
-NOTE: The data used in this tutorial were collected at Harvard Forest which is
+The data used in this tutorial were collected at Harvard Forest which is
 a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
 More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
 available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
-{: .notice}
 
-#Lesson 03: Getting to Know The Data
-As we continue working with our data we are going to learn skills that
-will enable us to visualize our data by:
-1) plotting the 15-minute air temperature data across years,
+
+####Setting the Working Directory
+The code in this lesson assumes that you have set your working directory to the
+location of the unzipped file of data downloaded above.  If you would like a
+refresher on setting the working directory, please view the <a href="XXX" target="_blank">Setting A Working Directory In R</a> lesson prior to beginning the lesson.
+
+####Recommended Pre-Lesson Reading
+
+</div>
+
+Working with micro-meterology data from Harvard Forest, we are going to
+learn skills that will enable us to visualize our data by:
+
+1) plotting 15-minute air temperature data across years,
 2) manipulating the date to group and summarize by year, daily average, and 
 julian date, and 
-3) compareing plots of 15-minute and daily average air temperature. 
+3) comparing plots of 15-minute and daily average air temperature. 
 
-##Plotting Time Series Data
-One of the first things that can often be useful once we've loaded our 
-data and cleaned it up is to visualize it. We can start to get a sense of 
-general trends, as well as see possible outliers or non-sensical values. 
-
-To do this, we're going to use the package `ggplot2` to plot the air temperature across our 3 year time span for each 15 minute data point. We will not cover the details of how to use ggplot to customize your plot, but some of these will be introduced in the last module: Making Pretty Maps.
+You will need the daily and 15-minute micro-meteorology data for 2009-2011 from
+the Harvard Forest. If you do not have these data sets as R objects created in
+<a href="XXX" target="_blank">Tabular Time Series Lesson 03: Subset Data and No Data Values</a> 
+please load them from the .csv files in the downloaded data.  
 
 
     #Remember it is good coding technique to add additional libraries to the top of
-      #your script (we started this section in Lesson 02)
+      #your script 
     library (ggplot2)  #for creating graphs
     library (scales)   #to access breaks/formatting functions
     
+    #set working directory to ensure R can find the file we wish to import
+    #setwd("working-dir-path-here")
+    
+    #15-min Harvard Forest met data, 2009-2011
+    harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
+                              stringsAsFactors = FALSE)
+    
+    #daily HARV met data, 2009-2011
+    harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+                         stringsAsFactors = FALSE)
+
+##Plotting Time Series Data
+Visualization of data is important as it allow us to start to get a sense of 
+general trends, as well as see possible outliers or non-sensical values. 
+
+###Intro to ggplot2 
+
+Using the package `ggplot2` we could use the simple `qplot()` function to make a
+quick plot of the air temperature (`airt`) across all three years using the
+15-min data. 
+
+
+    #qplot (x=datetime, y=airt,
+          # data= harMet15.09.11,
+           #geom="point", na.rm=TRUE,   #prevents a warning about the 2 missing values
+           #main= "Air temperature at the Harvard Forest 2009-2011",
+           #xlab= "Date", ylab= "Temperature (°C)")
+
+We get a warning message reminding us there there are two missing values in the 
+air temperature data and a plot showing the pattern of air temperature across
+the three years.
+
+While `qplot` is a simple way to quickly plot data it is limited in it's ability
+to be modified and customized into professional looking plots.  The `ggplot()` 
+function within `ggplot2` package allows the user to have much more control
+over the appearance of the plot.  
+
+Let's plot the same data again using `ggplot()`.
+
+
     #plot Air Temperature Data across 2009-2011 using 15-minute data
     AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
                geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
@@ -91,11 +139,7 @@ To do this, we're going to use the package `ggplot2` to plot the air temperature
                xlab("Date") + ylab("Air Temperature (C)")
     AirTemp15a
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/basic-plotting-1.png) 
-
-Here we see that we get a warning message saying that two rows were removed due
-to missing values.  Those are the two rows that still had NA in the air
-temperature data.  
+![ ]({{ site.baseurl }}/images/rfigs/TS04-Plotting-Time-Series-R/basic-ggplot2-1.png) 
 
 The dates on the x-axis are unreadable and not particularly well formatted. We 
 can reformat them so they are in the Month/Day/Year format we are used to. 
@@ -104,10 +148,10 @@ can reformat them so they are in the Month/Day/Year format we are used to.
     AirTemp15<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
     AirTemp15
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/nice-x-axis-1.png) 
+    ## Error: Invalid input: time_trans works with objects of class POSIXct only
 
-Bonus: If an x variable is not a datetime class (e.g., not POSIX), other 
-`scale_x_...()` exist to help format x axes. 
+Bonus: If an x variable is not a datetime class (e.g., not POSIX),
+`scale_x_...()` exist to help format x-axes. 
 
 ##Challenge 2: Plotting daily precipitaiton data
 Using the daily precipitation data you imported earlier, create a plot with the
@@ -126,7 +170,7 @@ name the plot 'PrecipDaily".
     
     PrecipDaily
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-2-code-1.png) 
+    ## Error: Invalid input: time_trans works with objects of class POSIXct only
 
 We will return to precipitation data in Challenge 4 and discuss this plot. 
 
@@ -259,7 +303,7 @@ Using `names()` we can see that we now have a variable named year. Here we are s
     #check to make sure it worked
     names(harMet15.09.11 [32])
 
-    ## Error in `[.data.frame`(harMet15.09.11, 32): undefined columns selected
+    ## [1] "year"
 
 Now we have our two variables: julian and year. To get the mean air temperature
 for each day for each year we can use the `dplyr` pipes to group by year and
@@ -303,12 +347,12 @@ in our harMet15.09.11 dataframe.
 
     names(harMet15.09.11)
 
-    ##  [1] "datetime" "jd"       "airt"     "f.airt"   "rh"       "f.rh"    
-    ##  [7] "dewp"     "f.dewp"   "prec"     "f.prec"   "slrr"     "f.slrr"  
-    ## [13] "parr"     "f.parr"   "netr"     "f.netr"   "bar"      "f.bar"   
-    ## [19] "wspd"     "f.wspd"   "wres"     "f.wres"   "wdir"     "f.wdir"  
-    ## [25] "wdev"     "f.wdev"   "gspd"     "f.gspd"   "s10t"     "f.s10t"  
-    ## [31] "year"
+    ##  [1] "X"        "datetime" "jd"       "airt"     "f.airt"   "rh"      
+    ##  [7] "f.rh"     "dewp"     "f.dewp"   "prec"     "f.prec"   "slrr"    
+    ## [13] "f.slrr"   "parr"     "f.parr"   "netr"     "f.netr"   "bar"     
+    ## [19] "f.bar"    "wspd"     "f.wspd"   "wres"     "f.wres"   "wdir"    
+    ## [25] "f.wdir"   "wdev"     "f.wdev"   "gspd"     "f.gspd"   "s10t"    
+    ## [31] "f.s10t"   "year"
 
 We want to save this information so that we can plot the daily air temperature
 as well. So, we save the output of our dplyr function as a new data frame. 
@@ -351,7 +395,7 @@ each year.  For ease with future activities name your new dataframe
     ##  $ month    : num  1 1 1 2 2 2 3 3 3 4 ...
     ##  $ year     : num  2009 2010 2011 2009 2010 ...
     ##  $ mean_airt: num  -8.24 -4.83 -6.51 -2.88 -3.29 ...
-    ##  $ datetime : POSIXct, format: "2009-01-01" "2010-01-01" ...
+    ##  $ datetime : chr  "2009-01-01 00:00:00" "2010-01-01 00:00:00" "2011-01-01 00:00:00" "2009-02-01 00:00:00" ...
     ##  - attr(*, "vars")=List of 1
     ##   ..$ : symbol month
     ##  - attr(*, "drop")= logi TRUE
@@ -393,7 +437,7 @@ below.  For ease of future code, name your plot "AirTempMonthly".
               scale_x_datetime(labels=date_format ("%b%y"))
     AirTempMonthly
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/plot-airtemp-Monthly-1.png) 
+    ## Error: Invalid input: time_trans works with objects of class POSIXct only
 
 Notice in the code for the x scale (`scale_x_datetime()`), we further changed
 the date format by removing the day since we are graphing monthly averages. 
@@ -429,17 +473,12 @@ for each month?
       mutate(month = month(datetime), year= year(datetime)) %>%
       group_by(month, year) %>%
       summarize(total_prec = sum(prec, na.rm = TRUE), datetime=first(datetime))
-    
+
+    ## Error in eval(expr, envir, enclos): object 'harMet15' not found
+
     str(prec.monthly)
 
-    ## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	129 obs. of  4 variables:
-    ##  $ month     : num  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ year      : num  2005 2006 2007 2008 2009 ...
-    ##  $ total_prec: num  120.5 110 82.9 75.7 84.4 ...
-    ##  $ datetime  : chr  "2005-01-01T00:15" "2006-01-01T00:15" "2007-01-01T00:15" "2008-01-01T00:15" ...
-    ##  - attr(*, "vars")=List of 1
-    ##   ..$ : symbol month
-    ##  - attr(*, "drop")= logi TRUE
+    ## Error in str(prec.monthly): object 'prec.monthly' not found
 
     PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
       geom_point(na.rm=TRUE) +
@@ -448,20 +487,21 @@ for each month?
       theme(text = element_text(size=20)) +
       xlab("Month") + ylab("Precipitation (mm)") +
       scale_x_discrete(labels=month)  
+
+    ## Error in ggplot(prec.monthly, aes(month, total_prec)): object 'prec.monthly' not found
+
     #month is no longer datetime, but a discrete number. Change from scale_x_datetime()
       #to scale_x_discrete()
     
     PrecipMonthly
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-4-code-1.png) 
+    ## Error in eval(expr, envir, enclos): object 'PrecipMonthly' not found
 
     #If we want written out month labels
     PrecipMonthly + scale_x_discrete("month", labels = c("1" = "Jan","2" = "Feb",
       "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
 
-    ## Scale for 'x' is already present. Adding another scale for 'x', which will replace the existing scale.
-
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/challenge-4-code-2.png) 
+    ## Error in eval(expr, envir, enclos): object 'PrecipMonthly' not found
 
 Is there an obvious annual trend in percipitation at Harvard Forest?  
 
@@ -472,7 +512,7 @@ another?
 
     grid.arrange(PrecipDaily, PrecipMonthly, ncol=1)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS03-Getting-To-Know-Data/compare-precip-1.png) 
+    ## Error in arrangeGrob(...): object 'PrecipMonthly' not found
 
 In the next lesson we will learn to expand our plotting abilities to plot two
 variables side-by-side and to incorporate values from spacial data sets (NDVI)

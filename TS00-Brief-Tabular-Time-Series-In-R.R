@@ -2,12 +2,12 @@
 # Install packages required for entire script.
 #install.packages(ggplot2)
 
-# What libraries are required for this lesson?
+# Load libraries required for entire script. 
 # library(nameOfLibrary)  #purpose of library
 library(ggplot2)   #efficient, pretty plotting - required to qplot function
 
 #set working directory to ensure R can find the file we wish to import
-#setwd("workingDirHere")
+#setwd("working-dir-path-here")
 
 
 ## ----import-csv----------------------------------------------------------
@@ -28,9 +28,8 @@ head(harMetdaily)
 #View the structure (str) of the data 
 str(harMetdaily)
 
-
 ## ----plot-data-----------------------------------------------------------
-#quickly plot the data
+#quickly plot of air temperature
 qplot(x=date,y=airt, data=harMetdaily)
 
 
@@ -54,10 +53,12 @@ class(harMetdaily$date)
 
 
 ## ----qplot-data----------------------------------------------------------
-#quickly plo the data
+#quickly plot the data and include a title
+#In a string \n forces the string to break onto a new line
 qplot(x=date,y=airt, 
       data=harMetdaily,
-      main="Daily Air Temperature w Date Assigned\nNEON Harvard Forest")
+      main="Daily Air Temperature w Date Assigned\nNEON Harvard Forest")  
+
 
 ## ----challenge-code-plotting, echo=FALSE---------------------------------
 
