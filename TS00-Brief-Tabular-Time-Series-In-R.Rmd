@@ -36,7 +36,7 @@ recogniaze and plot efficiently.
 ###Goals / Objectives
 After completing this lesson, you will:
 
-  * Be able to open a .csv file in `R` using `read.csv()`.
+  * Be able to open a .csv file in `R` using `read.csv()`and understand why we are using that format
   * Understand how to work with `date.frame` fields in `R`.
   * Understand how to examine data structures and types.
   * Be able to convert a date field, stored as a character, into an `R` date 
@@ -108,7 +108,7 @@ exploring  the data, we need to first import it into R. We can use the function
 
 # Load libraries required for entire script. 
 # library(nameOfLibrary)  #purpose of library
-library(ggplot2)   #efficient, pretty plotting - required to qplot function
+library(ggplot2)   #efficient, pretty plotting - required for qplot function
 
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
@@ -153,10 +153,10 @@ class(harMetdaily)
 
 #Data.Frames in R
 When we use the `read.csv()` function, `R` imports the data as a `data.frame`.
-This format type is idea for working with tabular data. It is similar to a 
+This format type is ideal for working with tabular data. It is similar to a 
 spreadsheet.
 
-## Data Structure & Metadata
+## Data Structure
 Once our data are imported, we can explore its structure. There are several ways to examine the structure of a data frame: 
 
 * `head()` method: this will show us the first 6 rows of the data. 
@@ -188,9 +188,9 @@ will (>2*10^9).
 
 Storing variables as different data types is a strategic decision by `R` (and 
 other programing languages).  Certain functions can be performed on certain data
-types and not on others (e.g. a<-"mouse"-"sparrow"; subtracting two **chr** data
+types and not on others (e.g., a <- "mouse"-"sparrow"; subtracting two **chr** data
 points makes no sense).  Additionally, the attributes and properties of
-different data types varies (e.g. there is not point in showing the minimum
+different data types varies (e.g., there is not point in showing the minimum
 value for `SpeciesObserved` a **chr** type but there is for `prec` a **num**
 type.) These and many other processes mean that assigning data types makes for
 more efficient and faster running code. 
@@ -229,11 +229,12 @@ class(harMetdaily$airt)
 Looking at our data, we can see that the `date` field actually imported into
 `R` as character type. This means that `R` does not know how to plot these 
 data as a continuous variable on the x-axis. The `airt` field is numeric so that
-field should plot just fine.
+field plots just fine.
 
 #Date as a Time Format
 We need to convert our date field, which is currently stored as a character 
-value to an actual date format that can be displayed quantitively. Lucky for us, `R` has `date` format. We can reassign the `harMetdaily$date` field using `as.Date`.
+value to an actual date format that can be displayed quantitively. Lucky for us, `R` has a `date` format. 
+We can reassign the `harMetdaily$date` field using `as.Date`.
 
 ```{r convert-date-time }
 
@@ -254,7 +255,7 @@ ticks on the x axis by year instead of trying to plot every day!
 
 ```{r qplot-data}
 #quickly plot the data and include a title
-#In a string \n forces the string to break onto a new line
+#In a the string we use for the title we can use '\n' to force the string to break onto a new line
 qplot(x=date,y=airt, 
       data=harMetdaily,
       main="Daily Air Temperature w Date Assigned\nNEON Harvard Forest")  
@@ -265,8 +266,7 @@ qplot(x=date,y=airt,
 #Challenge
 > 1. Plot something else?? what else should we plot.
 > 2. it could be cool to show them how to aggregate - adjust tick marks by 5 years, 10 years, etc
-> 3. it could be cool to show them how to add x lab and y lab
-> 4. plot on variable vs another??
+> 3. plot one variable vs another??
 
 ```{r challenge-code-plotting, echo=FALSE}
 

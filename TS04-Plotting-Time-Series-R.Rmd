@@ -23,8 +23,7 @@ comments: false
 
 
 ##About
-This activity will walk you through the fundamentals of data manipulation and 
-basic plotting.
+This lesson will teach individuals how to conduct basic data manipulation and create plots of time series data using ggplot2.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
@@ -80,18 +79,22 @@ julian date, and
 
 You will need the daily and 15-minute micro-meteorology data for 2009-2011 from
 the Harvard Forest. If you do not have these data sets, as R objects created in
-<a href="XXX" target="_blank">Tabular Time Series Lesson 03: Subset Data and No Data Values</a>,
+[{{site.baseurl}} / LINKHERE](Lesson 00 - ) and [{{site.baseurl}} / LINKHERE](Lesson 01 - )
 please load them from the .csv files in the downloaded data.  
 
 ```{r load-data}
 #Remember it is good coding technique to add additional libraries to the top of
   #your script 
-library (ggplot2)  #for creating graphs
-library (scales)   #to access breaks/formatting functions
+library(lubridate) #for working with dates
+library(ggplot2)  #for creating graphs
+library(scales)   #to access breaks/formatting functions
+library(dplyr)    #for data manipulation (split, apply, combine)
+library(gridExtra) #for arranging plots
 
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
 
+#If not already available from Lesson 01-03:
 #15-min Harvard Forest met data, 2009-2011
 harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
                           stringsAsFactors = FALSE)
@@ -100,12 +103,12 @@ harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
                     format = "%Y-%m-%dT%H:%M",
                     tz = "America/New_York")
 #daily HARV met data, 2009-2011
-harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+harMetDaily.09.11 <- read.csv(file="Met_HARV_Daily_2009_2011.csv",
                      stringsAsFactors = FALSE)
 
 #covert date to Date type
 
-harMetDaily.09.11$date<-as.Date(harMetDaily.09.11$date)
+harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 ```
 
 ##Plotting Time Series Data
@@ -114,14 +117,16 @@ general trends, as well as see possible outliers or non-sensical values.
 
 ###Intro to ggplot2 
 
-Using the package `ggplot2` we could use the simple `qplot()` function to make a
+Using the package `ggplot2` we could use the simple `qplot()` function
+that we introduced in [{{site.baseurl}} / LINKHERE](Lesson 00 - ) to make a
 quick plot of the air temperature (`airt`) across all three years using the
-15-min data. 
+15-min data. Here we introduce a new feature of ggplot, adding labels to
+the x and y axes using `xlab=` and `ylab=`.
 
 ``` {r qplot}
 qplot (x=datetime, y=airt,
       data= harMet15.09.11,
-      main= "Air temperature at the Harvard Forest 2009-2011",
+      main= "Air temperature Harvard Forest\n 2009-2011",
       xlab= "Date", ylab= "Temperature (°C)")
 ```
 
@@ -135,23 +140,26 @@ function within `ggplot2` package allows the user to have much more control
 over the appearance of the plot.  
 
 Let's plot the same data again using `ggplot()`.  While `ggplot()` is based on 
-using much of the information we just used with `qplot` however the syntax is 
+using much of the information we just used with `qplot` the syntax is 
 different: 
 
 * the data source is now the first element,
-* `aes` (aesthetics) is where the field names for the x, y (and 
+* `aes` (aesthetics) are where the variables for the x, y (and 
 other) axes are entered,  
-* `geom_XXX`, specifically `geom_point`, is used to define the type of
-demarkation you want to represent the data.  We want a scatterplot so we are
+* `geom_XXX` (geometry), in this lesson `geom_point`, is used to define the type of
+demarcation you want to represent the data.  We want a scatterplot so we are
 using geom_point. The default is small round filled circles, 
 * within the parameters for `geom_point` we will specify that all na values 
 shoud be removed `na.rm=TRUE`.  This will prevent the warning messages from 
 showing,
-* `ggtitle` is now how we name the plot,
-* and `xlab` and `ylab` are still how we label the axes.  
+* `ggtitle` is now how we give the plot a title,
+* `xlab` and `ylab` are still how we label the axes.  
 
 Remember `help(ggplot2)` will list the many other parameters that can be 
-defined.  
+defined. There are far more ways ggplot can be used to customize and stylize
+your plots, but we will not cover those additional details in this lesson to
+keep the focus on working with time series data.
+
 ``` {r basic-ggplot2}
 #plot Air Temperature Data across 2009-2011 using 15-minute data
 AirTemp15a <- ggplot(harMet15.09.11, aes(datetime, airt)) +
@@ -168,12 +176,12 @@ write in the object name to get the plot to appear.  Creating plots as an
 will do in just a few lines and to be able to recall a plot later on in code as
 we do at the end of this lesson. 
 
-The dates on the x-axis in this last plot are unreadable and not particularly
+The dates on the x-axis in this last plot are not particularly
 well formatted. We can reformat them so they are in the Month/Day/Year format by 
 simply adding onto the `AirTemp15a` plot that we just created. 
 ```{r nice-x-axis}
 #format x axis with dates
-AirTemp15b<-AirTemp15a + scale_x_datetime(labels=date_format ("%m/%d/%y") )
+AirTemp15b <- AirTemp15a + (scale_x_datetime(labels=date_format("%m/%d/%y")))
 AirTemp15b
 ```
 
@@ -221,11 +229,7 @@ we can, unsurprisingly, see a clear seasonal trend. Yet the air temperature data
 at 15 minute intervals is at a finer time-step than we want. Instead, we  want to 
 look at how daily average temperature changes over time. To do this we first 
 need to learn a bit about how to manipulate data in R. We'll use the `dplyr` 
-package. 
-
-``` {r load-dplyr}
-library (dplyr)   #aid with manipulating data #remember it is good coing practice to load all packages at the beginning of your script
-```
+package. We loaded this library at the beginning of the script.
 
 The `dplyr` package is designed to simplify more complicated data manipulations
 in dataframes.  Beyond what we are focusing on today, it is also useful
@@ -257,11 +261,13 @@ all three years. To do this we can use the `group-by()` function.
 
 Before getting into our data, let's count up the number of observations per
 Julian date using the `group-by()` function to determine how we split up our
-data. Remember we created a column named "julian" for our Julian Day data.
+data. If Julian days weren't already in our dataset we could use the `yday()`
+function <a href="http://www.inside-r.org/packages/cran/lubridate/docs/yday"/>
+from the lubridate package to create a new variable for this feature.
 
 ```{r dplyr-group}
 harMet15.09.11 %>%          #Within the harMet15.09.11 data
-  group_by(julian) %>%      #group the data by the julian day
+  group_by(jd) %>%      #group the data by the julian day
   tally()                   #and tally how many observations per julian day
 ```
 
@@ -274,7 +280,7 @@ harMet15.09.11 dataframe, find the julian dates, group them, and then count
 (tally) how many values for each of the grouped days.  
 
 Bonus: Older `dplyr` coded pipes as %.% and you may still see that format in some
-older Stack Overflow answers and other tutuorials. 
+older StackOverflow answers and other tutorials. 
 
 As the output shows we have 288 values for each day.  Is that what we expect? 
 
@@ -296,12 +302,12 @@ any NA values when making the calculations.
 
 ```{r dplyr-summarize}
 harMet15.09.11 %>%
-  group_by(julian) %>%
+  group_by(jd) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))  
 ```
 
 Julian days repeat 1-365 (or 366) each year, therefore what we have here is that
-the mean temperature for all 3 January 1st in 2009, 2010, and 2011 was -3.7C. 
+the mean temperature for all 3 January 1st in 2009, 2010, and 2011 was -3.7 Celsius. 
 Sometimes this is how we want to summarize our data, however, we may also want 
 to summarize our air temperature data for each day in each of the three years.  
 To do that we need to group our data by two different values at once, year and 
@@ -318,25 +324,25 @@ harMet15.09.11$year <- year(as.Date(harMet15.09.11$datetime, "%y-%b-%d",
       tz = "America/New_York"))
 ```
 
-or since our date data is already a POSIX date/time variable, we can be more efficient: 
+or since our date data is already a POSIXct date/time variable, we can be more efficient: 
 
 ```{r dplyr-lubridate-2}
 harMet15.09.11$year <- year(harMet15.09.11$datetime)
 ```
 
-Using `names()` we can see that we now have a variable named year. Here we are specifying the last column we added (32).
+Using `names()` we can see that we now have a variable named year. Here we are specifying the last column we added.
 ```{r dplyr-lubridate-3}
 #check to make sure it worked
-names(harMet15.09.11 [32])
+names(harMet15.09.11)
 ```
 
-Now we have our two variables: julian and year. To get the mean air temperature
+Now we have our two variables: jd and year. To get the mean air temperature
 for each day for each year we can use the `dplyr` pipes to group by year and
 julian date.
 
 ```{r dplyr-2-groups}
 harMet15.09.11 %>%
-  group_by(year, julian) %>%
+  group_by(year, jd) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 ```
 
@@ -350,7 +356,7 @@ To create more efficient code, could we create the year variable within our
 
 Yes, we can use the `mutate()` function of `dplyr` and include our `lubridate`
 function within the `mutate()` call. `mutate()` is used to add new data to a
-dataframe. These are often new data that are created from a calculation or
+dataframe. There are often new data that are created from a calculation or
 manipulation of existing data. If you are familiar with the `tranform()` core R
 function the usage is similar:  `mutate()` allows us to create and immediately use a
 variable (year2), which is something that the core `R` function `transform()`
@@ -359,7 +365,7 @@ will not do.
 ```{r dplyr-mutate}
 harMet15.09.11 %>%
   mutate(year2 = year(datetime)) %>%
-  group_by(year2, julian) %>%
+  group_by(year2, jd) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE))
 
 ```
@@ -384,7 +390,7 @@ each year using the `summarize()` function.
 ```{r dplyr-dataframe}
 temp.daily.09.11 <- harMet15.09.11 %>%
   mutate(year3 = year(datetime)) %>%
-  group_by(year3, julian) %>%
+  group_by(year3, jd) %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
 
 str(temp.daily.09.11)
@@ -450,7 +456,6 @@ Lets compare the two air tempurature figures we have created. Unfortunately
 Instead we can use another package, `gridExtra`, to do this. 
 
 ``` {r airTemp-plots-compare}
-require(gridExtra)
 grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
 ```
 
@@ -469,7 +474,7 @@ for each month?
 
 ```{r challenge-4-code}
 
-prec.monthly <- harMet15 %>%
+prec.monthly <- harMet_15Min %>%
   mutate(month = month(datetime), year= year(datetime)) %>%
   group_by(month, year) %>%
   summarize(total_prec = sum(prec, na.rm = TRUE), datetime=first(datetime))
@@ -489,7 +494,7 @@ PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
 PrecipMonthly
 
 #If we want written out month labels
-PrecipMonthly + scale_x_discrete("month", labels = c("1" = "Jan","2" = "Feb",
+PrecipMonthly + scale_x_discrete("Month", labels = c("1" = "Jan","2" = "Feb",
   "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
 
 ```
@@ -505,5 +510,5 @@ grid.arrange(PrecipDaily, PrecipMonthly, ncol=1)
 ```
 
 In the next lesson we will learn to expand our plotting abilities to plot two
-variables side-by-side and to incorporate values from spacial data sets (NDVI)
+variables side-by-side and to incorporate values from spatial data sets (NDVI)
 into our phenology related plots. 
