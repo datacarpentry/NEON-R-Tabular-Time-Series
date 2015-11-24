@@ -187,8 +187,8 @@ have NA values in our other variables.
 When we encounter NA or missing values (blank, NaN, -9999, etc.) in our data we
 need to decide at how to deal with them.  By default R treats NA values as 
 blanks, not as zeros.  This is good as a value of zero (no rain today) is not
-the same as lack of data (we didn't measure the rain today). You may have some 
-CSV files where a blank is meant as a 'zero'- be used to check the metadata!
+the same as lack of data (we didn't measure the rain today). Beware--some .csv
+files use blank to indicate 'zero', this is why checking the metadata is essential!
 
 The way one deals with missing values and data gaps will depend on what type of 
 data are used, the analysis conducted, and the significance of the gap or 
