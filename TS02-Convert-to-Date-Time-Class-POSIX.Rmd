@@ -87,7 +87,17 @@ library(lubridate)  #work with dates
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
 
+#Load csv file of 15 min meterological data from Harvard Forest
+#Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
+harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
+                     stringsAsFactors = FALSE)
 
+#what type of R object is our imported data?
+class(harMet_15Min)
+
+#what data classes are within our R object? 
+#What is our date-time field called?
+str(harMet_15Min)
 ```
 
 ##Dealing with date and time
