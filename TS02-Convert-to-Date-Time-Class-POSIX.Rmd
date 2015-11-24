@@ -9,7 +9,7 @@ lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [lubridate]
 tags: module-1
 description: "This lesson will teach individuals how to prepare tabular data for
-further analysis in R, addressing missing values and date-time formats. Students
+further analysis in R by addressing date-time formats. Students
 will also learn how to convert characters to a date-time class and to convert
 date-time to Julian day."
 code1:
@@ -25,7 +25,7 @@ comments: false
 
 ##About
 This lesson will teach students how to prepare tabular data for further analysis
-in R by addressing missing values and date-time formats. Students will also
+in R by addressing date-time formats. Students will also
 learn how to convert characters to a date-time class and to convert date-time to
 Julian day.
 
@@ -72,11 +72,12 @@ explore how to work with data field that contains both a date AND a time stamp.
 In this lesson, we will use functions from both base `R` and the `lubridate` 
 library learn how to work with date-time data types.
 
-We will use the `hf001-10-15min-m.csv` file that contains micrometereology
+We will use the `hf001-10-15min-m.csv` file that we imported in 
+[{{site.baseurl}} / LINKHERE](Lesson 01 - NEED TO ADD LINK) that contains micrometereology
 data including our variables of interest: temperature, precipitation and PAR, 
 for Harvard Forest, aggregated at 15 minute intervals.
 
-We will begin by loading the data and viewing its structure in `R`.
+
 
 ```{r load-libraries}
 
@@ -97,11 +98,11 @@ class(harMet_15Min)
 #what data classes are within our R object? 
 #What is our date-time field called?
 str(harMet_15Min)
-
 ```
 
 ##Dealing with date and time
 
+Let's revisit the data structure to start, looking specifically at the date-time field.
 Have a look at the `datetime` field in the `harmet_15Min object`. What data type
 is it in? 
 
@@ -115,7 +116,8 @@ head(harMet_15Min$datetime)
 ```
 
 Our data are in a character data type. We need to convert them to date-time data
-type. What happens when we use the `as.Date` method on our `datetime` field?
+type. What happens when we use the `as.Date` method we learned in 
+[{{site.baseurl}} / LINKHERE](Lesson 01 - NEED TO ADD LINK) on our `datetime` field?
 
 ```{r as-date-only, results="hide" }
 
@@ -134,19 +136,20 @@ formats in `R`.
 ## Exploring Date and Time Classes
 
 ###R - Date Class - as.Date
-We can use the`as.Date` method to convert a date field in string/character 
-format to an `R` `Date` class. It will ignore all values after the date string.
+As we just saw, when we use the`as.Date` method to convert a date field in string/character 
+format to an `R` `date` class, it will ignore all values after the date string.
+Let's explore date and time classes in more detail separately from our data set.
 
 ```{r explore-as_date }
 #Convert character data to date (no time) 
 myDate <- as.Date("2015-10-19 10:15")   
 str(myDate)
-head(myDate)
+myDate
 
 #whhat happens if the date has text at the end?
 myDate2 <- as.Date("2015-10-19Hello")   
 str(myDate2)
-head(myDate2)
+myDate2
 
 ```
 
@@ -160,20 +163,15 @@ explore both of these before choosing which one to use with our data.
 #Convert character data to date and time.
 timeDate <- as.POSIXct("2015-10-19 10:15")   
 str(timeDate)
-head(timeDate)
+timeDate
 
 ```
 
 The `as.POSIXct` method converts a date-time string into a `POSIXct` or 
 date-time class. 
 
-If we look at the data, we see the date and time with a time zone designation. 
-
-```{r time-zone }
-#view date - notice the time zone - MDT (mountain daylight time)
-timeDate
-
-```
+We see the date and time with a time zone designation - the time zone your computer 
+is set to, likely your local time zone. 
 
 POSIXct stores date and time as the number of seconds since 1 January 1970
 (negative numbers are used for dates before 1970). As each date and time is 
@@ -181,6 +179,8 @@ just a single number this format is easy to use in dataframes and to convert
 from one format to another. 
 
 ```{r explore-POSIXct2 }
+#to see the data in this 'raw' format, i.e., not formatted according to the 
+#class type to show us a date we recognize, use the `unclass()` function.
 unclass(timeDate)
 ```
 
@@ -195,22 +195,22 @@ second, min, hour, day of month, month, year, numeric day of year, etc).
 
 ```{r explore-POSIXlt }
 #Convert character data to POSIXlt date and time
-timeDatelt<- as.POSIXlt("2015-10-1910:15")  
+timeDatelt<- as.POSIXlt("2015-10-19 10:15")  
 str(timeDatelt)
-head(timeDatelt)
+timeDatelt
 
 unclass(timeDatelt)
 ```
 
 When we converted the string to `POSIXlt`, it still appears to be the same as 
 `POSIXct`. However, `unclass()` shows us that the data are stored differently. 
-The `POSIXlt` format stores the hour, minute, second, and month day year as 
+The `POSIXlt` format stores the hour, minute, second, day, month, and year as 
 separate components.
 
 Yet, just like `POSIXct` being based on seconds since 1 Jan. 1970, `POSIXlt` has
 a few quirks.  First, the months use zero based indexing which starts counting
 with zero instead of 1 so October is stored as the 9th month (`$mon = 9`) and 
-the years are base on years since 1900 so 2015 is stored as 115 (`$year = 115`)
+the years are based on years since 1900 so 2015 is stored as 115 (`$year = 115`)
 Information like this can always be found in the `R` documentation by using `?`
 or specifically `?POSIXlt`.  
 
@@ -225,13 +225,13 @@ the program can still work with the date/time in a single format.
 ###R- Data-Time - Other Classes
 There are a many other options in `R` for working with date-time formats, 
 including packages `readr` and `zoo`. The `chron` package allows the use of time
-without a data attached.  
+without a date attached.  
 
 ##Convert data.frame Field to a Date-time Class
 
 ### Date-Time Formats
-We can tell R how our data are formated (or, in other contexts, how we want to
-view date and time) using a `format=` string.  However, we have to know what
+We can tell R how our data are formatted (or, in other contexts, how we want to
+view date and time) using a `format=` string.  However, first we have to know what
 format our dates are currently in. 
 
 ```{r view-date }
@@ -260,13 +260,13 @@ around it.
 as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%dT%H:%M")
 
 ##The format of date-time MUST match the specified format or the field will not
-# convert
+# convert; see what happens when you try it a different way
 as.POSIXct(harMet_15Min$datetime[1],format="%m-%d-%YT%H:%M")
 
 ```
 
 Using the syntax we've learned, we can reformat the entire datetime format into 
-an `R POSIX` data type.
+`POSIXct` data type.
 
 ##Check the Time Zone
 Whenever using a time field it is essential to know what time zone the
@@ -275,22 +275,23 @@ data will be collected and stored in thier local time zone but storage in UTC or
 GMT is also a common default. 
 
 ```{r time-zone-HarMet }
-#checking time zone of data
+#checking time zone of data as R sees it
 tz(harMet_15Min)
 ```
 
 `R` currently interprets that the time data are record in Coordinated Universal 
-Time (UTC) . Now that we've found this out we need to make sure it corresponds 
-with what we know is true for the data.  In the <a href="XXX" target="_blank"> Understand The Data</a>
+Time (UTC). Now that we've found this out we need to make sure it corresponds 
+with what we know is true for the data.  In the 
+[{{site.baseurl}} / LINKHERE](Lesson 01 - NEED TO ADD LINK)
 lesson we viewed the metadata associated with this data and found out that the 
-data were collected in eastern time.  We need to designate the correct time zone
-when convert the field to POSIX. There are individual designations for different
+data were collected in Eastern Standard Time.  We need to designate the correct time zone
+when converting the field to POSIX. There are individual designations for different
 time zones and time zone variants (e.g., is daylight savings time observed). All
 of the codes can be found <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank"> here</a>. 
 
-The code for the eastern time zone the is the closest match to the Harvard
+The code for the eastern time zone that is the closest match to the Harvard
 Forest is `America/New_York`. To try this out let's, convert the first entry to 
-POSIX specifying the format and the correct time zone. 
+POSIXct specifying the format and the correct time zone. 
 
 ```{r assign-time-zone }
 
