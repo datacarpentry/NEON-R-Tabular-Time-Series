@@ -74,7 +74,7 @@ In [{{site.baseurl}} / LINKHERE](Lesson 01 - ) we imported a
 `.csv` time series dataset and in [{{site.baseurl}} / LINKHERE](Lesson 02 - ) we 
 learned out to convert data fields into date-time classes.  We'll use that data (from file 
 `hf001-10-15min-m.csv`) to explore the relationship between our variables of 
-interest, air temperature, precipitation, and PAR in regards to plant phenology.  
+interest, air temperature, precipitation, and photosynthetically active radiation (PAR) in regards to plant phenology.  
 
 If not already done we need to load the file and convert the datetime field to a
 POSIXct class date-time data type field. 
