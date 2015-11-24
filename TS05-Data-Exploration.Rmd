@@ -30,7 +30,7 @@ This lesson will teach individuals how to plot subsetted timeseries data (e.g., 
 
 ###Goals / Objectives
 After completing this activity, you will:
- * Know how to use facets in ggplot,
+ * Know how to use facets in ggplot
  * Be able to combine different types of data into one plot.
 
 ###Things You'll Need To Complete This Lesson
@@ -47,7 +47,7 @@ Make sure you have downloaded the Landsat_NDVI folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
 ####Recommended Pre-Lesson Reading
-Lessons 00-03 in this Time Series learning module
+Lessons 00-04 in this Time Series learning module
 
 </div>
 
@@ -70,7 +70,7 @@ can finally directly compare the observed plant phenology with patterns we've
 already been exploring.  
 
 All the packages we need in this lesson were loaded in previous lessons
-00-03, the code is not included here.  {: .notice}
+00-04, the code is not included here.  {: .notice}
 
 ##Graph precip by total PAR across all seasons
 PAR, a measure of solar radiation, is less on cloudy days and precipitation is
@@ -152,16 +152,13 @@ par.precip + facet_grid(. ~ season)
 
 Why this didn't work? 
 We added the season variable to harMet.daily after we created the original par.precip plot. Go back up to the code we used to create par.precip and run it again; now it will include the new version of harMet.daily that has the season variable.
-``` {r create-new-par.precip}
-#need to add code
-```
 
 Let's try the original code again with the new plot. 
 ``` {r plot-by-season2}
 par.precip + facet_grid(. ~ season)
-# for a landscape orientation of the plots:
+# for a landscape orientation of the plots we change the order of arguments in facet_grid():
 par.precip + facet_grid(season ~ .)
-#and another arrangementt of plots:
+#and another arrangement of plots:
 par.precip + facet_wrap(~season, ncol = 2)
 
 ```
