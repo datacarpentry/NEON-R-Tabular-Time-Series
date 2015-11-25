@@ -9,7 +9,8 @@ lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 tags: [module-1]
 packagesLibraries: 
 category: 
-description: "This lesson will teach individuals how to conduct basic data manipulation and create plots of time series data using ggplot2."
+description: "This lesson teaches individuals how to convert from calendar to
+Julian dates."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
