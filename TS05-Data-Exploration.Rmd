@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 05: Data Exploration"
+title: "Lesson 05: Plotting with Facets and NDVI Data"
 date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah Wasser]
@@ -30,7 +30,7 @@ This lesson will teach individuals how to plot subsetted timeseries data (e.g., 
 
 ###Goals / Objectives
 After completing this activity, you will:
- * Know how to use facets in ggplot
+ * Know how to use facets in ggplot.
  * Be able to combine different types of data into one plot.
 
 ###Things You'll Need To Complete This Lesson
@@ -46,35 +46,63 @@ RStudio to write your code.
 Make sure you have downloaded the Landsat_NDVI folder from
 http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
 
-####Recommended Pre-Lesson Reading
-Lessons 00-04 in this Time Series learning module
-
-</div>
-
-
-NOTE: The data used in this tutorial were collected at Harvard Forest which is
+The data used in this tutorial were collected at Harvard Forest which is
 a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
 More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
 available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
-{: .notice}
 
-#Lesson 04: Further Exploration of the Data
-Up until this point in the lesson we have been looking at how a single variable 
-changes across time. In the interest of studying phenology it is likely that 
-some combination of precipitation, temperature, and solar radiation (PAR) plays
-a role in the annual greening and browning of plants.  
+####Setting the Working Directory
+The code in this lesson assumes that you have set your working directory to the
+location of the unzipped file of data downloaded above.  If you would like a
+refresher on setting the working directory, please view the <a href="XXX" target="_blank">Setting A Working Directory In R</a> lesson prior to beginning the lesson.
+
+####Recommended Pre-Lesson Reading
+* Time Series In R: Workshop Introduction Page [LINK]
+* Phenology Introduction Page [LINK]
+* A brief video explaining <a href="https://www.youtube.com/watch?v=rxOMhQwApMc" target="_blank"> NDVI</a>. 
+
+</div>
+
+In studying phenology it is likely that some combination of precipitation,
+temperature, and solar radiation (PAR) plays a role in the annual greening and
+browning of plants.  
 
 Let's look at interactions between several of the variables to each other across
-the seasons before adding the NDVI data into the mix.  Using the NDVI data we
-can finally directly compare the observed plant phenology with patterns we've 
-already been exploring.  
+the seasons before adding the Normalized Difference Vegetation Index (NDVI) data
+into the mix.  Using the NDVI data we can finally directly compare the observed
+plant phenology with patterns we've already been exploring.  
 
-All the packages we need in this lesson were loaded in previous lessons
-00-04, the code is not included here.  {: .notice}
+##Loading the Data
+You will need the daily and micro-meteorology data for 2005-2011 from
+the Harvard Forest. If you do not have these data sets, as R objects created in
+[{{site.baseurl}} / LINKHERE](Lesson 02 - ), please load them from the .csv files in the downloaded data.  
 
-##Graph precip by total PAR across all seasons
+```{r load-data}
+#Remember it is good coding technique to add additional libraries to the top of
+  #your script 
+library(lubridate) #for working with dates
+library(ggplot2)  #for creating graphs
+library(scales)   #to access breaks/formatting functions
+library(dplyr)    #for data manipulation (split, apply, combine)
+library(gridExtra) #for arranging plots
+
+#set working directory to ensure R can find the file we wish to import
+#setwd("working-dir-path-here")
+
+#If not already available from Lesson 01-03:
+#daily HARV met data
+harMet.daily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+                     stringsAsFactors = FALSE)
+
+#covert date to POSIXct data type
+harMet.daily$date <- as.POSIXct(harMet.daily$date)
+```
+
+
+##Graph precipitation by total PAR across all seasons
 PAR, a measure of solar radiation, is less on cloudy days and precipitation is
-also more likely when clouds are present.  We will use `ggplot` to graph PAR
+ more likely when clouds are present, therefore we can expect a relationship
+ between them.  We will use `ggplot` to graph PAR
 and precipitation from the daily Harvard Meterological data.  We can simply do
 this using the code we previously learned and substituting precipitation
 (prec) in for time on the x axis.  
@@ -102,8 +130,8 @@ The first step to doing this is to subset by season.  First, we have to switch
 away from coding and data analysis and think about ecology.  What is the best
 way to break a year apart into seasons?  
 
-The divisions will change depending on the geographic location and climate where the
-data were collected.  We are using data from Harvard Forest in Massachusetts in
+The divisions will change depending on the geographic location and climate where 
+the data were collected.  We are using data from Harvard Forest in Massachusetts 
 in the northeastern United States.  Given the strong seasonal affects in this 
 area dividing the year into 4 seasons is ecologically relevant.  Based on
 general knowledge of the area it is also plausible to group the months as 
@@ -113,7 +141,7 @@ general knowledge of the area it is also plausible to group the months as
  * Summer: June - August
  * Fall: September - November 
  
-In order to subset the data by season we will again use the `dplyr` package.
+In order to subset the data by season we will use the `dplyr` package.
 
 ```{r subsetting-by-season}
 #subset by season using month (12-2 is winter, 3-5 spring, 6-8 summer, 9-11 fall)
@@ -123,11 +151,17 @@ harMet.daily <- harMet.daily  %>%
 
 #check structure of this variable
 str(harMet.daily$month)
+```
 
-#notice it is a character
+Notice month is a character.   Because month is a character variable we will 
+need to put the month number in quotes  when we use mutate to create a new 
+variable for season. 
 
-#use mutate to create a new variable for season, because month is a character variable we need to put the month number in quotes in this formula
-# %in% is short-hand for OR, so the 3rd line of code essentially says "If the month variable is equal to 12 or to 01 or to 02, set the season variable to winter.
+When using `dplyr` %in% is short-hand for -or-, so the 3rd line of code 
+essentially says "If the month variable is equal to 12 or to 01 or to 02, set
+the season variable to winter".
+
+``` {r subsetting-by-season-2}
 harMet.daily <- harMet.daily %>% 
   mutate(season = 
            ifelse(month %in% c("12", "01", "02"), "winter",
@@ -141,9 +175,10 @@ tail(harMet.daily)
 
 ```
 
-##Use facets in ggplot
+##Use Facets in ggplot
 This allows us to create the same graph for each season and display them in a
 grid. Also break up this chunk and move some in code directions to text. 
+
 ```{r plot-by-season}
 
 #run this code to plot the same plot as before but with one plot per season
@@ -151,9 +186,13 @@ par.precip + facet_grid(. ~ season)
 ```
 
 Why this didn't work? 
-We added the season variable to harMet.daily after we created the original par.precip plot. Go back up to the code we used to create par.precip and run it again; now it will include the new version of harMet.daily that has the season variable.
 
-Let's try the original code again with the new plot. 
+We added the season variable to harMet.daily after we created the original 
+`par.precip` plot. Go back up to the code we used to create `par.precip` and run
+it again; now it will include the new version of harMet.daily that has the 
+season variable.
+
+Let's try the new plot again. 
 ``` {r plot-by-season2}
 par.precip + facet_grid(. ~ season)
 # for a landscape orientation of the plots we change the order of arguments in facet_grid():
@@ -168,7 +207,8 @@ Add discussion of why you might want to do this.
 
 ```{r NDVI plots}
 #first read in the NDVI CSV data
-NDVI.2009 <- read.csv(file="Landsat_NDVI/Harv2009NDVI.csv", stringsAsFactors = FALSE)
+NDVI.2009 <- read.csv(file="Landsat_NDVI/HARV/Harv2009NDVI.csv",
+                      stringsAsFactors = FALSE)
 #check out the data
 str(NDVI.2009)
 View(NDVI.2009)
