@@ -42,25 +42,20 @@ After completing this activity, you will:
 
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and preferably
-R studio to write your code.
+RStudio to write your code.
 
 ####R Libraries to Install
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
 
 ####Data to Download
 
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
-Download Atmospheric Data</a>
-
-The data used in this tutorial were collected at Harvard Forest which is
-a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
-More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
-available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{% include /maps/_tabular-time-series-data.html %}
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the <a href="XXX" target="_blank">Setting A Working Directory In R</a> lesson prior to beginning the lesson.
+refresher on setting the working directory, please view the [Setting A Working Directory In R](URL "R Working Directory Lesson") lesson prior to beginning
+this lesson.
 
 </div>
 

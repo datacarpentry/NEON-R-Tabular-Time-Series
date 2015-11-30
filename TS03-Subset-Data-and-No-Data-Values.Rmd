@@ -17,7 +17,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Introduction-to-Tabular-Time-Series-In-R
+permalink: /R/Subset-Data-and-No-Data-Values
 comments: false
 ---
 
@@ -52,13 +52,7 @@ More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
 
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
-Download Atmospheric Data</a>
-
-The data used in this tutorial were collected at Harvard Forest which is
-a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
-More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
-available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{% include /maps/_tabular-time-series-data.html %}
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
