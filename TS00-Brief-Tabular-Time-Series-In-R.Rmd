@@ -114,8 +114,7 @@ library(ggplot2)   #efficient, pretty plotting - required for qplot function
 
 ```
 
-Once our working directory is set, we can import the data using 
-`read.csv`. 
+Once our working directory is set, we can import the data using `read.csv()`. 
 
 ```{r import-csv}
 
@@ -179,7 +178,7 @@ str(harMetdaily)
 ##Data Classes in R
 
 The structure of our data tells us that the data are stored as several different
-data types or classes in our `.csv`:
+data types or classes in our new `R` object:
 
 * **chr** - Character. It holds strings that are data made up of letters and
 words.  They are not of a numerical interpretation and most often represent data
@@ -190,13 +189,19 @@ including decimals and integers. Numeric also accept larger numbers than **int**
 will.
 
 Storing variables as different data types is a strategic decision by `R` (and 
-other programing languages).  Certain functions can be performed on certain data
+other programing languages).  The goal of having different data classes is to 
+optimize the data:  
+
+* so it can be processed more quickly & efficiently
+* to minimize the storage size.
+
+Certain functions can be performed on certain data
 classes and not on others (e.g., a <- "mouse"-"sparrow"; subtracting two **chr** 
 data points makes no sense).  Additionally, the attributes and properties of
 different data classes varies (e.g., there is not point in showing the minimum
 value for `SpeciesObserved` a **chr** type but there is for `prec` a **num**
-type.) These and many other processes mean that assigning data classes makes for
-more efficient and faster running code. 
+type.)  
+
 
 #Plot Data Using `qplot()`
 
@@ -236,8 +241,9 @@ field plots just fine.
 
 #Date as a Date-Time Class
 We need to convert our `date` field, which is currently stored as a character 
-value to an actual date-time class that can be displayed quantitatively. Lucky for 
-us, `R` has a `date` class.  We can reassign the `harMetdaily$date` field using `as.Date`.
+value to an actual date-time class that can be displayed quantitatively. Lucky 
+for us, `R` has a `date` class.  We can reassign the `date` field using
+`as.Date`.
 
 ```{r convert-date-time }
 
@@ -252,8 +258,8 @@ head(harMetdaily$date)
 ```
 
 Now that we have adjusted the date, let's plot again. Notice that it plots
-much more quickly now that R recognizes the date as a date field. R can aggregate
-ticks on the x-axis by year instead of trying to plot every day!
+much more quickly now that R recognizes the date as a date field. `R` can 
+aggregate ticks on the x-axis by year instead of trying to plot every day!
 
 ```{r qplot-data}
 #quickly plot the data and include a title using main=""
