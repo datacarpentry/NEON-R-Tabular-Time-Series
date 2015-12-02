@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 04: Plotting Time Series with ggplot in R"
+title: "Lesson 05: Plotting Time Series with ggplot in R"
 date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
@@ -169,7 +169,7 @@ The dates on the x-axis in this last plot are not particularly
 well formatted. We can reformat them so they are in the Month/Day/Year format by 
 simply adding onto the `AirTemp15a` plot that we just created. 
 ```{r nice-x-axis}
-#format x axis with dates
+#format x-axis with dates
 AirTemp15b <- AirTemp15a + (scale_x_datetime(labels=date_format("%m/%d/%y")))
 AirTemp15b
 ```
@@ -212,3 +212,102 @@ PrecipDaily
 
 We will return to precipitation data in Challenge 4 and discuss this plot. 
 
+
+## Plotting daily & monthly temperature data
+Now that we have daily and monthly air temperature data (temp.daily.09.11 &
+temp.monthly.09.11 dataframes), let's plot the average daily temperature.  
+``` {r plot-airtempDaily}
+AirTempDaily <- ggplot(temp.daily.09.11, aes(datetime, mean_airt)) +
+           geom_point() +
+           ggtitle("Average Daily Air Temperature At Harvard Forest") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                  size = 20)) +
+           theme(text = element_text(size=20)) +
+           xlab("Date") + ylab("Air Temperature (C)")+
+           scale_x_datetime(labels=date_format ("%d%b%y"))
+AirTempDaily 
+```
+
+Notice in the code for the x scale (`scale_x_datetime()`), we changed the date format from %m to %b which gives the abreviated month.
+
+Now that we've plotted daily temperature together, plot the monthly on your own
+before looking at the next set of code. If you get stuck, suggested code is
+below.  For ease of future code, name your plot "AirTempMonthly".
+
+``` {r plot-airtemp-Monthly}
+AirTempMonthly <- ggplot(temp.monthly.09.11, aes(datetime, mean_airt)) +
+           geom_point() +
+           ggtitle("Average Monthly Air Temperature At Harvard Forest") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                size = 20)) +
+           theme(text = element_text(size=20)) +
+           xlab("Date") + ylab("Air Temperature (C)") +
+          scale_x_datetime(labels=date_format ("%b%y"))
+AirTempMonthly
+
+```
+
+Notice in the code for the x scale (`scale_x_datetime()`), we further changed
+the date format by removing the day since we are graphing monthly averages. 
+
+Lets compare the two air tempurature figures we have created. Unfortunately
+`ggplot` doesn't recognize `par(mfrow=())` to show side by side figures.
+Instead we can use another package, `gridExtra`, to do this. 
+
+``` {r airTemp-plots-compare}
+grid.arrange(AirTemp15, AirTempDaily, AirTempMonthly, ncol=1)
+```
+
+On which plot is it easier to see annual patterns of air temperature?  Can you
+think of when you might use one plot or another?  Remember if the plots are too
+small you can use the zoom feature in R Studio to pop the out into a seperate
+window.  
+
+##Challenge 4: Combining `dplyr` and `ggplot` Skills
+Plot the precipiation by month in all years available. 
+
+Using the Harvard Meterorological 15-min datafile, plot the average monthly 
+precipitation using all years (not just 09-11).  Does it make more sense to
+calculate the total precipitation for each month or the average percipitation
+for each month?
+
+```{r challenge-4-code}
+
+prec.monthly <- harMet_15Min %>%
+  mutate(month = month(datetime), year= year(datetime)) %>%
+  group_by(month, year) %>%
+  summarize(total_prec = sum(prec, na.rm = TRUE), datetime=first(datetime))
+
+str(prec.monthly)
+
+PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
+  geom_point(na.rm=TRUE) +
+  ggtitle("Monthly Precipitation in Harvard Forest (2005-2011") +
+  theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+  theme(text = element_text(size=20)) +
+  xlab("Month") + ylab("Precipitation (mm)") +
+  scale_x_discrete(labels=month)  
+#month is no longer datetime, but a discrete number. Change from scale_x_datetime()
+  #to scale_x_discrete()
+
+PrecipMonthly
+
+#If we want written out month labels
+PrecipMonthly + scale_x_discrete("Month", labels = c("1" = "Jan","2" = "Feb",
+  "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
+
+```
+
+Is there an obvious annual trend in percipitation at Harvard Forest?  
+
+Compare how you plotted daily (Challenge 2: DailyPrecip) and monthly
+precipitation (Challenge 4: PrecipMontly). When would one format be better than 
+another? 
+
+```{r compare-precip}
+grid.arrange(PrecipDaily, PrecipMonthly, ncol=1)
+```
+
+In the next lesson we will learn to expand our plotting abilities to plot two
+variables side-by-side and to incorporate values from spatial data sets (NDVI)
+into our phenology related plots. 

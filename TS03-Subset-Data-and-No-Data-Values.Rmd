@@ -69,7 +69,7 @@ radiation (PAR) in regards to plant phenology.
 Prior to starting we need to load the appropriate libraries (`lubridate` and
 `ggplot2`).  If you have not already done so, we must also load the .csv file for
 15-minute micrometeorological data ( file: `hf001-10-15min-m.csv`) and convert 
-the `datetime` field to a POSIXct class date-time data type. 
+the `datetime` column to a POSIXct class date-time data type. 
 
 ```{r load-libraries}
 # Load packages required for entire script
@@ -175,7 +175,7 @@ sum(is.na(harMet15.09.11$prec))
 sum(is.na(harMet15.09.11$parr))
 
 ```
-As we can see here we have no NA values within the `datetime` field but we do
+As we can see here we have no NA values within the `datetime` column but we do
 have NA values in our other variables.  
 
 ###Dealing with No Data Values
@@ -202,7 +202,7 @@ How should we deal with the missing values in our case?  As the goal of the our
 current analysis
 is to get a good feeling about the general patterns of greening up and browning 
 down we can leave the NAs in the different variables at this point. With no 
-missing values in the `datetime` field, the x-axis on our plots will not be 
+missing values in the `datetime` column, the x-axis on our plots will not be 
 missing values.  Compared to the full dataset (376,800 data points) the few 
 missing values in the other variables are not going to interfere with us seeing 
 general trends.
@@ -214,7 +214,7 @@ the data gap would be a problem.
 ###NA Values in Functions & Calculations
 One time it is very important to consider NA values is if we are doing 
 calculations
-or using a function on fields that may contain NA values.  Missing values can
+or using a function on columns that may contain NA values.  Missing values can
 cause error in calculations.  By default `R` will not calculate certain function
 if they have a NA value in it.  
 ``` {r na-in-calculations}
@@ -244,9 +244,9 @@ Daily atmospheric data are therefore far more appropriate for our work than the
 15-minute data.  
 
 1) Import the Daily Meteorological data from the Harvard Forest (if you haven't already done so in  [Lesson 00: A Brief Intro to Time Series Data ](URL "Lesson 00 for HarMet_Daily"). )
-2) Check the metadata to see what the field names are for the variable of
+2) Check the metadata to see what the column names are for the variable of
 interest (precipitation, air temperature, PAR, day and time ).
-3) If needed, convert the data class of different fields.
+3) If needed, convert the data class of different columns.
 4) Check for missing data and decide what to do with any that exist.
 5) Subset out the data for the duration of our study: 2009-2011. Name the object 
 "harMetDaily.09.11" for consistency with later lessons. Be sure to recheck the 

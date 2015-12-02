@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 00: Brief Time Series in R- Simple Plots & Date Conversion"
+title: "Lesson 00: Brief Time Series in R - Simple Plots & Date Conversion"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
@@ -10,9 +10,9 @@ packagesLibraries: [ggplot2]
 category: 
 tags: [module-1]
 description: "This lesson will demonstrate how to import a time series dataset 
-stored in .csv format into R. It will explore column classes and will walk
-through how to convert a date field, stored as a character string, into a date 
-field that R can recogniaze and plot efficiently."
+stored in .csv format into R. It will explore data classes and will walk
+through how to convert date data, stored as a character string, into a date 
+class that R can recognize and plot efficiently."
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -26,8 +26,8 @@ comments: false
 ##About
 This lesson will demonstrate how to import a time series dataset stored in .csv
 format into R. It will explore column data classes and will walk through how to 
-convert a date field, stored as a character string, into a date field that R can
-recogniaze and plot efficiently.
+convert a date data, stored as a character string, into a date class that R can
+recognize and plot efficiently.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
@@ -38,9 +38,9 @@ After completing this lesson, you will:
 
   * Be able to open a .csv file in `R` using `read.csv()`and understand why we
   are using that file type.
-  * Understand how to work with `date.frame` fields in `R`.
+  * Understand how to work with different columns in `data.frame` in `R`.
   * Understand how to examine data structures and data classes.
-  * Be able to convert a date field, stored as a character, into an `R` date 
+  * Be able to convert date data, stored as a character, into an `R` date 
   class.
   * Know how to create a quick plot of a time-series dataset using `qplot`. 
 
@@ -101,12 +101,12 @@ given script. {: .notice2}
 We will be using the package `ggplot2` to create basic plots of our
 meteorological data. 
 
-```{r load-libraries}
+```{r load-packages}
 # Install packages required for entire script.
 install.packages(ggplot2)
 
-# Load libraries required for entire script. 
-# library(nameOfLibrary)  #purpose of library
+# Load packages required for entire script. 
+# library(PackageName)  #purpose of package
 library(ggplot2)   #efficient, pretty plotting - required for qplot function
 
 #set working directory to ensure R can find the file we wish to import
@@ -142,9 +142,9 @@ non-factors are a hypothetical data set of `SpeciesObserved` consisting of
 *mouse*, *grasshopper*, and *sparrow*. These are non-numerical data with no 
 relevant level or numerical interpretation.  
 
-Later on it is easy to turn specific fields into factors using `as.factor()`,
-so it is almost always best to read in a file with `stringsAsFactors = FALSE`.
-
+After loading the data it is easy to convert any data that should be a factor by
+using `as.factor()`, so it is almost always best to read in a file with
+`stringsAsFactors = FALSE`.
 
 #Data.Frames in R
 When we use the `read.csv()` function, `R` imports the data as a `data.frame`.
@@ -207,10 +207,10 @@ type.)
 
 Let's have a look at one of the metrics stored within our data -- `airt` which 
 is air temperature. Given this is a time series dataset, we might want to plot
-air temperature as it changes over time. We have a date-time field, `date`, so 
+air temperature as it changes over time. We have a date-time column, `date`, so 
 let's use that as our x-axis variable and `airt` will be our y-axis variable.
 
-We will use the `qplot()` (for *quick plot*) function in the `ggplot2` library.
+We will use the `qplot()` (for *quick plot*) function in the `ggplot2` package.
 The notation for `qplot()` requires the x- and y-axis variables and then the R
 object that the variables are stored in. 
 
@@ -224,9 +224,9 @@ We have successfully plotted some data. However, what is going happening on the
 x-axis?
 
 R is trying to plot EVERY date value on the x-axis, so it was not readable. Why?
-Let's have a look at the data class of the fields that we are trying to plot.
+Let's have a look at the data class of the data that we are trying to plot.
 
-```{r view-field-structure }
+```{r view-data-structure }
 # View data structure for each column that we wish to plot
 class(harMetdaily$date)
 
@@ -234,23 +234,23 @@ class(harMetdaily$airt)
 
 ```
 
-Looking at our data, we can see that the `date` field actually imported into
+Looking at our data, we can see that the `date` data actually imported into
 `R` as character type. This means that `R` does not know how to plot these 
-data as a continuous variable on the x-axis. The `airt` field is numeric so that
-field plots just fine.
+data as a continuous variable on the x-axis. The `airt` data is numeric so that
+data plots just fine.
 
 #Date as a Date-Time Class
-We need to convert our `date` field, which is currently stored as a character 
+We need to convert our `date` data, which is currently stored as a character 
 value to an actual date-time class that can be displayed quantitatively. Lucky 
-for us, `R` has a `date` class.  We can reassign the `date` field using
+for us, `R` has a `date` class.  We can reassign the `date` class using
 `as.Date`.
 
 ```{r convert-date-time }
 
-#convert field to date class
+#convert column to date class
 harMetdaily$date <- as.Date(harMetdaily$date)
 
-#view structure of field
+#view R class of data
 class(harMetdaily$date)
 
 #view results
@@ -258,7 +258,7 @@ head(harMetdaily$date)
 ```
 
 Now that we have adjusted the date, let's plot again. Notice that it plots
-much more quickly now that R recognizes the date as a date field. `R` can 
+much more quickly now that R recognizes the date as a date class. `R` can 
 aggregate ticks on the x-axis by year instead of trying to plot every day!
 
 ```{r qplot-data}

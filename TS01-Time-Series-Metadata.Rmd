@@ -83,12 +83,12 @@ Load any packages prior to importing and working with the data.  At this point w
 will only be working with base R and don't need additional packages. If we need 
 another package later, we will return to this section to add it so that at a 
 glance we can see all the packages in the script.  Including a short note in the 
-code allows us to denote each library's purpose in the script. This will help 
+code allows us to denote each package's purpose in the script. This will help 
 later when we write new scripts for other projects.
 
 ``` {r load-libraries}
 # Load packages required for entire script
-# library(nameOfLibrary)  #purpose of library
+# library(PackageName)  #purpose of package
 ```
 
 Once the libraries are loaded, we need to set the working directory to the
