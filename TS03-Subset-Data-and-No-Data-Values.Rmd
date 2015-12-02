@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "Lesson 03: Refining Time Series Data: Subsetting Data by Date and NoData Values in R"
+title: "Lesson 03: Refining Time Series Data -- NoData Values and Subsetting Data
+by Date in R"
 date: 2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
@@ -9,35 +10,33 @@ lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 tags: module-1
 packagesLibraries: [lubridate, ggplot2]
 category: 
-description: "This lesson will teach individuals how to prepare tabular data for
-further analysis in R, addressing missing values and how to subset the data into
-a new dataframe."
+description: "This lesson teaches how to prepare tabular data for further analysis in R, addressing missing values and how to subset the data into
+a new data frame."
 code1:
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Introduction-to-Tabular-Time-Series-In-R
+permalink: /R/Subset-Data-and-No-Data-Values
 comments: false
 ---
 
 {% include _toc.html %}
 
 ##About
-This lesson will teach students how to prepare tabular data for further analysis
-in R, addressing missing values and date-time formats. Students will also learn
-how to convert characters to a time class, to convert date-time to Julian day, 
-and how to subset the data into a new dataframe.
-
-<div id="objectives" markdown="1">
+This lesson teaches how to prepare tabular data for further analysis in R, 
+addressing missing values and how to subset the data into a new data frame.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
 
+<div id="objectives" markdown="1">
+
 ### Goals / Objectives
-After completing this activity, you will know how to:
- * Clean data
- * Subset data
+After completing this activity, you will:
+ * Be able to subset data by date. 
+ * Know how to search for NA or missing data values. 
+ * Understand different possibilities on how to deal with missing data. 
 
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and, preferably,
@@ -52,32 +51,25 @@ More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
 
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
-Download Atmospheric Data</a>
-
-The data used in this tutorial were collected at Harvard Forest which is
-a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
-More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
-available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
+{% include /maps/_tabular-time-series-data.html %}
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the <a href="XXX" target="_blank">Setting A Working Directory In R</a> lesson prior to beginning the lesson.
-
-####Recommended Pre-Lesson Reading
-
+refresher on setting the working directory, please view the [Setting A Working Directory In R](URL "R Working Directory Lesson") lesson prior to beginning
+this lesson.
 
 </div>
 
-In [{{site.baseurl}} / LINKHERE](Lesson 01 - ) we imported a
-`.csv` time series dataset and in [{{site.baseurl}} / LINKHERE](Lesson 02 - ) we 
-learned out to convert data fields into date-time classes.  We'll use that data (from file 
-`hf001-10-15min-m.csv`) to explore the relationship between our variables of 
-interest, air temperature, precipitation, and photosynthetically active radiation (PAR) in regards to plant phenology.  
+We'll learn now how to subset data and how to find and deal with missing data 
+values, while we continue to explore the relationship between our variables of
+interest, air temperature, precipitation, and photosynthetically active
+radiation (PAR) in regards to plant phenology.  
 
-If not already done we need to load the file and convert the datetime field to a
-POSIXct class date-time data type field. 
+Prior to starting we need to load the appropriate libraries (`lubridate` and
+`ggplot2`).  If you have not already done so, we must also load the .csv file for
+15-minute micrometeorological data ( file: `hf001-10-15min-m.csv`) and convert 
+the `datetime` column to a POSIXct class date-time data type. 
 
 ```{r load-libraries}
 # Load packages required for entire script
@@ -88,7 +80,7 @@ library(ggplot2)  # plotting
 #setwd("working-dir-path-here")
 
 #If you did not complete Lesson 01-02
-#Load csv file of 15 min meterological data from Harvard Forest
+#Load csv file of 15 min meteorological data from Harvard Forest
 #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
 harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
                      stringsAsFactors = FALSE)
@@ -100,19 +92,19 @@ harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
 ```
 
 ##Subsetting
-Our `.csv` file contains nearly a decades worth of data which makes for a large
-file. The time period we are interested in for our study is only 2009-2011. We can 
-subset the data so that we have just these three years.
+Our `.csv` file contains nearly a decade's worth of data which makes for a large
+file. The time period we are interested in for our study is only 2009-2011. We
+can subset the data so that we have just these three years.
 
 To to this we will use the `subset()` function, with the syntax
 `NewObject <- subset ( ObjectToBeSubset, CriteriaForSubsetting ) `.  
 We want all data between the beginning of 1 January 2009 and the end of 31 
-December 2011 so we set our criteria to be "any datetime that is greater than or
-equal to 1 Jan 2009 at 0:00 AND datetime less than or equal to 31 Dec 2011 at
+December 2011, so we set our criteria to be "any `datetime` that is greater than
+or equal to 1 Jan 2009 at 0:00 **AND** less than or equal to 31 Dec 2011 at
 23:59".
 
 We need to include the time zone to get this to work correctly. If we provide
-the time zone, R will take care of daylight savings and leap year for us.
+the time zone, `R` will take care of daylight savings and leap year for us.
 
 ``` {r subset-by-time }
 #subset out some of the data - 2009-2011
@@ -126,12 +118,13 @@ tail(harMet15.09.11[1])
 
 ```
 
-It worked! The first entry is 1 Jan 2009 at 00:00 and the last entry is 31 Dec 2011 at 23:45.
+It worked! The first entry is 1 January 2009 at 00:00 and the last entry is 31
+December 2011 at 23:45.
 
 Sometimes we might want to share just a subset of our data with a colleague.  We 
-can do that by writing our subsetted R object to a .csv file.  Remember, that
-when naming any file to give it a concise yet description name.  By default, the
-the .csv will be written to your working directory. 
+can do that by writing our subsetted `R` object to a .csv file.  Remember, that
+when naming any file, give it a concise yet description name.  By default, the
+the .csv file will be written to your working directory. 
 
 ``` {r write-csv}
 #writing the subset of harMet15 data to .csv
@@ -140,8 +133,9 @@ write.csv(harMet15.09.11, file="Met_HARV_15min_2009_2011.csv")
 ```
 
 
-#Challenge: Subset and Plot Precipitation for July 2010 in the Harvard Forest
-
+#Challenge: Subsetting & Plotting
+1.Plot precipitation for only July 2010 in the Harvard Forest
+ 
 ``` {r challenge-code-subsetting, echo=FALSE}
 harMet15_July2010 <- subset(harMet15.09.11, datetime >= as.POSIXct('2010-07-01 00:00',
         tz = "America/New_York") & datetime <=
@@ -162,13 +156,14 @@ qplot (datetime, prec,
 ## Missing Data - Dealing with data gaps
 
 ###Checking for No Data Values
-In the  [{{site.baseurl}} / LINKHERE](Lesson 01 - )
-lesson we viewed the metadata associated with this data and found out that the  
-missing values are given an NA value. One must always check for missing values 
-in any of the variables with which one is working.  
+In [Lesson 01: Investigating Time Series Metadata ](URL "Lesson 01 for Metadata")
+we viewed the metadata associated 
+with this data and found out that the missing values are given an NA value. One 
+must always check for missing values in any of the variables with which one is 
+working.  
 
 Do we have missing values in our data set? An easy way to check for this is the
-is.na() function. By asking for the sum() of is.na() we can see how many 
+`is.na()` function. By asking for the `sum()` of `is.na()` we can see how many 
 NA/missing values we have. 
 
 ```{r missing values}
@@ -180,41 +175,46 @@ sum(is.na(harMet15.09.11$prec))
 sum(is.na(harMet15.09.11$parr))
 
 ```
-As we can see here we have no NA values within the `datetime` field but we do
+As we can see here we have no NA values within the `datetime` column but we do
 have NA values in our other variables.  
 
-###Deal with No Data Values
+###Dealing with No Data Values
 When we encounter NA or missing values (blank, NaN, -9999, etc.) in our data we
-need to decide at how to deal with them.  By default R treats NA values as 
-blanks, not as zeros.  This is good as a value of zero (no rain today) is not
-the same as lack of data (we didn't measure the rain today). Beware--some .csv
-files use blank to indicate 'zero', this is why checking the metadata is essential!
+need to decide at how to deal with them.  By default `R` treats NA values as 
+blanks, not as zeros.  This is good, as a value of zero (no rain today) is not
+the same as lack of data (we didn't measure the rain today). 
+
+Beware--some .csv files use blank to indicate 'zero', this is why checking the 
+metadata is essential!
 
 The way one deals with missing values and data gaps will depend on what type of 
 data are used, the analysis conducted, and the significance of the gap or 
-missing value.  The many issues associated with this can be complex and are beyond 
-the scope of this lesson.  As recommendations vary on how to deal with the data 
-you should look up what others recommend for the specific data type you are 
-using and analyses you plan.  Other resources included:
+missing value.  The many issues associated with this can be complex and are 
+beyond the scope of this lesson.  As recommendations vary on how to deal with 
+missing data you should look up what others recommend for the specific type of 
+data you are using and the analyses you plan.  Other resources included:
 
  1)<a href="http://www.statmethods.net/input/missingdata.html" target="_blank"> Quick-R: Missing  Data</a> 
  -- R code for dealing with missing data 
  2) The Institute for Digital Research and Education has an <a href="http://www.ats.ucla.edu/stat/r/faq/missing.htm" target="_blank"> R FAQ on Missing Values</a>.
 
-How should we deal with it in our case?  As the goal of the our current analysis
+How should we deal with the missing values in our case?  As the goal of the our 
+current analysis
 is to get a good feeling about the general patterns of greening up and browning 
-down we can leave the NAs in the differnet variables at this point. With no 
-missing values in the `datetime` field the x-axis on our plots will not be 
+down we can leave the NAs in the different variables at this point. With no 
+missing values in the `datetime` column, the x-axis on our plots will not be 
 missing values.  Compared to the full dataset (376,800 data points) the few 
-missing values are not going to interfere with our analysis.
+missing values in the other variables are not going to interfere with us seeing 
+general trends.
 
 However, it is important to remember that there are null values in case we 
 decide to revisit this data set for a more detailed time-series analysis where 
 the data gap would be a problem.  
 
 ###NA Values in Functions & Calculations
-One time it is very important to consider NA values is if we are doing calculations
-or using a fuction on fields that may contain NA values.  Missing values can
+One time it is very important to consider NA values is if we are doing 
+calculations
+or using a function on columns that may contain NA values.  Missing values can
 cause error in calculations.  By default `R` will not calculate certain function
 if they have a NA value in it.  
 ``` {r na-in-calculations}
@@ -223,10 +223,14 @@ mean(harMet15.09.11$airt)
 
 ```
 
-`R` will not return a value for the mean as there NA values in the air temperature.  However, we know that there are only 2 of 105,108 observations of air temperature missing, so we aren't that worried about those two missing values skewing the three year air temperature mean.  We can tell `R` to not include the missing values by using `na.rm=` (NA, remove) within the function.  
+`R` will not return a value for the mean as there NA values in the air 
+temperature.  However, we know that there are only 2 of 105,108 observations of 
+air temperature missing, so we aren't that worried about those two missing values
+skewing the three year air temperature mean.  We can tell `R` to not include the
+missing values by using `na.rm=` (NA.remove) within the function.  
 
 ``` {r na-rm}
-#calculate mean of air temperature
+#calculate mean of air temperature, ignore NA values
 mean(harMet15.09.11$airt, na.rm=TRUE)
 
 ```
@@ -234,19 +238,19 @@ mean(harMet15.09.11$airt, na.rm=TRUE)
 We now see that the average air temperature across the three years was 8.5°C.  
 
 # Challenge 1: Uploading and Preparing Data
-In [{{site.baseurl}} / LINKHERE](Lesson 00 - ) we imported the daily .csv datafile from Harvard Forest
-
-We have been using the 15 minute data from the Harvard Forest. However, overall
+We have been using the 15-minute data from the Harvard Forest. However, overall
 we are interested in larger scale patterns of greening-up and browning-down.  
 Daily atmospheric data are therefore far more appropriate for our work than the 
-15 minute data.  
+15-minute data.  
 
-1) Import the Daily Meteorological data from the Harvard Forest (if you haven't already done so in In [{{site.baseurl}} / LINKHERE](Lesson 00 - ) )
-2) Check the metadata to see what the field names are for the variable of
+1) Import the Daily Meteorological data from the Harvard Forest (if you haven't already done so in  [Lesson 00: A Brief Intro to Time Series Data ](URL "Lesson 00 for HarMet_Daily"). )
+2) Check the metadata to see what the column names are for the variable of
 interest (precipitation, air temperature, PAR, day and time ).
-3) If needed, convert the data type of data fields.
+3) If needed, convert the data class of different columns.
 4) Check for missing data and decide what to do with any that exist.
-5) Subset out the data for the duration of our study: 2009-2011.  Be sure to recheck the quality of the data at this point. 
+5) Subset out the data for the duration of our study: 2009-2011. Name the object 
+"harMetDaily.09.11" for consistency with later lessons. Be sure to recheck the 
+quality of the data at this point. 
 6) Write the subset to a .csv file. 
 7) Create a fully labelled plot for the air temperature during our study. 
 
@@ -293,7 +297,7 @@ write.csv(harMetDaily.09.11, file="Met_HARV_Daily_2009_2011.csv")
 #7.  Plotting air temp 2009-2011
 qplot (x=date, y=airt,
        data=harMetDaily.09.11,
-       main= "Average air Temperature in the Harvard Forest",
+       main= "Average Air Temperature \n Harvard Forest",
        xlab="Date", ylab="Temperature (°C)")
 ```
 

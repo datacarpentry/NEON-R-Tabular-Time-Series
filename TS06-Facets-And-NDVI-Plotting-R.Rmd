@@ -43,22 +43,21 @@ RStudio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 
 ####Data to Download
-Make sure you have downloaded the Landsat_NDVI folder from
-http://figshare.com/articles/NEON_Spatio_Temporal_Teaching_Dataset/1580068
+{% include /maps/_tabular-time-series-data.html %}
+
+####Setting the Working Directory
+The code in this lesson assumes that you have set your working directory to the
+location of the unzipped file of data downloaded above.  If you would like a
+refresher on setting the working directory, please view the [Setting A Working Directory In R](URL "R Working Directory Lesson") lesson prior to beginning
+this lesson.
 
 ####Recommended Pre-Lesson Reading
-Lessons 00-04 in this Time Series learning module
+
 
 </div>
 
 
-NOTE: The data used in this tutorial were collected at Harvard Forest which is
-a the National Ecological Observatory Network field site <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">
-More about the NEON Harvard Forest field site</a>. These data are proxy data for what will be
-available for 30 years from the NEON flux tower [from the NEON data portal](http://data.neoninc.org/ "NEON data").
-{: .notice}
 
-#Lesson 04: Further Exploration of the Data
 Up until this point in the lesson we have been looking at how a single variable 
 changes across time. In the interest of studying phenology it is likely that 
 some combination of precipitation, temperature, and solar radiation (PAR) plays
