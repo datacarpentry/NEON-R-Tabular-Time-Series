@@ -55,7 +55,46 @@ this lesson.
 
 
 </div>
+**Maybe add here-- removed from 04/05, prior to slip
+##Challenge: Combining `dplyr` and `ggplot` Skills
+Plot the precipiation by month in all years available. 
 
+Using the Harvard Meterorological 15-min datafile, plot the average monthly 
+precipitation using all years (not just 09-11).  Does it make more sense to
+calculate the total precipitation for each month or the average percipitation
+for each month?
+
+```{r challenge-code-dplyr&ggplot}
+
+prec.monthly <- harMet_15Min %>%
+  mutate(month = month(datetime), year= year(datetime)) %>%
+  group_by(month, year) %>%
+  summarize(total_prec = sum(prec, na.rm = TRUE), datetime=first(datetime))
+
+str(prec.monthly)
+
+PrecipMonthly <- ggplot(prec.monthly,aes(month, total_prec)) +
+  geom_point(na.rm=TRUE) +
+  ggtitle("Monthly Precipitation in Harvard Forest (2005-2011") +
+  theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+  theme(text = element_text(size=20)) +
+  xlab("Month") + ylab("Precipitation (mm)") +
+  scale_x_discrete(labels=month)  
+#month is no longer datetime, but a discrete number. Change from scale_x_datetime()
+  #to scale_x_discrete()
+
+PrecipMonthly
+
+#If we want written out month labels
+PrecipMonthly + scale_x_discrete("Month", labels = c("1" = "Jan","2" = "Feb",
+  "3" = "Mar","4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec") )
+
+```
+
+Is there an obvious annual trend in percipitation at Harvard Forest?  
+
+Compare how you plotted daily (DailyPrecip) and monthly precipitation 
+(PrecipMonthly). When would one format be better than another? 
 
 
 Up until this point in the lesson we have been looking at how a single variable 

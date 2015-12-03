@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 04: Manipulating and Subsett Time Series Data with `dplyr`"
+title: "Lesson 04: Manipulate and Subset Time Series Data with `dplyr`"
 date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
@@ -102,9 +102,8 @@ library(dplyr)    #for data manipulation (split, apply, combine)
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
 
-#If not already available from Lessons 03:
 #15-min Harvard Forest met data, 2009-2011
-harMet15.09.11<- read.csv(file="Met_HARV_15min_2009_2011.csv",
+harMet15.09.11<- read.csv(file="AtmosData/HARV/Met_HARV_15min_2009_2011.csv",
                           stringsAsFactors = FALSE)
 #convert datetime to POSIXct
 harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
@@ -322,9 +321,10 @@ Now we have a data frame with only values for year, Julian day, mean air temp,
 and a date that could easily be plotted to show the mean daily temperature 
 during the study period. 
 
+
 ##Challenge: Applying `dplyr` Skills
-Calculate and save a dataframe of the average air temperate for each month in
-each year.  Name the new data frame "HarTemp.monthly.09.11"
+Calculate and save a data frame of the average air temperate for each month in
+each year.  Name the new data frame "HarTemp.monthly.09.11".
 
 ``` {r challenge-code-dplyr, echo=FALSE}
 harTemp.monthly.09.11 <- harMet15.09.11 %>%
