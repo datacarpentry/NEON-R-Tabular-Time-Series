@@ -237,7 +237,7 @@ mean(harMet15.09.11$airt, na.rm=TRUE)
 
 We now see that the average air temperature across the three years was 8.5°C.  
 
-# Challenge 1: Uploading and Preparing Data
+# Challenge: 
 We have been using the 15-minute data from the Harvard Forest. However, overall
 we are interested in larger scale patterns of greening-up and browning-down.  
 Daily atmospheric data are therefore far more appropriate for our work than the 

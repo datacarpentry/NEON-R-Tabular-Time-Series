@@ -72,7 +72,6 @@ The final products of this lesson will be two different plots ready for putting
 in a presentation or publishing in a paper. 
 
 ##ggplot2
-
 If after this lesson, you would like more information on creating graphics in
 `R` using `ggplot2` consider: 
 
@@ -109,8 +108,9 @@ harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/Met_HARV_Daily_2009_2011.csv"
 harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 
 #monthly HARV temperature data, 2009-2011
-harTemp.monthly.09.11<-read.csv(file="AtmosData/HARV/Temp_HARV_Monthly_09_11.csv",
-                                stringsAsFactors=FALSE)
+harTemp.monthly.09.11<-read.csv(file=
+                        "AtmosData/HARV/Temp_HARV_Monthly_09_11.csv",
+                        stringsAsFactors=FALSE)
 #check data classes
 str(harTemp.monthly.09.11)
 #convert datetime from chr to datetime class & rename date for clarification
@@ -150,7 +150,7 @@ other) axes,
  3) `geom_XXX` (geometry) which defines the type of graphical representaiton
 you want for the data.  We want a scatterplot so we are using ``geom_point`. 
 
-To customize the plot we can then add other specifications within the attributes 
+To customize the plot we can then add other specifications within the attributes
 of one of these elements. For example, if we want the NA values to be ignored, 
 we code `na.rm=TRUE` within the geom_point() function.  This will prevent the
 warning messages from showing.
@@ -365,7 +365,7 @@ ggplot(harMetDaily.09.11, aes(date, prec)) +
 ```
 
 
-#Challenge: Plot Montly Air Temperature
+#Challenge: Plot Monthly Air Temperature
 
 Use the `harTemp.monthly.09.11` data frame to plot the monthly air temperature
 throughout the three years of interest (2009-2010).  For ease of future code,
@@ -412,5 +412,13 @@ one on top of the other.
 grid.arrange(AirTempDaily, AirTempMonthly, ncol=2)
 ```
 
- 
+#Polish `ggplot` Figures
+Throughout this module we have been creating plots using ggplot.  We've covered
+the basics of adding axis labels and titles but using ggplot you can do so much 
+more.  If you are interested in making your graphs look better consider
+following up with any of these resources:
 
+1) ggplot2 Cheatsheet from Zev Ross: <a href="http://neondataskills.org/cheatsheets/R-GGPLOT2/" target="_blank"> ggplot2 Cheatsheet</a>  
+2) ggplot2 documentation index: 
+ <a href="http://docs.ggplot2.org/current/index.html#" target="_blank"> ggplot2 Documentation</a>    
+3) NEON's Publishable Maps Tutorial ADD LINK TO PRETTY MAPS TUTORIAL WHEN DONE

@@ -10,7 +10,7 @@ tags: [module-1]
 packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
 category: 
 description: "This lesson teaches how to conduct basic data manipulation using
-`dplyr`functions including `groupby`, `summarize`and `mutate`. The use of pipes
+`dplyr`functions including `group_by`, `summarize`and `mutate`. The use of pipes
 is taught and used throughout the lesson. Finally the new data frames created in
 the previous manipulations will be plotted using `ggplot()`. "
 code1:

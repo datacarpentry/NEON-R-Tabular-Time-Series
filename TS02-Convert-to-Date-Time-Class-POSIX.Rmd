@@ -24,8 +24,8 @@ comments: false
 
 ##About
 This lesson explain how to prepare tabular data for further analysis in `R` 
-through understanding date-time classes and learning how to
-convert character class data to a POSIX date-time class
+through understanding date-time classes and learning how to convert character
+class data to a POSIX date-time class
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
@@ -119,15 +119,15 @@ head(har_dateOnly)
 ```
 
 We've lost the time stamp associated with the `datetime` data. The `as.Date` 
-method worked great for data with just dates, but it doesn't 
-store any time information. Let's take a minute to explore the various date/time
-classes in `R`.
+method worked great for data with just dates, but it doesn't store any time
+information. Let's take a minute to explore the various date/time classes in
+`R`.
 
 ## Exploring Date and Time Classes
 
 ###R - Date Class - as.Date
 As we just saw, when we use the`as.Date` method to convert date data that is
-a string/character class to an `R` `date` class, it will ignore all values after 
+a string/character class to an `R` `date` class, it will ignore all values after
 the date string.
 
 Let's explore date classes in more detail separately from our data set.
