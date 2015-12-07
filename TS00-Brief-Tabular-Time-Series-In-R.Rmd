@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "Lesson 00: Brief Time Series in R - Simple Plots & Date Conversion"
+title: "Lesson 00: Brief Time Series in R - Simple Plots with qplot & as.Date
+Conversion"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
@@ -9,8 +10,8 @@ lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2]
 category: 
 tags: [module-1]
-description: "This lesson will demonstrate how to import a time series dataset 
-stored in .csv format into R. It will explore data classes and will walk
+description: "This lesson will demonstrate how to import a time series data set 
+stored in .csv format into `R`. It will explore data classes and will walk
 through how to convert date data, stored as a character string, into a date 
 class that R can recognize and plot efficiently."
 image:
@@ -24,9 +25,9 @@ comments: false
 {% include _toc.html %}
 
 ##About
-This lesson will demonstrate how to import a time series dataset stored in .csv
-format into R. It will explore column data classes and will walk through how to 
-convert a date data, stored as a character string, into a date class that R can
+This lesson will demonstrate how to import a time series data set stored in .csv
+format into `R`. It will explore column data classes and will walk through how to 
+convert a date, stored as a character string, into a date class that R can
 recognize and plot efficiently.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
@@ -38,11 +39,11 @@ After completing this lesson, you will:
 
   * Be able to open a .csv file in `R` using `read.csv()`and understand why we
   are using that file type.
-  * Understand how to work with different columns in `data.frame` in `R`.
+  * Understand how to work with different columns within a `data.frame` in `R`.
   * Understand how to examine data structures and data classes.
   * Be able to convert date data, stored as a character, into an `R` date 
   class.
-  * Know how to create a quick plot of a time-series dataset using `qplot`. 
+  * Know how to create a quick plot of a time-series data set using `qplot`. 
 
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of 'R' and, preferably,
@@ -57,7 +58,7 @@ More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
 
-{% include /maps/_tabular-time-series-data.html %}
+{% include _tabular-time-series-data.html %}
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
@@ -81,7 +82,7 @@ The data we downloaded is micro-meteorology data from a flux tower at Harvard
 Forest in .csv file format.
 The file extension .csv stands for comma-separated values. It is a text file 
 based format, where each value in the dataset is separate by a comma. Plain text 
-formats are ideal for working both across platforms (MAC, PC, LINUX, etc) and 
+formats are ideal for working both across platforms (Mac, PC, LINUX, etc) and 
 also can be read by many different tools. Additionally, the file format is 
 less likely to become obsolete over time!
 
@@ -91,7 +92,7 @@ less likely to become obsolete over time!
 # Importing the Data 
 
 Our .csv file contains a suite of metrics that we are interested in. To begin 
-exploring  the data, we need to first import it into R. 
+exploring  the data, we need to first import it into `R`. 
 
 Bonus: Good coding practice -- install and load all libraries at top of script.
 If you decide you need another package later on in the script, return to this
@@ -103,7 +104,7 @@ meteorological data.
 
 ```{r load-packages}
 # Install packages required for entire script.
-install.packages(ggplot2)
+install.packages("ggplot2")
 
 # Load packages required for entire script. 
 # library(PackageName)  #purpose of package
@@ -119,11 +120,11 @@ Once our working directory is set, we can import the data using `read.csv()`.
 ```{r import-csv}
 
 #Load csv file of daily meteorological data from Harvard Forest
-harMetdaily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+harMet.daily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
                      stringsAsFactors = FALSE)
 ```
 
-##stringsAsFactors
+##stringsAsFactors=FALSE
 When reading in files we most often use `stringsAsFactors = FALSE`. This
 addition causes `R` to read non-numeric data (strings) in their original format 
 and not convert them to factors.  Factors are non-numerical data that can be 
@@ -137,8 +138,9 @@ respectively.
 * 1 and 2s to represent male and female sex (a nominal variable). Numerical
 interpretation of non-numerical data but no order to the levels.  
 
-But much ecological data are not suitable for factors. An example of strings as
-non-factors are a hypothetical data set of `SpeciesObserved` consisting of 
+But many types of ecological data are not suitable for factors. An example of
+strings as non-factors are a hypothetical data set of `SpeciesObserved` 
+consisting of 
 *mouse*, *grasshopper*, and *sparrow*. These are non-numerical data with no 
 relevant level or numerical interpretation.  
 
@@ -153,7 +155,7 @@ spreadsheet.
 
 ``` {r dataframe}
 #what type of R object is our imported data?
-class(harMetdaily)
+class(harMet.daily)
 
 ```
 
@@ -161,18 +163,19 @@ class(harMetdaily)
 Once our data are imported, we can explore its structure. There are several ways
 to examine the structure of a data frame: 
 
-* `head()` method: this will show us the first 6 rows of the data. 
-* `str()` method: view the structure of the data as `R` interprets it.
+* `head()`: shows us the first 6 rows of the data (`tail()` shows the last 6 
+            rows). 
+* `str()` : displays the structure of the data as `R` interprets it.
 
 Let's view each. 
 
 ```{r view-data-structure}
 
 #view first 6 rows of the dataframe 
-head(harMetdaily)
+head(harMet.daily)
 
 #View the structure (str) of the data 
-str(harMetdaily)
+str(harMet.daily)
 ```
 
 ##Data Classes in R
@@ -182,7 +185,7 @@ data types or classes in our new `R` object:
 
 * **chr** - Character. It holds strings that are data made up of letters and
 words.  They are not of a numerical interpretation and most often represent data
-that are discrete classes.  
+that are discrete categories.  
 * **int** - Integer.  It holds numbers that are whole integers without decimals.
 * **num** - Numeric.  It accepts data that are a wide variety of numbers 
 including decimals and integers. Numeric also accept larger numbers than **int**
@@ -192,21 +195,24 @@ Storing variables as different data types is a strategic decision by `R` (and
 other programing languages).  The goal of having different data classes is to 
 optimize the data:  
 
-* so it can be processed more quickly & efficiently
+* so it can be processed more quickly & efficiently.
 * to minimize the storage size.
 
 Certain functions can be performed on certain data
-classes and not on others (e.g., a <- "mouse"-"sparrow"; subtracting two **chr** 
-data points makes no sense).  Additionally, the attributes and properties of
-different data classes varies (e.g., there is not point in showing the minimum
-value for `SpeciesObserved` a **chr** type but there is for `prec` a **num**
+classes and not on others. 
+
+a <- "mouse"-"sparrow"; subtracting two **chr** data points makes no sense
+
+Additionally, the attributes and properties of
+different data classes vary (e.g., there is not point in showing the minimum
+value for `SpeciesObserved`, a **chr** type, but there is for `prec` a **num**
 type.)  
 
 
-#Plot Data Using `qplot()`
+#Plot Data Using qplot()
 
-Let's have a look at one of the metrics stored within our data -- `airt` which 
-is air temperature. Given this is a time series dataset, we might want to plot
+Let's have a look at one of the metrics in our data, air temperature -- `airt`.
+Given this is a time series dataset, we might want to plot
 air temperature as it changes over time. We have a date-time column, `date`, so 
 let's use that as our x-axis variable and `airt` will be our y-axis variable.
 
@@ -216,7 +222,7 @@ object that the variables are stored in.
 
 ```{r plot-data }
 #quickly plot of air temperature
-qplot(x=date,y=airt, data=harMetdaily)
+qplot(x=date,y=airt, data=harMet.daily)
 
 ```
 
@@ -226,11 +232,11 @@ x-axis?
 R is trying to plot EVERY date value on the x-axis, so it was not readable. Why?
 Let's have a look at the data class of the data that we are trying to plot.
 
-```{r view-data-structure }
+```{r view-class }
 # View data structure for each column that we wish to plot
-class(harMetdaily$date)
+class(harMet.daily$date)
 
-class(harMetdaily$airt)
+class(harMet.daily$airt)
 
 ```
 
@@ -241,52 +247,53 @@ data plots just fine.
 
 #Date as a Date-Time Class
 We need to convert our `date` data, which is currently stored as a character 
-value to an actual date-time class that can be displayed quantitatively. Lucky 
+to an actual date-time class that can be displayed quantitatively. Lucky 
 for us, `R` has a `date` class.  We can reassign the `date` class using
 `as.Date`.
 
 ```{r convert-date-time }
 
 #convert column to date class
-harMetdaily$date <- as.Date(harMetdaily$date)
+harMet.daily$date <- as.Date(harMet.daily$date)
 
 #view R class of data
-class(harMetdaily$date)
+class(harMet.daily$date)
 
 #view results
-head(harMetdaily$date)
+head(harMet.daily$date)
 ```
 
 Now that we have adjusted the date, let's plot again. Notice that it plots
-much more quickly now that R recognizes the date as a date class. `R` can 
+much more quickly now that R recognizes `date` as a date class. `R` can 
 aggregate ticks on the x-axis by year instead of trying to plot every day!
 
 ```{r qplot-data}
 #quickly plot the data and include a title using main=""
 #In title string we can use '\n' to force the string to break onto a new line
 qplot(x=date,y=airt, 
-      data=harMetdaily,
+      data=harMet.daily,
       main="Daily Air Temperature w/ Date Assigned\nNEON Harvard Forest")  
 
 ```
 
+Note that we have also added a title using `main="Title string"`.
 
 #Challenge: Using ggplot2's qplot function 
-1. Create a quick plot of the precipitation throughout the years of the study.
+1. Create a quick plot of the precipitation throughout all years of the study.
 2. Do precipitation and air temperature have similar annual patterns? 
 3. Create a quick plot examining the relationship between air temperature and precipitation. 
 
 ```{r challenge-code-plotting, echo=FALSE}
 #1
 qplot(x=date,y=prec, 
-      data=harMetdaily,
+      data=harMet.daily,
       main="Daily Precipitation \nNEON Harvard Forest")  
 
 #2 Precipiation does not appear to have the same striking annual pattern as air temperature does. 
 
 #3
 qplot(x=airt,y=prec, 
-      data=harMetdaily,
+      data=harMet.daily,
       main="Relationship between precipitation & air temperature \nNEON Harvard Forest")  
 
 ```

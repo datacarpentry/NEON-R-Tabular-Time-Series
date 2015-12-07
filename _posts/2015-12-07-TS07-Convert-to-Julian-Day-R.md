@@ -5,7 +5,7 @@ date:   2015-10-18
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: 
 dateCreated: 2015-10-18
-lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+lastModified: 2015-12-07
 tags: [module-1]
 packagesLibraries: lubridate
 category: 
@@ -67,44 +67,46 @@ Including a Julian day variable in your data set can be very useful when
 comparing data across years, when plotting data, and when matching your data
 with other types of data that include Julian day.  
 
-```{r load-data}
 
-# Load packages required for entire script
-library(lubridate)  #work with dates
+    # Load packages required for entire script
+    library(lubridate)  #work with dates
+    
+    #set working directory to ensure R can find the file we wish to import
+    #setwd("working-dir-path-here")
+    
+    #Load csv file of daily meterological data from Harvard Forest
+    #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
+    harMet_DailyNoJD <- read.csv(file="AtmosData/HARV/hf001-06-daily-m-NoJD.csv",
+                         stringsAsFactors = FALSE)
+    
+    #what data class is the date column? 
+    str(harMet_DailyNoJD$date)
 
-#set working directory to ensure R can find the file we wish to import
-#setwd("working-dir-path-here")
+    ##  chr [1:5345] "2/11/01" "2/12/01" "2/13/01" "2/14/01" ...
 
-#Load csv file of daily meterological data from Harvard Forest
-#Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
-harMet_DailyNoJD <- read.csv(file="AtmosData/HARV/hf001-06-daily-m-NoJD.csv",
-                     stringsAsFactors = FALSE)
-
-#what data class is the date column? 
-str(harMet_DailyNoJD$date)
-
-#convert "date" from chr to a Date class and specify current date format
-harMet_DailyNoJD$date<- as.Date(harMet_DailyNoJD$date, "%m/%d/%y")
-```
+    #convert "date" from chr to a Date class and specify current date format
+    harMet_DailyNoJD$date<- as.Date(harMet_DailyNoJD$date, "%m/%d/%y")
 
 To quickly convert from from Date to Julian days, can we use `yday`, a 
 function from the `lubridate` package. 
 
-```{r yday }
-# to learn more about it type
-?yday
-```
+
+    # to learn more about it type
+    ?yday
 
 We want to create a new column in the existing data frame, titled `julian`, that
 contains the Julian day data.  
 
-``` {r julian-day-convert }
-harMet_DailyNoJD$julian <- yday(harMet_DailyNoJD$date)  
-#make sure it worked all the way through. 
-head(harMet_DailyNoJD$julian) 
-tail(harMet_DailyNoJD$julian)
 
-```
+    harMet_DailyNoJD$julian <- yday(harMet_DailyNoJD$date)  
+    #make sure it worked all the way through. 
+    head(harMet_DailyNoJD$julian) 
+
+    ## [1] 42 43 44 45 46 47
+
+    tail(harMet_DailyNoJD$julian)
+
+    ## [1] 268 269 270 271 272 273
 
 In this lesson we converted from `Date` class to a julian day, however, you can
 convert between any recocognized date/time class (POSIXct, POSIXlt, etc) and

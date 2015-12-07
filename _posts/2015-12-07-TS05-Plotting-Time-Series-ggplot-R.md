@@ -5,7 +5,7 @@ date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+lastModified: 2015-12-07
 tags: [module-1]
 packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
 category: 
@@ -87,31 +87,30 @@ You will need the daily micro-meteorology data for 2009-2011 from
 the Harvard Forest. If you do not already have these data sets as `R` objects, 
 please load them from the .csv files in the downloaded data.  
 
-```{r load-data}
-#Remember it is good coding technique to add additional libraries to the top of
-  #your script 
-library(lubridate) #for working with dates
-library(ggplot2)  #for creating graphs
-library(scales)   #to access breaks/formatting functions
-library(gridExtra) #for arranging plots
 
-#set working directory to ensure R can find the file we wish to import
-#setwd("working-dir-path-here")
-
-#daily HARV met data, 2009-2011
-harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/Met_HARV_Daily_2009_2011.csv",
-                     stringsAsFactors = FALSE)
-
-#covert date to POSIXct date-time class
-harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
-
-#monthly HARV temperature data, 2009-2011
-harTemp.monthly.09.11<-read.csv(file=
-                        "AtmosData/HARV/Temp_HARV_Monthly_09_11.csv",
-                        stringsAsFactors=FALSE)
-#convert datetime from chr to datetime class & rename date for clarification
-harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
-```
+    #Remember it is good coding technique to add additional libraries to the top of
+      #your script 
+    library(lubridate) #for working with dates
+    library(ggplot2)  #for creating graphs
+    library(scales)   #to access breaks/formatting functions
+    library(gridExtra) #for arranging plots
+    
+    #set working directory to ensure R can find the file we wish to import
+    #setwd("working-dir-path-here")
+    
+    #daily HARV met data, 2009-2011
+    harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/Met_HARV_Daily_2009_2011.csv",
+                         stringsAsFactors = FALSE)
+    
+    #covert date to POSIXct date-time class
+    harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
+    
+    #monthly HARV temperature data, 2009-2011
+    harTemp.monthly.09.11<-read.csv(file=
+                            "AtmosData/HARV/Temp_HARV_Monthly_09_11.csv",
+                            stringsAsFactors=FALSE)
+    #convert datetime from chr to datetime class & rename date for clarification
+    harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
 
 
 ##Plot with qplot
@@ -119,12 +118,13 @@ Using the library `ggplot2` we can use the simple `qplot()` function make a
 quick plot of the air temperature (`airt`) across all three years using the
 daily data. 
 
-``` {r qplot}
-qplot (x=date, y=airt,
-      data= harMetDaily.09.11,
-      main= "Air temperature Harvard Forest\n 2009-2011",
-      xlab= "Date", ylab= "Temperature (°C)")
-```
+
+    qplot (x=date, y=airt,
+          data= harMetDaily.09.11,
+          main= "Air temperature Harvard Forest\n 2009-2011",
+          xlab= "Date", ylab= "Temperature (°C)")
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/qplot-1.png) 
 
 When we do this we get a warning message reminding us that there are two missing
 values in the 
@@ -161,15 +161,16 @@ defined. There are far more ways `ggplot2` can be used to create and customize
 plots, but we will not cover those additional details in this lesson to
 keep the focus on working with time series data.
 
-``` {r basic-ggplot2}
-#plot Air Temperature Data across 2009-2011 using 15-minute data
-AirTempDailya <- ggplot(harMetDaily.09.11, aes(date, airt)) +
-           geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
-                                      # that 2 NA values were removed.
-           ggtitle("Air Temperature Harvard Forest\n 2009-2011") +
-           xlab("Date") + ylab("Air Temperature (C)")
-AirTempDailya
-```
+
+    #plot Air Temperature Data across 2009-2011 using 15-minute data
+    AirTempDailya <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+               geom_point(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
+                                          # that 2 NA values were removed.
+               ggtitle("Air Temperature Harvard Forest\n 2009-2011") +
+               xlab("Date") + ylab("Air Temperature (C)")
+    AirTempDailya
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/basic-ggplot2-1.png) 
 
 Notice we created an object (AirTempDailya) that is our plot.  We then have to
 write in the object name to get the plot to appear.  Creating plots as an 
@@ -181,11 +182,12 @@ as we do at the end of this lesson.
 The dates on the x-axis in this last plot are not particularly
 well formatted. We can reformat them so they are in the Month Year format by 
 simply adding onto the `AirTemp15a` plot that we just created. 
-```{r nice-x-axis}
-#format x-axis: dates
-AirTempDailyb <- AirTempDailya + (scale_x_datetime(labels=date_format("%b %y")))
-AirTempDailyb
-```
+
+    #format x-axis: dates
+    AirTempDailyb <- AirTempDailya + (scale_x_datetime(labels=date_format("%b %y")))
+    AirTempDailyb
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/nice-x-axis-1.png) 
 
 The dates are now legible on the x-axis. Notice in the code for the x scale
 (`scale_x_datetime()`), we changed the date format from %m to %b which gives the
@@ -202,15 +204,16 @@ customize the text in this section.  You can find the other arguments for
 `theme()` at Hadley Wickham's <a href="http://docs.ggplot2.org/0.9.2.1/theme.html" target="_blank"> 
 documentation</a> `theme()` documentation. 
 
-```{r nice-font}
-#format x axis with dates
-AirTempDaily<-AirTempDailyb +
-  #theme(plot.title) allows to format the Title seperately from other text
-  theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-  #theme(text) will format all text that isn't specifically formatted elsewhere
-  theme(text = element_text(size=18)) 
-AirTempDaily
-```
+
+    #format x axis with dates
+    AirTempDaily<-AirTempDailyb +
+      #theme(plot.title) allows to format the Title seperately from other text
+      theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+      #theme(text) will format all text that isn't specifically formatted elsewhere
+      theme(text = element_text(size=18)) 
+    AirTempDaily
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/nice-font-1.png) 
 
 
 #Challenge: Plotting daily precipitaiton data
@@ -218,18 +221,7 @@ Use the `harMetDaily.09.11` data to create a plot of percipitation.
 Format the date to appear as Day-Month-Year.  For ease in future activities 
 name the plot 'PrecipDaily".
 
-``` {r challenge-code-ggplot-precip, echo=FALSE}
-PrecipDaily <- ggplot(harMetDaily.09.11, aes(date, prec)) +
-           geom_point() +
-           ggtitle("Daily Precipitation Harvard Forest\n 2009-2011") +
-            xlab("Date") + ylab("Precipitation (mm)") +
-            scale_x_datetime(labels=date_format ("%m-%y"))+
-           theme(plot.title = element_text(lineheight=.8, face="bold",
-                 size = 20)) +
-           theme(text = element_text(size=18))
-
-PrecipDaily
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-ggplot-precip-1.png) 
 
 ##Figures with Bars
 In the previous figure we get a scatterplot of precipitation by date, however, 
@@ -243,17 +235,18 @@ histograms.  However, we don't want a histogram, we want the bars to be for the
 varible (precipiation) mapped to the y-axis.  Therefore we must specify  
 `geom_bar(stat="identity")`. 
 
-``` {r ggplot-geom_bar }
-PrecipDailyBarA <- ggplot(harMetDaily.09.11, aes(date, prec)) +
-           geom_bar(stat="identity") +
-           ggtitle("Daily Precipitation\n Harvard Forest") +
-            xlab("Date") + ylab("Precipitation (mm)") +
-            scale_x_datetime(labels=date_format ("%b-%y")) +
-            theme(plot.title = element_text(lineheight=.8, face="bold",
-                 size = 20)) +
-           theme(text = element_text(size=18))
-PrecipDailyBarA
-```
+
+    PrecipDailyBarA <- ggplot(harMetDaily.09.11, aes(date, prec)) +
+               geom_bar(stat="identity") +
+               ggtitle("Daily Precipitation\n Harvard Forest") +
+                xlab("Date") + ylab("Precipitation (mm)") +
+                scale_x_datetime(labels=date_format ("%b-%y")) +
+                theme(plot.title = element_text(lineheight=.8, face="bold",
+                     size = 20)) +
+               theme(text = element_text(size=18))
+    PrecipDailyBarA
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-geom_bar-1.png) 
 
 Why do some of the bars appear black and some appear grey?  Zoom in on the 
 figure, now we can see all the bars are black.  When there is lots of data 
@@ -266,17 +259,19 @@ We can change the color of points or bar by specifying the color within the
 colors, `fill=` and `line=`.  Colors can be specified by a common name (for
 simple colors) or hexidecimal color codes (e.g, #FF9999).  
 
-``` {r ggplot-color }
-#specifying color by name
-PrecipDailyBarB <- PrecipDailyBarA+
-  geom_bar(stat="identity", colour="darkblue")
 
-PrecipDailyBarB
+    #specifying color by name
+    PrecipDailyBarB <- PrecipDailyBarA+
+      geom_bar(stat="identity", colour="darkblue")
+    
+    PrecipDailyBarB
 
-#specifying color by hexidecimal code
-AirTempDaily+geom_point(colour="#66ffb3", na.rm=TRUE)
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-color-1.png) 
 
-```
+    #specifying color by hexidecimal code
+    AirTempDaily+geom_point(colour="#66ffb3", na.rm=TRUE)
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-color-2.png) 
 
 Notice that color choice is important in figures. #66ffb3 is probably not a 
 great choice for this plot.
@@ -289,17 +284,18 @@ based on the _R_ _Graphics_ _Cookbook_ text.
 ##Figures with Lines
 Often when plotting data from a time series, representing the data with a line 
 makes sense.  Let's try it with our daily air temperature data. 
-```{r ggplot-geom_lines}
-AirTempDailyline <- ggplot(harMetDaily.09.11, aes(date, airt)) +
-           geom_line(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
-                                      # that 2 NA values were removed.
-           ggtitle("Air Temperature Harvard Forest\n 2009-2011") +
-           xlab("Date") + ylab("Air Temperature (C)") +
-          theme(plot.title = element_text(lineheight=.8, face="bold", 
-                                          size = 20)) +
-           theme(text = element_text(size=18))
-AirTempDailyline
-```
+
+    AirTempDailyline <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+               geom_line(na.rm=TRUE) +    #na.rm=TRUE prevents a warning stating
+                                          # that 2 NA values were removed.
+               ggtitle("Air Temperature Harvard Forest\n 2009-2011") +
+               xlab("Date") + ylab("Air Temperature (C)") +
+              theme(plot.title = element_text(lineheight=.8, face="bold", 
+                                              size = 20)) +
+               theme(text = element_text(size=18))
+    AirTempDailyline
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-geom_lines-1.png) 
 
 This might be worse than having the individual points.  When might lines be
 better than points?   
@@ -308,9 +304,7 @@ better than points?
 What happens if you simply add the `geom_line()` to the original `AirTempDaily` 
 plot instead of substituting `geom_line()` for `geom_points()` like we just did?
 
-```{r challenge-code-geom_lines&points, echo=FALSE }
-AirTempDaily + geom_line(na.rm=TRUE) 
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-geom_lines&points-1.png) 
 
 Interesting, but not the best representation of this data.  Perhaps what would
 be better is a scatter plot of the data points with a trend line over it. 
@@ -334,11 +328,14 @@ appropriate for either
 the non-parametric loess or gam model methods.  How large is our data set?
 Which method will be used by default?  
 
-``` {r ggplot-trend-line}
-#adding on a trend lin using loess
-AirTempDailyTrend <- AirTempDaily + stat_smooth(colour="green")
-AirTempDailyTrend
-```
+
+    #adding on a trend lin using loess
+    AirTempDailyTrend <- AirTempDaily + stat_smooth(colour="green")
+    AirTempDailyTrend
+
+    ## geom_smooth: method="auto" and size of largest group is >=1000, so using gam with formula: y ~ s(x, bs = "cs"). Use 'method = x' to change the smoothing method.
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-trend-line-1.png) 
 
 As our data set has 1095 observations the default gam method was used with a 
 specified 
@@ -352,17 +349,7 @@ the precipitation data as purple bars (added challenge: find hexicolor code and
 make bars the color "dark orchid 4") with a grey trend line. Format the dates to
 appear as Jan 2009 and make the title in an italic font.
 
-``` {r challenge-code-linear-trend, echo=FALSE}
-ggplot(harMetDaily.09.11, aes(date, prec)) +
-      geom_bar(stat="identity", colour="darkorchid4") + #dark orchid 4 = #68228B
-      ggtitle("Daily Precipitation with Linear Trend\n Harvard Forest") +
-      xlab("Date") + ylab("Precipitation (mm)") +
-      scale_x_datetime(labels=date_format ("%b %y"))+
-      theme(plot.title = element_text(lineheight=.8, face="italic",
-                 size = 20)) +
-      theme(text = element_text(size=18))+
-      stat_smooth(method="lm", colour="grey")
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-linear-trend-1.png) 
 
 
 #Challenge: Plot Monthly Air Temperature
@@ -371,18 +358,7 @@ Use the `harTemp.monthly.09.11` data frame to plot the monthly air temperature
 throughout the three years of interest (2009-2010).  For ease of future code,
 name your plot "AirTempMonthly".
 
-``` {r plot-airtemp-Monthly, echo=FALSE}
-AirTempMonthly <- ggplot(harTemp.monthly.09.11, aes(date, mean_airt)) +
-           geom_point() +
-           ggtitle("Average Monthly Air Temperature\n Harvard Forest") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",
-                size = 20)) +
-           theme(text = element_text(size=18)) +
-           xlab("Date") + ylab("Air Temperature (C)") +
-          scale_x_datetime(labels=date_format ("%b%y"))
-AirTempMonthly
-
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/plot-airtemp-Monthly-1.png) 
 
 ##Displaying Multiple Figures in Same Panel
 How does our new plot (`AirTemp Monthly`) compare to our previous air 
@@ -395,9 +371,10 @@ However, this will not work with `ggplot2` functions.  Instead we will use the
 figures simultaneously.  
 
 
-```{r compare-precip}
-grid.arrange(AirTempDaily, AirTempMonthly, ncol=1)
-```
+
+    grid.arrange(AirTempDaily, AirTempMonthly, ncol=1)
+
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/compare-precip-1.png) 
 
 On which plot is it easier to see annual patterns of air temperature?  Can you
 think of when you might use one plot or another?  Remember if the plots are too
@@ -408,9 +385,7 @@ window.
 Rearrange the same two plots so that they are side by side instead of stacked 
 one on top of the other.  
 
-```{r challenge-code-grid-arrange, echo=FALSE}
-grid.arrange(AirTempDaily, AirTempMonthly, ncol=2)
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-grid-arrange-1.png) 
 
 #Polish ggplot Figures
 Throughout this module we have been creating plots using ggplot.  We've covered
