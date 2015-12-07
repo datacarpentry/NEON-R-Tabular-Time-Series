@@ -6,7 +6,7 @@ date: 2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+lastModified: 2015-12-07
 tags: module-1
 packagesLibraries: [lubridate, ggplot2]
 category: 
@@ -73,24 +73,22 @@ Prior to starting we need to load the appropriate libraries (`lubridate` and
 15-minute micrometeorological data ( file: `hf001-10-15min-m.csv`) and convert 
 the `datetime` column to a POSIXct class date-time data type. 
 
-```{r load-libraries}
-# Load packages required for entire script
-library(lubridate)  #work with dates
-library(ggplot2)  # plotting
 
-#set working directory to ensure R can find the file we wish to import
-#setwd("working-dir-path-here")
-
-#Load csv file of 15 min meteorological data from Harvard Forest
-#Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
-harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
-                     stringsAsFactors = FALSE)
-#convert date time
-harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
-                                format = "%Y-%m-%dT%H:%M",
-                                tz = "America/New_York")
-
-```
+    # Load packages required for entire script
+    library(lubridate)  #work with dates
+    library(ggplot2)  # plotting
+    
+    #set working directory to ensure R can find the file we wish to import
+    #setwd("working-dir-path-here")
+    
+    #Load csv file of 15 min meteorological data from Harvard Forest
+    #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
+    harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
+                         stringsAsFactors = FALSE)
+    #convert date time
+    harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
+                                    format = "%Y-%m-%dT%H:%M",
+                                    tz = "America/New_York")
 
 ##Subsetting
 Our `.csv` file contains nearly a decade's worth of data which makes for a large
@@ -109,17 +107,32 @@ or equal to 1 Jan 2009 at 0:00 **AND** less than or equal to 31 Dec 2011 at
 We need to include the time zone to get this to work correctly. If we provide
 the time zone, `R` will take care of daylight savings and leap year for us.
 
-``` {r subset-by-time }
-#subset out some of the data - 2009-2011
-harMet15.09.11 <- subset(harMet_15Min, datetime >= as.POSIXct('2009-01-01 00:00',
-        tz = "America/New_York") & datetime <=
-        as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
 
-#check to make sure it worked.
-head(harMet15.09.11[1])
-tail(harMet15.09.11[1])
+    #subset out some of the data - 2009-2011
+    harMet15.09.11 <- subset(harMet_15Min, datetime >= as.POSIXct('2009-01-01 00:00',
+            tz = "America/New_York") & datetime <=
+            as.POSIXct('2011-12-31 23:59', tz = "America/New_York"))
+    
+    #check to make sure it worked.
+    head(harMet15.09.11[1])
 
-```
+    ##                   datetime
+    ## 140255 2009-01-01 00:00:00
+    ## 140256 2009-01-01 00:15:00
+    ## 140257 2009-01-01 00:30:00
+    ## 140258 2009-01-01 00:45:00
+    ## 140259 2009-01-01 01:00:00
+    ## 140260 2009-01-01 01:15:00
+
+    tail(harMet15.09.11[1])
+
+    ##                   datetime
+    ## 245369 2011-12-31 22:30:00
+    ## 245370 2011-12-31 22:45:00
+    ## 245371 2011-12-31 23:00:00
+    ## 245372 2011-12-31 23:15:00
+    ## 245373 2011-12-31 23:30:00
+    ## 245374 2011-12-31 23:45:00
 
 It worked! The first entry is 1 January 2009 at 00:00 and the last entry is 31
 December 2011 at 23:45.
@@ -129,31 +142,15 @@ can do that by writing our new `R` object to a .csv file.  Remember, that
 when naming any file, give it a concise, yet description name.  By default, the
 the .csv file will be written to your working directory. 
 
-``` {r write-csv}
-#writing the subset of harMet15 data to .csv
-write.csv(harMet15.09.11, file="Met_HARV_15min_2009_2011.csv")
 
-```
+    #writing the subset of harMet15 data to .csv
+    write.csv(harMet15.09.11, file="Met_HARV_15min_2009_2011.csv")
 
 
 #Challenge: Subsetting & Plotting
 1.Plot precipitation for only July 2010 in the Harvard Forest
  
-``` {r challenge-code-subsetting, include=TRUE, results="hide", echo=FALSE}
-harMet15_July2010 <- subset(harMet15.09.11, datetime >= as.POSIXct('2010-07-01 00:00',
-        tz = "America/New_York") & datetime <=
-        as.POSIXct('2010-07-31 23:59', tz = "America/New_York"))
-
-#did it work?
-head(harMet15_July2010$datetime)
-tail(harMet15_July2010$datetime)
-
-#ploting precip in July
-qplot (datetime, prec,
-       data= harMet15_July2010,
-       main= "Precipitation in July 2010\nHarvard Forest",
-       xlab= "Date", ylab= "Precipitation (mm)")
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS03-Subset-Data-and-No-Data-Values/challenge-code-subsetting-1.png) 
 
 
 ## Missing Data - Dealing with data gaps
@@ -171,15 +168,23 @@ An easy way to check for this is the
 `is.na()` function. By asking for the `sum()` of `is.na()` we can see how many 
 NA/missing values we have. 
 
-```{r missing values}
 
-#Check for NA values
-sum(is.na(harMet15.09.11$datetime))
-sum(is.na(harMet15.09.11$airt))
-sum(is.na(harMet15.09.11$prec))
-sum(is.na(harMet15.09.11$parr))
+    #Check for NA values
+    sum(is.na(harMet15.09.11$datetime))
 
-```
+    ## [1] 0
+
+    sum(is.na(harMet15.09.11$airt))
+
+    ## [1] 2
+
+    sum(is.na(harMet15.09.11$prec))
+
+    ## [1] 863
+
+    sum(is.na(harMet15.09.11$parr))
+
+    ## [1] 4
 
 As we can see here we have no NA values within the `datetime` column but we do
 have NA values in our other variables.  
@@ -223,11 +228,11 @@ calculations
 or using a function on columns that may contain NA values.  Missing values can
 cause error in calculations.  By default `R` will not calculate certain function
 if they have a NA value in it.  
-``` {r na-in-calculations}
-#calculate mean of air temperature
-mean(harMet15.09.11$airt)
 
-```
+    #calculate mean of air temperature
+    mean(harMet15.09.11$airt)
+
+    ## [1] NA
 
 `R` will not return a value for the mean as there NA values in the air 
 temperature.  However, we know that there are only 2 of 105,108 observations of 
@@ -235,11 +240,11 @@ air temperature missing, so we aren't that worried about those two missing value
 skewing the three year air temperature mean.  We can tell `R` to not include the
 missing values by using `na.rm=` (NA.remove) within the function.  
 
-``` {r na-rm}
-#calculate mean of air temperature, ignore NA values
-mean(harMet15.09.11$airt, na.rm=TRUE)
 
-```
+    #calculate mean of air temperature, ignore NA values
+    mean(harMet15.09.11$airt, na.rm=TRUE)
+
+    ## [1] 8.467904
 
 We now see that the average air temperature across the three years was 8.5°C.  
 
@@ -260,50 +265,5 @@ quality of the data at this point.
 6. Write the subset to a .csv file. 
 7. Create a fully labelled plot for the air temperature during our study. 
 
-``` {r Challenge-code-harMet.daily, include=TRUE, results="hide", echo=FALSE}
-
-#1. import daily file
-harMet.daily <- read.csv("AtmosData/HARV/hf001-06-daily-m.csv", 
-      stringsAsFactors = FALSE)
-#check it out
-str(harMet.daily)
-
-#2. Metadata
-#Differences in 2 variable names PAR=part, DateTime=date
-
-#3. convert date 
-harMet.daily$date <- as.Date(harMet.daily$date,format = "%Y-%m-%d")
-#check it out
-str(harMet.daily [1])
-
-
-#4. Check for NA values
-sum(is.na(harMet.daily$date))
-sum(is.na(harMet.daily$airt))
-sum(is.na(harMet.daily$prec))
-sum(is.na(harMet.daily$part))
-#OuputNote: PART is missing 1032 values
-
-#5. subset out some of the data - 2009-2011
-harMetDaily.09.11 <- subset(harMet.daily, date >= as.Date('2009-01-01')
-                                        & date <= as.Date('2011-12-31'))
-
-#check it
-head(harMetDaily.09.11$date)
-tail(harMetDaily.09.11$date)
-
-#do we still have the NA in part?
-sum(is.na(harMetDaily.09.11$part))
-#Output note: now only 1 NA!
-
-#6. Write .csv
-write.csv(harMetDaily.09.11, file="Met_HARV_Daily_2009_2011.csv")
-
-
-#7.  Plotting air temp 2009-2011
-qplot (x=date, y=airt,
-       data=harMetDaily.09.11,
-       main= "Average Air Temperature \n Harvard Forest",
-       xlab="Date", ylab="Temperature (°C)")
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS03-Subset-Data-and-No-Data-Values/Challenge-code-harMet.daily-1.png) 
 

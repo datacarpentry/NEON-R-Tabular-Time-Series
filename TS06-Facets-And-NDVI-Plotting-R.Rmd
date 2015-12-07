@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Lesson 06: Plotting with Facets and Time Series with NDVI data"
-date:   2015-10-20
+title: "Lesson 06: Plot using Facets and Plot Time Series with NDVI data"
+date:   2015-10-19
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah Wasser]
 dateCreated: 2015-10-22
@@ -34,6 +34,7 @@ NDVI.
 
 ###Goals / Objectives
 After completing this activity, you will:
+
  * Know how to use `facets()` in ggplot2.
  * Be able to combine different types of data into one plot.
 
@@ -47,7 +48,7 @@ RStudio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 
 ####Data to Download
-{% include /maps/_tabular-time-series-data.html %}
+{% include _tabular-time-series-data.html %}
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
@@ -64,6 +65,7 @@ respectively, to gain familiarity.
 
 </div>
 
+#The Data Approach
 What we want to do with ecological time series data often extends beyond
 plotting a single variable as it changes across time. For example, when studying
 phenology it is likely that a combination of precipitation, temperature, and
@@ -77,9 +79,9 @@ already been exploring.
 
 ###Load the Data
 We will need the daily micro-meteorology data for 2009-2011 from the Harvard
-Forest. If you do not have these data sets as `R` objects, created in
-[{{site.baseurl}} / LINKHERE](Lesson 00 - ) and [{{site.baseurl}} / LINKHERE](Lesson 01 - ),
-please load them from the .csv files in the downloaded data.  
+Forest. If you do not have these data sets as `R` objects, please load them from
+the .csv files in the downloaded data and convert date-time variables to 
+POSIXct date-time class. 
 
 ```{r load-data}
 #Remember it is good coding technique to add additional libraries to the top of
@@ -103,8 +105,7 @@ harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 #monthly HARV temperature data, 2009-2011
 harTemp.monthly.09.11<-read.csv(file="AtmosData/HARV/Temp_HARV_Monthly_09_11.csv",
                                 stringsAsFactors=FALSE)
-#check data classes
-str(harTemp.monthly.09.11)
+
 #convert datetime from chr to datetime class & rename date for clarification
 harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
 ```
@@ -115,7 +116,7 @@ precipiation.  It makes sense there would be as solar radiation is lower on
 cloudy days and precipitation is also more likely when clouds are present. 
 
 We will use `ggplot()` to graph PAR and precipitation from the daily Harvard
-Meterological data.  We can simply do this by in putting both variables into the
+Meteorological data.  We can simply do this by in putting both variables into the
 aesthetics (`aes`) argument of `ggplot()`.  Unless we specify, the first 
 variable will be the x-axis and the second the y-axis.  
 
@@ -137,9 +138,9 @@ of annual patterns as date isn't part of this figure.
 
 ##Subset by Season
 One way to add a time component to this figure is to subset the data by season 
-and then to plot a facetted graph showing the data by season.  
+and then to plot a facetted graph showing the data by season.  The initial step to do this is to subset by season.  
 
-The first step to doing this is to subset by season.  First, we have to switch 
+First, we have to switch 
 away from coding and data analysis and think about ecology.  What is the best
 way to break a year apart into seasons?  
 
@@ -191,7 +192,7 @@ tail(harMetDaily.09.11$month)
 tail(harMetDaily.09.11$season)
 ```
 
-##Use Facets in `ggplot`
+##Use Facets in ggplot
 Facets allow us to plot subsets of data together.  Using `facet_grid()` we can
 create the same plot of PAR and precipiation for each season and display them in
 a grid.
@@ -206,7 +207,7 @@ It didn't work!  Why?
 
 We added the season variable to `harMetDaily.09.11` after we created the
 original `par.precip` plot. We need to re-run the `par.precip` code again so 
-that `season` is now included in the data. 
+that `season` is now included in the data (go back and re-run that code). 
 
 ``` {r par.precip-rerun, echo=FALSE}
 par.precip <- ggplot(harMetDaily.09.11,aes(prec, part)) +
@@ -236,7 +237,7 @@ arrangement the graphs are in?
 
 ###Defining the Order of Facetted Plots
 Notice how our facetted plots are currently show up as "fall", "spring",
-"summer", "winter".  As no level was assigned as data class is character `R`
+"summer", "winter".  As no level is assigned the data are class character, `R`
 simply arranges them in alphabetical order.  However, "fall", "spring", 
 "summer", "winter" do have a specified order to them.  It doesn't mater which
 season starts the cycle but they should be in order to ease our understanding
@@ -247,9 +248,11 @@ can do this by assigning the seasons as a factor with a defined order (or
 level).  
 
 ``` {r assigning-level-to-season  }
-harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, level=c("spring",                                                   "summer","fall","winter"))
+harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, level=c("spring",
+                                                    "summer","fall","winter")) 
+
 #check to make sure it worked
-str(harMetDaily.09.11)
+str(harMetDaily.09.11$season)
 
 #rerun original par.precip code to incorporate the levels. 
 par.precip <- ggplot(harMetDaily.09.11,aes(prec, part)) +
@@ -287,7 +290,7 @@ prec.airtemp + facet_grid(season~.)
 
 ```
 
-##Plot Two Variables Across A Time Series. 
+##Plot Two Variables Across A Time Series. ##HADLEY DOESN'T LIKE THIS DO WE INCLUDE?
 ``` {r plot-bar-and-line}
 
 plot1<- ggplot(harMetDaily.09.11) +
@@ -310,24 +313,30 @@ grid.arrange(plot1, plot2, cols=2)
 
 #Graph variables and NDVI data together
 
-
-```{r NDVI plots}
+```{r read-NDVI}
 #first read in the NDVI CSV data
 NDVI.2009 <- read.csv(file="Landsat_NDVI/Harv2009NDVI.csv", stringsAsFactors = FALSE)
 #check out the data
 str(NDVI.2009)
 View(NDVI.2009)
+```
+
 
 ###plot of NDVI vs. PAR using daily data
-#first lets get just 2009 from the harmet.Daily data since that is the only year for which we have NDVI data
+#first lets get just 2009 from the harmet.Daily data since that is the only year 
+#for which we have NDVI data
+
+```{r dplyr-to-subset}
 harMet.daily2009 <- harMet.daily %>% 
   mutate(year = year(date)) %>%   #need to create a year only column first
   filter(year == "2009")
 
+```
+
 #ggplot does not provide for two y-axes and the scale for these two variables are vastly different.
 #So we will create a plot for each variable using the same time variable (julian day) as our x-axis.
 #Then we will plot the two plots in the same viewer so we can compare
-
+``` {r plot-PAR-NDVI}
 #create plot of julian day vs. PAR
 par.2009 <- ggplot(harMet.daily2009, aes(jd,part))+
   geom_point(na.rm=TRUE)+
@@ -344,7 +353,11 @@ NDVI.2009 <- ggplot(NDVI.2009,aes(julianDays, meanNDVI))+
 
 #display the plots together
 grid.arrange(par.2009, NDVI.2009) 
+```
 
+
+
+``` {r plot-airt-NDVI}
 #Let's take a look at air temperature too
 airt.2009 <- ggplot(harMet.daily2009, aes(jd,airt))+
   geom_point(na.rm=TRUE)+
@@ -353,8 +366,10 @@ airt.2009 <- ggplot(harMet.daily2009, aes(jd,airt))+
            theme(text = element_text(size=20)) 
 
 grid.arrange(airt.2009, NDVI.2009)
+```
+
+``` {r plot-PAR-air-NDVI}
 #all 3 together
 grid.arrange(par.2009, airt.2009, NDVI.2009)
-
 ```
 
