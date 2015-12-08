@@ -52,12 +52,19 @@ More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
 
-{% include _tabular-time-series-data.html %}
+<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
+Download Atmospheric Data</a>
+
+The data used in this lesson were collected at Harvard Forest which is
+an National Ecological Observatory Network  
+<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. These data are proxy data for what will be available for 30 years on the [NEON data portal](http://data.neoninc.org/ "NEON data")
+for both Harvard Forest and other field sites located across the United States.
+
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the [Setting A Working Directory In R](URL "R Working Directory Lesson") lesson prior to beginning
+refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") lesson prior to beginning
 this lesson.
 
 </div>
@@ -156,7 +163,7 @@ the .csv file will be written to your working directory.
 ## Missing Data - Dealing with data gaps
 
 ###Checking for No Data Values
-In [Lesson 01: Investigating Time Series Metadata ](URL "Lesson 01 for Metadata")
+In the [Time Series Metadata Lesson ]({{site.baseurl}}/R/Time-Series-Metadata/ "Time Series Metadata")
 we viewed the metadata associated 
 with these data and found out that the missing values are given an NA value. One 
 must always check for missing values in any of the variables with which one is 
@@ -254,7 +261,7 @@ we are interested in larger scale patterns of greening-up and browning-down.
 Daily atmospheric data are therefore far more appropriate for our work than the 
 15-minute data.  
 
-1. Import the Daily Meteorological data from the Harvard Forest (if you haven't already done so in  [Lesson 00: A Brief Intro to Time Series Data ](URL "Lesson 00 for HarMet_Daily"). )
+1. Import the Daily Meteorological data from the Harvard Forest (if you haven't already done so in the [Brief Tabular Time Series lesson ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for HarMet_Daily"). )
 2. Check the metadata to see what the column names are for the variable of
 interest (precipitation, air temperature, PAR, day and time ).
 3. If needed, convert the data class of different columns.

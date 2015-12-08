@@ -13,7 +13,7 @@ require(knitr)
 gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series_mjones01/"
 
 #jekyll will only render md posts that begin with a date. Add one.
-add.date <- "2015-11-18-"
+add.date <- "2015-12-07-"
 
 #set working dir - this is where the data are located
 wd <- "~/Documents/data/Spatio_TemporalWorkshop/1_WorkshopData"

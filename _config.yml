@@ -3,12 +3,12 @@ description: 	Hackathon held October 21-23 in Boulder, CO at NEON headquarters.
 #Comment out url when working locally to resolve base urls correctly ok
 #use this when pushing to git for live version
 
-#url:      http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
-#baseurl:   http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
+url:      http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
+baseurl:   http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
 
 #use this when working locally
 #just uncomment the first localhost.
-url: http://localhost:4000
+#url: http://localhost:4000
 #baseurl: http://localhost:4000
 
 #we might not need comments here???
@@ -21,7 +21,7 @@ owner:
   name: NEON / Data Carpentry Hackathon
   avatar: profilePic.png
   bio: "Devoted to open data and open source in science and education."
-  email: "lwasser@neoninc.org"
+  email: "neondataskills@neoninc.org"
 #  twitter: "leahawasser"
   github: "data-lessons"
 #  youtube: " "
@@ -70,7 +70,7 @@ kramdown:
   auto_ids: true
   footnote_nr: 1
   entity_output: as_char
-  toc_levels: 1..1
+  toc_levels: 1..2
   use_coderay: false
 
   coderay:
