@@ -6,7 +6,7 @@ date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 packagesLibraries: [ggplot2]
 category: 
 tags: [module-1]
@@ -114,7 +114,12 @@ meteorological data.
     # Install packages required for entire script.
     install.packages("ggplot2")
 
-    ## Error in install.packages : Updating loaded packages
+    ## Installing package into '/Users/mjones01/Library/R/3.2/library'
+    ## (as 'lib' is unspecified)
+
+    ## 
+    ## The downloaded binary packages are in
+    ## 	/var/folders/0p/x8phw1_156511_jqkryx2t8m2vn2t3/T//RtmpXHS0C1/downloaded_packages
 
     # Load packages required for entire script. 
     # library(PackageName)  #purpose of package

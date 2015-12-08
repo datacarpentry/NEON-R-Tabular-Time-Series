@@ -5,7 +5,7 @@ date:   2015-10-18
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: 
 dateCreated: 2015-10-18
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 tags: [module-1]
 packagesLibraries: lubridate
 category: 
@@ -56,7 +56,7 @@ for both Harvard Forest and other field sites located across the United States.
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}/R/Set-Working-Directory/ "R Working Directory Lesson") 
+refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") 
 lesson prior to beginning this lesson.
 
 </div>
