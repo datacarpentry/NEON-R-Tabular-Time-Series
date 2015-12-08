@@ -5,7 +5,7 @@ date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 tags: [module-1]
 packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
 category: 
@@ -107,7 +107,22 @@ date-time column to a POSIXct class variable.
       #your script 
     library(lubridate) #for working with dates
     library(dplyr)    #for data manipulation (split, apply, combine)
-    
+
+    ## 
+    ## Attaching package: 'dplyr'
+    ## 
+    ## The following objects are masked from 'package:lubridate':
+    ## 
+    ##     intersect, setdiff, union
+    ## 
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+    ## 
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
     #set working directory to ensure R can find the file we wish to import
     #setwd("working-dir-path-here")
     

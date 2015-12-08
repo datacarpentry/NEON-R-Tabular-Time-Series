@@ -2,7 +2,7 @@
 layout: post
 title: "Setting A Working Directory In R"
 date:   2015-12-07
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 createddate:   2015-12-07
 estimatedTime: 5 Min
 authors: Megan A. Jones

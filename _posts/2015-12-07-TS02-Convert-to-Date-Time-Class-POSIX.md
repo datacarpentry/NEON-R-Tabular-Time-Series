@@ -5,7 +5,7 @@ date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 packagesLibraries: [lubridate]
 tags: module-1
 description: "This lesson explain how to prepare tabular data for further

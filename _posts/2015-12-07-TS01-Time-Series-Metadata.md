@@ -5,7 +5,7 @@ date:   2015-10-24
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 category: 
 tags: [module-1]
 description: "This lesson teaches basic good practices for writing a script in R

@@ -6,7 +6,7 @@ date: 2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2015-12-07
+lastModified: 2015-12-08
 tags: module-1
 packagesLibraries: [lubridate, ggplot2]
 category: 

@@ -18,7 +18,6 @@ add.date <- "2015-12-07-"
 #set working dir - this is where the data are located
 wd <- "~/Documents/data/Spatio_TemporalWorkshop/1_WorkshopData"
 
-
 ################### CONFIG BELOW IS REQUIRED BY JEKYLL - DON"T CHANGE ############
 #set data working dir
 setwd(wd)
