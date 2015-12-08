@@ -17,7 +17,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Data-Exploration
+permalink: /R/Time-Series-Plot-Facets-NDVI
 comments: false
 ---
 
@@ -48,19 +48,27 @@ RStudio to write your code.
 <li><strong>gridExtra:</strong> <code> install.packages("gridExtra")</code></li>
 
 ####Data to Download
-{% include _tabular-time-series-data.html %}
+<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
+Download Atmospheric Data</a>
+
+The data used in this lesson were collected at Harvard Forest which is
+an National Ecological Observatory Network  
+<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. 
+These data are proxy data for what will be available for 30 years
+on the [NEON data portal](http://data.neoninc.org/ "NEON data")
+for both Harvard Forest and other field sites located across the United States.
 
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the [Setting A Working Directory In R](URL "R Working Directory Lesson") lesson prior to beginning
+refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") lesson prior to beginning
 this lesson.
 
 ####Skills Needed
 This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
 the `ggplot2` package.  If you are not comfortable with either of these we
-recommend starting with [Lesson 04: Manipulate and Subset Time Series Data with `dplyr`](URL "Learn ggplot") 
-and [Lesson 05: Plotting Time Series with ggplot in R](URL "Learn dplyr")  
+recommend starting with the [Subset & Manipulate Time Series Data with `dplyr` lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
+and the [Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
 respectively, to gain familiarity.
 
 </div>
@@ -286,29 +294,6 @@ precipitation and air temperature across the seasons.  Create the figure with
 
 ![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-R/challenge-code-prec.airtemp-1.png) ![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-R/challenge-code-prec.airtemp-2.png) 
 
-##Plot Two Variables Across A Time Series. ##HADLEY DOESN'T LIKE THIS DO WE INCLUDE?
-
-    plot1<- ggplot(harMetDaily.09.11) +
-               geom_bar(aes(x=time, y=prec), stat="identity", na.rm=TRUE) +
-               ggtitle("Harvard Forest\n 2009-2011") +
-               theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-               theme(text = element_text(size=20)) +
-               xlab("Date") + ylab("Precipitation (daily mm)") 
-    
-    plot2<-ggplot(harMetDaily.09.11) +
-               geom_line(aes(x=time, y=airt), stat="identity", na.rm=TRUE) +
-               ggtitle("Harvard Forest\n 2009-2011") +
-               theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-               theme(text = element_text(size=20)) +
-               xlab("Date") + ylab("Air Temp (C)") 
-    
-    grid.arrange(plot1, plot2, cols=2)
-
-    ## Don't know how to automatically pick scale for object of type function. Defaulting to continuous
-
-    ## Error in data.frame(x = function (x, ...) : arguments imply differing number of rows: 0, 1095
-
-
 #Graph variables and NDVI data together
 
 
@@ -330,18 +315,21 @@ precipitation and air temperature across the seasons.  Create the figure with
     ## Error in View : object 'NDVI.2009' not found
 
 
-###plot of NDVI vs. PAR using daily data
-#first lets get just 2009 from the harmet.Daily data since that is the only year 
-#for which we have NDVI data
+#plot of NDVI vs. PAR using daily data
+First lets get just 2009 from the `harmet.Daily` data since that is the only
+year for which we have NDVI data.
 
 
     harMet.daily2009 <- harMet.daily %>% 
       mutate(year = year(date)) %>%   #need to create a year only column first
       filter(year == "2009")
 
-#ggplot does not provide for two y-axes and the scale for these two variables are vastly different.
-#So we will create a plot for each variable using the same time variable (julian day) as our x-axis.
-#Then we will plot the two plots in the same viewer so we can compare
+#ggplot does not provide for two y-axes and the scale for these two variables
+are vastly different.
+So we will create a plot for each variable using the same time variable (julian
+day) as our x-axis.
+Then we will plot the two plots in the same viewer so we can compare
+
 
     #create plot of julian day vs. PAR
     par.2009 <- ggplot(harMet.daily2009, aes(jd,part))+

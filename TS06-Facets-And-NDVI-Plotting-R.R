@@ -113,24 +113,6 @@ prec.airtemp + facet_grid(.~season)
 prec.airtemp + facet_grid(season~.)
 
 
-## ----plot-bar-and-line---------------------------------------------------
-
-plot1<- ggplot(harMetDaily.09.11) +
-           geom_bar(aes(x=time, y=prec), stat="identity", na.rm=TRUE) +
-           ggtitle("Harvard Forest\n 2009-2011") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-           theme(text = element_text(size=20)) +
-           xlab("Date") + ylab("Precipitation (daily mm)") 
-
-plot2<-ggplot(harMetDaily.09.11) +
-           geom_line(aes(x=time, y=airt), stat="identity", na.rm=TRUE) +
-           ggtitle("Harvard Forest\n 2009-2011") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-           theme(text = element_text(size=20)) +
-           xlab("Date") + ylab("Air Temp (C)") 
-
-grid.arrange(plot1, plot2, cols=2)
-
 ## ----read-NDVI-----------------------------------------------------------
 #first read in the NDVI CSV data
 NDVI.2009 <- read.csv(file="Landsat_NDVI/Harv2009NDVI.csv", stringsAsFactors = FALSE)
