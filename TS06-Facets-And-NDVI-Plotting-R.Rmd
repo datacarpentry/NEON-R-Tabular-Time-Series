@@ -61,8 +61,8 @@ for both Harvard Forest and other field sites located across the United States.
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") lesson prior to beginning
-this lesson.
+refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") 
+lesson prior to beginning this lesson.
 
 ####Skills Needed
 This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
@@ -124,8 +124,8 @@ precipiation.  It makes sense there would be as solar radiation is lower on
 cloudy days and precipitation is also more likely when clouds are present. 
 
 We will use `ggplot()` to graph PAR and precipitation from the daily Harvard
-Meteorological data.  We can simply do this by in putting both variables into the
-aesthetics (`aes`) argument of `ggplot()`.  Unless we specify, the first 
+Meteorological data.  We can simply do this by in putting both variables into
+the aesthetics (`aes`) argument of `ggplot()`.  Unless we specify, the first 
 variable will be the x-axis and the second the y-axis.  
 
 ```{r PAR-v-precip}
@@ -146,10 +146,11 @@ of annual patterns as date isn't part of this figure.
 
 ##Subset by Season
 One way to add a time component to this figure is to subset the data by season 
-and then to plot a facetted graph showing the data by season.  The initial step to do this is to subset by season.  
+and then to plot a facetted graph showing the data by season.  The initial step
+to do this is to subset by season.  
 
 First, we have to switch 
-away from coding and data analysis and think about ecology.  What is the best
+away from coding and data analysis to think about ecology.  What is the best
 way to break a year apart into seasons?  
 
 The divisions will change depending on the geographic location and climate where
@@ -243,7 +244,7 @@ par.precip + facet_wrap(~season, ncol = 2)
 How does our ability to see patterns in the data vary depending on which
 arrangement the graphs are in? 
 
-###Defining the Order of Facetted Plots
+##Defining the Order of Facetted Plots
 Notice how our facetted plots are currently show up as "fall", "spring",
 "summer", "winter".  As no level is assigned the data are class character, `R`
 simply arranges them in alphabetical order.  However, "fall", "spring", 
@@ -298,18 +299,30 @@ prec.airtemp + facet_grid(season~.)
 
 ```
 
-#Graph variables and NDVI data together
+#NDVI Data
+Normalized Difference Vegetation Index (NDVI) is an indicator of how green vegetation is.  NDVI is derrived from remote sensing data based on a ratio the reflectance of visible red spectra and near-infrared specra.  The NDVI values vary from -1.0 to 1.0.  
 
+The NDVI data used here are based on imagery data collected over the
+<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank" > Harvard</a> 
+field site and processed at <a href="http://www.neoninc.org" target="_blank" >NEON </a> 
+headquarters. The entire dataset can be accessed by request from the 
+<a href="http://www.neoninc.org/data-resources/get-data/airborne-data" target="_blank"> NEON  website. </a> 
+A tutorial,
+[Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
+explains how to create this NDVI file based on Raster data. 
+
+##Plot Micrometeorology and NDVI Data
+We need to read in the 2009 NDVI data for the Harvard Forest. 
 ```{r read-NDVI}
 #first read in the NDVI CSV data
-NDVI.2009 <- read.csv(file="Landsat_NDVI/Harv2009NDVI.csv", stringsAsFactors = FALSE)
+NDVI.2009 <- read.csv(file="Landsat_NDVI/HARV/Harv2009NDVI.csv", stringsAsFactors = FALSE)
 #check out the data
 str(NDVI.2009)
 View(NDVI.2009)
 ```
 
 
-#plot of NDVI vs. PAR using daily data
+##plot of NDVI vs. PAR using daily data
 First lets get just 2009 from the `harmet.Daily` data since that is the only
 year for which we have NDVI data.
 
