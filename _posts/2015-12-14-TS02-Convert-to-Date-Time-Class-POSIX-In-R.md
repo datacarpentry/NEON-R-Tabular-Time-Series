@@ -5,13 +5,13 @@ date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2015-12-08
+lastModified: 2015-12-14
 packagesLibraries: [lubridate]
 tags: module-1
 description: "This lesson explain how to prepare tabular data for further
 analysis in `R` through understanding date-time classes and learning how to
 convert date-time character class data to a POSIX date-time class."
-code1:
+code1: TS02-Convert-to-Date-Time-Class-POSIX-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -42,6 +42,11 @@ After completing this activity, you will:
  * Be able to convert data between different date-time classes. 
  * Be able to designate which format a date-time class will be displayed in. 
 
+###Challenge Code
+Throughout the lesson we have Challenges that reinforce learned skills. Possible
+solutions to the challenges are not posted on this page, however, the code for
+each challenge is in the `R` code that can be downloaded for this lesson (see
+footer on this page).
 
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and, preferably,
@@ -51,7 +56,7 @@ RStudio to write your code.
 <li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
 
 ####Data to Download
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
+<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
 Download Atmospheric Data</a>
 
 The data used in this lesson were collected at Harvard Forest which is
@@ -64,6 +69,20 @@ The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
 refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") lesson prior to beginning
 this lesson.
+
+###Time Series Lesson Series 
+This lesson is a part of a series of lessons on tabular time series data in `R`:
+
+* [ Brief Time Series in R - Simple Plots with qplot & as.Date Conversion]({{ site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/)
+* [Understanding Time Series Metadata]({{ site.baseurl}}/R/Time-Series-Metadata/)
+* [Convert Date & Time Data from Character Class to Date-Time Class (POSIX) in R]({{ site.baseurl}}R/Time-Series-Convert-Date-Time-Class-POSIX/)
+* [Refining Time Series Data - NoData Values and Subsetting Data by Date in R]({{ site.baseurl}}/R/Subset-Data-and-No-Data-Values/)
+* [Subset and Manipulate Time Series Data with dplyr]({{ site.baseurl}}/R/Time-Series-Subset-dplyr/)
+* [Plotting Time Series with ggplot in R]({{ site.baseurl}}/R/Time-Series-Plot-ggplot/)
+* [Plot uisng Facets and Plot Time Sereis with NDVI data]({{ site.baseurl}}/R/Time-Series-Plot-Facets-NDVI/)
+* [Converting to Julian Day]({{ site.baseurl}}/R/julian-day-conversion/)
+
+###Sources of Additional Information
 
 </div>
 

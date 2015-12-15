@@ -5,14 +5,14 @@ date:   2015-10-24
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
-lastModified: 2015-12-08
+lastModified: 2015-12-14
 category: 
 tags: [module-1]
 description: "This lesson teaches basic good practices for writing a script in R
 when importing tabular data from a .csv file, how to examine the structure of a 
 R object and the importance of collecting information from related metadata 
 text files or websites."
-code1: 
+code1: TS01-Time-Series-Metadata.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -44,6 +44,12 @@ object.
 * Understand the importance of including metadata details in your `R` script.
 * Know what an EML file is. 
 
+###Challenge Code
+Throughout the lesson we have Challenges that reinforce learned skills. Possible
+solutions to the challenges are not posted on this page, however, the code for
+each challenge is in the `R` code that can be downloaded for this lesson (see
+footer on this page).
+
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of R and, preferably,
 RStudio to write your code.
@@ -52,7 +58,7 @@ RStudio to write your code.
 No additional libraries are needed for this lesson.
 
 ####Data to Download
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
+<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
 Download Atmospheric Data</a>
 
 The data used in this lesson were collected at Harvard Forest which is
@@ -66,6 +72,19 @@ location of the unzipped file of data downloaded above.  If you would like a
 refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") lesson prior to beginning
 this lesson. 
 
+###Time Series Lesson Series 
+This lesson is a part of a series of lessons on tabular time series data in `R`:
+
+* [ Brief Time Series in R - Simple Plots with qplot & as.Date Conversion]({{ site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/)
+* [Understanding Time Series Metadata]({{ site.baseurl}}/R/Time-Series-Metadata/)
+* [Convert Date & Time Data from Character Class to Date-Time Class (POSIX) in R]({{ site.baseurl}}R/Time-Series-Convert-Date-Time-Class-POSIX/)
+* [Refining Time Series Data - NoData Values and Subsetting Data by Date in R]({{ site.baseurl}}/R/Subset-Data-and-No-Data-Values/)
+* [Subset and Manipulate Time Series Data with dplyr]({{ site.baseurl}}/R/Time-Series-Subset-dplyr/)
+* [Plotting Time Series with ggplot in R]({{ site.baseurl}}/R/Time-Series-Plot-ggplot/)
+* [Plot uisng Facets and Plot Time Sereis with NDVI data]({{ site.baseurl}}/R/Time-Series-Plot-Facets-NDVI/)
+* [Converting to Julian Day]({{ site.baseurl}}/R/julian-day-conversion/)
+
+###Sources of Additional Information
 </div>
 
 #The Data Approach

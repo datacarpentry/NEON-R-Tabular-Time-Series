@@ -5,7 +5,7 @@ date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+lastModified: 2015-12-14
 tags: [module-1]
 packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
 category: 
@@ -13,7 +13,7 @@ description: "This lesson teaches how to conduct basic data manipulation using
 `dplyr` functions including `group_by`, `summarize`and `mutate`. The use of pipes
 is taught and used throughout the lesson. Finally the new data frames created in
 the previous manipulations will be plotted using `ggplot()`. "
-code1:
+code1: TS04-Dplyr-And-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -45,6 +45,12 @@ After completing this lesson, you will:
  * Use the `year()` function from the `lubridate` package to extract year from a
  date-time class variable. 
 
+###Challenge Code
+Throughout the lesson we have Challenges that reinforce learned skills. Possible
+solutions to the challenges are not posted on this page, however, the code for
+each challenge is in the `R` code that can be downloaded for this lesson (see
+footer on this page).
+
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and, preferably,
 RStudio to write your code.
@@ -57,7 +63,7 @@ RStudio to write your code.
 More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success"> Download Atmospheric Data</a>
+<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success"> Download Atmospheric Data</a>
 
 The data used in this lesson were collected at Harvard Forest which is
 an National Ecological Observatory Network  
@@ -71,6 +77,20 @@ The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
 refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") lesson prior to beginning
 this lesson.
+
+###Time Series Lesson Series 
+This lesson is a part of a series of lessons on tabular time series data in `R`:
+
+* [ Brief Time Series in R - Simple Plots with qplot & as.Date Conversion]({{ site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/)
+* [Understanding Time Series Metadata]({{ site.baseurl}}/R/Time-Series-Metadata/)
+* [Convert Date & Time Data from Character Class to Date-Time Class (POSIX) in R]({{ site.baseurl}}R/Time-Series-Convert-Date-Time-Class-POSIX/)
+* [Refining Time Series Data - NoData Values and Subsetting Data by Date in R]({{ site.baseurl}}/R/Subset-Data-and-No-Data-Values/)
+* [Subset and Manipulate Time Series Data with dplyr]({{ site.baseurl}}/R/Time-Series-Subset-dplyr/)
+* [Plotting Time Series with ggplot in R]({{ site.baseurl}}/R/Time-Series-Plot-ggplot/)
+* [Plot uisng Facets and Plot Time Sereis with NDVI data]({{ site.baseurl}}/R/Time-Series-Plot-Facets-NDVI/)
+* [Converting to Julian Day]({{ site.baseurl}}/R/julian-day-conversion/)
+
+###Sources of Additional Information
 
 </div>
 
@@ -102,47 +122,27 @@ created in the [Subsetting Time Series Data lesson]({{site.baseurl}}/R/Subset-Da
 please load it from the .csv file in the downloaded data and convert the 
 date-time column to a POSIXct class variable.  
 
-```{r load-data}
-#Remember it is good coding technique to add additional packages to the top of
-  #your script 
-library(lubridate) #for working with dates
-library(dplyr)    #for data manipulation (split, apply, combine)
 
-#set working directory to ensure R can find the file we wish to import
-#setwd("working-dir-path-here")
-
-#15-min Harvard Forest met data, 2009-2011
-harMet15.09.11<- read.csv(file="AtmosData/HARV/Met_HARV_15min_2009_2011.csv",
-                          stringsAsFactors = FALSE)
-#convert datetime to POSIXct
-harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
-                    format = "%Y-%m-%d %H:%M",
-                    tz = "America/New_York")
-```
+    #Remember it is good coding technique to add additional packages to the top of
+      #your script 
+    library(lubridate) #for working with dates
+    library(dplyr)    #for data manipulation (split, apply, combine)
+    
+    #set working directory to ensure R can find the file we wish to import
+    #setwd("working-dir-path-here")
+    
+    #15-min Harvard Forest met data, 2009-2011
+    harMet15.09.11<- read.csv(file="AtmosData/HARV/Met_HARV_15min_2009_2011.csv",
+                              stringsAsFactors = FALSE)
+    #convert datetime to POSIXct
+    harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
+                        format = "%Y-%m-%d %H:%M",
+                        tz = "America/New_York")
 
 As we are interested in the annual patterns of air temperature, precipitation,
 and PAR, we could simply create a figure of each of these variables at the
 15-minute intervals that we have in our data.  
-```{r 15-min-plots, echo=FALSE}
-library(gridExtra)
-
-temp=qplot(x=datetime, y=airt, 
-           data=harMet15.09.11, na.rm=TRUE,
-           main=("Air Temp \n Harvard Forest"),
-           xlab="Date", ylab= "Air Temp, Celcius")
-
-prec=qplot(x=datetime, y=prec, 
-           data=harMet15.09.11, na.rm=TRUE,
-           main=("Precipitation \n Harvard Forest"),
-           xlab="Date", ylab= "Daily Total Precip., mm")
-
-PAR=qplot(x=datetime, y=parr, 
-           data=harMet15.09.11, na.rm=TRUE,
-           main=("Air Temp \n Harvard Forest"),
-           xlab="Date", ylab= "Total PAR-Daily Mean")
-
-grid.arrange(temp, prec, PAR, ncol=3)
-```
+![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-And-Time-Series-In-R/15-min-plots-1.png) 
 
 However, summarizing the data at
 a coarser scale (e.g., daily, weekly, by season, or by year) may be easier to 
@@ -195,11 +195,10 @@ like the name implies, allow us to take the output of one function and send it
 (pipe it) directly to the next function. We don't have to save the intermediate
 steps between functions. 
 
-```{r pipe-demo, eval=FALSE}
-harMet15.09.11 %>%      #Within the harMet15.09.11 data
-  group_by(jd) %>%      #group the data by the Julian day
-  tally()               #and tally how many observations per julian day
-```
+
+    harMet15.09.11 %>%      #Within the harMet15.09.11 data
+      group_by(jd) %>%      #group the data by the Julian day
+      tally()               #and tally how many observations per julian day
 
 The above code essentially says: go into the harMet15.09.11 dataframe, find the 
 Julian day column and group all data by each Julian day, then count (tally) how
@@ -220,17 +219,33 @@ Before getting into our data, let's count up the number of observations per
 Julian day (or year day) using the `group-by()` function as practice using the 
 `dplyr` syntax and pipes. 
 
-```{r dplyr-group}
-harMet15.09.11 %>%      #Within the harMet15.09.11 data
-  group_by(jd) %>%      #group the data by the Julian day
-  tally()               #and tally how many observations per julian day
-```
+
+    harMet15.09.11 %>%      #Within the harMet15.09.11 data
+      group_by(jd) %>%      #group the data by the Julian day
+      tally()               #and tally how many observations per julian day
+
+    ## Source: local data frame [366 x 2]
+    ## 
+    ##       jd     n
+    ##    (int) (int)
+    ## 1      1   288
+    ## 2      2   288
+    ## 3      3   288
+    ## 4      4   288
+    ## 5      5   288
+    ## 6      6   288
+    ## 7      7   288
+    ## 8      8   288
+    ## 9      9   288
+    ## 10    10   288
+    ## ..   ...   ...
 
 As the output shows we have 288 values for each day.  Is that what we expect? 
 
-``` {r simple-math}
-3*24*4  # 3 years * 24 hours/day * 4 15-min data points/hour
-```
+
+    3*24*4  # 3 years * 24 hours/day * 4 15-min data points/hour
+
+    ## [1] 288
 
 Yep!  Looks good. 
 
@@ -247,11 +262,26 @@ Let's calculate the mean air temperature for each Julian day. Since we have a
 few missing values we can add `na.rm=TRUE` to force R to ignore any NA values
 when making the calculations. 
 
-```{r dplyr-summarize}
-harMet15.09.11 %>%
-  group_by(jd) %>%
-  summarize(mean_airt = mean(airt, na.rm = TRUE))  
-```
+
+    harMet15.09.11 %>%
+      group_by(jd) %>%
+      summarize(mean_airt = mean(airt, na.rm = TRUE))  
+
+    ## Source: local data frame [366 x 2]
+    ## 
+    ##       jd mean_airt
+    ##    (int)     (dbl)
+    ## 1      1 -3.672222
+    ## 2      2 -3.145139
+    ## 3      3 -6.812847
+    ## 4      4 -5.780556
+    ## 5      5 -4.217361
+    ## 6      6 -6.406944
+    ## 7      7 -4.398958
+    ## 8      8 -5.293056
+    ## 9      9 -8.268750
+    ## 10    10 -9.787500
+    ## ..   ...       ...
 
 Julian days repeat 1-365 (or 366) each year, therefore what we have here is that
 the mean temperature for January 1st across 2009, 2010, and 2011 was -3.7
@@ -268,26 +298,50 @@ group by year, we're first going to need to create a year-only column. For this
 we'll use the `lubridate` package. Since our date column is already a POSIXct 
 date-time class, we can use the `year()` function. 
 
-```{r dplyr-lubridate-2}
-harMet15.09.11$year <- year(harMet15.09.11$datetime)
-```
+
+    harMet15.09.11$year <- year(harMet15.09.11$datetime)
 
 Using `names()` we can see that we now have a `year` variable . 
-```{r dplyr-lubridate-3}
-#check to make sure it worked
-names(harMet15.09.11)
-str(harMet15.09.11$year)
-```
+
+    #check to make sure it worked
+    names(harMet15.09.11)
+
+    ##  [1] "X"        "datetime" "jd"       "airt"     "f.airt"   "rh"      
+    ##  [7] "f.rh"     "dewp"     "f.dewp"   "prec"     "f.prec"   "slrr"    
+    ## [13] "f.slrr"   "parr"     "f.parr"   "netr"     "f.netr"   "bar"     
+    ## [19] "f.bar"    "wspd"     "f.wspd"   "wres"     "f.wres"   "wdir"    
+    ## [25] "f.wdir"   "wdev"     "f.wdev"   "gspd"     "f.gspd"   "s10t"    
+    ## [31] "f.s10t"   "year"
+
+    str(harMet15.09.11$year)
+
+    ##  num [1:105108] 2009 2009 2009 2009 2009 ...
 
 Now we have our two variables: `jd` and `year`. To get the mean air temperature
 for each day for each year we can use the `dplyr` pipes to group by year and
 Julian day.
 
-```{r dplyr-2-groups}
-harMet15.09.11 %>%
-  group_by(year, jd) %>%
-  summarize(mean_airt = mean(airt, na.rm = TRUE))
-```
+
+    harMet15.09.11 %>%
+      group_by(year, jd) %>%
+      summarize(mean_airt = mean(airt, na.rm = TRUE))
+
+    ## Source: local data frame [1,096 x 3]
+    ## Groups: year [?]
+    ## 
+    ##     year    jd  mean_airt
+    ##    (dbl) (int)      (dbl)
+    ## 1   2009     1 -15.128125
+    ## 2   2009     2  -9.143750
+    ## 3   2009     3  -5.539583
+    ## 4   2009     4  -6.352083
+    ## 5   2009     5  -2.414583
+    ## 6   2009     6  -4.915625
+    ## 7   2009     7  -2.590625
+    ## 8   2009     8  -3.227083
+    ## 9   2009     9  -9.915625
+    ## 10  2009    10 -11.131250
+    ## ..   ...   ...        ...
 
 Given just the header in the output we can see the difference between the
 3-year average temperature for 1 January (-3.7C, previous analysis) and the 
@@ -307,34 +361,66 @@ manipulation of existing data. If you are familiar with the `transform()` base
 immediately use the variable (`year2`), something that `transform()` will not
 do.
 
-```{r dplyr-mutate}
-harMet15.09.11 %>%
-  mutate(year2 = year(datetime)) %>%
-  group_by(year2, jd) %>%
-  summarize(mean_airt = mean(airt, na.rm = TRUE))
 
-```
+    harMet15.09.11 %>%
+      mutate(year2 = year(datetime)) %>%
+      group_by(year2, jd) %>%
+      summarize(mean_airt = mean(airt, na.rm = TRUE))
+
+    ## Source: local data frame [1,096 x 3]
+    ## Groups: year2 [?]
+    ## 
+    ##    year2    jd  mean_airt
+    ##    (dbl) (int)      (dbl)
+    ## 1   2009     1 -15.128125
+    ## 2   2009     2  -9.143750
+    ## 3   2009     3  -5.539583
+    ## 4   2009     4  -6.352083
+    ## 5   2009     5  -2.414583
+    ## 6   2009     6  -4.915625
+    ## 7   2009     7  -2.590625
+    ## 8   2009     8  -3.227083
+    ## 9   2009     9  -9.915625
+    ## 10  2009    10 -11.131250
+    ## ..   ...   ...        ...
 
 For illustration purposes, we named the new variable we just created using
 `mutate()` `year2` so we could distinguish it from the `year` already created by
 `year()`. Notice, below, that after using this code, we don't see `year2` as a 
 column in our harMet15.09.11 dataframe yet we could see it the output. 
 
-```{r dplyr-mutate-2}
-names(harMet15.09.11)
-```
+
+    names(harMet15.09.11)
+
+    ##  [1] "X"        "datetime" "jd"       "airt"     "f.airt"   "rh"      
+    ##  [7] "f.rh"     "dewp"     "f.dewp"   "prec"     "f.prec"   "slrr"    
+    ## [13] "f.slrr"   "parr"     "f.parr"   "netr"     "f.netr"   "bar"     
+    ## [19] "f.bar"    "wspd"     "f.wspd"   "wres"     "f.wres"   "wdir"    
+    ## [25] "f.wdir"   "wdev"     "f.wdev"   "gspd"     "f.gspd"   "s10t"    
+    ## [31] "f.s10t"   "year"
 
 In order to save output from `mutate`, so we can later plot or use the data, we 
 must create a new `R` object. 
 
-```{r dplyr-create-data-frame}
-harTemp.daily.09.11<-harMet15.09.11 %>%
-                    mutate(year2 = year(datetime)) %>%
-                    group_by(year2, jd) %>%
-                    summarize(mean_airt = mean(airt, na.rm = TRUE))
 
-head(harTemp.daily.09.11)
-```
+    harTemp.daily.09.11<-harMet15.09.11 %>%
+                        mutate(year2 = year(datetime)) %>%
+                        group_by(year2, jd) %>%
+                        summarize(mean_airt = mean(airt, na.rm = TRUE))
+    
+    head(harTemp.daily.09.11)
+
+    ## Source: local data frame [6 x 3]
+    ## Groups: year2 [1]
+    ## 
+    ##   year2    jd  mean_airt
+    ##   (dbl) (int)      (dbl)
+    ## 1  2009     1 -15.128125
+    ## 2  2009     2  -9.143750
+    ## 3  2009     3  -5.539583
+    ## 4  2009     4  -6.352083
+    ## 5  2009     5  -2.414583
+    ## 6  2009     6  -4.915625
 
 ###Carry Date-Time Data with Mutated Data
 Now that we have the `harTemp.daily.09.11` data frame we may want to plot the
@@ -345,14 +431,22 @@ information. But we only want one `datetime` entry per air temperature
 measurement. We can get this by asking R to output the first datetime entry for
 each day for each year using the `summarize()` function.
 
-```{r dplyr-dataframe}
-harTemp.daily.09.11 <- harMet15.09.11 %>%
-  mutate(year3 = year(datetime)) %>%
-  group_by(year3, jd) %>%
-  summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
 
-str(harTemp.daily.09.11)
-```
+    harTemp.daily.09.11 <- harMet15.09.11 %>%
+      mutate(year3 = year(datetime)) %>%
+      group_by(year3, jd) %>%
+      summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
+    
+    str(harTemp.daily.09.11)
+
+    ## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	1096 obs. of  4 variables:
+    ##  $ year3    : num  2009 2009 2009 2009 2009 ...
+    ##  $ jd       : int  1 2 3 4 5 6 7 8 9 10 ...
+    ##  $ mean_airt: num  -15.13 -9.14 -5.54 -6.35 -2.41 ...
+    ##  $ datetime : POSIXct, format: "2009-01-01 00:15:00" "2009-01-02 00:15:00" ...
+    ##  - attr(*, "vars")=List of 1
+    ##   ..$ : symbol year3
+    ##  - attr(*, "drop")= logi TRUE
 
 Now we have a data frame with only values for year, Julian day, mean air temp,
 and a date that could easily be plotted to show the mean daily temperature 
@@ -363,12 +457,5 @@ during the study period.
 Calculate and save a data frame of the average air temperate for each month in
 each year.  Name the new data frame "HarTemp.monthly.09.11".
 
-``` {r challenge-code-dplyr, include=TRUE, results="hide", echo=FALSE}
-harTemp.monthly.09.11 <- harMet15.09.11 %>%
-  mutate(month = month(datetime), year= year(datetime)) %>%
-  group_by(month, year) %>%
-  summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
 
-str(harTemp.monthly.09.11)
-```
 
