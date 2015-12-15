@@ -5,12 +5,12 @@ date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2015-12-08
+lastModified: 2015-12-14
 tags: [module-1]
 packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
 category: 
 description: "This lesson teaches how to create plots of time series data using `ggplot()`."
-code1:
+code1: TS05-Plotting-Time-Series-ggplot-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -37,6 +37,12 @@ After completing this lesson, you will:
  * Be able to choose between visually representing data as points or bars in a
  plot.
  
+###Challenge Code
+Throughout the lesson we have Challenges that reinforce learned skills. Possible
+solutions to the challenges are not posted on this page, however, the code for
+each challenge is in the `R` code that can be downloaded for this lesson (see
+footer on this page).
+
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of `R` and, preferably,
 RStudio to write your code.
@@ -51,7 +57,7 @@ RStudio to write your code.
 More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success"> Download Atmospheric Data</a>
+<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success"> Download Atmospheric Data</a>
 
 The data used in this lesson were collected at Harvard Forest which is
 an National Ecological Observatory Network  
@@ -60,12 +66,25 @@ These data are proxy data for what will be available for 30 years
 on the [NEON data portal](http://data.neoninc.org/ "NEON data")
 for both Harvard Forest and other field sites located across the United States.
 
-
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
 refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory/ "R Working Directory Lesson") lesson prior to beginning
 this lesson.
+
+###Time Series Lesson Series 
+This lesson is a part of a series of lessons on tabular time series data in `R`:
+
+* [ Brief Time Series in R - Simple Plots with qplot & as.Date Conversion]({{ site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/)
+* [Understanding Time Series Metadata]({{ site.baseurl}}/R/Time-Series-Metadata/)
+* [Convert Date & Time Data from Character Class to Date-Time Class (POSIX) in R]({{ site.baseurl}}R/Time-Series-Convert-Date-Time-Class-POSIX/)
+* [Refining Time Series Data - NoData Values and Subsetting Data by Date in R]({{ site.baseurl}}/R/Subset-Data-and-No-Data-Values/)
+* [Subset and Manipulate Time Series Data with dplyr]({{ site.baseurl}}/R/Time-Series-Subset-dplyr/)
+* [Plotting Time Series with ggplot in R]({{ site.baseurl}}/R/Time-Series-Plot-ggplot/)
+* [Plot uisng Facets and Plot Time Sereis with NDVI data]({{ site.baseurl}}/R/Time-Series-Plot-Facets-NDVI/)
+* [Converting to Julian Day]({{ site.baseurl}}/R/julian-day-conversion/)
+
+###Sources of Additional Information
 
 </div>
 
@@ -131,7 +150,7 @@ daily data.
           main= "Air temperature Harvard Forest\n 2009-2011",
           xlab= "Date", ylab= "Temperature (°C)")
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/qplot-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/qplot-1.png) 
 
 When we do this we get a warning message reminding us that there are two missing
 values in the 
@@ -177,7 +196,7 @@ keep the focus on working with time series data.
                xlab("Date") + ylab("Air Temperature (C)")
     AirTempDailya
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/basic-ggplot2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-1.png) 
 
 Notice we created an object (AirTempDailya) that is our plot.  We then have to
 write in the object name to get the plot to appear.  Creating plots as an 
@@ -194,7 +213,7 @@ simply adding onto the `AirTemp15a` plot that we just created.
     AirTempDailyb <- AirTempDailya + (scale_x_datetime(labels=date_format("%b %y")))
     AirTempDailyb
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/nice-x-axis-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/nice-x-axis-1.png) 
 
 The dates are now legible on the x-axis. Notice in the code for the x scale
 (`scale_x_datetime()`), we changed the date format from %m to %b which gives the
@@ -220,7 +239,7 @@ documentation</a> `theme()` documentation.
       theme(text = element_text(size=18)) 
     AirTempDaily
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/nice-font-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/nice-font-1.png) 
 
 
 #Challenge: Plotting Daily Precipitaiton Data
@@ -228,7 +247,7 @@ Use the `harMetDaily.09.11` data to create a plot of percipitation.
 Format the date to appear as Day-Month-Year.  For ease in future activities 
 name the plot 'PrecipDaily".
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-ggplot-precip-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/challenge-code-ggplot-precip-1.png) 
 
 ##Figures with Bars
 In the previous figure we get a scatterplot of precipitation by date, however, 
@@ -253,7 +272,7 @@ varible (precipiation) mapped to the y-axis.  Therefore we must specify
                theme(text = element_text(size=18))
     PrecipDailyBarA
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-geom_bar-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_bar-1.png) 
 
 Why do some of the bars appear black and some appear grey?  Zoom in on the 
 figure, now we can see all the bars are black.  When there is lots of data 
@@ -273,12 +292,12 @@ simple colors) or hexidecimal color codes (e.g, #FF9999).
     
     PrecipDailyBarB
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-color-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/ggplot-color-1.png) 
 
     #specifying color by hexidecimal code
     AirTempDaily+geom_point(colour="#66ffb3", na.rm=TRUE)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-color-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/ggplot-color-2.png) 
 
 Notice that color choice is important in figures. #66ffb3 is probably not a 
 great choice for this plot.
@@ -302,7 +321,7 @@ makes sense.  Let's try it with our daily air temperature data.
                theme(text = element_text(size=18))
     AirTempDailyline
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-geom_lines-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_lines-1.png) 
 
 This might be worse than having the individual points.  When might lines be
 better than points?   
@@ -311,7 +330,7 @@ better than points?
 What happens if you simply add the `geom_line()` to the original `AirTempDaily` 
 plot instead of substituting `geom_line()` for `geom_points()` like we just did?
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-geom_lines&points-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/challenge-code-geom_lines&points-1.png) 
 
 Interesting, but not the best representation of this data.  Perhaps what would
 be better is a scatter plot of the data points with a trend line over it. 
@@ -342,7 +361,7 @@ Which method will be used by default?
 
     ## geom_smooth: method="auto" and size of largest group is >=1000, so using gam with formula: y ~ s(x, bs = "cs"). Use 'method = x' to change the smoothing method.
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/ggplot-trend-line-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/ggplot-trend-line-1.png) 
 
 As our data set has 1095 observations the default gam method was used with a 
 specified 
@@ -356,7 +375,7 @@ the precipitation data as purple bars (added challenge: find hexicolor code and
 make bars the color "dark orchid 4") with a grey trend line. Format the dates to
 appear as Jan 2009 and make the title in an italic font.
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-linear-trend-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/challenge-code-linear-trend-1.png) 
 
 
 #Challenge: Plot Monthly Air Temperature
@@ -365,7 +384,7 @@ Use the `harTemp.monthly.09.11` data frame to plot the monthly air temperature
 throughout the three years of interest (2009-2010).  For ease of future code,
 name your plot "AirTempMonthly".
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/plot-airtemp-Monthly-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/plot-airtemp-Monthly-1.png) 
 
 ##Displaying Multiple Figures in Same Panel
 How does our new plot (`AirTemp Monthly`) compare to our previous air 
@@ -381,7 +400,7 @@ figures simultaneously.
 
     grid.arrange(AirTempDaily, AirTempMonthly, ncol=1)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/compare-precip-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/compare-precip-1.png) 
 
 On which plot is it easier to see annual patterns of air temperature?  Can you
 think of when you might use one plot or another?  Remember if the plots are too
@@ -392,7 +411,7 @@ window.
 Rearrange the same two plots so that they are side by side instead of stacked 
 one on top of the other.  
 
-![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-R/challenge-code-grid-arrange-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS05-Plotting-Time-Series-ggplot-In-R/challenge-code-grid-arrange-1.png) 
 
 #Polish ggplot Figures
 Throughout this module we have been creating plots using ggplot.  We've covered
@@ -403,4 +422,5 @@ following up with any of these resources:
 1) ggplot2 Cheatsheet from Zev Ross: <a href="http://neondataskills.org/cheatsheets/R-GGPLOT2/" target="_blank"> ggplot2 Cheatsheet</a>  
 2) ggplot2 documentation index: 
  <a href="http://docs.ggplot2.org/current/index.html#" target="_blank"> ggplot2 Documentation</a>    
-3) NEON's Publishable Maps Tutorial ADD LINK TO PRETTY MAPS TUTORIAL WHEN DONE
+3) NEON's Publishable Maps Tutorial  (Currently in draft, link will be updated
+when published)

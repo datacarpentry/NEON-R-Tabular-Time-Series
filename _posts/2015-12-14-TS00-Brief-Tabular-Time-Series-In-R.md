@@ -6,7 +6,7 @@ date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
-lastModified: 2015-12-08
+lastModified: 2015-12-14
 packagesLibraries: [ggplot2]
 category: 
 tags: [module-1]
@@ -14,6 +14,7 @@ description: "This lesson will demonstrate how to import a time series data set
 stored in .csv format into `R`. It will explore data classes and will walk
 through how to convert date data, stored as a character string, into a date 
 class that R can recognize and plot efficiently."
+code1: TS00-Brief-Tabular-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -44,6 +45,12 @@ After completing this lesson, you will:
   * Be able to convert date data, stored as a character, into an `R` date 
   class.
   * Know how to create a quick plot of a time-series data set using `qplot`. 
+  
+###Challenge Code
+Throughout the lesson we have Challenges that reinforce learned skills. Possible
+solutions to the challenges are not posted on this page, however, the code for
+each challenge is in the `R` code that can be downloaded for this lesson (see
+footer on this page).
 
 ###Things You'll Need To Complete This Lesson
 Please be sure you have the most current version of 'R' and, preferably,
@@ -58,7 +65,7 @@ More on Packages in R - Adapted from Software Carpentry.</a>
 
 ####Data to Download
 
-<a href="http://files.figshare.com/2437700/AtmosData.zip" class="btn btn-success">
+<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
 Download Atmospheric Data</a>
 
 The data used in this lesson were collected at Harvard Forest which is
@@ -71,13 +78,27 @@ for both Harvard Forest and other field sites located across the United States.
 ####Setting the Working Directory
 The code in this lesson assumes that you have set your working directory to the
 location of the unzipped file of data downloaded above.  If you would like a
-refresher on setting the working directory, please view the [Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") lesson prior to beginning
-this lesson.
+refresher on setting the working directory, please view the
+[Setting A Working Directory In R]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson")
+lesson prior to beginning this lesson.
+
+###Time Series Lesson Series 
+This lesson is a part of a series of lessons on tabular time series data in `R`:
+
+* [ Brief Time Series in R - Simple Plots with qplot & as.Date Conversion]({{ site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/)
+* [Understanding Time Series Metadata]({{ site.baseurl}}/R/Time-Series-Metadata/)
+* [Convert Date & Time Data from Character Class to Date-Time Class (POSIX) in R]({{ site.baseurl}}R/Time-Series-Convert-Date-Time-Class-POSIX/)
+* [Refining Time Series Data - NoData Values and Subsetting Data by Date in R]({{ site.baseurl}}/R/Subset-Data-and-No-Data-Values/)
+* [Subset and Manipulate Time Series Data with dplyr]({{ site.baseurl}}/R/Time-Series-Subset-dplyr/)
+* [Plotting Time Series with ggplot in R]({{ site.baseurl}}/R/Time-Series-Plot-ggplot/)
+* [Plot uisng Facets and Plot Time Sereis with NDVI data]({{ site.baseurl}}/R/Time-Series-Plot-Facets-NDVI/)
+* [Converting to Julian Day]({{ site.baseurl}}/R/julian-day-conversion/)
+
+###Sources of Additional Information
 
 </div>
 
 #The Data Approach
-
 In this lesson, we will explore micro-meteorology data collected from a 
 <a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">flux
 tower</a> at the NEON Harvard Forest field site. We are interested in exploring 
@@ -110,16 +131,6 @@ given script. {: .notice2}
 We will be using the package `ggplot2` to create basic plots of our
 meteorological data. 
 
-
-    # Install packages required for entire script.
-    install.packages("ggplot2")
-
-    ## Installing package into '/Users/mjones01/Library/R/3.2/library'
-    ## (as 'lib' is unspecified)
-
-    ## 
-    ## The downloaded binary packages are in
-    ## 	/var/folders/0p/x8phw1_156511_jqkryx2t8m2vn2t3/T//RtmpXHS0C1/downloaded_packages
 
     # Load packages required for entire script. 
     # library(PackageName)  #purpose of package

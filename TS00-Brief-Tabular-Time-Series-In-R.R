@@ -1,7 +1,4 @@
 ## ----load-packages-------------------------------------------------------
-# Install packages required for entire script.
-install.packages("ggplot2")
-
 # Load packages required for entire script. 
 # library(PackageName)  #purpose of package
 library(ggplot2)   #efficient, pretty plotting - required for qplot function
