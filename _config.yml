@@ -21,7 +21,7 @@ owner:
   name: NEON / Data Carpentry Hackathon
   avatar: profilePic.png
   bio: "Devoted to open data and open source in science and education."
-  email: "lwasser@neoninc.org"
+  email: "neondataskills@neoninc.org"
 #  twitter: "leahawasser"
   github: "data-lessons"
 #  youtube: " "
@@ -70,7 +70,7 @@ kramdown:
   auto_ids: true
   footnote_nr: 1
   entity_output: as_char
-  toc_levels: 1..1
+  toc_levels: 1..2
   use_coderay: false
 
   coderay:

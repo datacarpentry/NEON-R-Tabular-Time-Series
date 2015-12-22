@@ -10,14 +10,13 @@ require(knitr)
 
 #################### Set up Input Variables #############################
 #Inputs - Where the git repo is on your computer
-gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series_main/"
+gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series_mjones01/"
 
 #jekyll will only render md posts that begin with a date. Add one.
-add.date <- "2015-11-03-"
+add.date <- "2015-12-07-"
 
 #set working dir - this is where the data are located
 wd <- "~/Documents/data/Spatio_TemporalWorkshop/1_WorkshopData"
-
 
 ################### CONFIG BELOW IS REQUIRED BY JEKYLL - DON"T CHANGE ############
 #set data working dir
