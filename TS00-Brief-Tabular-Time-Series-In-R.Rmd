@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Lesson 00: Brief Time Series in R - Simple Plots with qplot & as.Date
-Conversion"
+title: "Lesson 00: Intro to Time Series Data in R - Managing Date / Time Formats
+Simple Plots using GGPLOT2"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
@@ -143,7 +143,7 @@ Examples of factors:
 
 * Month Names (an ordinal variable). Month names are non-numerical but we know 
 that April (month 4) comes after March (month 3) and each could be represented by
-a numer (4 & 3).
+a number (4 & 3).
 * 1 and 2s to represent male and female sex (a nominal variable). Numerical
 interpretation of non-numerical data but no order to the levels.  
 
