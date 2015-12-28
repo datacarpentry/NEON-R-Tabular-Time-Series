@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 02: Dealing With Dates & Times in R - as.Date vs. POSIXct vs. POSIXlt "
+title: "Lesson 02: Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt"
 date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
