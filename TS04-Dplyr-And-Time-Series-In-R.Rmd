@@ -8,7 +8,7 @@ dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 tags: [spatio-temporal, time-series, phenology]
 mainTag: time-series
-packagesLibraries: [lubridate, ggplot2, scales, gridExtra, dplyr]
+packagesLibraries: [lubridate, ggplot2, dplyr]
 category: 
 description: "This lesson teaches how to conduct basic data manipulation using
 `dplyr` functions including `group_by`, `summarize`and `mutate`. The use of pipes
@@ -53,6 +53,7 @@ preferably RStudio, loaded on your computer.
 ####R Libraries to Install
 * **lubridate:** `install.packages("lubridate")`
 * **dplyr:** `install.packages("dplyr")`
+* **ggplot2:** `install.packages("ggplot2")`
 
   <a href="http://neondataskills.org/R/Packages-In-R/" target="_blank">
 More on Packages in R - Adapted from Software Carpentry.</a>
@@ -114,7 +115,8 @@ date-time column to a POSIXct class after you load the `.csv`.
 #work with dates
 library(lubridate) 
 #data manipulation (filter, summarize, mutate)
-library(dplyr)    
+library(dplyr) 
+library(ggplot2)
 
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
