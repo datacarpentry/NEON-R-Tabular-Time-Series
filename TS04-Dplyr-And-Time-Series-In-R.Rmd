@@ -143,20 +143,20 @@ library(gridExtra)
 library(scales)
 
 a <- ggplot(harMet15.09.11, aes(x=datetime, y=airt)) + 
-           geom_point(na.rm=TRUE) +
+           geom_point(na.rm=TRUE, size = .1) +
            scale_x_datetime(breaks=date_breaks("1 year")) +
            ggtitle("Air Temp \n NEON Harvard Forest Field Site") +
            xlab("Date") + 
            ylab("Air Temperature, Celcius")
 
 b <- ggplot(harMet15.09.11, aes(x=datetime, y=prec)) +
-          geom_point(na.rm=TRUE) +
+          geom_point(na.rm=TRUE, size = .1) +
           scale_x_datetime(breaks=date_breaks("1 year")) +
            ggtitle("Precipitation \n NEON Harvard Forest Field Site")+
            xlab("Date") + ylab("Daily Total Precip., mm")
 
 c <- ggplot(harMet15.09.11, aes(x=datetime, y=parr))+
-          geom_point(na.rm=TRUE) +
+          geom_point(na.rm=TRUE, size = .1) +
            scale_x_datetime(breaks=date_breaks("1 year")) +
            ggtitle("Air Temp \n NEON Harvard Forest Field Site") +
            xlab("Date") + ylab("Total PAR-Daily Mean")
