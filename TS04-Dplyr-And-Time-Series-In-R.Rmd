@@ -27,9 +27,9 @@ comments: false
 
 
 ##About
-In this lesson, we will use the `groupby`, `summarize`and `mutate` functions in the 
+In this lesson, we will use the `group_by`, `summarize`and `mutate` functions in the 
 `dplyr` package to efficiently manipulate atmospheric data collected at the NEON
-Harvard Forest Field Site. We will use of pipes to efficiently perform multiple
+Harvard Forest Field Site. We will use pipes to efficiently perform multiple
 tasks within a single chunk of code.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
@@ -86,16 +86,16 @@ downloadable `R` script available on the footer of each lesson page.
 
 * NEON Data Skills on <a href="http://neondataskills.org/R/GREPL-Filter-Piping-in-DPLYR-Using-R/" target="_blank"> spatial data and piping with dplyr</a> or 
 * Data Carpentry on <a href="http://www.datacarpentry.org/R-ecology/04-dplyr.html" target="_blank">Aggregating and Analyzing Data with dplyr</a> 
-* <a href="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf" target="_blank"> DPLYR package description</a>.
-* <a href="http://blog.rstudio.org/2014/01/17/introducing-dplyr/" target="_blank">RStudio Introduction to DPLYR</a>
+* <a href="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf" target="_blank"> dplyr package description</a>.
+* <a href="http://blog.rstudio.org/2014/01/17/introducing-dplyr/" target="_blank">RStudio Introduction to dplyr</a>
 
 ****
 
 
 #Introduction to dplyr
 The `dplyr` package simplifies and increases efficiency of complicated yet commonly 
-performed data "munging" tasks. It uses the `data_frame` object as both an input and 
-an output.
+performed data "wrangling" (manipulation / processing) tasks. It uses the `data_frame` 
+object as both an input and an output.
 
 ##Load the Data
 We will need the `lubridate` and the `dplyr` packages to complete this lesson.
@@ -229,10 +229,10 @@ summarize(HARV.grp.year,
 
 Why did this return a `NA` value for years 2009 and 2010? We know there
 are some values for both years. Let's check our
-data for `noData` values.
+data for `NoData` values.
 
 ```{r check-data }
-#are there noData values?
+#are there NoData values?
 sum(is.na(HARV.grp.year$airt))
 
 #where are the no data values
@@ -241,9 +241,9 @@ HARV.grp.year[is.na(HARV.grp.year$airt),1:6]
 
 ```
 
-It appears as if there are two `noData` values (in 2009 and 2010) that are causing 
+It appears as if there are two `NoData` values (in 2009 and 2010) that are causing 
 `R` to return a `NA` for the mean for those years. As we learned previously, 
-we can use `na.rm` to tell R to ignore those values and calculate the final mean
+we can use `na.rm` to tell `R` to ignore those values and calculate the final mean
 value.
 
 ``` {r calculate-mean-value }
@@ -338,7 +338,7 @@ qplot(jday.avg$jday,jday.avg$meanAirTemp,
 to designate a pipe. Pipes are occasionally sometimes referred to as chains. 
 {: .notice }
 
-##Other DPLYR functions
+##Other dplyr functions
 
 `dplyr` works based on a series of *verb* functions that allow us to 
 manipulate the data in different ways: 
@@ -431,13 +431,13 @@ total.prec <- harMet15.09.11 %>%
 
 qplot(total.prec$jd, total.prec$sum_prec,
       main="Total Precipitation",
-      xlab="Julian Day", ylab=="Precip (mm)", 
+      xlab="Julian Day", ylab="Precip (mm)", 
       colour=as.factor(total.prec$year))
 
 ```
 
 
-###Mutate - Add Data.Frame Columns 2 Dplyr Output
+###Mutate - Add Data.Frame Columns 2 dplyr Output
 
 We can use the `mutate()` function of `dplyr` to add additional columns of information
 to a data.frame. For instance, we added the year column independently
@@ -462,7 +462,7 @@ harMet15.09.11 %>%
 immediately use the variable (`year2`).
 {: .notice }
 
-##Save DPLYR OUTPUT as Data.Frame
+##Save dplyr OUTPUT as Data.Frame
 
 We can save output from a `dplyr` pipe, as a new `R` object to use for quick plotting. 
 
@@ -475,7 +475,7 @@ harTemp.daily.09.11<-harMet15.09.11 %>%
 head(harTemp.daily.09.11)
 ```
 
-###Add Date-Time To DPLYR Output
+###Add Date-Time To dplyr Output
 
 In the challenge above, we created a plot of daily precipitation data using qplot. 
 However, the x-axis ranged from 0-366 (Julian Days for the year). It would have 

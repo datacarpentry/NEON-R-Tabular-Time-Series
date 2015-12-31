@@ -78,10 +78,10 @@ downloadable `R` script available on the footer of each lesson page.
 
 #Cleaning Time Series Data 
 No dataset is perfect. It is common to encounter, large files containing more
-data than we need for our analysis. It is also common to encounter `noData` values
+data than we need for our analysis. It is also common to encounter `NoData` values
 that we need to account for when analyzing our data. 
 
-In this tutorial, we'll learn about ways to both manage `noData` values and also 
+In this tutorial, we'll learn about ways to both manage `NoData` values and also 
 subset and export a portion of an R object as a new `.CSV` file. 
 
 In this lesson, we will work with atmospheric data, containing air temperature, 
@@ -92,7 +92,7 @@ We will use the `lubridate` and `ggplot2` packages. Let's load those first.
 
 If you have not already done so, import the `hf001-10-15min-m.csv` file, which contains
 our atmospheric data for Harvard Forest. Convert the `datetime` column to a `POSIXct` 
-class: [As covered in Time Series Lesson 02]({{ site.baseurl }}/R/Time-Series-Metadata/). 
+class: [As covered in the lesson: Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt]({{ site.baseurl }}/R/Time-Series-Metadata/). 
 
 ```{r load-libraries}
 # Load packages required for entire script
@@ -208,26 +208,26 @@ If we are lucky when working with external data, the `NoData` value is clearly s
 in the metadata. Sometimes this value is `NA` or `nan` (not a number). However, 
 `NA` isn't always used. Text values can make data storage difficult for some 
 programs and thus, sometimes you'll encounter a large negative value such as `-9999`
-used as the `noData` value. Othertimes, we might see blank values in a data file
-which designate `noData`. Blanks are particularly problematic because we can't be 
+used as the `NoData` value. Othertimes, we might see blank values in a data file
+which designate `NoData`. Blanks are particularly problematic because we can't be 
 certain if a data value is purposefully missing (not measured that day or a bad
 measurement) OR if someone unintentionally deleted it.
 
 Because the actual value used to designate missing data can vary depending upon 
 what data we are working with, it is important to always check the metadata for
-the files associated `noData` value. If the value is `NA`, we are in luck, `R` will
-recognize and flag this value as `noData`. If the value is numeric (e.g. `-9999`),
+the files associated `NoData` value. If the value is `NA`, we are in luck, `R` will
+recognize and flag this value as `NoData`. If the value is numeric (e.g. `-9999`),
 then we might need to assign this value to `NA`.
 
 <i class="fa fa-star"></i> **Data Tip:** `NA` values will be ignored when
-performing calculations in R. However a `noData` value of `-9999` will be recognized
-as an integer and processed accordingly. If you encounter a numeric `noData` value
+performing calculations in R. However a `NoData` value of `-9999` will be recognized
+as an integer and processed accordingly. If you encounter a numeric `NoData` value
 be sure to assign it to `NA` in R as follows: `objectName[objectName==-9999] <- NA`
 {: .notice}
 
-###Check For noData Values 
+###Check For NoData Values 
 
-We can quickly check for `noData` values in our data using the`is.na()` function. 
+We can quickly check for `NoData` values in our data using the`is.na()` function. 
 By asking for the `sum()` of `is.na()` we can see how many NA/missing values we have. 
 
 ```{r missing values}
@@ -241,13 +241,13 @@ sum(is.na(harMet15.09.11$airt))
 harMet15.09.11[is.na(harMet15.09.11$airt),]
 ```
 
-The results above tell us there are `noData` values in the `datetime` column.
-However, there are `noData` values in other variables.  
+The results above tell us there are `NoData` values in the `datetime` column.
+However, there are `NoData` values in other variables.  
 
 <div id="challenge" markdown="1">
 #Challenge: NoData Values
 
-* How many `noData` values are in the prec and parr columns of our data?
+* How many `NoData` values are in the prec and parr columns of our data?
 
 </div>
 
@@ -259,14 +259,14 @@ sum(is.na(harMet15.09.11$parr))
 ```
 
 
-###Deal with noData Values
-When we encounter `noData` values (blank, NaN, -9999, etc.) in our data we
-need to decide how to deal with them. By default `R` treats `noData` values designated
+###Deal with NoData Values
+When we encounter `NoData` values (blank, NaN, -9999, etc.) in our data we
+need to decide how to deal with them. By default `R` treats `NoData` values designated
 with a `NA` as a missing value rather than a zero. This is good, as a value of 
 zero (no rain today) is not the same as missing data (e.g. we didn't measure the 
 amount of rainfall today). 
 
-How we deal with `noData` values will depend on:
+How we deal with `NoData` values will depend on:
 
 * the data type we are working with
 * the analysis we are conducting 
@@ -284,12 +284,12 @@ Other resources:
  -- R code for dealing with missing data 
 2. The Institute for Digital Research and Education has an <a href="http://www.ats.ucla.edu/stat/r/faq/missing.htm" target="_blank"> R FAQ on Missing Values</a>.
 
-### Managing noData Values in Our Data
+### Managing NoData Values in Our Data
 
 For this lesson, we are exploring the patterns of precipitation,
 and termperature as they related to green-up and brown-down of vegetation at 
 Harvard Forest. To view overall trends during these early exploration stages, it 
-is ok for us to leave out the `noData` values in our plots. 
+is ok for us to leave out the `NoData` values in our plots. 
 
 
 <i class="fa fa-star"></i> **Data Tip:** If we wanted to perform more advanced 
@@ -300,9 +300,9 @@ target="_blank">More on Gap Filling</a>
 {: .notice}
 
 
-### noData Values Can Impact Calculations
+### NoData Values Can Impact Calculations
 
-It is important to consider `noData` values when performing calculations on our
+It is important to consider `NoData` values when performing calculations on our
 data. For example, `R` will not properly calculate certain functions if there are 
 `NA` values in the data, unless we explicetly tell it to ignore them. 
 
@@ -334,7 +334,8 @@ We have been using the 15-minute data from the Harvard Forest. However, overall
 we are interested in larger scale patterns of greening-up and browning-down.  
 Thus a daily summary is sufficient for us to see overall trends.
 
-1. Import the Daily Meteorological data from the Harvard Forest (if you haven't already done so in the [Brief Tabular Time Series lesson ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for HarMet_Daily"). )
+1. Import the Daily Meteorological data from the Harvard Forest (if you haven't already 
+done so in the [Intro to Time Series Data in R - Managing Date / Time Format and Simple Plots using ggplot2 lesson ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for HarMet_Daily"). )
 2. Check the metadata to see what the column names are for the variable of
 interest (precipitation, air temperature, PAR, day and time ).
 3. If needed, convert the data class of different columns.
@@ -364,7 +365,7 @@ harMet.daily$date <- as.Date(harMet.daily$date,format = "%Y-%m-%d")
 str(harMet.daily [1])
 
 
-#4. Check for noData values
+#4. Check for NoData values
 sum(is.na(harMet.daily$date))
 sum(is.na(harMet.daily$airt))
 sum(is.na(harMet.daily$prec))

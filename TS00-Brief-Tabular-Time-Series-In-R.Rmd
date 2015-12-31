@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lesson 00: Intro to Time Series Data in R - Managing Date / Time Formats
-Simple Plots using GGPLOT2"
+Simple Plots using ggplot2"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
@@ -98,7 +98,7 @@ Plain text formats are ideal for working both across platforms (Mac, PC, LINUX,
 etc) and also can be read by many different tools. Additionally, the plain file 
 format is less likely to become obsolete over time!
 
-<i class="fa fa-star"></i>**Tip:**<a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank"> 
+<i class="fa fa-star"></i>**Data Tip:**<a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank"> 
 For more on .csv format see this Wikipedia article.</a>
 
 

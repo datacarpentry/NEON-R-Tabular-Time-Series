@@ -151,7 +151,7 @@ If we use the `facet()` element in `ggplot`, we can create facets or a panel of
 plots that are grouped by a particular category or time period. To create a 
 a plot for each year, we will first need a year column in our data to use a subset 
 factor. We created a year column did this in the 
-[{{site.baseurl}}R/Time-Series-Subset-dplyr/](DPLYR subset timeseries lesson)
+[{{site.baseurl}}R/Time-Series-Subset-dplyr/](dplyr subset timeseries lesson)
 using the `year` function in the `lubridate` package.
 
  
@@ -219,7 +219,7 @@ this way, side by side, allows us to quickly scan for differences
 along the Y axis. Notice any differences in min vs max air temperature across the 
 three years?
 
-##Arranging Facets
+##Arrange Facets
 
 We can rearrange the facets in different ways, too.
 

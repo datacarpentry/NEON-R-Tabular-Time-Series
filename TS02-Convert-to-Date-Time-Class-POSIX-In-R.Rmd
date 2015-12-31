@@ -128,7 +128,7 @@ head(harMet_15Min$datetime)
 
 Our `datetime` column is stored as a `character` class. We need to convert it to 
 date-time class. What happens when we use the `as.Date` method that we learned about
-in the [Intro to Time Series data in R ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for as.Date") 
+in the [Intro to Time Series Data in R ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for as.Date") 
 tutorial?
 
 ```{r as-date-only }
@@ -241,8 +241,9 @@ using a base index value of 1900. Thus, 2015 is stored as 115 (`$year = 115`
 - 115 years since 1900).
 
 <i class="fa fa-star"></i> **Data Tip:** To learn more about how `R` stores information
-within date-time and other objects AND also about functions, check out the 
-`R` documentation by using `?` (E.G., `?POSIXlt`).  
+within date-time and other objects check out the 
+`R` documentation by using `?` (E.G., `?POSIXlt`). NOTE: you can use this same syntax to
+learn about particular functions (E.G., `?ggplot`).  
 {: .notice}
 
 Having dates classified as separate components makes `POSIXlt` computationally
