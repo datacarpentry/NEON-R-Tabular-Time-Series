@@ -106,7 +106,7 @@ library(ggplot2)  # plotting
 # for the NEON Harvard Forest Field Site
 
 #Factors=FALSE so data are imported as numbers and characters 
-harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
+harMet_15Min <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
                      stringsAsFactors = FALSE)
 
 #convert to POSIX date time class - US Eastern Time Zone
@@ -350,7 +350,7 @@ axes. Also give the plot a title!
 ``` {r Challenge-code-harMet.daily, include=TRUE, results="hide", echo=FALSE}
 
 #1. import daily file
-harMet.daily <- read.csv("AtmosData/HARV/hf001-06-daily-m.csv", 
+harMet.daily <- read.csv("NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m.csv", 
       stringsAsFactors = FALSE)
 #view file structure
 str(harMet.daily)

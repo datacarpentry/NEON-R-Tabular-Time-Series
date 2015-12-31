@@ -129,7 +129,7 @@ Once our working directory is set, we can import the file using `read.csv()`.
 ```{r import-csv}
 
 #Load csv file of daily meteorological data from Harvard Forest
-harMet.daily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
+harMet.daily <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m.csv",
                      stringsAsFactors = FALSE)
 ```
 

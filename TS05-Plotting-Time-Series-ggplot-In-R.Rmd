@@ -102,7 +102,7 @@ We will use the `lubridate`, `ggplot2`, `scales` and `gridExtra` packages in thi
 lesson.
 
 Our data sample will be the daily meteorology data for 2009-2011 for the NEON
-Harvard Forest field site (`AtmosData/HARV/Met_HARV_Daily_2009_2011.csv`). If this
+Harvard Forest field site (`NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_Daily_2009_2011.csv`). If this
 subset is not already loaded in RStudio, please load it now.  
 
 ```{r load-data}

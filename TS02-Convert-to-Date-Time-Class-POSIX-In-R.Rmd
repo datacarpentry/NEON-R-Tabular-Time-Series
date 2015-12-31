@@ -105,10 +105,10 @@ that contains atmospheric data for the NEON Harvard Forest field site, aggregate
 at 15-minute intervals. 
 
 
-```{r}
+```{r read-data-csv }
 #Load csv file of 15 min meteorological data from Harvard Forest
 #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
-harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
+harMet_15Min <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
                      stringsAsFactors = FALSE)
 ```
 

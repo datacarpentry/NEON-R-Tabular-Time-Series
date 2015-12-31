@@ -82,9 +82,9 @@ respectively, to gain familiarity.
 
 #Plotting Subsetted Data Using Facets
  
-In this lesson we will learn how to create facetted plots - that is a panel
-of plots each of which represents a particular data_frame subset - for example
-year or season.
+In this lesson we will learn how to create a panel of indivual plots - known as
+facets in `ggplot2`. Each plot represents a particular `data_frame` time-series 
+subset - for example year or season.
 
 ###Load the Data
 We will use the daily micro-meteorology data for 2009-2011 from the Harvard
@@ -112,11 +112,11 @@ harMetDaily.09.11 <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met
 harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 
 #monthly HARV temperature data, 2009-2011
-harTemp.monthly.09.11<-read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Temp_HARV_Monthly_09_11.csv",
-                                stringsAsFactors=FALSE)
+#harTemp.monthly.09.11<-read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Temp_HARV_Monthly_09_11.csv",
+#                                stringsAsFactors=FALSE)
 
 #convert datetime from chr to datetime class & rename date for clarification
-harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
+#harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
 ```
 
 ##GGPLOT Facets
@@ -125,22 +125,10 @@ Facets allow us to plot subsets of data in one cleanly organized panel. We use
  `facet_grid()` to create a plot of a particular variable subsetted by a particular
  "group".
  
-To begin, let's create a faceted plot using year as our subset group. To do this,
-we need a year column in our data to use a subset factor. We
-did this in the 
-[{{site.baseurl}}R/Time-Series-Subset-dplyr/](DPLYR subset timeseries lesson.)
-using the `year` function in the `lubridate` package.
+Let's plot air temperature as we did previously. We will name the `ggplot`
+object `AirTempDaily`.
 
- 
-```{r plot-by-year}
-#add year column to daily values
-harMetDaily.09.11$year <- year(harMetDaily.09.11$date)
-```
-
-Next, let's plot air temperature as we did previously. We will name the `ggplot`
-object `PrecipDaily`.
-
-```{r plot-precip }
+```{r plot-airt }
 
 AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
            geom_point() +
@@ -153,9 +141,33 @@ AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
 
 AirTempDaily
 ```
+ 
+This plot tells us a lot about the annual increase and decrease of temperature
+at the NEON Harvard Forest field site. However, what is we wanted to plot each
+year's worth of data individually?
+
+If we use the `facet()` element in `ggplot`, we can create facets or a panel of 
+plots that are grouped by a particular category or time period. To create a 
+a plot for each year, we will first need a year column in our data to use a subset 
+factor. We created a year column did this in the 
+[{{site.baseurl}}R/Time-Series-Subset-dplyr/](DPLYR subset timeseries lesson)
+using the `year` function in the `lubridate` package.
+
+ 
+```{r plot-by-year}
+#add year column to daily values
+harMetDaily.09.11$year <- year(harMetDaily.09.11$date)
+
+#view year column head and tail
+head(harMetDaily.09.11$year)
+tail(harMetDaily.09.11$year)
+
+```
+
 
 ## Facet by Year
-Next, we can create a facetted plot - plotting each  year's worth of data in 
+Once we have a column that can be used to group or subset our data, we can 
+create a facetted plot - plotting each year's worth of data in 
 an individual, named panel.
 
 ```{r plot-facet-year }
@@ -163,8 +175,27 @@ an individual, named panel.
 AirTempDaily + facet_grid(. ~ year)
 ```
 
-The faceted plot is interesting, however the data are plotted by year, which means
-that the range of data in the x axis varies between facets. Our plots might be 
+Oops - what happened? The plot did not render because we added the `year` column
+after creating the `ggplot` object `AirTempDaily`. Let's rerun the ggplot code
+to ensure our newly added column is recognized.
+
+```{r plot-facet-year-2}
+AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+           geom_point() +
+           ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+            xlab("Date") + ylab("Temperature (C)") +
+            scale_x_datetime(labels=date_format ("%m-%y"))+
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#facet plot by year
+AirTempDaily + facet_grid(. ~ year)
+```
+
+The faceted plot is interesting, however the x-axis on each plot is month-day-year.
+This means that the data for 2009 is on the left end of the plot and the data for
+2011 is on the right end (the end of the x axis) of the 2011 plot. Our plots might be 
 easier to compare visually, if the days were julian days rather than date. 
 
 ```{r plot-precip-jd }
@@ -182,13 +213,14 @@ AirTempDaily_jd + facet_grid(. ~ year)
 
 ```
 
-Arranging our plots this way, side by side, allows us to quickly scan for differences
+Using Julian Day, our plots are visually easier to compare. Arranging our plots 
+this way, side by side, allows us to quickly scan for differences
 along the Y axis. Notice any differences in min vs max air temperature across the 
 three years?
 
 ##Arranging Facets
 
-We can organize our plots too.
+We can rearrange the facets in different ways, too.
 
 ```{r rearrange-facets }
 
@@ -210,11 +242,11 @@ AirTempDaily_jd + facet_wrap(~year, ncol = 2)
 
 ##Graph Two Variables on One Plot
 Next, let's explore the relationship between two variables - air temperature
-and soil temperature. We might expect soil temperature to fluctuate according to
+and soil temperature. We might expect soil temperature to fluctuate with
 changes in air temperature over time.  
 
-We will use `ggplot()` to plot `airt` and `s10t` (representing the soil temperature
-10 cm below the ground. 
+We will use `ggplot()` to plot `airt` and `s10t` (soil temperature
+10 cm below the ground). 
 
 ```{r plot-airt-soilt }
 
@@ -228,16 +260,14 @@ airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
 
 airSoilTemp_Plot
 
-
-
 ```
 
-The plot above is interesting and suggests a relationship between the two variables.
-However, it clumps all three years worth of data into one plot. Let's create a 
-stacked facetted plot of air vs soil temperature grouped by year.
+The plot above suggests a relationship between the air and soil temperature as
+we might expect. However, it clumps all three years worth of data into one plot. 
+Let's create a stacked facetted plot of air vs. soil temperature grouped by year.
 
 Lucky for us, we can do this quickly with one line of code - reusing the plot we
-created above!
+created above.
 
 ```{r faceted-temp-plots }
 #create faceted panel
@@ -252,13 +282,10 @@ differences between the three years?
 ##Challenge
 
 Create a facetted plot of air temperature vs soil temperature by MONTH rather 
-than year. A few hints to help you along the way:
+than year.
 
-1. To create this plot, you will want to add a month column to our data_frame.
+* HINT: To create this plot, you will want to add a month column to our data_frame.
 We can use lubridate `month` in the same way we used `year` to add a year column. 
-2. Once you have added the month column, you will need to rerun your ggplot code
-to ensure the new month field is recognized when you render the plot using 
-facets.
 
 </div>
 
@@ -279,47 +306,29 @@ airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
 #create faceted panel
 airSoilTemp_Plot + facet_wrap(~month, nc=3)
 
-
-
 ```
 
-<div id="challenge" markdown="1">
+##Facetted Plots & Categorical Groups
 
-##Facet Challenge 2
+In the challenge above, we grouped our data by MONTH - specificed by a numeric
+value between 1 (January) and 12 (December). However, what if we wanted to 
+organize our plots using a categorical (character) group such as month NAME?
+Let's do that next.
 
-Create a second facetted plot, but this time use the full month names (e.g. January,
-February, March) to group your facets. A few hints regarding how to do this follow:
+If we want to group our data by month NAME, we first need to create a month name
+column in our `data_frame`. We can create this column using the following syntax:
 
-1. We can use `format(harMetDaily.09.11$date,"%B")` to add a month column using the full month 
-names for prettier plotting.
-2. When you plot by month, you might notice that the years are not in the desired order, rather
-they are arranged alphabetically. To account for this, you can reassign the 
-month_name column to a factor, and order the factor levels manually.
+`format(harMetDaily.09.11$date,"%B")`
 
-The code below assigned the `month_name` field to a factor class. It then defines
-the `levels` in the order that we wish to see them. 
+Which tells `R` to extract the month name (`%B`) from the date field.
 
-```{r factor, eval=FALSE}
-#order the factors
-harMetDaily.09.11$month_name = factor(harMetDaily.09.11$month_name, 
-                                      levels=c('January','February','March',
-                                               'April','May','June','July',
-                                               'August','September','October',
-                                               'November','December'))
-```
-</div>
-
-```{r answers-challenge-p2, echo=FALSE }
-
-#add text month
+```{r extract-month-name }
+#add text month name column
 harMetDaily.09.11$month_name <- format(harMetDaily.09.11$date,"%B")
 
-#order the factors
-harMetDaily.09.11$month_name = factor(harMetDaily.09.11$month_name, 
-                                      levels=c('January','February','March',
-                                               'April','May','June','July',
-                                               'August','September','October',
-                                               'November','December'))
+#view head and tail
+head(harMetDaily.09.11$month_name)
+tail(harMetDaily.09.11$month_name)
 
 #recreate plot
 airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
@@ -335,14 +344,56 @@ airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
 
 ```
 
+Great! We've created a nice set of plots by month. However, what is the order
+or the plots? It looks like `R` is ordering things alphabetically yet we know
+that months are ordinal not character strings. To account for order, we can 
+reassign the `month_name` field to a `factor`. This will allow us to specify
+an order to each factor "level" (each month is a level).
+
+The syntax for this operation is 
+
+1. turn field into a factor: `factor(fieldName) `
+2. designate the `levels` using a list `c(level1, level2, level3)`
+
+In our case, each level will be a month.
+
+```{r factor }
+#order the factors
+harMetDaily.09.11$month_name = factor(harMetDaily.09.11$month_name, 
+                                      levels=c('January','February','March',
+                                               'April','May','June','July',
+                                               'August','September','October',
+                                               'November','December'))
+```
+
+Once we have specified the factor column and its associated levels, we can plot 
+again. Remember, that because we have modified a column in our `data_frame`, we
+need to rerun our `ggplot` code.
+
+```{r plot-by-month-levels }
+
+#recreate plot
+airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
+           geom_point() +
+           ggtitle("Air vs. Soil Temperature 2009-2011\n NEON Harvard Forest Field Site") +
+            xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#create faceted panel
+airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
+
+```
+
 
 ##Subset by Season - ADVANCED
-Sometimes we want to group data by unique time periods. For example, we might
+Sometimes we want to group data by custom time periods. For example, we might
 want to group by season. However, the definition of various seasons may vary by 
-region which means we might want to manually define each time period.
+region which means we need to manually define each time period.
 
 In the next section, we will add a season column to our data using a manually
-defined query. We are using data from Harvard Forest in Massachusetts
+defined query. Our field site is Harvard Forest (Massachusetts), located
 in the northeastern portion of the United States. We can divide this 
 region into 4 seasons as follows: 
 
@@ -352,23 +403,40 @@ region into 4 seasons as follows:
  * Fall: September - November 
  
 In order to subset the data by season we will use the `dplyr` package.  We
-can use the month column that we added to our data in the challenge above.
+can use the numeric month column that we added to our data earlier in this lesson.
 
 ```   {r subsetting-by-season-1}
-#add month
+#add month to data_frame - note we already performed this step above.
 harMetDaily.09.11$month  <- month(harMetDaily.09.11$date)
 
-#check structure of this variable
+#view head and tail of column
 head(harMetDaily.09.11$month)
+tail(harMetDaily.09.11$month)
 ```
 
-We can now use `mutate()` and an `ifelse` statement to create a new variable
-called `season` by grouping three months together. 
+We can use `mutate()` and a set of `ifelse` statements to create a new categorical
+variable called `season` by grouping three months together. 
 
-Within `dplyr` `%in%` is short-hand for "or"; the 3rd line of code essentially
-says "If the month variable is equal to 12 or  1 or  2, set the season
-variable to Winter". The "Error" at the end is what will be printed in the 
-column if the month does not equal any of the month dates specified.  
+Within `dplyr` `%in%` is short-hand for "contained within". So the syntax:
+
+`ifelse(month %in% c(12, 1, 2), "Winter",`
+
+Can be read:
+
+> if the `month` column value is 12 or 1 or 1, then assign the value "Winter"
+
+Our `ifelse` statement ends with the following:
+
+`ifelse(month %in% c(9, 10, 11), "Fall", "Error")`
+
+We can translate this as:
+
+> if the `month` column value is 9 or 10 or 11, then assign the value "Winter"
+
+The last portion `, "Error"` tells `R` that if a `month` column value does not 
+fall within any of the criteria laid out in previous `ifelse` statements, to 
+assign the column the value of "Error". 
+
 
 ``` {r  subsetting-by-season-2}
 harMetDaily.09.11 <- harMetDaily.09.11 %>% 
@@ -386,108 +454,121 @@ tail(harMetDaily.09.11$month)
 tail(harMetDaily.09.11$season)
 ```
 
-Now that we can plot our data by season!
+Now that we have a season column, we can plot our data by season!
 
 ```{r plot-by-season}
 
-#run this code to plot the same plot as before but with one plot per season
-airSoilTemp_Plot + facet_grid(. ~ season)
-```
-
-It didn't work!  Why? 
-
-We added the season variable to `harMetDaily.09.11` after we created the
-original `airSoilTemp_Plot` plot. We need to re-run the `airSoilTemp_Plot` code 
-again so that `season` is now included in the data (go back and re-run that code). 
-
-``` {r tempPlot-rerun }
 #recreate plot
 airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
            geom_point() +
-           ggtitle("Air vs. Soil Temperature NEON Harvard Forest Field Site\n 2009-2011") +
+           ggtitle("Air vs. Soil Temperature 2009-2011\n NEON Harvard Forest Field Site") +
             xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",
                  size = 20)) +
            theme(text = element_text(size=18))
 
-
+#run this code to plot the same plot as before but with one plot per season
+airSoilTemp_Plot + facet_grid(. ~ season)
 ```
 
-Now that we've rerun the plot code, the facet option should work. 
+Note, that once again, we re-ran our `ggplot` code to make sure our new column
+is recognized by `R`. We can experiment with various facet layouts next.
 
 ``` {r plot-by-season2}
-airSoilTemp_Plot + facet_grid(. ~ season)
 
 # for a landscape orientation of the plots we change the order of arguments in
     #facet_grid():
 airSoilTemp_Plot + facet_grid(season ~ .)
 
 
-#and another arrangement of plots:
-airSoilTemp_Plot + facet_wrap(~season, ncol = 2)
 
 ```
 
+<div id="challenge" markdown="1">
 
+##Challenge 
 
+Convert the season column that we just created to a factor and organize the seasons
+chronologically as follows: Winter, Spring, Summer, Fall.
 
-How does our ability to see patterns in the data vary depending on which
-arrangement the graphs are in? 
+Create a new faceted plot that is 2 x 2 (2 columns of plots).
 
-##Defining the Order of Facetted Plots
-Notice how our facetted plots are currently show up as "fall", "spring",
-"summer", "winter".  As no level is assigned the data are class character, `R`
-simply arranges them in alphabetical order.  However, "fall", "spring", 
-"summer", "winter" do have a specified order to them.  It doesn't mater which
-season starts the cycle but they should be in order to ease our understanding
-of annual cycles. 
+</div>
 
-In order to create a logical order we need to assign levels to the seasons. We
-can do this by assigning the seasons as a factor with a defined order (or 
-level).  
+``` {r assigning-level-to-season, echo=FALSE  }
 
-``` {r assigning-level-to-season  }
-harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, level=c("spring",
-                                                    "summer","fall","winter")) 
+#create factor / assign levels
+harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, 
+                                  level=c("Winter","Spring","Summer","Fall")) 
 
 #check to make sure it worked
 str(harMetDaily.09.11$season)
 
 #rerun original par.precip code to incorporate the levels. 
-par.precip <- ggplot(harMetDaily.09.11,aes(prec, part)) +
+airSoilTemp_Plot_season <- ggplot(harMetDaily.09.11,aes(prec, part)) +
          geom_point(na.rm=TRUE) +    #removing the NA values
-        ggtitle("Daily Precipitation and PAR at Harvard Forest") +
+        ggtitle("Seasonal Air vs Soil Temperature 2009-2011 \n NEON Harvard Forest Site") +
          theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
          theme(text = element_text(size=20)) +
          xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
            
 #new facetted plots
-par.precip + facet_grid(. ~ season)
+airSoilTemp_Plot_season + facet_wrap(~ season, nc=2)
+
 
 ```
 
-We now how a plot with the seasons in a logical order. 
 
-#Challenge: Compare Precipitation and Air Temperature Across Seasons
-1) Using the same data create a faceted plot showing the relationship between 
-precipitation and air temperature across the seasons.  Create the figure with
-"winter" as the first facetted plot.   
-2) Compare how different orientations of the plots highlight different patterns.
+<div id="challenge" markdown="1">
 
-``` {r  challenge-code-prec.airtemp, echo=FALSE}
-harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, level=c("winter",
-                                                  "spring", "summer", "fall"))
-prec.airtemp <- ggplot(harMetDaily.09.11,aes(airt, prec)) +
-           geom_point(na.rm=TRUE) +    #removing the NA values
-           ggtitle("Harvard Forest\n 2009-2011") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-           theme(text = element_text(size=20)) +
-           xlab("Air Temperature (Celcius)") + ylab("Precipitation (daily mm)")
+Use the `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv` 
+`.csv` file. This contains monthy average data for the NEON Harvard Forest field
+site. Create a faceted plot of annual air temperature for each year of data
+in the file (2001-2015)
 
-prec.airtemp + facet_grid(.~season)
-prec.airtemp + facet_grid(season~.)
+* HINT: in this case, we will be converting a year-month field. To do this with
+a base R date class, we need an associated day. We can add this using:
 
+`as.Date(paste(met_monthly_HARV$date,"-01",sep=""))`
+
+If we wanted we could use the `zoo` package to achieve this as follows:
+
+`library(zoo)`
+`as.Date(as.yearmon(met_monthly_HARV$date))`
+
+Experiment on your own to figure out the methods that you prefer!
+
+</div>
+
+```{r plot-monthly-data, echo=FALSE }
+
+met_monthly_HARV <- read.csv("NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv", stringsAsFactors = FALSE)
+
+#convert to date time - add a day "01" to each date to support this in base R
+met_monthly_HARV$date <- as.Date(paste(met_monthly_HARV$date,"-01",sep=""))
+
+#add year
+met_monthly_HARV$year <- year(met_monthly_HARV$date)
+
+#add month
+met_monthly_HARV$month <- factor(month(met_monthly_HARV$date))
+
+
+#create plot
+#rerun original par.precip code to incorporate the levels. 
+long_term_temp <- ggplot(met_monthly_HARV,aes(month, airt)) +
+         geom_point(na.rm=TRUE) +    #removing the NA values
+        ggtitle("Air Temperature 2001-2015 \n NEON Harvard Forest Site") +
+         theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+         theme(text = element_text(size=20)) +
+         xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+           
+#new facetted plots
+long_term_temp + facet_wrap(~ year, nc=3)
 ```
+
+***
+
 
 #Plot NDVI & PAR using Daily Data
 
@@ -511,7 +592,7 @@ We need to read in the 2011 NDVI data for the Harvard Forest. A .csv file is
 within `NDVI_ForAtmosData` subdirectory in the `AtmosData` directory.
 ```{r read-NDVI}
 #first read in the NDVI CSV data
-NDVI.2011 <- read.csv(file="AtmosData/NDVI_ForAtmosData/meanNDVI_HARV_2011.csv"
+NDVI.2011 <- read.csv(file="NEON-DS-Met-Time-Series/HARV/NDVI/meanNDVI_HARV_2011.csv"
                       , stringsAsFactors = FALSE)
 #check out the data
 str(NDVI.2011)
