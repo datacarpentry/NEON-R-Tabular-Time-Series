@@ -1,11 +1,13 @@
 ---
 layout: post_by_tag
-title: 'Module 3 Lessons'
-tag: module-3
-permalink: module-3/
+title: 'Time Series Lessons'
+tag: time-series
+permalink: time-series/
 image:
   feature: NEONCarpentryHeader_2.png
   credit: National Ecological Observatory Network (NEON)
   creditlink: http://www.neoninc.org
 ---
+
+Time series lessons go here.
 

@@ -1,7 +1,8 @@
-- slug: tabular-time-series
-  name: Tabular Time Series Data Lessons
-   color: '#1abc9c'
-  
-- slug: csv-time-series-data
-  name: .csv Time Series Data
+- slug: module-1
+  name: Raster and Vector Data
   color: '#1abc9c'
+   
+- slug: time-series
+  name: Time Series 
+  color: '#1abc9c' 
+
