@@ -1,3 +1,4 @@
+HEAD
 - slug: tabular-time-series
   name: Tabular Time Series Data Lessons
    color: '#1abc9c'
@@ -5,3 +6,4 @@
 - slug: csv-time-series-data
   name: .csv Time Series Data
   color: '#1abc9c'
+
