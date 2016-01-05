@@ -53,7 +53,7 @@ preferably RStudio, loaded on your computer.
 ###Install R Packages
 No additional libraries are needed for this lesson.
 
-##Data to Download
+###Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
@@ -121,8 +121,10 @@ for Harvard Forest, aggregated at 15 minute intervals.
 ``` {r load-data}
 # Load csv file of 15 min meteorological data from Harvard Forest
 #Factors=FALSE so strings, a series of letters/ words/ numerals, remain characters
-harMet_15Min <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
-      stringsAsFactors = FALSE)
+harMet_15Min <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
+  stringsAsFactors = FALSE
+  )
 ```
 
 Now it is time to look at our data, metadata and information about how `R` 
@@ -151,7 +153,8 @@ that are not numbers or integers are classified as characters (chr) rather than
 as factors.
 
 #Metadata
-There is information other than how `R` interprets our data that we need to know.
+There is information other than how `R` interprets our data that we need to
+know.
 
 Can you think of any examples? 
 

@@ -55,9 +55,9 @@ preferably RStudio, loaded on your computer.
 
 * **ggplot2:** `install.packages("ggplot2")`
 
-* [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+ [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-##Data to Download
+##Download Data
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
@@ -69,31 +69,35 @@ preferably RStudio, loaded on your computer.
 It is also part of a larger 
 [spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
 that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
+[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series)
 and  
 [vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
 
 </div>
 
 #The Data Approach
-In this lesson, we will explore atmospheric data (including temperature, precipitation
-and other metrics) by sensors mounted on a 
-<a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">flux
-tower</a> at the NEON Harvard Forest field site. We are interested in exploring 
+In this lesson, we will explore atmospheric data (including temperature,
+precipitation and other metrics) by sensors mounted on a 
+<a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
+flux tower</a> 
+at the NEON Harvard Forest field site. We are interested in exploring 
 patterns associated with changes in temperature, precipitation, PAR and day 
-length -- metrics that impact changes in plant <a href=" http://budburst.org/phenology_defined" target="_blank">phenology</a>. 
+length -- metrics that impact changes in plant 
+<a href=" http://budburst.org/phenology_defined" target="_blank">phenology</a>. 
 
 
 #About .csv File Format
-The data we will use is in `.csv` (comma-separated values) file format. The `.csv`
-format is a plain text format, where each value in the dataset is separate by a comma. 
+The data we will use is in `.csv` (comma-separated values) file format. The
+`.csv` format is a plain text format, where each value in the dataset is 
+separate by a comma. 
 Plain text formats are ideal for working both across platforms (Mac, PC, LINUX, 
 etc) and also can be read by many different tools. Additionally, the plain file 
 format is less likely to become obsolete over time!
 
-<i class="fa fa-star"></i>**Data Tip:**<a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank"> 
+<i class="fa fa-star"></i>**Data Tip:**
+<a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank"> 
 For more on .csv format see this Wikipedia article.</a>
-
+{: .notice}
 
 # Import the Data 
 
@@ -122,29 +126,30 @@ Once our working directory is set, we can import the file using `read.csv()`.
 ```{r import-csv}
 
 #Load csv file of daily meteorological data from Harvard Forest
-harMet.daily <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m.csv",
-                     stringsAsFactors = FALSE)
+harMet.daily <- read.csv(
+      file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m.csv",
+      stringsAsFactors = FALSE
+      )
 ```
 
 ##stringsAsFactors=FALSE
 When reading in files we most often use `stringsAsFactors = FALSE`. This
-setting will ensure that non-numeric data (strings) are not converted to factors.
-Factors are non-numerical data that can be numerically interpreted and may have 
-a level associated with them. 
+setting will ensure that non-numeric data (strings) are not converted to
+factors. Factors are non-numerical data that can be numerically interpreted and
+may have a level associated with them. 
 
 Examples of factors:
 
 * Month Names (an ordinal variable). Month names are non-numerical but we know 
-that April (month 4) comes after March (month 3) and each could be represented by
-a number (4 & 3).
+that April (month 4) comes after March (month 3) and each could be represented
+by a number (4 & 3).
 * 1 and 2s to represent male and female sex (a nominal variable). Numerical
 interpretation of non-numerical data but no order to the levels.  
 
 Many types of ecological data are not suitable for factors. An example of
 strings as non-factors are a hypothetical data set of `SpeciesObserved` 
-consisting of 
-*mouse*, *grasshopper*, and *sparrow*. These are non-numerical data with no 
-relevant level or numerical interpretation.  
+consisting of *mouse*, *grasshopper*, and *sparrow*. These are non-numerical
+data with no relevant level or numerical interpretation.  
 
 After loading the data it is easy to convert any data that should be a factor by
 using `as.factor()`, so it is almost always best to read in a file with
@@ -180,15 +185,15 @@ str(harMet.daily)
 ```
 
 
-<i class="fa fa-star"></i> **Data Tip:** You can adjust the number of rows returned 
-when using the `head` and `tail` functions. For example you can use `head(harMet.daily,10) 
-to display the first 10 rows of your data rather than 6.
+<i class="fa fa-star"></i> **Data Tip:** You can adjust the number of rows
+returned when using the `head` and `tail` functions. For example you can use
+`head(harMet.daily,10)` to display the first 10 rows of your data rather than 6.
 {: .notice }
 
 ##Data Classes in R
 
-The structure results above let us know that our data are stored as several different
-data types or classes in our `data.frame` as follows:
+The structure results above let us know that our data are stored as several
+different data types or classes in our `data.frame` as follows:
 
 * **chr** - Character. It holds strings that are composed of letters and
 words. Character class data can not be interpreted numerically - that is to say
@@ -215,11 +220,10 @@ For example:
 a <- "mouse"
 b <- "sparrow"
 
-#subract a-b - 
+#subract a-b 
 a-b
 
 ```
-
 
 Subtracting two **chr** data values makes no sense.
 
@@ -246,9 +250,8 @@ min(prec)
 
 For example, we can calculate the minimum value for `SpeciesObserved`, a **chr** 
 class of data, however it does not return a quantative minimum. It simply looks 
-for the first element, using alphabetical order. Yet, we can calculate the quantitative
-minimum value for `prec` a **numeric** data class.  
-
+for the first element, using alphabetical order. Yet, we can calculate the
+quantitative minimum value for `prec` a **numeric** data class.  
 
 #Plot Data Using qplot()
 
@@ -269,14 +272,14 @@ qplot(x=date,y=airt,
 
 ```
 
-<i class="fa fa-star"></i>**Data Tip:** Add a a title to your plot using 
+<i class="fa fa-star"></i>**Data Tip:** Add a title to the plot using 
 `main="Title string"`.
 {: .notice }
 
 We have successfully plotted some data. However, what is happening on the 
 x-axis?
 
-R is trying to plot EVERY date value on the x-axis, so it was not readable. Why?
+`R` is trying to plot EVERY date value on the x-axis, so it was not readable. Why?
 Let's have a look at the class of the x-axis variable - date.
 
 ```{r view-class }
@@ -287,10 +290,10 @@ class(harMet.daily$airt)
 
 ```
 
-In this case, the `date` column is stored in our `data.frame` as a character class. 
-Because it is a character, `R` does not know how to plot the dates as a continuous 
-variable. Instead it tries to plot every date value. The `airt` data is numeric so that
-metric plots just fine.
+In this case, the `date` column is stored in our `data.frame` as a character
+class. Because it is a character, `R` does not know how to plot the dates as a
+continuousvariable. Instead it tries to plot every date value. The `airt` data
+is numeric so that metric plots just fine.
 
 #Date as a Date-Time Class
 We need to convert our `date` column, which is currently stored as a character 

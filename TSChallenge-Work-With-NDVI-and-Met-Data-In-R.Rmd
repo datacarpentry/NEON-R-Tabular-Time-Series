@@ -1,17 +1,17 @@
 ---
 layout: post
-title: "CHALLENGE: Plot using Facets and Plot Time Series with NDVI data"
+title: "Culmination Activity: Plot using Facets and Plot Time Series with NDVI Data"
 date:   2015-10-16
 authors: [Megan A. Jones, Leah A. Wasser]
 contributors: []
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
-packagesLibraries: [[ggplot2, scales, gridExtra, grid, dplyr, reshape2]
+packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
 category:  
 tags: [spatio-temporal, time-series, phenology]
 mainTag: time-series
-description: "This lesson will be a data integration wrap-up challenge lesson -
-to be developed."
+description: "This lesson is a data integration wrap-up culmination
+activity for the ."
 code1: TSChallenge-Work-With-NDVI-and-Met-Data-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
@@ -24,13 +24,22 @@ comments: false
 {% include _toc.html %}
 
 ##About
-MORE here
+This lesson is a culmination activity for the end of the lesson series on 
+[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series) 
+and as part of a 
+[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop). 
+The data used in this culmination activity has been extracted or previously
+worked with in the 
+[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series)
+and  
+[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) .
 
-**R Skill Level:** Intermediate - you've got the basics of `R` down.
+**R Skill Level:** Advanced/ Intermediate - you've got the basics of `R` down
+ and are comfortable using ggplot2 and dplyr. 
 
 <div id="objectives" markdown="1">
 
-###Goals / Objectives
+#Goals / Objectives
 After completing this activity, you will:
 
  * 
@@ -47,9 +56,9 @@ preferably RStudio, loaded on your computer.
 * **dplyr:** `install.packages("dplyr")`
 * **reshape2:** `install.packages("reshape2")`
 
-* [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-###Data to Download
+###Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
@@ -70,44 +79,51 @@ and
 ###Skills Needed
 This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
 the `ggplot2` package.  If you are not comfortable with either of these we
-recommend starting with the [Subset & Manipulate Time Series Data with `dplyr` lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
-and the [Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
+recommend starting with the 
+[Subset & Manipulate Time Series Data with `dplyr` lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
+and the 
+[Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
 respectively, to gain familiarity.
-
 
 </div>
 
 #Plot NDVI & PAR using Daily Data
 
 ##NDVI Data
-Normalized Difference Vegetation Index (NDVI) is an indicator of how green vegetation is.  NDVI is derrived from remote sensing data based on a ratio the reflectance of visible red spectra and near-infrared specra.  The NDVI values vary from -1.0 to 1.0.  
+Normalized Difference Vegetation Index (NDVI) is an indicator of how green
+vegetation is.  NDVI is derrived from remote sensing data based on a ratio the
+reflectance of visible red spectra and near-infrared specra.  The NDVI values
+vary from -1.0 to 1.0.  
 
-The imagery data used to create this NDVI data were collected over
-the National Ecological Observatory Network's
+The imagery data used to create this NDVI data were collected over the National
+Ecological Observatory Network's
 <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank" >Harvard Forest</a>
 field site.  
 The imagery was created by the U.S. Geological Survey (USGS) using a 
 <a href="http://eros.usgs.gov/#/Find_Data/Products_and_Data_Available/MSS" target="_blank" >  multispectral scanner</a>
-on a <a href="http://landsat.usgs.gov" target="_blank" > Landsat Satellite </a>.
+on a
+<a href="http://landsat.usgs.gov" target="_blank" > Landsat Satellite </a>.
 The data files are Geographic Tagged Image-File Format (GeoTIFF).  
-A tutorial,
-[Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
-explains how to create this NDVI file based on Raster data. 
+A tutorial, [Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
+explains how to create this NDVI file from on Raster data. 
 
 ###Read In NDVI Data
 We need to read in the 2011 NDVI data for the Harvard Forest. A .csv file is
 within `NDVI_ForAtmosData` subdirectory in the `AtmosData` directory.
 ```{r read-NDVI}
 #first read in the NDVI CSV data
-NDVI.2011 <- read.csv(file="NEON-DS-Met-Time-Series/HARV/NDVI/HARV_NDVI_2011.csv"
-                      , stringsAsFactors = FALSE)
+NDVI.2011 <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/NDVI/HARV_NDVI_2011.csv", 
+  stringsAsFactors = FALSE
+  )
+
 #check out the data
 str(NDVI.2011)
 head(NDVI.2011)
 ```
 
 #Challenge: Convert Date in Character Class to a Date-Time Class
-The Date data is currently in the character class convert the data to a date
+The `Date` data is currently in the character class, convert the data to a date
 class. 
 
 ``` {r challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE}
@@ -134,7 +150,8 @@ harMet.daily2011$date<-as.Date(harMet.daily2011$date)
 In this data set we have the following variables:  
 
 * 'X': an integer representing each row
-* meanNDVI: the daily total NDVI for that area.  ("Mean" comes from the fact that the value is a mean of all pixels in the original raster).
+* meanNDVI: the daily total NDVI for that area.  ("Mean" comes from the fact
+   that the value is a mean of all pixels in the original raster).
 * site: all NDVI values are from the Harvard Forest
 * year: all values are from 2011
 * julianDay: the numeric day of the year
@@ -182,8 +199,8 @@ grid.arrange(plot.par.2011, plot.NDVI.2011)
 ```
 
 This is nice but a bit confusing as the time on our x-axis doesn't fully line
-up.  To fix this we can assign the same min and max to both x-axes so that
-they align.  We can also label the axes 
+up.  To fix this we can assign the same min and max to both x-axes so that they
+align.  We can also label the axes. 
 
 ``` {r plot-same-xaxis}
 plot2.par.2011 <- plot.par.2011 +
@@ -204,8 +221,8 @@ grid.arrange(plot2.par.2011, plot2.NDVI.2011)
 ```
 
 #Challenge: Plot Air Temperature and NDVI
-Create a complementary plot pairing with Air Temperateure and NDVI.  Choose
-colors and symobls that show the data well.  Finally, plot air temperature, PAR,
+Create a complementary plot pairing with Air Temperateure and NDVI.  Choose 
+colors and symbols that show the data well.  Finally, plot air temperature, PAR,
 and NDVI in a single window to ease comparisons.  
 
 ``` {r challengeplot-same-xaxis, echo=FALSE}
@@ -231,19 +248,19 @@ We are able to nicely see the three different variables.  However, we waste a
 lot of space to repeating the x-axes and the titles.  Instead of three seperate
 plots we could alternatively, use facets and plot all the variables of interests
 (NDVI, air temperature, precipiation, and PAR) on a single x-axis.  To do this
-we'll 
-use `melt()` from the `reshape2` package. `melt` tranforms the data from a wide
-format (columns of different variables with values in them), to a long format 
-(column of variables with a column of values) organized according to a specified
-variable.  
+we'll use `melt()` from the `reshape2` package. `melt` tranforms the data from a
+wide format (columns of different variables with values in them), to a long
+format (column of variables with a column of values) organized according to a
+specified variable.  
 
 ```{r plot-same-x-axis-1}
 
 library(reshape2)  #allows us to "melt" dataframes from "wide" to "long"
 
 #merge the two data frames by date and retain all 'harMet.daily
-harMetNDVIall.daily.2011<- merge(harMet.daily2011, NDVI.2011, by.x = "date", 
-                              by.y = "Date", all.x=TRUE)
+harMetNDVIall.daily.2011<- merge(harMet.daily2011, 
+                                 NDVI.2011, by.x = "date", 
+                                 by.y = "Date", all.x=TRUE)
 
 #convert from "wide" form to "long" form
 harMetNDVI.daily.2011.long<-melt(harMetNDVIall.daily.2011, id ="date")
@@ -258,8 +275,9 @@ harMetNDVI.daily.2011.select<-subset(harMetNDVI.daily.2011.long,
                                 variable=="meanNDVI"| variable== "prec"|
                                 variable == "airt" | variable == "part")
 
-NDVI.harMet.facet.plot<-ggplot(harMetNDVI.daily.2011.select,
-                               aes(date, value), group=variable) +
+NDVI.harMet.facet.plot<-ggplot(
+  harMetNDVI.daily.2011.select,
+  aes(date, value), group=variable) +
   geom_point() +
   facet_grid(variable~., scales="free") +   #specify facets & y-axis can vary
   ggtitle("Harvard Forest 2011") +
@@ -268,7 +286,8 @@ NDVI.harMet.facet.plot<-ggplot(harMetNDVI.daily.2011.select,
   xlab ("Date") + ylab ("Value") +
   theme(legend.position = "none",
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=10)) 
+        text = element_text(size=10)
+  ) 
 
 NDVI.harMet.facet.plot
 
