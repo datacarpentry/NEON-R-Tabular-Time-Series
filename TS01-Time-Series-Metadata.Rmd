@@ -164,7 +164,7 @@ To get some of this information, or clues to this information, we will open the
 metadata text file associated with this 15-min meteorology data that is in the 
 AtmosData folder. Navigate to this file and open it in a text editor.
 
-![Harvard Forest 15 min Atmospheric Data Screenshot]  ({{site.baseurl}}/images/tabTimeSeries/TS01_MetaDataScreenShot.tiff)
+![Harvard Forest 15 min Atmospheric Data Screenshot]  ({{site.baseurl}}/images/tabTimeSeries/TS01_MetaDataScreenShot.png)
 
 Remember, we are currently interested in plant phenology so we'll be looking at
 air temperature, precipitation and PAR. Look for these variables and identify
