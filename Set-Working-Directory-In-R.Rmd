@@ -6,6 +6,7 @@ lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 createddate:   2015-12-07
 estimatedTime: 5 Min
 authors: Megan A. Jones
+packagesLibraries: []
 categories: [coding-and-informatics]
 category: coding-and-informatics
 tags: [R]
@@ -31,25 +32,17 @@ downloaded to a local folder.
 
 <div id="objectives" markdown="1">
 
-### Goals / Objectives
+#Goals / Objectives
 After completing this activity, you will:
 
  * Be able set the `R` Working Directory to a folder of downloaded data.
 
-###Things You'll Need To Complete This Lesson
-Please be sure you have the most current version of `R` and, preferably
-RStudio, to write your code.
+##Things You’ll Need To Complete This Lesson
+To complete this lesson: you will need the most current version of R, and 
+preferably RStudio, loaded on your computer.
 
-####Data to Download
-<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
-Download Atmospheric Data</a>
-
-The data used in this lesson were collected at Harvard Forest which is
-an National Ecological Observatory Network  
-<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. 
-These data are proxy data for what will be available for 30 years
-on the [NEON data portal](http://data.neoninc.org/ "NEON data")
-for both Harvard Forest and other field sites located across the United States.
+##Data to Download
+{% include/dataSubsets/_data_Met-Time-Series.html %}
 
 </div>
 

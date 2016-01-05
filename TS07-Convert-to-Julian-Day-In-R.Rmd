@@ -6,6 +6,7 @@ authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser] 
 dateCreated: 2015-10-18
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+packagesLibraries: [lubridate]
 tags: [spatio-temporal, time-series, phenology]
 mainTag: time-series
 packagesLibraries: lubridate
@@ -36,33 +37,20 @@ After completing this activity, you will:
 
  * Be able to convert a Date or Date/Time class variable to a Julian day variable.
 
-**To complete this lesson:** you will need the most current version of R, and 
+##Things You’ll Need To Complete This Lesson
+To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-####R Libraries to Install
-<li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
+###Install R Packages
+* **lubridate:** install.packages("lubridate")</code></li>
 
-####Data to Download
-<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
-Download Atmospheric Data</a>
+* [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-The data used in this lesson were collected at Harvard Forest which is
-an National Ecological Observatory Network  
-<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. 
-These data are proxy data for what will be available for 30 years
-on the [NEON data portal](http://data.neoninc.org/ "NEON data")
-for both Harvard Forest and other field sites located across the United States.
+###Data to Download
+{% include/dataSubsets/_data_Met-Time-Series.html %}
 
-**Set Working Directory:** This lessons assumes that you have set your working 
-directory to the location of the downloaded and unzipped data subset. [An overview
-of setting the working directory in `R` can be found here.]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") 
-lesson prior to beginning this lesson.
-
-**Challenge Code:** NEON Data lesson often contain challenges that reinforce 
-learned skills. If available, the code for challenge solutions is found in a 
-downloadable `R` script available on the footer of each lesson page.
-
-###Additional Resources
+****
+{% include/_greyBox-wd-rscript.html %}
 
 </div>
 

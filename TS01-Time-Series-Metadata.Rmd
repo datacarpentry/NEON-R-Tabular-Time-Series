@@ -6,6 +6,7 @@ authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser]
 dateCreated:  2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+packagesLibraries: []
 category: 
 tags: [spatio-temporal, time-series, phenology]
 mainTag: time-series
@@ -36,7 +37,7 @@ understand the general structure of tabular data.
 
 <div id="objectives" markdown="1">
 
-###Goals / Objectives
+#Goals / Objectives
 After completing this lesson, you will:
 
 * Know how to import a .csv file and examine the structure of the related `R`
@@ -45,31 +46,29 @@ object.
 * Understand the importance of including metadata details in your `R` script.
 * Know what an EML file is. 
 
-**To complete this lesson:** you will need the most current version of R, and 
+##Things You’ll Need To Complete This Lesson
+To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-####R Libraries to Install
+###Install R Packages
 No additional libraries are needed for this lesson.
 
-####Data to Download
-<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
-Download Atmospheric Data</a>
+##Data to Download
+{% include/dataSubsets/_data_Met-Time-Series.html %}
 
-The data used in this lesson were collected at Harvard Forest which is
-an National Ecological Observatory Network  
-<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. These data are proxy data for what will be available for 30 years on the [NEON data portal](http://data.neoninc.org/ "NEON data")
-for both Harvard Forest and other field sites located across the United States.
+****
 
-**Set Working Directory:** This lessons assumes that you have set your working 
-directory to the location of the downloaded and unzipped data subset. [An overview
-of setting the working directory in `R` can be found here.]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") 
-lesson prior to beginning this lesson.
+{% include/_greyBox-wd-rscript.html %}
 
-**Challenge Code:** NEON Data lesson often contain challenges that reinforce 
-learned skills. If available, the code for challenge solutions is found in a 
-downloadable `R` script available on the footer of each lesson page.
+**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
+[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
+It is also part of a larger 
+[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
+that includes working with
+[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
+and  
+[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
 
-###Sources of Additional Information
 </div>
 
 #The Data Approach

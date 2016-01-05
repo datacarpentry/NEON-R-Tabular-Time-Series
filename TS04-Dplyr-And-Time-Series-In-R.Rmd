@@ -6,6 +6,7 @@ authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser, Michael Patterson]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+packagesLibraries: [ggplot2, dplyr, lubridate]
 tags: [spatio-temporal, time-series, phenology]
 mainTag: time-series
 packagesLibraries: [lubridate, ggplot2, dplyr]
@@ -47,50 +48,43 @@ After completing this lesson, you will:
  * Use the `year()` function from the `lubridate` package to extract year from a
  date-time class variable. 
 
-**To complete this lesson:** you will need the most current version of R, and 
+##Things You’ll Need To Complete This Lesson
+To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-####R Libraries to Install
+###Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 * **dplyr:** `install.packages("dplyr")`
 * **ggplot2:** `install.packages("ggplot2")`
 
-  <a href="http://neondataskills.org/R/Packages-In-R/" target="_blank">
-More on Packages in R - Adapted from Software Carpentry.</a>
+* [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-####Data to Download
-<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success"> 
-Download NEON Atmospheric Teaching Data Subset</a>
-
-The data used in this lesson were collected at Harvard Forest which is
-an National Ecological Observatory Network <a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank">field site</a>. These data are proxy data for what will be available for 30 years
-on the [NEON data portal](http://data.neoninc.org/ "NEON data")
-for both Harvard Forest and other field sites located across the United States.</p>
-
-
-**Set Working Directory:** This lesson assumes that you have set your working 
-directory to the location of the downloaded and unzipped data subset. [An overview
-of setting the working directory in `R` can be found here.]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") 
-lesson prior to beginning this lesson.
-
-**Challenge Code:** NEON Data lesson often contain challenges that reinforce 
-learned skills. If available, the code for challenge solutions is found in a 
-downloadable `R` script available on the footer of each lesson page.
-
-
-</div>
+##Data to Download
+{% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
-### Additional Resources
+{% include/_greyBox-wd-rscript.html %}
+
+**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
+[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
+It is also part of a larger 
+[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
+that includes working with
+[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
+and  
+[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+
+****
+
+## Additional Resources
 
 * NEON Data Skills on <a href="http://neondataskills.org/R/GREPL-Filter-Piping-in-DPLYR-Using-R/" target="_blank"> spatial data and piping with dplyr</a> or 
 * Data Carpentry on <a href="http://www.datacarpentry.org/R-ecology/04-dplyr.html" target="_blank">Aggregating and Analyzing Data with dplyr</a> 
 * <a href="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf" target="_blank"> dplyr package description</a>.
 * <a href="http://blog.rstudio.org/2014/01/17/introducing-dplyr/" target="_blank">RStudio Introduction to dplyr</a>
 
-****
-
+</div>
 
 #Introduction to dplyr
 The `dplyr` package simplifies and increases efficiency of complicated yet commonly 
