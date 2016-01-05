@@ -1,11 +1,12 @@
 ---
 layout: post
-title: "Lesson 07: Converting to Julian Day"
+title: "Converting to Julian Day"
 date:   2015-10-18
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
 contributors: [Leah A. Wasser] 
 dateCreated: 2015-10-18
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+packagesLibraries: [lubridate]
 tags: [spatio-temporal, time-series, phenology]
 mainTag: time-series
 packagesLibraries: lubridate
@@ -31,50 +32,38 @@ Julian day variable from a Date or DataTime class variable.
 
 <div id="objectives" markdown="1">
 
-### Goals / Objectives
+#Goals / Objectives
 After completing this activity, you will:
 
- * Be able to convert a Date or Date/Time class variable to a Julian day variable.
+ * Be able to convert a Date or Date/Time class variable to a Julian day
+ variable.
 
-**To complete this lesson:** you will need the most current version of R, and 
+##Things You’ll Need To Complete This Lesson
+To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-####R Libraries to Install
-<li><strong>lubridate:</strong> <code> install.packages("lubridate")</code></li>
+###Install R Packages
+* **lubridate:** `install.packages("lubridate")`
 
-####Data to Download
-<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
-Download Atmospheric Data</a>
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-The data used in this lesson were collected at Harvard Forest which is
-an National Ecological Observatory Network  
-<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. 
-These data are proxy data for what will be available for 30 years
-on the [NEON data portal](http://data.neoninc.org/ "NEON data")
-for both Harvard Forest and other field sites located across the United States.
+###Download Data 
+{% include/dataSubsets/_data_Met-Time-Series.html %}
 
-**Set Working Directory:** This lessons assumes that you have set your working 
-directory to the location of the downloaded and unzipped data subset. [An overview
-of setting the working directory in `R` can be found here.]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") 
-lesson prior to beginning this lesson.
-
-**Challenge Code:** NEON Data lesson often contain challenges that reinforce 
-learned skills. If available, the code for challenge solutions is found in a 
-downloadable `R` script available on the footer of each lesson page.
-
-###Additional Resources
+****
+{% include/_greyBox-wd-rscript.html %}
 
 </div>
 
 ##Converting Between Time Formats - Julian Days
-Julian days, as R interprets it, is a continuous count of the number of days 
+Julian days, as `R` interprets them, is a continuous count of the number of days 
 beginning at Jan 1, each year. Thus each year will have up to 365 (non-leap
 year) or 366 (leap year) days. 
 
-Note: This format can also be called ordinal day or year day, and, ocassionally,
-Julian day can refer to a numeric count since 1 January 4713 BCE instead of a
-yearly count of 365 or 366 days.
-{ : .notice1 }
+<i class="fa fa-star"></i> **Data Tip:**  This format can also be called ordinal
+day or year day, and, ocassionally, Julian day can refer to a numeric count
+since 1 January 4713 BCE instead of a yearly count of 365 or 366 days.
+{ : .notice}
 
 Including a Julian day variable in your data set can be very useful when
 comparing data across years, when plotting data, and when matching your data
@@ -90,8 +79,10 @@ library(lubridate)  #work with dates
 
 #Load csv file of daily meterological data from Harvard Forest
 #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
-harMet_DailyNoJD <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m-NoJD.csv",
-                     stringsAsFactors = FALSE)
+harMet_DailyNoJD <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m-NoJD.csv",
+  stringsAsFactors = FALSE
+  )
 
 #what data class is the date column? 
 str(harMet_DailyNoJD$date)
@@ -100,8 +91,8 @@ str(harMet_DailyNoJD$date)
 harMet_DailyNoJD$date<- as.Date(harMet_DailyNoJD$date, "%m/%d/%y")
 ```
 
-To quickly convert from from Date to Julian days, can we use `yday`, a 
-function from the `lubridate` package. 
+To quickly convert from from Date to Julian days, can we use `yday`, a function
+from the `lubridate` package. 
 
 ```{r yday }
 # to learn more about it type
@@ -119,8 +110,6 @@ tail(harMet_DailyNoJD$julian)
 
 ```
 
-In this lesson we converted from `Date` class to a julian day, however, you can
+In this lesson we converted from `Date` class to a Julian day, however, you can
 convert between any recocognized date/time class (POSIXct, POSIXlt, etc) and
 Julian day using `yday`.  
-
-
