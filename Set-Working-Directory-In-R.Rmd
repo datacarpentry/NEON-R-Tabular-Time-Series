@@ -16,7 +16,7 @@ folder of downloaded data files. "
 code1: Set-Working-Directory-In-R.R
 image:
   feature: hierarchy_folder_purple.png
-  credit: Colin Williams National Ecological Observatory Network (NEON).
+  credit: National Ecological Observatory Network (NEON).
   creditlink: http://www.neoninc.org
 permalink: /R/Set-Working-Directory/
 comments: false
