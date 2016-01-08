@@ -1,5 +1,5 @@
 ---
-layout: tutorial
+layout: workshop
 title: "Self-paced Tutorial: Working with Tabular Time Series"
 estimatedTime: 3.0 Hours
 packagesLibraries: [ggplot2, scales, gridExtra, grid, zoo, dplyr, lubridate, ggthemes, reshape2]

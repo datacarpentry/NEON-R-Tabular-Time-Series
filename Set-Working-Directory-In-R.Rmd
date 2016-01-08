@@ -47,15 +47,15 @@ preferably RStudio, loaded on your computer.
 
 </div>
 
-#NEON Data Skills Lessons
-Most of the data skills lessons available through the [NEON Data Skills portal](http://www.NEONdataskills.org  "#WorkWithData")
+##NEON Data Skills Lessons
+Most of the data skills lessons available through the [NEON Data Skills portal](http://www.NEONdataskills.org  "NEON Data Skills Portal")
 utilize one or more teaching datasets that are is available for download within
 each lesson in the **Download** **Data** section.  These data 
 subsets are hosted on the NEON Data Skills' Figshare site and are freely 
 available.  Prior to being able to start the lesson we must set the `R` Working
 Directory to the location of these downloaded files.  
 
-#Download the Data
+##Download the Data
 After clicking on the "Download Data" button, the data
 (here **NEON-DS-Met-Time-Series.zip**) 
 will automatically download.  The data files will be contained within a zipped
@@ -70,7 +70,7 @@ the purposes of this lesson we will say that we have a folder
 Use a program already installed on your computer, or one of many free unzipping 
 programs that can be readily downloaded, to unzip the folder.  
 
-#Check Current Working Directory
+##Check Current Working Directory
 The code `getwd()` can be typed into the `R` console at any point to determine
 where the current Working Directory is set.  
 
@@ -82,7 +82,7 @@ getwd()
 
 ```
 
-#Set the Working Directory: Written Path
+##Set the Working Directory: Written Path
 
 Pathways in the NEON Data Skills lessons will be written assuming the working
 directory is the parent directory to the folder that was downloaded.
@@ -99,17 +99,17 @@ explanation purposes we have a:
  * third folder: NEON-DS-Met-Time-Series
 
 Our goal is to set the working directory to *data* so that all pathways with our
-code can start with the AtmosData folder that was downloaded.  
+code can start with the *NEON-DS-Met-Time-Series* folder that was downloaded.  
 
-## Windows
+###Windows
 
 setwd("C:/Users/NEON/Documents/data/")
 
 
-## Mac
+###Mac
 setwd("/Users/NEON/Documents/data")
 
-##Finding the Path
+##Find the Working Directory Path
 If you are unsure of the pathway you can find out by right clicking (Mac: 
 control+click) on the file/folder of interest and select "Get Info". There 
 location information will appear something like: 
@@ -122,13 +122,13 @@ that folder:
 Windows:  C:/Users/NEON/Documents/data/NEON-DS-Met-Time-Series/
 Mac:  /Users/NEON/Documents/data/NEON-DS-Met-Time-Series
 
-#Set the Working Directory: Using RStudio GUI
+##Set the Working Directory: Using RStudio GUI
 Windows or Mac Operating System: go to Session, select Select Working Directory,
-select Choose Directory, and select the appropraite folder/directory. 
+select Choose Directory, and select the appropriate folder/directory. 
 
-#Set the Working Directory: Using R GUI
-Windows Operating Systems: go to the File menu, select Change Working Directory,
-and select the appropriate folder/directory.
+##Set the Working Directory: Using R GUI
+Windows Operating Systems: go to the `File` menu, select `Change Working
+Directory`, and select the appropriate folder/directory.
 
-Mac Operating Systems: go to the Misc menu, select Change Working Directory, and
-select the appropriate folder/directory
+Mac Operating Systems: go to the `Misc` menu, select `Change Working Directory`,
+and select the appropriate folder/directory
