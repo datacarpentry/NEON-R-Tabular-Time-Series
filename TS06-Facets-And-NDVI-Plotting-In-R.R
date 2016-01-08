@@ -12,44 +12,177 @@ library(dplyr)  #for subsetting by season
 #setwd("working-dir-path-here")
 
 #daily HARV met data, 2009-2011
-harMetDaily.09.11 <- read.csv(file="AtmosData/HARV/Met_HARV_Daily_2009_2011.csv",
-                     stringsAsFactors = FALSE)
+harMetDaily.09.11 <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_Daily_2009_2011.csv",
+  stringsAsFactors = FALSE
+  )
 
 #covert date to POSIXct date-time class
 harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 
-#monthly HARV temperature data, 2009-2011
-harTemp.monthly.09.11<-read.csv(file="AtmosData/HARV/Temp_HARV_Monthly_09_11.csv",
-                                stringsAsFactors=FALSE)
 
-#convert datetime from chr to datetime class & rename date for clarification
-harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
+## ----plot-airt-----------------------------------------------------------
 
-## ----PAR-v-precip--------------------------------------------------------
-#PAR v precip 
-par.precip <- ggplot(harMetDaily.09.11,aes(prec, part)) +
-           geom_point(na.rm=TRUE) +    #removing the NA values
-           ggtitle("Daily Precipitation and PAR at Harvard Forest") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-           theme(text = element_text(size=20)) +
-           xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
-par.precip
+AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+           geom_point() +
+           ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+            xlab("Date") + ylab("Temperature (C)") +
+            scale_x_datetime(labels=date_format ("%m-%y"))+
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+AirTempDaily
+
+## ----plot-by-year--------------------------------------------------------
+#add year column to daily values
+harMetDaily.09.11$year <- year(harMetDaily.09.11$date)
+
+#view year column head and tail
+head(harMetDaily.09.11$year)
+tail(harMetDaily.09.11$year)
+
+
+## ----plot-facet-year-----------------------------------------------------
+#run this code to plot the same plot as before but with one plot per season
+AirTempDaily + facet_grid(. ~ year)
+
+## ----plot-facet-year-2---------------------------------------------------
+AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+           geom_point() +
+           ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+            xlab("Date") + ylab("Temperature (C)") +
+            scale_x_datetime(labels=date_format ("%m-%y"))+
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#facet plot by year
+AirTempDaily + facet_grid(. ~ year)
+
+## ----plot-precip-jd------------------------------------------------------
+
+AirTempDaily_jd <- ggplot(harMetDaily.09.11, aes(jd, airt)) +
+           geom_point() +
+           ggtitle("Daily Precipitation Harvard Forest\n 2009-2011") +
+            xlab("Julian Day") + ylab("Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#create faceted panel
+AirTempDaily_jd + facet_grid(. ~ year)
+
+
+## ----rearrange-facets----------------------------------------------------
+
+#move labels to the RIGHT and stack all plots
+AirTempDaily_jd + facet_grid(year ~ .)
+
+
+
+## ----rearrange-facets-columns--------------------------------------------
+
+#add columns
+AirTempDaily_jd + facet_wrap(~year, ncol = 2)
+
+
+
+## ----plot-airt-soilt-----------------------------------------------------
+
+airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
+           geom_point() +
+           ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+           xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+airSoilTemp_Plot
+
+
+## ----faceted-temp-plots--------------------------------------------------
+#create faceted panel
+airSoilTemp_Plot + facet_grid(year ~ .)
+
+## ----challenge-answer-temp-month, echo=FALSE-----------------------------
+
+#add month column to daily values
+harMetDaily.09.11$month <- month(harMetDaily.09.11$date)
+
+#recreate plot
+airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
+           geom_point() +
+           ggtitle("Air vs. Soil Temperature NEON Harvard Forest Field Site\n 2009-2011") +
+           xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#create faceted panel
+airSoilTemp_Plot + facet_wrap(~month, nc=3)
+
+
+## ----extract-month-name--------------------------------------------------
+#add text month name column
+harMetDaily.09.11$month_name <- format(harMetDaily.09.11$date,"%B")
+
+#view head and tail
+head(harMetDaily.09.11$month_name)
+tail(harMetDaily.09.11$month_name)
+
+#recreate plot
+airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
+           geom_point() +
+           ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+            xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#create faceted panel
+airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
+
+
+## ----factor--------------------------------------------------------------
+#order the factors
+harMetDaily.09.11$month_name = factor(harMetDaily.09.11$month_name, 
+                                      levels=c('January','February','March',
+                                               'April','May','June','July',
+                                               'August','September','October',
+                                               'November','December'))
+
+## ----plot-by-month-levels------------------------------------------------
+
+#recreate plot
+airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
+           geom_point() +
+           ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+            xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
+
+#create faceted panel
+airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
+
 
 ## ----subsetting-by-season-1----------------------------------------------
-#create a column of only the month
-harMetDaily.09.11 <- harMetDaily.09.11  %>% 
-  mutate(month=format(date,"%m"))
+#add month to data_frame - note we already performed this step above.
+harMetDaily.09.11$month  <- month(harMetDaily.09.11$date)
 
-#check structure of this variable
-str(harMetDaily.09.11$month)
+#view head and tail of column
+head(harMetDaily.09.11$month)
+tail(harMetDaily.09.11$month)
 
 ## ----subsetting-by-season-2----------------------------------------------
 harMetDaily.09.11 <- harMetDaily.09.11 %>% 
   mutate(season = 
-           ifelse(month %in% c("12", "01", "02"), "winter",
-           ifelse(month %in% c("03", "04", "05"), "spring",
-           ifelse(month %in% c("06", "07", "08"), "summer",
-           ifelse(month %in% c("09", "10", "11"), "fall", "Error")))))
+           ifelse(month %in% c(12, 1, 2), "Winter",
+           ifelse(month %in% c(3, 4, 5), "Spring",
+           ifelse(month %in% c(6, 7, 8), "Summer",
+           ifelse(month %in% c(9, 10, 11), "Fall", "Error")))))
+
 
 #check to see if this worked
 head(harMetDaily.09.11$month)
@@ -59,168 +192,96 @@ tail(harMetDaily.09.11$season)
 
 ## ----plot-by-season------------------------------------------------------
 
-#run this code to plot the same plot as before but with one plot per season
-par.precip + facet_grid(. ~ season)
+#recreate plot
+airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
+           geom_point() +
+           ggtitle("Air vs. Soil Temperature\n 2009-2011\n NEON Harvard Forest Field Site") +
+            xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
+           theme(plot.title = element_text(lineheight=.8, face="bold",
+                 size = 20)) +
+           theme(text = element_text(size=18))
 
-## ----par.precip-rerun, echo=FALSE----------------------------------------
-par.precip <- ggplot(harMetDaily.09.11,aes(prec, part)) +
-           geom_point(na.rm=TRUE) +    #removing the NA values
-           ggtitle("Daily Precipitation and PAR at Harvard Forest") +
-           theme(plot.title = element_text(lineheight=.8, face="bold", 
-                                           size = 20)) +
-           theme(text = element_text(size=20)) +
-           xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+#run this code to plot the same plot as before but with one plot per season
+airSoilTemp_Plot + facet_grid(. ~ season)
 
 ## ----plot-by-season2-----------------------------------------------------
-par.precip + facet_grid(. ~ season)
 
 # for a landscape orientation of the plots we change the order of arguments in
     #facet_grid():
-par.precip + facet_grid(season ~ .)
+airSoilTemp_Plot + facet_grid(season ~ .)
 
 
-#and another arrangement of plots:
-par.precip + facet_wrap(~season, ncol = 2)
 
 
-## ----assigning-level-to-season-------------------------------------------
-harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, level=c("spring",
-                                                    "summer","fall","winter")) 
+## ----assigning-level-to-season, include=TRUE, results="hide", echo=FALSE----
+#1
+#create factor / assign levels
+harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, 
+                                  level=c("Winter","Spring","Summer","Fall")) 
 
 #check to make sure it worked
 str(harMetDaily.09.11$season)
 
 #rerun original par.precip code to incorporate the levels. 
-par.precip <- ggplot(harMetDaily.09.11,aes(prec, part)) +
-         geom_point(na.rm=TRUE) +    #removing the NA values
-        ggtitle("Daily Precipitation and PAR at Harvard Forest") +
-         theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-         theme(text = element_text(size=20)) +
-         xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+airSoilTemp_Plot_season <- ggplot(harMetDaily.09.11,aes(prec, part)) + 
+  geom_point(na.rm=TRUE) +    #removing the NA values
+  ggtitle("Seasonal Air vs Soil Temperature\n 2009-2011 \n NEON Harvard Forest Site") +
+  theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+  theme(text = element_text(size=20)) +
+  xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+
+#2   air & temp by season         
+#new facetted plots
+airSoilTemp_Plot_season + facet_wrap(~ season, nc=2)
+
+#3  air & temp by season & year
+#new facetted plots
+airSoilTemp_Plot_season + facet_grid(year ~ season)
+
+## ----plot-monthly-data, include=TRUE, results="hide", echo=FALSE---------
+#read in the data
+met_monthly_HARV <- read.csv(
+  "NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv",
+  stringsAsFactors = FALSE
+  )
+
+# Plot 1: base R methods
+#convert to date time - add a day "01" to each date to support this in base R
+met_monthly_HARV$date <- as.Date(paste(met_monthly_HARV$date,"-01",sep=""))
+
+#add year
+met_monthly_HARV$year <- year(met_monthly_HARV$date)
+
+#add month
+met_monthly_HARV$month <- factor(month(met_monthly_HARV$date))
+
+#create plot
+#rerun original par.precip code to incorporate the levels. 
+long_term_temp <- ggplot(met_monthly_HARV,aes(month, airt)) +
+        geom_point(na.rm=TRUE) +    #removing the NA values
+        ggtitle("Air Temperature 2001-2015 \n NEON Harvard Forest Site") +
+        theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+        theme(text = element_text(size=20)) +
+        xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
            
 #new facetted plots
-par.precip + facet_grid(. ~ season)
+long_term_temp + facet_wrap(~ year, nc=3)
 
+# Second plot zoo methods
 
-## ----challenge-code-prec.airtemp, echo=FALSE-----------------------------
-harMetDaily.09.11$season<- factor(harMetDaily.09.11$season, level=c("winter",
-                                                  "spring", "summer", "fall"))
-prec.airtemp <- ggplot(harMetDaily.09.11,aes(airt, prec)) +
-           geom_point(na.rm=TRUE) +    #removing the NA values
-           ggtitle("Harvard Forest\n 2009-2011") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
-           theme(text = element_text(size=20)) +
-           xlab("Air Temperature (Celcius)") + ylab("Precipitation (daily mm)")
+#load the zoo package
+library(zoo)
 
-prec.airtemp + facet_grid(.~season)
-prec.airtemp + facet_grid(season~.)
+#convert date column to date column
+met_monthly_HARV_zoo <- as.Date(as.yearmon(met_monthly_HARV$date))
 
-
-## ----read-NDVI-----------------------------------------------------------
-#first read in the NDVI CSV data
-NDVI.2011 <- read.csv(file="AtmosData/NDVI_ForAtmosData/meanNDVI_HARV_2011.csv"
-                      , stringsAsFactors = FALSE)
-#check out the data
-str(NDVI.2011)
-head(NDVI.2011)
-
-## ----challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE----
-#convert chr class Date to date class Date
-NDVI.2011$Date<- as.Date(NDVI.2011$Date)
-#double check
-str(NDVI.2011)
-
-## ----dplyr-to-subset-----------------------------------------------------
-#Use dplyr to subset only 2011 data
-harMet.daily2011 <- harMetDaily.09.11 %>% 
-  mutate(year = year(date)) %>%   #need to create a year only column first
-  filter(year == "2011")
-
-#convert data from POSIX class to Date class; both "date" vars. now Date class
-harMet.daily2011$date<-as.Date(harMet.daily2011$date)
-
-## ----plot-PAR-NDVI-------------------------------------------------------
-#create plot of julian day vs. PAR
-plot.par.2011 <- ggplot(harMet.daily2011, aes(date, part))+
-  geom_point(na.rm=TRUE) +
-  ggtitle("Daily PAR at Harvard Forest, 2011")+
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=20))
-
-plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
-  geom_point(colour = "forestgreen", size = 4) +
-  ggtitle("Daily NDVI at Harvard Forest, 2011")+
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=20))
- 
-#display the plots together
-grid.arrange(plot.par.2011, plot.NDVI.2011) 
-
-## ----plot-same-xaxis-----------------------------------------------------
-plot2.par.2011 <- plot.par.2011 +
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Total PAR") + xlab ("")
- 
-
-plot2.NDVI.2011 <- plot.NDVI.2011 +
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Total NDVI") + xlab ("Date")
-
-
-grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
-
-## ----challengeplot-same-xaxis, echo=FALSE--------------------------------
-plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
-  geom_point(colour="darkblue", na.rm=TRUE) +
-  ggtitle("Average Air Temperature\n Harvard Forest 2011")+
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Celcius") + xlab ("")+
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=20))
-
-grid.arrange(plot.airt.2011, plot2.NDVI.2011) 
-
-grid.arrange(plot2.par.2011, plot.airt.2011, plot2.NDVI.2011) 
-
-## ----plot-same-x-axis-1--------------------------------------------------
-
-library(reshape2)  #allows us to "melt" dataframes from "wide" to "long"
-
-#merge the two data frames by date and retain all 'harMet.daily
-harMetNDVIall.daily.2011<- merge(harMet.daily2011, NDVI.2011, by.x = "date", 
-                              by.y = "Date", all.x=TRUE)
-
-#convert from "wide" form to "long" form
-harMetNDVI.daily.2011.long<-melt(harMetNDVIall.daily.2011, id ="date")
-
-## ----plot-same-x-axis-2--------------------------------------------------
-#subset to retain just the variables of interest.  The vertical bar character
-# means "OR".
-harMetNDVI.daily.2011.select<-subset(harMetNDVI.daily.2011.long,
-                                variable=="meanNDVI"| variable== "prec"|
-                                variable == "airt" | variable == "part")
-
-NDVI.harMet.facet.plot<-ggplot(harMetNDVI.daily.2011.select,
-                               aes(date, value), group=variable) +
-  geom_point() +
-  facet_grid(variable~., scales="free") +   #specify facets & y-axis can vary
-  ggtitle("Harvard Forest 2011") +
-  scale_x_date(labels = date_format("%b %d"),  #abbreviated month & day
-               breaks = "3 months", minor_breaks= "1 month") +  #where grid is
-  xlab ("Date") + ylab ("Value") +
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=10)) 
-
-NDVI.harMet.facet.plot
-
+#create plot
+#rerun original par.precip code to incorporate the levels. 
+long_term_temp_zoo <- ggplot(met_monthly_HARV_zoo,aes(date, airt)) +
+        geom_point(na.rm=TRUE) +    #removing the NA values
+        ggtitle("Air Temperature 2001-2015 \n NEON Harvard Forest Site") +
+        theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
+        theme(text = element_text(size=20)) +
+        xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
+long_term_temp_zoo
 

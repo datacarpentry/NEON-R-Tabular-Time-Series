@@ -6,10 +6,13 @@ library(lubridate)  #work with dates
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
 
+
+## ----read-data-csv-------------------------------------------------------
 #Load csv file of 15 min meteorological data from Harvard Forest
 #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
-harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
-                     stringsAsFactors = FALSE)
+harMet_15Min <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
+  stringsAsFactors = FALSE)
 
 ## ----view-date-structure-------------------------------------------------
 #view column data class
@@ -50,6 +53,7 @@ timeDate
 #class type to show us a date we recognize, use the `unclass()` function.
 unclass(timeDate)
 
+
 ## ----explore-POSIXlt-----------------------------------------------------
 #Convert character data to POSIXlt date and time
 timeDatelt<- as.POSIXlt("2015-10-19 10:15")  
@@ -59,7 +63,7 @@ timeDatelt
 unclass(timeDatelt)
 
 ## ----view-date-----------------------------------------------------------
-#view one date time entry
+#view one date-time field
 harMet_15Min$datetime[1]
 
 ## ----format-date---------------------------------------------------------
@@ -73,9 +77,17 @@ as.POSIXct(harMet_15Min$datetime[1],format="%d-%m-%Y%H:%M")
 as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%d%H:%M")
 
 
-## ----time-zone-HarMet----------------------------------------------------
-#checking time zone of data as R sees it
-tz(harMet_15Min)
+## ----convert-column------------------------------------------------------
+new.date.time <- as.POSIXct(harMet_15Min$datetime,
+                            format="%Y-%m-%dT%H:%M" #format time
+                            )
+
+#view output
+head(new.date.time)
+
+#what class is the output
+class(new.date.time)
+
 
 ## ----assign-time-zone----------------------------------------------------
 #assign time zone to just the first entry

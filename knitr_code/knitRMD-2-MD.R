@@ -13,10 +13,11 @@ require(knitr)
 gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series_mjones01/"
 
 #jekyll will only render md posts that begin with a date. Add one.
-add.date <- "2015-12-07-"
+add.date <- "2016-1-05-"
 
 #set working dir - this is where the data are located
-wd <- "~/Documents/data/Spatio_TemporalWorkshop/1_WorkshopData"
+wd <- "~/Documents/data/Spatio_TemporalWorkshop"
+
 
 ################### CONFIG BELOW IS REQUIRED BY JEKYLL - DON"T CHANGE ############
 #set data working dir
@@ -37,7 +38,7 @@ opts_knit$set(base.url = base.url)
 #if it doesn't exist, create it
 #note this will fail if the sub dir doesn't exist
 if (file.exists(paste0(wd,"/","images"))){
-    print("image dir exists - all good")
+  print("image dir exists - all good")
 } else {
   #create image directory structure
   dir.create(file.path(wd, "images/"))
@@ -66,6 +67,7 @@ for (files in rmd.files) {
   #setup path to images
   #print(paste0(imagePath, sub(".Rmd$", "", basename(input)), "/"))
   fig.path <- print(paste0(imagePath, sub(".Rmd$", "", input), "/"))
+  
   
   opts_chunk$set(fig.path = fig.path)
   opts_chunk$set(fig.cap = " ")

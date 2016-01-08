@@ -8,8 +8,10 @@ library(lubridate)  #work with dates
 
 #Load csv file of daily meterological data from Harvard Forest
 #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
-harMet_DailyNoJD <- read.csv(file="AtmosData/HARV/hf001-06-daily-m-NoJD.csv",
-                     stringsAsFactors = FALSE)
+harMet_DailyNoJD <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m-NoJD.csv",
+  stringsAsFactors = FALSE
+  )
 
 #what data class is the date column? 
 str(harMet_DailyNoJD$date)

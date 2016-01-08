@@ -71,14 +71,14 @@ and
 
 </div>
 
-#The Data Approach
+##The Data Approach
 If our goal were to exploring the relationships between air temperature, 
 precipitation,  
 photosynthetically active radiation (PAR) and plant phenology we would have to
 know how the data were collected and what units the variables were in prior to
 any plotting or further analysis. 
 
-##Good practices in R Script Writing
+###Good practices in R Script Writing
 When initiating a new script and workflow it is always a good idea to 
 
  1) load all necessary packages,
@@ -114,7 +114,7 @@ We are now ready to import the data.  This data is a .csv or comma-separated
 value file.  This file format is an excellent way to store tabular data in a
 plain text format that can be read by many different programs including R. 
 
-We will use the `hf001-10-15min-m.csv` file that contains micro-meteoreology
+We will use the `hf001-10-15min-m.csv` file that contains micro-meteorology
 data including our variables of interest: temperature, precipitation, and PAR 
 for Harvard Forest, aggregated at 15 minute intervals.
 
@@ -130,7 +130,7 @@ harMet_15Min <- read.csv(
 Now it is time to look at our data, metadata and information about how `R` 
 interprets the data.
 
-# Data Structure 
+##Data Structure 
 We have three basic options for viewing the data structure.  We can view the
 first few lines of data using `head()`, we can use `str()` to see how
 `R` *interprets* the data or we could view the data in a spreadsheet format by
@@ -152,7 +152,7 @@ We can see that because we used the `stringsAsFactors=FALSE` command, data types
 that are not numbers or integers are classified as characters (chr) rather than 
 as factors.
 
-#Metadata
+##Metadata
 There is information other than how `R` interprets our data that we need to
 know.
 
@@ -162,10 +162,11 @@ When we are examining data that we've obtained from others, the extra step of
 metadata investigation is essential to visualizing, analyzing and interpreting
 the data properly for a project.
 
-##Open Associated Metadata Files
+###Open Associated Metadata Files
 To get some of this information, or clues to this information, we will open the
 metadata text file associated with this 15-min meteorology data that is in the 
-AtmosData folder. Navigate to this file and open it in a text editor.
+NEON-DS-Met-Time-Series folder. Navigate to this file and open it in a text
+editor.
 
 ![Harvard Forest 15 min Atmospheric Data Screenshot]  ({{site.baseurl}}/images/tabTimeSeries/TS01_MetaDataScreenShot.png)
 
@@ -187,7 +188,7 @@ ourselves, but also to colleagues and collaborators.
 # for quantitative variables missing values are given as NA
 ```
 
-## Metadata Sleuthing
+###Metadata Sleuthing
 Questions: 
 
 * Is there information provided here that doesn't match the data? 
@@ -214,7 +215,7 @@ script so that we can easily refer to it as we actually work with the data.
 # preview tab give plots of all variables
 ```
 
-## Other Metadata File Formats
+###Other Metadata File Formats
 Do you see anything else on the website that might be related to metadata? 
 
 An EML file! This is the official standards-based metadata file using the 
