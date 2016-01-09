@@ -3,13 +3,13 @@ layout: post
 title: "Lesson 00: Intro to Time Series Data in R - Managing Date / Time Formats
 Simple Plots using ggplot2"
 date:   2015-10-25
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Leah A. Wasser]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
+contributors: []
 dateCreated:  2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2]
 category: 
-tags: [spatio-temporal, time-series, phenology]
+tags: [spatio-temporal, time-series, phenology, R]
 mainTag: time-series
 description: "This lesson will demonstrate how to import a time series data set 
 stored in .csv format into `R`. It will explore data classes and will walk
@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Brief-Tabular-Time-Series-qplot
+permalink: R/Brief-Tabular-Time-Series-qplot
 comments: false
 ---
 
@@ -266,9 +266,9 @@ object that the variables are stored in.
 
 ```{r plot-data }
 #quickly plot of air temperature
-qplot(x=date,y=airt, 
+qplot(x=date, y=airt, 
       data=harMet.daily,
-      main="Daily Air Temperature \nNEON Harvard Forest Field Site")
+      main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
 ```
 

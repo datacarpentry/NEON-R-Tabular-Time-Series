@@ -58,9 +58,9 @@ min(prec)
 
 ## ----plot-data-----------------------------------------------------------
 #quickly plot of air temperature
-qplot(x=date,y=airt, 
+qplot(x=date, y=airt, 
       data=harMet.daily,
-      main="Daily Air Temperature \nNEON Harvard Forest Field Site")
+      main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
 
 ## ----view-class----------------------------------------------------------

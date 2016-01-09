@@ -2,12 +2,12 @@
 layout: post
 title: "Lesson 04: Subset and Manipulate Time Series Data with dplyr"
 date:   2015-10-21
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Leah A. Wasser, Michael Patterson]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
+contributors: [Michael Patterson]
 dateCreated: 2015-10-22
 lastModified: 2016-01-08
 packagesLibraries: [ggplot2, dplyr, lubridate]
-tags: [spatio-temporal, time-series, phenology]
+tags: [spatio-temporal, time-series, phenology, R]
 mainTag: time-series
 packagesLibraries: [lubridate, ggplot2, dplyr]
 category: 
@@ -15,17 +15,16 @@ description: "This lesson teaches how to conduct basic data manipulation using
 dplyr functions including group_by, summarize and mutate. The use of pipes
 is taught and used throughout the lesson. Finally the new data frames created in
 the previous manipulations will be plotted using ggplot(). "
-code1: TS04-Dplyr-And-Time-Series-In-R.R
+code1: TS04-Dplyr-For-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Time-Series-Subset-dplyr
+permalink: R/Time-Series-Subset-dplyr
 comments: false
 ---
 
 {% include _toc.html %}
-
 
 ##About
 In this lesson, we will use the `group_by`, `summarize`and `mutate` functions in
@@ -88,12 +87,12 @@ or
 
 </div>
 
-#Introduction to dplyr
+##Introduction to dplyr
 The `dplyr` package simplifies and increases efficiency of complicated yet
 commonly performed data "wrangling" (manipulation / processing) tasks. It uses
 the `data_frame` object as both an input and an output.
 
-##Load the Data
+###Load the Data
 We will need the `lubridate` and the `dplyr` packages to complete this lesson.
 
 We will also use the 15-minute average atmospheric data subsetted to 2009-2011 
@@ -125,21 +124,19 @@ loaded.
                         format = "%Y-%m-%d %H:%M",
                         tz = "America/New_York")
 
-##Explore Our Data
-
+##Explore The Data
 Remember that we are interested in the drivers of phenology including - 
 air temperature, precipitation, and PAR (photosynthetic active radiation - or
 the amount of visible light). Using the 15-minute averaged data, we could easily
 plot each of these variables.  
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-And-Time-Series-In-R/15-min-plots-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-For-Time-Series-In-R/15-min-plots-1.png) 
 
 However, summarizing the data at a coarser scale (e.g., daily, weekly, by season, 
 or by year) may be easier to visually interpret during initial stages of
 data exploration. 
 
 ###Extract Year from a Date-Time Column
-
 To summarize by year efficiently, it is helpful to have a year column that we
 can use to `group` by. We can use the `lubridate` function `year()` to extract
 the year only from a `date-time` class `R` column. 
@@ -167,7 +164,7 @@ Using `names()` we can see that we now have a `year` column in our `data.frame`.
 Now that we have added a year column to our data.frame, we can use `dplyr` to 
 summarize our data.
 
-#Manipulate Data using dplyr
+##Manipulate Data using dplyr
 Let's start by extracting a yearly air temperature value for the Harvard Forest
 data. To calculate a yearly average, we need to:
 
@@ -216,9 +213,8 @@ the mean air temperature value each year.
     ## 2  2010         NA
     ## 3  2011   8.746906
 
-Why did this return a `NA` value for years 2009 and 2010? We know there
-are some values for both years. Let's check our
-data for `NoData` values.
+Why did this return a `NA` value for years 2009 and 2010? We know there are some
+values for both years. Let's check our data for `NoData` values.
 
 
     #are there NoData values?
@@ -237,10 +233,10 @@ data for `NoData` values.
     ## 1 158360 2009-07-08 14:15:00   189    NA      M    NA
     ## 2 203173 2010-10-18 09:30:00   291    NA      M    NA
 
-It appears as if there are two `NoData` values (in 2009 and 2010) that are causing 
-`R` to return a `NA` for the mean for those years. As we learned previously, 
-we can use `na.rm` to tell `R` to ignore those values and calculate the final mean
-value.
+It appears as if there are two `NoData` values (in 2009 and 2010) that are
+causing `R` to return a `NA` for the mean for those years. As we learned
+previously, we can use `na.rm` to tell `R` to ignore those values and calculate
+the final mean value.
 
 
     #calculate mean but remove NA values
@@ -258,16 +254,18 @@ value.
 Great! We've now used the `group_by` function to create groups for each year 
 of our data. We then calculated a summary mean value per year using `summarize`.
 
-##dplyr Pipes 
+###dplyr Pipes 
 The above steps utilized several steps of `R` code and created 1 `R` object - 
-`HARV.grp.year`. We can combine these steps using `pipes` in the `dplyr` package.
+`HARV.grp.year`. We can combine these steps using `pipes` in the `dplyr` 
+package.
 `Pipes` allow us to create a string of functions where the output of each step
 is fed directly into the next step using the syntax: `%>%`. This means we don't 
 need to name the output of each intermediate step.
 
 A few notes about piping syntax:
 
-1. A pipe begins with the object name that we will be manipulating, in our case `harMet15.09.11`
+1. A pipe begins with the object name that we will be manipulating, in our case
+`harMet15.09.11`
 2. it then links that object with first manipulation step using `%>%`
 3. finally, the first function is called, in our case `group_by(year)`. Note
 that because we specified the object name in step one above, we can just use the
@@ -282,7 +280,6 @@ year.
 `harMet15.09.11 %>% group_by(year) %>% tally()`
 
 Let's try it!
-
 
 
     #how many measurements were made a year?
@@ -340,14 +337,14 @@ Plot the output using `qplot`.
 </div>
 
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-And-Time-Series-In-R/pipe-demo-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-For-Time-Series-In-R/pipe-demo-1.png) 
 
 <i class="fa fa-star"></i> **Data Tip:**  Older `dplyr` versions used the `%.%`
 syntax to designate a pipe. Pipes are occasionally sometimes referred to as
 chains. 
 {: .notice }
 
-##Other dplyr functions
+##Other dplyr Functions
 
 `dplyr` works based on a series of *verb* functions that allow us to manipulate
 the data in different ways: 
@@ -370,8 +367,7 @@ The syntax for all `dplyr` functions is similar:
  * the subsequent arguments dictate what to do with that `data.frame` and 
  * the output is a new data frame. 
 
-##Group by a Variable (or Two)
-
+###Group by a Variable (or Two)
 Our goal for this lesson is to view drivers of annual phenology patterns.
 Specifically, we want to explore daily average temperature throughout the year.
 This means we need to calculate average temperature, for each day, across three
@@ -412,7 +408,6 @@ The output shows we have 96 values for each day. Is that what we expect?
 
     ## [1] 96
 
-
 <i class="fa fa-star"></i> **Data Tip:**  If Julian days weren't already in our 
 data we could use the `yday()` function
 <a href="http://www.inside-r.org/packages/cran/lubridate/docs/yday"/>
@@ -421,7 +416,6 @@ from the `lubridate` package to create a new column containing julian day values
 {: .notice }
 
 ###Summarize by Group
-
 We can use `summarize()` function to calculate a summary output value for each
 "group" - in this case Julian day per year. Let's calculate the mean air
 temperature for each Julian day per year. Note that we are still using
@@ -451,7 +445,6 @@ temperature for each Julian day per year. Note that we are still using
 
 <div id="challenge" markdown="1">
 ##Challenge
-
 We can use `sum` to calculate the total rather than mean value for each Julian
 Day. Using this information, do the following:
 
@@ -464,11 +457,10 @@ data.frame `total.prec`.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-And-Time-Series-In-R/challenge-answer-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-For-Time-Series-In-R/challenge-answer-1.png) 
 
 
 ###Mutate - Add Data.Frame Columns 2 dplyr Output
-
 We can use the `mutate()` function of `dplyr` to add additional columns of
 information to a data.frame. For instance, we added the year column
 independently at the very beginning of the lesson. However, we can add the year
@@ -510,7 +502,6 @@ immediately use the variable (`year2`).
 {: .notice }
 
 ##Save dplyr Output as Data.Frame
-
 We can save output from a `dplyr` pipe as a new `R` object to use for quick
 plotting. 
 
@@ -535,8 +526,8 @@ plotting.
     ## 6  2009     6  -4.915625
 
 ###Add Date-Time To dplyr Output
-
-In the challenge above, we created a plot of daily precipitation data using qplot. 
+In the challenge above, we created a plot of daily precipitation data using
+`qplot`. 
 However, the x-axis ranged from 0-366 (Julian Days for the year). It would have 
 been easier to create a meaningful plot across all three years if we had a 
 continuous date variable in our data_frame representing the year and date for 
@@ -587,19 +578,18 @@ Let's try it!
     ## 6  2009     6  -4.915625 2009-01-06 00:15:00
 
 <div id="challenge" markdown="1">
-
 ##Challenge: Applying dplyr Skills
 
 1. Plot daily total precipitation from 2009-2011 as we did in the previous
 challenge. However this time, use the new syntax that you learned (mutate and
 summarize to add a datetime column to your output data_frame).
-2. Create a data.frame of the average MONTHLY air temperature for 2009-2011.
-Name the new data frame "HarTemp.monthly.09.11". Plot your output.
+2. Create a data.frame of the average *monthly* air temperature for 2009-2011.
+Name the new data frame "harTemp.monthly.09.11". Plot your output.
 
 </div>
 
 
     ## Error: Unknown parameters: NA
 
-![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-And-Time-Series-In-R/challenge-code-dplyr-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS04-Dplyr-For-Time-Series-In-R/challenge-code-dplyr-1.png) 
 

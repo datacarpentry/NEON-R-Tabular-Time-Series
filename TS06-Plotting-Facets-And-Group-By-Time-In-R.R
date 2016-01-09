@@ -25,7 +25,7 @@ harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 
 AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
            geom_point() +
-           ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+           ggtitle("Daily Air Temperature\n NEON Harvard Forest\n 2009-2011") +
             xlab("Date") + ylab("Temperature (C)") +
             scale_x_datetime(labels=date_format ("%m-%y"))+
            theme(plot.title = element_text(lineheight=.8, face="bold",
@@ -50,7 +50,7 @@ AirTempDaily + facet_grid(. ~ year)
 ## ----plot-facet-year-2---------------------------------------------------
 AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
            geom_point() +
-           ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+           ggtitle("Daily Air Temperature\n NEON Harvard Forest\n 2009-2011") +
             xlab("Date") + ylab("Temperature (C)") +
             scale_x_datetime(labels=date_format ("%m-%y"))+
            theme(plot.title = element_text(lineheight=.8, face="bold",
@@ -64,7 +64,7 @@ AirTempDaily + facet_grid(. ~ year)
 
 AirTempDaily_jd <- ggplot(harMetDaily.09.11, aes(jd, airt)) +
            geom_point() +
-           ggtitle("Daily Precipitation Harvard Forest\n 2009-2011") +
+           ggtitle("Daily Precipitation\n 2009-2011\n NEON Harvard Forest") +
             xlab("Julian Day") + ylab("Temperature (C)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",
                  size = 20)) +
@@ -113,7 +113,7 @@ harMetDaily.09.11$month <- month(harMetDaily.09.11$date)
 #recreate plot
 airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
            geom_point() +
-           ggtitle("Air vs. Soil Temperature NEON Harvard Forest Field Site\n 2009-2011") +
+           ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
            xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",
                  size = 20)) +
@@ -134,7 +134,7 @@ tail(harMetDaily.09.11$month_name)
 #recreate plot
 airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
            geom_point() +
-           ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+           ggtitle("Air vs. Soil Temperature \n NEON Harvard Forest Field Site\n 2009-2011") +
             xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",
                  size = 20)) +
@@ -157,7 +157,7 @@ harMetDaily.09.11$month_name = factor(harMetDaily.09.11$month_name,
 #recreate plot
 airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
            geom_point() +
-           ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+           ggtitle("Air vs. Soil Temperature \n NEON Harvard Forest Field Site\n 2009-2011") +
             xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",
                  size = 20)) +

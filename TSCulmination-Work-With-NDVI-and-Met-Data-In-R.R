@@ -1,7 +1,19 @@
 ## ----read-NDVI-----------------------------------------------------------
+#Remember it is good coding technique to add additional libraries to the top of
+  #your script 
+library(lubridate) #for working with dates
+library(ggplot2)  #for creating graphs
+library(scales)   #to access breaks/formatting functions
+library(gridExtra) #for arranging plots
+library(grid)   #for arrangeing plots
+library(dplyr)  #for subsetting by season
+
+#set working directory to ensure R can find the file we wish to import
+#setwd("working-dir-path-here")
+
 #first read in the NDVI CSV data
 NDVI.2011 <- read.csv(
-  file="NEON-DS-Met-Time-Series/HARV/NDVI/HARV_NDVI_2011.csv", 
+  file="NEON-DS-Met-Time-Series/HARV/NDVI/meanNDVI_HARV_2011.csv", 
   stringsAsFactors = FALSE
   )
 
@@ -15,7 +27,7 @@ NDVI.2011$Date<- as.Date(NDVI.2011$Date)
 #double check
 str(NDVI.2011)
 
-## ----dplyr-to-subset-----------------------------------------------------
+## ----dplyr-to-subset, include=TRUE, results="hide", echo=FALSE-----------
 #Use dplyr to subset only 2011 data
 harMet.daily2011 <- harMetDaily.09.11 %>% 
   mutate(year = year(date)) %>%   #need to create a year only column first
@@ -47,16 +59,15 @@ grid.arrange(plot.par.2011, plot.NDVI.2011)
 plot2.par.2011 <- plot.par.2011 +
   scale_x_date(labels = date_format("%b %d"),
                breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
+               limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
   ylab("Total PAR") + xlab ("")
  
 
 plot2.NDVI.2011 <- plot.NDVI.2011 +
   scale_x_date(labels = date_format("%b %d"),
                breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
+               limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
   ylab("Total NDVI") + xlab ("Date")
-
 
 grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
 
@@ -77,7 +88,6 @@ grid.arrange(plot.airt.2011, plot2.NDVI.2011)
 grid.arrange(plot2.par.2011, plot.airt.2011, plot2.NDVI.2011) 
 
 ## ----plot-same-x-axis-1--------------------------------------------------
-
 library(reshape2)  #allows us to "melt" dataframes from "wide" to "long"
 
 #merge the two data frames by date and retain all 'harMet.daily

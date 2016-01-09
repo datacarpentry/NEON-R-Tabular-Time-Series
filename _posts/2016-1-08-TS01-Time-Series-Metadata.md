@@ -2,13 +2,13 @@
 layout: post
 title: "Lesson 01: Understanding Time Series Metadata"
 date:   2015-10-24
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Leah A. Wasser]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
+contributors: [ ]
 dateCreated:  2015-10-22
 lastModified: 2016-01-08
 packagesLibraries: []
 category: 
-tags: [spatio-temporal, time-series, phenology]
+tags: [spatio-temporal, time-series, phenology, R]
 mainTag: time-series
 description: "This lesson teaches basic good practices for writing a script in R
 when importing tabular data from a .csv file, how to examine the structure of a 
@@ -19,7 +19,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Time-Series-Metadata
+permalink: R/Time-Series-Metadata
 comments: false
 ---
 

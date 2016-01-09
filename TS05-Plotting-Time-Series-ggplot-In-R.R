@@ -154,21 +154,19 @@ PrecipDaily
 
 ## ----ggplot-geom_bar-----------------------------------------------------
 PrecipDailyBarA <- ggplot(harMetDaily.09.11, aes(date, prec)) +
-           geom_bar(stat="identity", na.rm = TRUE) +
-           ggtitle("Daily Precipitation\n Harvard Forest") +
-            xlab("Date") + ylab("Precipitation (mm)") +
-            scale_x_datetime(labels=date_format ("%b-%y"),breaks=date_breaks("1 year")) +
-            theme(plot.title = element_text(lineheight=.8, face="bold",
-                 size = 20)) +
-           theme(text = element_text(size=18))
+    geom_bar(stat="identity", na.rm = TRUE) +
+    ggtitle("Daily Precipitation\n Harvard Forest") +
+    xlab("Date") + ylab("Precipitation (mm)") +
+    scale_x_datetime(labels=date_format ("%b-%y"),breaks=date_breaks("1 year")) +
+    theme(plot.title = element_text(lineheight=.8, face="bold", size = 20)) +
+    theme(text = element_text(size=18))
 
 PrecipDailyBarA
 
 ## ----ggplot-geom_bar-subset, echo=FALSE, warning=FALSE-------------------
 
 #plot year subset
-PrecipDailyBarA + 
-            scale_x_datetime(limits=start.end)
+PrecipDailyBarA + scale_x_datetime(limits=start.end)
 
 
 ## ----ggplot-color--------------------------------------------------------
@@ -177,7 +175,6 @@ PrecipDailyBarB <- PrecipDailyBarA+
   geom_bar(stat="identity", colour="darkblue")
 
 PrecipDailyBarB
-
 
 
 ## ----ggplot-geom_lines---------------------------------------------------
@@ -205,20 +202,18 @@ ggplot(harMetDaily.09.11, aes(date, prec)) +
       ggtitle("Daily Precipitation with Linear Trend\n Harvard Forest") +
       xlab("Date") + ylab("Precipitation (mm)") +
       scale_x_datetime(labels=date_format ("%b %y"))+
-      theme(plot.title = element_text(lineheight=.8, face="italic",
-                 size = 20)) +
+      theme(plot.title = element_text(lineheight=.8, face="italic", size = 20)) +
       theme(text = element_text(size=18))+
       stat_smooth(method="lm", colour="grey")
 
 ## ----plot-airtemp-Monthly, echo=FALSE------------------------------------
 AirTempMonthly <- ggplot(harTemp.monthly.09.11, aes(date, mean_airt)) +
-           geom_point() +
-           ggtitle("Average Monthly Air Temperature\n 2009-2011\n NEON Harvard Forest") +
-           theme(plot.title = element_text(lineheight=.8, face="bold",
-                size = 20)) +
-           theme(text = element_text(size=18)) +
-           xlab("Date") + ylab("Air Temperature (C)") +
-          scale_x_datetime(labels=date_format ("%b%y"))
+    geom_point() +
+    ggtitle("Average Monthly Air Temperature\n 2009-2011\n NEON Harvard Forest") +
+    theme(plot.title = element_text(lineheight=.8, face="bold", size = 20)) +
+    theme(text = element_text(size=18)) +
+    xlab("Date") + ylab("Air Temperature (C)") +
+    scale_x_datetime(labels=date_format ("%b%y"))
 
 AirTempMonthly
 
