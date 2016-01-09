@@ -174,9 +174,10 @@ total.prec2 <- harMet15.09.11 %>%
   group_by(year, jd) %>%
   summarize(sum_prec = sum(prec, na.rm = TRUE), datetime = first(datetime)) 
 
-qplot(total.prec2$datetime, total.prec$sum_prec,
-      main="Total Daily Precipitation 2009-2011\nNEON Harvard Forest Field Site",
-      xlab="Date (Daily Values)", ylab=="Precip (mm)")
+qplot(x=total.prec2$datetime, y=total.prec2$sum_prec,
+    main="Total Daily Precipitation 2009-2011\nNEON Harvard Forest Field Site",
+    xlab="Date (Daily Values)", ylab=="Precip (mm)")
+
 #####################
 #p2
 harTemp.monthly.09.11 <- harMet15.09.11 %>%
@@ -185,8 +186,8 @@ harTemp.monthly.09.11 <- harMet15.09.11 %>%
   summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))
 
 qplot(harTemp.monthly.09.11$datetime, harTemp.monthly.09.11$mean_airt,
-      main="Monthly Mean Air Temperature 2009-2011\nNEON Harvard Forest Field Site",
-      xlab="Date (Month)", ylab="Air Temp (C)")
+  main="Monthly Mean Air Temperature 2009-2011\nNEON Harvard Forest Field Site",
+  xlab="Date (Month)", ylab="Air Temp (C)")
 
 #str(harTemp.monthly.09.11)
 

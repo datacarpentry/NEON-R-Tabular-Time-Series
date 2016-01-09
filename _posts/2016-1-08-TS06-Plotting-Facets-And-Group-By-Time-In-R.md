@@ -3,23 +3,23 @@ layout: post
 title: "Lesson 06: Create Plots with Multiple Panels, Grouped by Time Using ggplot
 Facets"
 date:   2015-10-19
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Leah Wasser]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah Wasser]
+contributors: [ ]
 dateCreated: 2015-10-22
 lastModified: 2016-01-08
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
 category:  
-tags: [spatio-temporal, time-series, phenology]
+tags: [spatio-temporal, time-series, phenology, R]
 mainTag: time-series
 description: "This lesson teaches how to plot subsetted time series data using
 the facets() function (e.g., plot by season) and to plot time series data with
 NDVI."
-code1: TS06-Facets-And-NDVI-Plotting-In-R.R
+code1: TS06-Plotting-Facets-And-Group-By-Time-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Time-Series-Plot-Facets-NDVI
+permalink: R/Time-Series-Plot-Facets-NDVI
 comments: false
 ---
 
@@ -85,7 +85,7 @@ respectively, to gain familiarity.
 
 #Plotting Subsetted Data Using Facets
  
-In this lesson we will learn how to create a panel of indivual plots - known as
+In this lesson we will learn how to create a panel of individual plots - known as
 facets in `ggplot2`. Each plot represents a particular `data_frame` time-series 
 subset - for example year or season.
 
@@ -128,7 +128,7 @@ object `AirTempDaily`.
 
     AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
                geom_point() +
-               ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+               ggtitle("Daily Air Temperature\n NEON Harvard Forest\n 2009-2011") +
                 xlab("Date") + ylab("Temperature (C)") +
                 scale_x_datetime(labels=date_format ("%m-%y"))+
                theme(plot.title = element_text(lineheight=.8, face="bold",
@@ -137,7 +137,7 @@ object `AirTempDaily`.
     
     AirTempDaily
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-airt-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-airt-1.png) 
  
 This plot tells us a lot about the annual increase and decrease of temperature
 at the NEON Harvard Forest field site. However, what is we wanted to plot each
@@ -165,7 +165,7 @@ using the `year` function in the `lubridate` package.
 
 ## Facet by Year
 Once we have a column that can be used to group or subset our data, we can 
-create a facetted plot - plotting each year's worth of data in an individual, 
+create a faceted plot - plotting each year's worth of data in an individual, 
 named panel.
 
 
@@ -174,7 +174,7 @@ named panel.
 
     ## Error in layout_base(data, cols, drop = drop): At least one layer must contain all variables used for facetting
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-facet-year-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-facet-year-1.png) 
 
 Oops - what happened? The plot did not render because we added the `year` column
 after creating the `ggplot` object `AirTempDaily`. Let's rerun the `ggplot` code
@@ -183,7 +183,7 @@ to ensure our newly added column is recognized.
 
     AirTempDaily <- ggplot(harMetDaily.09.11, aes(date, airt)) +
                geom_point() +
-               ggtitle("Daily Air Temperature NEON Harvard Forest\n 2009-2011") +
+               ggtitle("Daily Air Temperature\n NEON Harvard Forest\n 2009-2011") +
                 xlab("Date") + ylab("Temperature (C)") +
                 scale_x_datetime(labels=date_format ("%m-%y"))+
                theme(plot.title = element_text(lineheight=.8, face="bold",
@@ -193,7 +193,7 @@ to ensure our newly added column is recognized.
     #facet plot by year
     AirTempDaily + facet_grid(. ~ year)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-facet-year-2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-facet-year-2-1.png) 
 
 The faceted plot is interesting, however the x-axis on each plot is
 month-day-year. This means that the data for 2009 is on the left end of the plot
@@ -204,7 +204,7 @@ days rather than date.
 
     AirTempDaily_jd <- ggplot(harMetDaily.09.11, aes(jd, airt)) +
                geom_point() +
-               ggtitle("Daily Precipitation Harvard Forest\n 2009-2011") +
+               ggtitle("Daily Precipitation\n 2009-2011\n NEON Harvard Forest") +
                 xlab("Julian Day") + ylab("Temperature (C)") +
                theme(plot.title = element_text(lineheight=.8, face="bold",
                      size = 20)) +
@@ -213,7 +213,7 @@ days rather than date.
     #create faceted panel
     AirTempDaily_jd + facet_grid(. ~ year)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-precip-jd-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-precip-jd-1.png) 
 
 Using Julian day, our plots are visually easier to compare. Arranging our plots 
 this way, side by side, allows us to quickly scan for differences along the
@@ -228,7 +228,7 @@ We can rearrange the facets in different ways, too.
     #move labels to the RIGHT and stack all plots
     AirTempDaily_jd + facet_grid(year ~ .)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/rearrange-facets-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-1.png) 
 
 If we use `facet_wrap` we can specify the number of columns.
 
@@ -236,7 +236,7 @@ If we use `facet_wrap` we can specify the number of columns.
     #add columns
     AirTempDaily_jd + facet_wrap(~year, ncol = 2)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/rearrange-facets-columns-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-columns-1.png) 
 
 ##Graph Two Variables on One Plot
 Next, let's explore the relationship between two variables - air temperature
@@ -257,11 +257,11 @@ the ground).
     
     airSoilTemp_Plot
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-airt-soilt-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-airt-soilt-1.png) 
 
 The plot above suggests a relationship between the air and soil temperature as
 we might expect. However, it clumps all three years worth of data into one plot. 
-Let's create a stacked facetted plot of air vs. soil temperature grouped by year.
+Let's create a stacked faceted plot of air vs. soil temperature grouped by year.
 
 Lucky for us, we can do this quickly with one line of code - reusing the plot we
 created above.
@@ -270,16 +270,14 @@ created above.
     #create faceted panel
     airSoilTemp_Plot + facet_grid(year ~ .)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/faceted-temp-plots-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/faceted-temp-plots-1.png) 
 
-Have a close look at the data. Are there any noticable min / max temperature 
+Have a close look at the data. Are there any noticeable min / max temperature 
 differences between the three years?
 
 <div id="challenge" markdown="1">
-
-##Challenge
-
-Create a facetted plot of air temperature vs soil temperature by MONTH rather 
+##Challenge: Faceted Plot
+Create a faceted plot of air temperature vs soil temperature by *month* rather 
 than year.
 
 HINT: To create this plot, you will want to add a month column to our
@@ -288,11 +286,11 @@ a year column.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/challenge-answer-temp-month-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/challenge-answer-temp-month-1.png) 
 
-##Facetted Plots & Categorical Groups
+##Faceted Plots & Categorical Groups
 
-In the challenge above, we grouped our data by *month* - specificed by a numeric
+In the challenge above, we grouped our data by *month* - specified by a numeric
 value between 1 (January) and 12 (December). However, what if we wanted to 
 organize our plots using a categorical (character) group such as month NAME?
 Let's do that next.
@@ -321,7 +319,7 @@ which tells `R` to extract the month name (`%B`) from the date field.
     #recreate plot
     airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
                geom_point() +
-               ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+               ggtitle("Air vs. Soil Temperature \n NEON Harvard Forest Field Site\n 2009-2011") +
                 xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
                theme(plot.title = element_text(lineheight=.8, face="bold",
                      size = 20)) +
@@ -330,7 +328,7 @@ which tells `R` to extract the month name (`%B`) from the date field.
     #create faceted panel
     airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/extract-month-name-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/extract-month-name-1.png) 
 
 Great! We've created a nice set of plots by month. However, what is the order
 or the plots? It looks like `R` is ordering things alphabetically yet we know
@@ -361,7 +359,7 @@ need to rerun our `ggplot` code.
     #recreate plot
     airSoilTemp_Plot <- ggplot(harMetDaily.09.11, aes(airt, s10t)) +
                geom_point() +
-               ggtitle("Air vs. Soil Temperature\n NEON Harvard Forest Field Site\n 2009-2011") +
+               ggtitle("Air vs. Soil Temperature \n NEON Harvard Forest Field Site\n 2009-2011") +
                 xlab("Air Temperature (C)") + ylab("Soil Temperature (C)") +
                theme(plot.title = element_text(lineheight=.8, face="bold",
                      size = 20)) +
@@ -370,9 +368,9 @@ need to rerun our `ggplot` code.
     #create faceted panel
     airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-by-month-levels-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-month-levels-1.png) 
 
-##Subset by Season - *Advanced* *Topic*
+##Subset by Season - *Advanced Topic*
 Sometimes we want to group data by custom time periods. For example, we might
 want to group by season. However, the definition of various seasons may vary by 
 region which means we need to manually define each time period.
@@ -466,7 +464,7 @@ Now that we have a season column, we can plot our data by season!
     #run this code to plot the same plot as before but with one plot per season
     airSoilTemp_Plot + facet_grid(. ~ season)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-by-season-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-season-1.png) 
 
 Note, that once again, we re-ran our `ggplot` code to make sure our new column
 is recognized by `R`. We can experiment with various facet layouts next.
@@ -476,26 +474,27 @@ is recognized by `R`. We can experiment with various facet layouts next.
         #facet_grid():
     airSoilTemp_Plot + facet_grid(season ~ .)
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-by-season2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-season2-1.png) 
 
 <div id="challenge" markdown="1">
 
 ##Challenge: Create Plots by Season
-
-The goal of this challenge is to create plots that show the relationship between air and soil temperature across the different seasons.  
+The goal of this challenge is to create plots that show the relationship between
+air and soil temperature across the different seasons.  
 1. Create a *factor* season variable.  Convert the season column that we just
-created to a factor, then organize the seasons chronologically as follows: Winter, Spring, Summer, Fall. 
+created to a factor, then organize the seasons chronologically as follows:
+Winter, Spring, Summer, Fall. 
 
 2. Create a new faceted plot that is 2 x 2 (2 columns of plots). One can neatly
-plot multiple variables using facets as follows: `facet_grid(variable1 ~ variable2)`. 
+plot multiple variables using facets as follows: 
+`facet_grid(variable1 ~ variable2)`. 
 
 3. Create a plot of air vs soil temperature grouped by year and season.
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/assigning-level-to-season-1.png) ![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/assigning-level-to-season-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/assigning-level-to-season-1.png) ![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/assigning-level-to-season-2.png) 
 
 # zoo Package: Work with Year-Month Data
- 
 Some data sets will have a Year-Month date for their day data.  We may want to
 summarize this data into a yearly total.  
 
@@ -513,13 +512,12 @@ capabilities (`as.yearmon`). With `zoo` the syntax would be:
 `as.Date(as.yearmon(met_monthly_HARV$date))`
 
 <div id="challenge" markdown="1">
-
 ##Challenge: Plot with Year-Month Data
 
 Create two faceted plots of annual air temperature for each year of data in the
 file (2001-2015). Use the
 `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv` 
-file. This contains monthy average data for the NEON Harvard Forest field site.
+file. This contains monthly average data for the NEON Harvard Forest field site.
 
 Create one plot using the methods for base `R` and create the second plot using
 the methods with the `zoo` package.  
@@ -528,7 +526,7 @@ Experiment on your own to figure out the methods that you prefer!
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/TS06-Facets-And-NDVI-Plotting-In-R/plot-monthly-data-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/TS06-Plotting-Facets-And-Group-By-Time-In-R/plot-monthly-data-1.png) 
 
     ## Error: ggplot2 doesn't know how to deal with data of class Date
 

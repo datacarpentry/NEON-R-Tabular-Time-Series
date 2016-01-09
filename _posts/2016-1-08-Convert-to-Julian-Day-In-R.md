@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Converting to Julian Day"
+title: "Convert to Julian Day"
 date:   2015-10-18
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Leah A. Wasser] 
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
+contributors: [ ] 
 dateCreated: 2015-10-18
 lastModified: 2016-01-08
 packagesLibraries: [lubridate]
@@ -12,13 +12,13 @@ mainTag: time-series
 packagesLibraries: lubridate
 category: 
 description: "This lesson explains why Julian days are useful and teaches how
-to create a Julian day variable from a Date or DataTime class variable."
-code1: TS07-Convert-to-Julian-Day-In-R.R
+to create a Julian day variable from a Date or Data/Time class variable."
+code1: Convert-to-Julian-Day-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/julian-day-conversion
+permalink: R/julian-day-conversion
 comments: false
 ---
 
@@ -26,7 +26,7 @@ comments: false
 
 ##About
 This lesson explains why Julian days are useful and teaches how to create a
-Julian day variable from a Date or DataTime class variable.
+Julian day variable from a Date or Data/Time class variable.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
@@ -61,10 +61,11 @@ beginning at Jan 1, each year. Thus each year will have up to 365 (non-leap
 year) or 366 (leap year) days. 
 
 <i class="fa fa-star"></i> **Data Tip:**  This format can also be called ordinal
-day or year day, and, ocassionally, Julian day can refer to a numeric count
+day or year day, and, occasionally, Julian day can refer to a numeric count
 since 1 January 4713 BCE instead of a yearly count of 365 or 366 days.
 { : .notice}
 
+##Load the Data
 Including a Julian day variable in your data set can be very useful when
 comparing data across years, when plotting data, and when matching your data
 with other types of data that include Julian day.  
@@ -91,6 +92,7 @@ with other types of data that include Julian day.
     #convert "date" from chr to a Date class and specify current date format
     harMet_DailyNoJD$date<- as.Date(harMet_DailyNoJD$date, "%m/%d/%y")
 
+##Convert with yday
 To quickly convert from from Date to Julian days, can we use `yday`, a function
 from the `lubridate` package. 
 
@@ -112,6 +114,7 @@ contains the Julian day data.
 
     ## [1] 268 269 270 271 272 273
 
-In this lesson we converted from `Date` class to a Julian day, however, you can
-convert between any recocognized date/time class (POSIXct, POSIXlt, etc) and
-Julian day using `yday`.  
+<i class="fa fa-star"></i> **Data Tip:**  In this lesson we converted from
+`Date` class to a Julian day, however, you can convert between any recognized
+date/time class (POSIXct, POSIXlt, etc) and Julian day using `yday`.  
+{: .notice}

@@ -2,12 +2,12 @@
 layout: post
 title: "Lesson 03: Cleaning & Subsetting Time Series Data - NoData Values & Subset by Date in R"
 date: 2015-10-22
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2, lubridate]
-tags: [spatio-temporal, time-series, phenology]
+tags: [spatio-temporal, time-series, phenology, R]
 mainTag: time-series
 packagesLibraries: [lubridate, ggplot2]
 category: 
@@ -19,7 +19,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Subset-Data-and-No-Data-Values
+permalink: R/Subset-Data-and-No-Data-Values
 comments: false
 ---
 
@@ -71,7 +71,7 @@ and
 
 </div>
 
-#Cleaning Time Series Data 
+##Cleaning Time Series Data 
 No dataset is perfect. It is common to encounter, large files containing more
 data than we need for our analysis. It is also common to encounter `NoData`
 values that we need to account for when analyzing our data. 
@@ -88,7 +88,8 @@ We will use the `lubridate` and `ggplot2` packages. Let's load those first.
 
 If you have not already done so, import the `hf001-10-15min-m.csv` file, which
 contains our atmospheric data for Harvard Forest. Convert the `datetime` column
-to a `POSIXct` class as covered in the lesson: [Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt]({{ site.baseurl }}/R/Time-Series-Metadata/). 
+to a `POSIXct` class as covered in the lesson: 
+[Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt]({{ site.baseurl }}/R/Time-Series-Metadata/). 
 
 ```{r load-libraries}
 # Load packages required for entire script
@@ -150,7 +151,7 @@ tail(harMet15.09.11[1])
 It worked! The first entry is 1 January 2009 at 00:00 and the last entry is 31
 December 2011 at 23:45.
 
-##Export data.frame to .CSV
+###Export data.frame to .CSV
 
 We can export this subset in `.csv` format to use in other analyses or to 
 share with colleagues using `write.csv`. 
@@ -168,7 +169,7 @@ write.csv(harMet15.09.11, file="Met_HARV_15min_2009_2011.csv")
 ```
 
 <div id="challenge" markdown="1">
-#Challenge: Subsetting & Plotting
+##Challenge: Subsetting & Plotting
 
 Plot precipitation data for the month of July 2010 in Harvard Forest.
 
@@ -195,7 +196,7 @@ qplot (datetime, prec,
 ```
 
 
-## Managing Missing Data: NoData values
+##Managing Missing Data: NoData values
 
 ###Checking for NoData Values
 In the
@@ -211,11 +212,11 @@ specified
 in the metadata. Sometimes this value is `NA` or `nan` (not a number). However, 
 `NA` isn't always used. Text values can make data storage difficult for some 
 programs and thus, sometimes you'll encounter a large negative value such as
-`-9999`
-used as the `NoData` value. Othertimes, we might see blank values in a data file
-which designate `NoData`. Blanks are particularly problematic because we can't
-be certain if a data value is purposefully missing (not measured that day or a
-bad measurement) or if someone unintentionally deleted it.
+`-9999` used as the `NoData` value. At other times, we might see blank values in
+a data file which designate `NoData`. Blanks are particularly problematic
+because we can't be certain if a data value is purposefully missing (not
+measured that day or a bad measurement) or if someone unintentionally deleted
+it.
 
 Because the actual value used to designate missing data can vary depending upon 
 what data we are working with, it is important to always check the metadata for
@@ -231,7 +232,6 @@ recognized as an integer and processed accordingly. If you encounter a numeric
 {: .notice}
 
 ###Check For NoData Values 
-
 We can quickly check for `NoData` values in our data using the`is.na()` 
 function. By asking for the `sum()` of `is.na()` we can see how many NA/ missing
 values we have. 
@@ -251,9 +251,9 @@ The results above tell us there are `NoData` values in the `datetime` column.
 However, there are `NoData` values in other variables.  
 
 <div id="challenge" markdown="1">
-#Challenge: NoData Values
+##Challenge: NoData Values
 
-How many `NoData` values are in the precipiation (`prec`) and PAR (`parr`)
+How many `NoData` values are in the precipitation (`prec`) and PAR (`parr`)
 columns of our data?
 
 </div>
@@ -292,13 +292,11 @@ Other resources:
 -- R code for dealing with missing data 
 2. The Institute for Digital Research and Education has an <a href="http://www.ats.ucla.edu/stat/r/faq/missing.htm" target="_blank"> R FAQ on Missing Values</a>.
 
-### Managing NoData Values in Our Data
-
+###Managing NoData Values in Our Data
 For this lesson, we are exploring the patterns of precipitation,
-and termperature as they related to green-up and brown-down of vegetation at 
+and temperature as they related to green-up and brown-down of vegetation at 
 Harvard Forest. To view overall trends during these early exploration stages, it 
-is ok for us to leave out the `NoData` values in our plots. 
-
+is okay for us to leave out the `NoData` values in our plots. 
 
 <i class="fa fa-star"></i> **Data Tip:** If we wanted to perform more advanced 
 statistical analysis, we might consider gap-filling as our next step. Many data 
@@ -308,12 +306,10 @@ product that we can download!
 target="_blank">More on Gap Filling</a>
 {: .notice}
 
-
-### NoData Values Can Impact Calculations
-
+###NoData Values Can Impact Calculations
 It is important to consider `NoData` values when performing calculations on our
 data. For example, `R` will not properly calculate certain functions if there
-are `NA` values in the data, unless we explicetly tell it to ignore them. 
+are `NA` values in the data, unless we explicitly tell it to ignore them. 
 
 ``` {r na-in-calculations}
 
@@ -339,7 +335,7 @@ We now see that the 3-year average air temperature is 8.5°C.
 
 <div id="challenge" markdown="1">
 
-## Challenge: Import, Understand Metadata, and Clean a Data Set
+##Challenge: Import, Understand Metadata, and Clean a Data Set
 We have been using the 15-minute data from the Harvard Forest. However, overall
 we are interested in larger scale patterns of greening-up and browning-down.  
 Thus a daily summary is sufficient for us to see overall trends.
