@@ -9,8 +9,10 @@
 ## ----load-data-----------------------------------------------------------
 # Load csv file of 15 min meteorological data from Harvard Forest
 #Factors=FALSE so strings, a series of letters/ words/ numerals, remain characters
-harMet_15Min <- read.csv(file="AtmosData/HARV/hf001-10-15min-m.csv",
-      stringsAsFactors = FALSE)
+harMet_15Min <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
+  stringsAsFactors = FALSE
+  )
 
 ## ----look-at-data-structure----------------------------------------------
 #to see first few lines of data file

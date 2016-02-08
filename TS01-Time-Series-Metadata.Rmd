@@ -2,12 +2,13 @@
 layout: post
 title: "Lesson 01: Understanding Time Series Metadata"
 date:   2015-10-24
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg]
-contributors: [Leah A. Wasser]
+authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
+contributors: [ ]
 dateCreated:  2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
+packagesLibraries: []
 category: 
-tags: [spatio-temporal, time-series, phenology]
+tags: [spatio-temporal, time-series, phenology, R]
 mainTag: time-series
 description: "This lesson teaches basic good practices for writing a script in R
 when importing tabular data from a .csv file, how to examine the structure of a 
@@ -18,7 +19,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/Time-Series-Metadata
+permalink: R/Time-Series-Metadata
 comments: false
 ---
 
@@ -36,7 +37,7 @@ understand the general structure of tabular data.
 
 <div id="objectives" markdown="1">
 
-###Goals / Objectives
+#Goals / Objectives
 After completing this lesson, you will:
 
 * Know how to import a .csv file and examine the structure of the related `R`
@@ -45,41 +46,39 @@ object.
 * Understand the importance of including metadata details in your `R` script.
 * Know what an EML file is. 
 
-**To complete this lesson:** you will need the most current version of R, and 
+##Things You’ll Need To Complete This Lesson
+To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-####R Libraries to Install
+###Install R Packages
 No additional libraries are needed for this lesson.
 
-####Data to Download
-<a href="https://ndownloader.figshare.com/files/3579861" class="btn btn-success">
-Download Atmospheric Data</a>
+###Download Data 
+{% include/dataSubsets/_data_Met-Time-Series.html %}
 
-The data used in this lesson were collected at Harvard Forest which is
-an National Ecological Observatory Network  
-<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank"> field site</a>. These data are proxy data for what will be available for 30 years on the [NEON data portal](http://data.neoninc.org/ "NEON data")
-for both Harvard Forest and other field sites located across the United States.
+****
 
-**Set Working Directory:** This lessons assumes that you have set your working 
-directory to the location of the downloaded and unzipped data subset. [An overview
-of setting the working directory in `R` can be found here.]({{site.baseurl}}/R/Set-Working-Directory "R Working Directory Lesson") 
-lesson prior to beginning this lesson.
+{% include/_greyBox-wd-rscript.html %}
 
-**Challenge Code:** NEON Data lesson often contain challenges that reinforce 
-learned skills. If available, the code for challenge solutions is found in a 
-downloadable `R` script available on the footer of each lesson page.
+**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
+[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
+It is also part of a larger 
+[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
+that includes working with
+[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
+and  
+[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
 
-###Sources of Additional Information
 </div>
 
-#The Data Approach
+##The Data Approach
 If our goal were to exploring the relationships between air temperature, 
 precipitation,  
 photosynthetically active radiation (PAR) and plant phenology we would have to
 know how the data were collected and what units the variables were in prior to
 any plotting or further analysis. 
 
-##Good practices in R Script Writing
+###Good practices in R Script Writing
 When initiating a new script and workflow it is always a good idea to 
 
  1) load all necessary packages,
@@ -115,21 +114,23 @@ We are now ready to import the data.  This data is a .csv or comma-separated
 value file.  This file format is an excellent way to store tabular data in a
 plain text format that can be read by many different programs including R. 
 
-We will use the `hf001-10-15min-m.csv` file that contains micro-meteoreology
+We will use the `hf001-10-15min-m.csv` file that contains micro-meteorology
 data including our variables of interest: temperature, precipitation, and PAR 
 for Harvard Forest, aggregated at 15 minute intervals.
 
 ``` {r load-data}
 # Load csv file of 15 min meteorological data from Harvard Forest
 #Factors=FALSE so strings, a series of letters/ words/ numerals, remain characters
-harMet_15Min <- read.csv(file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
-      stringsAsFactors = FALSE)
+harMet_15Min <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
+  stringsAsFactors = FALSE
+  )
 ```
 
 Now it is time to look at our data, metadata and information about how `R` 
 interprets the data.
 
-# Data Structure 
+##Data Structure 
 We have three basic options for viewing the data structure.  We can view the
 first few lines of data using `head()`, we can use `str()` to see how
 `R` *interprets* the data or we could view the data in a spreadsheet format by
@@ -151,8 +152,9 @@ We can see that because we used the `stringsAsFactors=FALSE` command, data types
 that are not numbers or integers are classified as characters (chr) rather than 
 as factors.
 
-#Metadata
-There is information other than how `R` interprets our data that we need to know.
+##Metadata
+There is information other than how `R` interprets our data that we need to
+know.
 
 Can you think of any examples? 
 
@@ -160,12 +162,13 @@ When we are examining data that we've obtained from others, the extra step of
 metadata investigation is essential to visualizing, analyzing and interpreting
 the data properly for a project.
 
-##Open Associated Metadata Files
+###Open Associated Metadata Files
 To get some of this information, or clues to this information, we will open the
 metadata text file associated with this 15-min meteorology data that is in the 
-AtmosData folder. Navigate to this file and open it in a text editor.
+NEON-DS-Met-Time-Series folder. Navigate to this file and open it in a text
+editor.
 
-![Harvard Forest 15 min Atmospheric Data Screenshot]  ({{site.baseurl}}/images/tabTimeSeries/TS01_MetaDataScreenShot.tiff)
+![Harvard Forest 15 min Atmospheric Data Screenshot]  ({{site.baseurl}}/images/tabTimeSeries/TS01_MetaDataScreenShot.png)
 
 Remember, we are currently interested in plant phenology so we'll be looking at
 air temperature, precipitation and PAR. Look for these variables and identify
@@ -185,7 +188,7 @@ ourselves, but also to colleagues and collaborators.
 # for quantitative variables missing values are given as NA
 ```
 
-## Metadata Sleuthing
+###Metadata Sleuthing
 Questions: 
 
 * Is there information provided here that doesn't match the data? 
@@ -212,7 +215,7 @@ script so that we can easily refer to it as we actually work with the data.
 # preview tab give plots of all variables
 ```
 
-## Other Metadata File Formats
+###Other Metadata File Formats
 Do you see anything else on the website that might be related to metadata? 
 
 An EML file! This is the official standards-based metadata file using the 

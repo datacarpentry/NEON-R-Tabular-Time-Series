@@ -10,8 +10,10 @@ library(ggplot2)   #efficient, pretty plotting - required for qplot function
 ## ----import-csv----------------------------------------------------------
 
 #Load csv file of daily meteorological data from Harvard Forest
-harMet.daily <- read.csv(file="AtmosData/HARV/hf001-06-daily-m.csv",
-                     stringsAsFactors = FALSE)
+harMet.daily <- read.csv(
+      file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m.csv",
+      stringsAsFactors = FALSE
+      )
 
 ## ----dataframe-----------------------------------------------------------
 #what type of R object is our imported data?
@@ -26,9 +28,39 @@ head(harMet.daily)
 #View the structure (str) of the data 
 str(harMet.daily)
 
+## ----data-class-examples-------------------------------------------------
+
+a <- "mouse"
+b <- "sparrow"
+
+#subract a-b 
+a-b
+
+
+## ----data-class-example-2------------------------------------------------
+
+#create a new object
+speciesObserved <- c("speciesb","speciesc","speciesa")
+speciesObserved
+
+#determine the class
+class(speciesObserved)
+
+#calculate the minimum
+min(speciesObserved)
+
+#create numeric object
+prec <- c(1,2,5,3,6)
+#view class
+class(prec)
+#calculate min value
+min(prec)
+
 ## ----plot-data-----------------------------------------------------------
 #quickly plot of air temperature
-qplot(x=date,y=airt, data=harMet.daily)
+qplot(x=date, y=airt, 
+      data=harMet.daily,
+      main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
 
 ## ----view-class----------------------------------------------------------
@@ -54,7 +86,7 @@ head(harMet.daily$date)
 #In title string we can use '\n' to force the string to break onto a new line
 qplot(x=date,y=airt, 
       data=harMet.daily,
-      main="Daily Air Temperature w/ Date Assigned\nNEON Harvard Forest")  
+      main="Daily Air Temperature w/ Date Assigned\nNEON Harvard Forest Field Site")  
 
 
 ## ----challenge-code-plotting, echo=FALSE---------------------------------
