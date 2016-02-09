@@ -1,18 +1,19 @@
 ---
 layout: post
-title: "Lesson 00: Intro to Time Series Data in R - Managing Date / Time Formats
-Simple Plots using ggplot2"
+title: "Time Series 00: Intro to Time Series Data in R - Managing Date/Time 
+Formats & Simple Plots using ggplot2"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: []
 dateCreated:  2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2]
-category: 
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-description: "This lesson will demonstrate how to import a time series data set 
-stored in .csv format into `R`. It will explore data classes and will walk
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial will demonstrate how to import a time series data set 
+stored in .csv format into R. It will explore data classes and will walk
 through how to convert date data, stored as a character string, into a date 
 class that R can recognize and plot efficiently."
 code1: TS00-Brief-Tabular-Time-Series-In-R.R
@@ -26,8 +27,8 @@ comments: false
 
 {% include _toc.html %}
 
-##About
-This lesson will demonstrate how to import a time series data set stored in .csv
+## About
+This tutorial will demonstrate how to import a time series data set stored in .csv
 format into `R`. It will explore column data classes and will walk through how to 
 convert a date, stored as a character string, into a date class that R can
 recognize and plot efficiently.
@@ -36,7 +37,7 @@ recognize and plot efficiently.
 
 <div id="objectives" markdown="1">
 
-#Goals / Objectives
+# Goals / Objectives
 After completing this lesson, you will:
 
   * Be able to open a .csv file in `R` using `read.csv()`and understand why we
@@ -47,35 +48,27 @@ After completing this lesson, you will:
   class.
   * Know how to create a quick plot of a time-series data set using `qplot`. 
   
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-###Install R Packages
+### Install R Packages
 
 * **ggplot2:** `install.packages("ggplot2")`
 
  [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-##Download Data
+## Download Data
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series)
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 </div>
 
-##The Data Approach
+## The Data Approach
 In this lesson, we will explore atmospheric data (including temperature,
 precipitation and other metrics) by sensors mounted on a 
 <a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
@@ -86,7 +79,7 @@ length -- metrics that impact changes in plant
 <a href=" http://budburst.org/phenology_defined" target="_blank">phenology</a>. 
 
 
-##About .csv File Format
+## About .csv File Format
 The data we will use is in `.csv` (comma-separated values) file format. The
 `.csv` format is a plain text format, where each value in the dataset is 
 separate by a comma. 
@@ -99,7 +92,7 @@ format is less likely to become obsolete over time!
 For more on .csv format see this Wikipedia article.</a>
 {: .notice}
 
-##Import the Data 
+## Import the Data 
 
 To begin, we need to import the data into `R`. We can use base `R` functionality
 to import a `.csv` file. We will use the `ggplot2` package to plots our data. 
@@ -132,7 +125,7 @@ harMet.daily <- read.csv(
       )
 ```
 
-###stringsAsFactors=FALSE
+### stringsAsFactors=FALSE
 When reading in files we most often use `stringsAsFactors = FALSE`. This
 setting will ensure that non-numeric data (strings) are not converted to
 factors. Factors are non-numerical data that can be numerically interpreted and
@@ -155,7 +148,7 @@ After loading the data it is easy to convert any data that should be a factor by
 using `as.factor()`, so it is almost always best to read in a file with
 `stringsAsFactors = FALSE`.
 
-##Data.Frames in R
+## Data.Frames in R
 The `read.csv()` imports the data into a `data.frame`. `data.frame`s are 
 ideal for working with tabular data - they are similar to a spreadsheet.
 
@@ -165,7 +158,7 @@ class(harMet.daily)
 
 ```
 
-##Data Structure
+## Data Structure
 Once the data are imported, we can explore its structure. There are several ways
 to examine the structure of a data frame: 
 
@@ -190,7 +183,7 @@ returned when using the `head` and `tail` functions. For example you can use
 `head(harMet.daily,10)` to display the first 10 rows of your data rather than 6.
 {: .notice }
 
-###Data Classes in R
+### Data Classes in R
 
 The structure results above let us know that our data are stored as several
 different data types or classes in our `data.frame` as follows:
@@ -253,7 +246,7 @@ class of data, however it does not return a quantitative minimum. It simply
 looks for the first element, using alphabetical order. Yet, we can calculate the
 quantitative minimum value for `prec` a **numeric** data class.  
 
-##Plot Data Using qplot()
+## Plot Data Using qplot()
 
 Let's have a look at one of the metrics in our data, air temperature -- `airt`.
 Given this is a time series dataset, we might want to plot
@@ -328,7 +321,7 @@ qplot(x=date,y=airt,
 
 
 <div id="challenge" markdown="1">
-##Challenge: Using ggplot2's qplot function 
+## Challenge: Using ggplot2's qplot function 
 1. Create a quick plot of the precipitation throughout all years of the study.
 2. Do precipitation and air temperature have similar annual patterns? 
 3. Create a quick plot examining the relationship between air temperature and precipitation. 

@@ -1,17 +1,17 @@
 ---
 layout: post
-title: "Lesson 04: Subset and Manipulate Time Series Data with dplyr"
+title: "Time Series 04: Subset and Manipulate Time Series Data with dplyr"
 date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2, dplyr, lubridate]
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-packagesLibraries: [lubridate, ggplot2, dplyr]
-category: 
-description: "This lesson teaches how to conduct basic data manipulation using
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial teaches how to conduct basic data manipulation using
 dplyr functions including group_by, summarize and mutate. The use of pipes
 is taught and used throughout the lesson. Finally the new data frames created in
 the previous manipulations will be plotted using ggplot(). "
@@ -26,8 +26,8 @@ comments: false
 
 {% include _toc.html %}
 
-##About
-In this lesson, we will use the `group_by`, `summarize`and `mutate` functions in
+## About
+In this tutorial, we will use the `group_by`, `summarize`and `mutate` functions in
 the `dplyr` package to efficiently manipulate atmospheric data collected at the
 NEON Harvard Forest Field Site. We will use pipes to efficiently perform
 multiple tasks within a single chunk of code.
@@ -36,7 +36,7 @@ multiple tasks within a single chunk of code.
 
 <div id="objectives" markdown="1">
 
-#Goals / Objectives
+# Goals / Objectives
 After completing this lesson, you will:
 
  * Know several ways to manipulate data using functions in the `dplyr` package
@@ -46,7 +46,7 @@ After completing this lesson, you will:
  * Use the `year()` function from the `lubridate` package to extract year from a
  date-time class variable. 
 
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
@@ -63,15 +63,7 @@ preferably RStudio, loaded on your computer.
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series)
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 ****
 
@@ -87,12 +79,12 @@ or
 
 </div>
 
-##Introduction to dplyr
+## Introduction to dplyr
 The `dplyr` package simplifies and increases efficiency of complicated yet
 commonly performed data "wrangling" (manipulation / processing) tasks. It uses
 the `data_frame` object as both an input and an output.
 
-###Load the Data
+### Load the Data
 We will need the `lubridate` and the `dplyr` packages to complete this lesson.
 
 We will also use the 15-minute average atmospheric data subsetted to 2009-2011 
@@ -126,7 +118,7 @@ harMet15.09.11$datetime<-as.POSIXct(harMet15.09.11$datetime,
                     tz = "America/New_York")
 ```
 
-##Explore The Data
+## Explore The Data
 Remember that we are interested in the drivers of phenology including - 
 air temperature, precipitation, and PAR (photosynthetic active radiation - or
 the amount of visible light). Using the 15-minute averaged data, we could easily
@@ -155,14 +147,12 @@ c <- ggplot(harMet15.09.11, aes(x=datetime, y=parr))+
 
 grid.arrange(a,b,c, ncol=2)
 
-
 ```
-
 However, summarizing the data at a coarser scale (e.g., daily, weekly, by season, 
 or by year) may be easier to visually interpret during initial stages of
 data exploration. 
 
-###Extract Year from a Date-Time Column
+### Extract Year from a Date-Time Column
 To summarize by year efficiently, it is helpful to have a year column that we
 can use to `group` by. We can use the `lubridate` function `year()` to extract
 the year only from a `date-time` class `R` column. 
@@ -182,7 +172,7 @@ str(harMet15.09.11$year)
 Now that we have added a year column to our data.frame, we can use `dplyr` to 
 summarize our data.
 
-##Manipulate Data using dplyr
+## Manipulate Data using dplyr
 Let's start by extracting a yearly air temperature value for the Harvard Forest
 data. To calculate a yearly average, we need to:
 
@@ -245,7 +235,7 @@ summarize(HARV.grp.year,
 Great! We've now used the `group_by` function to create groups for each year 
 of our data. We then calculated a summary mean value per year using `summarize`.
 
-###dplyr Pipes 
+### dplyr Pipes 
 The above steps utilized several steps of `R` code and created 1 `R` object - 
 `HARV.grp.year`. We can combine these steps using `pipes` in the `dplyr` 
 package.
@@ -302,7 +292,7 @@ str(year.sum)
 
 
 <div id="challenge" markdown="1" >
-##Challenge
+## Challenge
 
 Using the piping syntax that we just learned, create a `data_frame` called
 jday.avg that contains the average `airt` per julian day (`harMet15.09.11$jd`).
@@ -351,7 +341,7 @@ The syntax for all `dplyr` functions is similar:
  * the subsequent arguments dictate what to do with that `data.frame` and 
  * the output is a new data frame. 
 
-###Group by a Variable (or Two)
+### Group by a Variable (or Two)
 Our goal for this lesson is to view drivers of annual phenology patterns.
 Specifically, we want to explore daily average temperature throughout the year.
 This means we need to calculate average temperature, for each day, across three
@@ -382,7 +372,7 @@ from the `lubridate` package to create a new column containing julian day values
 [More information in this NEON Data Skills lesson ]({{site.baseurl}}/R/julian-day-conversion/ "Julian Day Conversion"). 
 {: .notice }
 
-###Summarize by Group
+### Summarize by Group
 We can use `summarize()` function to calculate a summary output value for each
 "group" - in this case Julian day per year. Let's calculate the mean air
 temperature for each Julian day per year. Note that we are still using
@@ -395,7 +385,7 @@ harMet15.09.11 %>%
 ```
 
 <div id="challenge" markdown="1">
-##Challenge
+## Challenge
 We can use `sum` to calculate the total rather than mean value for each Julian
 Day. Using this information, do the following:
 
@@ -422,8 +412,7 @@ qplot(total.prec$jd, total.prec$sum_prec,
 
 ```
 
-
-###Mutate - Add Data.Frame Columns 2 dplyr Output
+### Mutate - Add Data.Frame Columns 2 dplyr Output
 We can use the `mutate()` function of `dplyr` to add additional columns of
 information to a data.frame. For instance, we added the year column
 independently at the very beginning of the lesson. However, we can add the year
@@ -443,13 +432,12 @@ harMet15.09.11 %>%
 
 ```
 
-
 <i class="fa fa-star"></i> **Data Tip:** The `mutate` function is similar to
 `transform()` in base `R`. However,`mutate()` allows us to create and 
 immediately use the variable (`year2`).
 {: .notice }
 
-##Save dplyr Output as Data.Frame
+## Save dplyr Output as Data.Frame
 We can save output from a `dplyr` pipe as a new `R` object to use for quick
 plotting. 
 
@@ -462,7 +450,7 @@ harTemp.daily.09.11<-harMet15.09.11 %>%
 head(harTemp.daily.09.11)
 ```
 
-###Add Date-Time To dplyr Output
+### Add Date-Time To dplyr Output
 In the challenge above, we created a plot of daily precipitation data using
 `qplot`. 
 However, the x-axis ranged from 0-366 (Julian Days for the year). It would have 
@@ -495,7 +483,7 @@ head(harTemp.daily.09.11)
 ```
 
 <div id="challenge" markdown="1">
-##Challenge: Applying dplyr Skills
+## Challenge: Applying dplyr Skills
 
 1. Plot daily total precipitation from 2009-2011 as we did in the previous
 challenge. However this time, use the new syntax that you learned (mutate and

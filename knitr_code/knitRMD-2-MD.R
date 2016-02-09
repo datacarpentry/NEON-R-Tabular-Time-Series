@@ -10,7 +10,7 @@ require(knitr)
 
 #################### Set up Input Variables #############################
 #Inputs - Where the git repo is on your computer
-gitRepoPath <-"~/Documents/Git_Repositories/NEON-R-Tabular-Time-Series_mjones01/"
+gitRepoPath <-"~/Documents/GitHub/NEON-R-Tabular-Time-Series/"
 
 #jekyll will only render md posts that begin with a date. Add one.
 add.date <- "2016-1-08-"
@@ -23,11 +23,13 @@ wd <- "~/Documents/data/Spatio_TemporalWorkshop"
 #set data working dir
 setwd(wd)
 
-#don't change - this is the posts dir location required by jekyll
-postsDir <- ("_posts/")
+#all .md files must be in the _posts dir as required by jekyll
+#jan 21 - added sub dir to group all lessons together
+#please change the directory name ONLY (after _posts/ if needed 
+postsDir <- ("_posts/R/dc-tabular-time-series/")
 
 #images path
-imagePath <- "images/rfigs/"
+imagePath <- "images/rfigs/dc-tabular-time-series/"
 
 #set the base url for images and links in the md file
 base.url="{{ site.baseurl }}/"
@@ -43,12 +45,23 @@ if (file.exists(paste0(wd,"/","images"))){
   #create image directory structure
   dir.create(file.path(wd, "images/"))
   dir.create(file.path(wd, "images/rfigs"))
+  dir.create(file.path(wd, imagePath))
   dir.create(file.path(wd, figDir))
   print("image directories created!")
 }
 
 #NOTE -- delete the image directory at the end!
 
+#make sure image subdir exists
+#note this will fail if the sub dir doesn't exist
+if (file.exists(paste0(gitRepoPath, imagePath))){
+  print("image dir exists - all good")
+} else {
+  #create image directory structure
+  dir.create(file.path(gitRepoPath, "images/rfigs"))
+  dir.create(file.path(gitRepoPath, imagePath))
+  print("git image directories created!")
+}
 #################### Get List of RMD files to Render #############################
 
 
@@ -82,6 +95,7 @@ for (files in rmd.files) {
   
   #COPY image director, rmd file OVER to the GIT SITE###
   
+
   #copy image directory over
   file.copy(paste0(wd,"/",fig.path), paste0(gitRepoPath,imagePath), recursive=TRUE)
   
@@ -92,9 +106,9 @@ for (files in rmd.files) {
   
   ## OUTPUT STUFF TO R ##
   #output code in R format
-  rCodeOutput <- paste0(gitRepoPath, sub(".Rmd$", "", basename(files)), ".R")
+  rCodeOutput <- paste0(gitRepoPath, "code/", sub(".Rmd$", "", basename(files)), ".R")
 
-  #purl the code to R
+  #purl the code to R - place it in the "code" directory
   purl(files, output = rCodeOutput)
   
   #clean up
