@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lesson 06: Create Plots with Multiple Panels, Grouped by Time Using ggplot
+title: "Time Series 06: Create Plots with Multiple Panels, Grouped by Time Using ggplot
 Facets"
 date:   2015-10-19
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah Wasser]
@@ -8,10 +8,11 @@ contributors: [ ]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
-category:  
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-description: "This lesson teaches how to plot subsetted time series data using
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series] 
+description: "This tutorial teaches how to plot subsetted time series data using
 the facets() function (e.g., plot by season) and to plot time series data with
 NDVI."
 code1: TS06-Plotting-Facets-And-Group-By-Time-In-R.R
@@ -25,8 +26,8 @@ comments: false
 
 {% include _toc.html %}
 
-##About
-This lesson teaches how to plot subsetted time series data using
+## About
+This tutorial teaches how to plot subsetted time series data using
 the `facets()` function (e.g., plot by season) and to plot time series data with
 NDVI.
 
@@ -34,13 +35,13 @@ NDVI.
 
 <div id="objectives" markdown="1">
 
-###Goals / Objectives
+### Goals / Objectives
 After completing this activity, you will:
 
  * Know how to use `facets()` in the ggplot2 package.
  * Be able to combine different types of data into one plot.
 
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
@@ -54,25 +55,17 @@ preferably RStudio, loaded on your computer.
 
 [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-###Download Data 
+### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 ****
 
-##Skills Needed
+## Skills Needed
 This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
 the `ggplot2` package.  If you are not comfortable with either of these we
 recommend starting with the
@@ -83,13 +76,13 @@ respectively, to gain familiarity.
 
 </div>
 
-#Plotting Subsetted Data Using Facets
+# Plotting Subsetted Data Using Facets
  
 In this lesson we will learn how to create a panel of individual plots - known as
 facets in `ggplot2`. Each plot represents a particular `data_frame` time-series 
 subset - for example year or season.
 
-###Load the Data
+### Load the Data
 We will use the daily micro-meteorology data for 2009-2011 from the Harvard
 Forest. If you do not have this data loaded into an `R` `data_frame`, please 
 load them, and convert date-time columns to a date-time class now.
@@ -118,7 +111,7 @@ harMetDaily.09.11$date <- as.POSIXct(harMetDaily.09.11$date)
 
 ```
 
-##ggplot2 Facets
+## ggplot2 Facets
 
 Facets allow us to plot subsets of data in one cleanly organized panel. We use
 `facet_grid()` to create a plot of a particular variable subsetted by a
@@ -238,7 +231,7 @@ AirTempDaily_jd + facet_wrap(~year, ncol = 2)
 
 ```
 
-##Graph Two Variables on One Plot
+## Graph Two Variables on One Plot
 Next, let's explore the relationship between two variables - air temperature
 and soil temperature. We might expect soil temperature to fluctuate with changes
 in air temperature over time.  
@@ -305,7 +298,7 @@ airSoilTemp_Plot + facet_wrap(~month, nc=3)
 
 ```
 
-##Faceted Plots & Categorical Groups
+## Faceted Plots & Categorical Groups
 
 In the challenge above, we grouped our data by *month* - specified by a numeric
 value between 1 (January) and 12 (December). However, what if we wanted to 
@@ -384,7 +377,7 @@ airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
 
 ```
 
-##Subset by Season - *Advanced Topic*
+## Subset by Season - *Advanced Topic*
 Sometimes we want to group data by custom time periods. For example, we might
 want to group by season. However, the definition of various seasons may vary by 
 region which means we need to manually define each time period.
@@ -475,13 +468,10 @@ is recognized by `R`. We can experiment with various facet layouts next.
     #facet_grid():
 airSoilTemp_Plot + facet_grid(season ~ .)
 
-
-
 ```
 
 <div id="challenge" markdown="1">
-
-##Challenge: Create Plots by Season
+## Challenge: Create Plots by Season
 The goal of this challenge is to create plots that show the relationship between
 air and soil temperature across the different seasons.  
 1. Create a *factor* season variable.  Convert the season column that we just
@@ -539,8 +529,7 @@ capabilities (`as.yearmon`). With `zoo` the syntax would be:
 `as.Date(as.yearmon(met_monthly_HARV$date))`
 
 <div id="challenge" markdown="1">
-##Challenge: Plot with Year-Month Data
-
+## Challenge: Plot with Year-Month Data
 Create two faceted plots of annual air temperature for each year of data in the
 file (2001-2015). Use the
 `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv` 

@@ -1,18 +1,18 @@
 ---
 layout: post
-title: "Lesson 05: Plotting Time Series with ggplot in R"
+title: "Time Series 05: Plotting Time Series with ggplot in R"
 date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
 packagesLibraries: [ggplot2, scales, gridExtra, lubridate, ggthemes]
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-packagesLibraries: [lubridate, ggplot2, dplyr]
-category: 
-description: "This lesson uses ggplot2 to create professional plots of time 
-series data. We will learn how to adjust x and y axis ticks using the scales
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial uses ggplot2 to create professional plots of time 
+series data. We will learn how to adjust x- and y-axis ticks using the scales
 package, how to add trend lines to a scatter plot and how to customize plot
 labels, colors and overall theme."
 code1: TS05-Plotting-Time-Series-ggplot-In-R.R
@@ -26,8 +26,8 @@ comments: false
 
 {% include _toc.html %}
 
-##About
-This lesson uses `ggplot2` to create professional plots of time 
+## About
+This tutorial uses `ggplot2` to create professional plots of time 
 series data. We will learn how to adjust x- and y-axis ticks using the scales
 package, how to add trend lines to a scatter plot and how to customize plot
 labels, colors and overall theme.
@@ -44,11 +44,11 @@ After completing this lesson, you will:
  package. 
  * Be able to plot data using scatter and bar plots.
  
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-###Install R Packages
+### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 * **ggplot2:** `install.packages("ggplot2")`
 * **scales:** `install.packages("scales")`
@@ -57,21 +57,13 @@ preferably RStudio, loaded on your computer.
 
 [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-###Download Data 
+### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 ****
 
@@ -93,13 +85,13 @@ and
 
 </div>
 
-##Plotting Time Series Data
+## Plotting Time Series Data
 Plotting our data allows us to quickly see general patterns including 
 outlier points and trends. Plots are also a useful way to communicate the results
 of our research. `ggplot2` is a powerful `R` library that we use to create customized,
 professional plots.
 
-###Load the Data
+### Load the Data
 We will use the `lubridate`, `ggplot2`, `scales` and `gridExtra` packages in
 this lesson.
 
@@ -137,7 +129,7 @@ harTemp.monthly.09.11<-read.csv(
 harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
 ```
 
-##Plot with qplot
+## Plot with qplot
 We can use the `qplot()` function in the `ggplot2` package to quickly plot a
 variable such as air temperature (`airt`) across all three years of our daily
 averaged time series data. 
@@ -153,7 +145,7 @@ The resulting plot displays the pattern of air temperature increasing and
 decreasing over three years. While `qplot()` is a quick way to plot data, our 
 ability to customize the output plot is limited.
 
-##Plot with ggplot
+## Plot with ggplot
 The `ggplot()` function within `ggplot2` package gives us more control
 over plot appearance. However, to use `ggplot` we need to learn a slightly 
 different syntax. Three basic elements are needed:
@@ -182,7 +174,7 @@ ggplot(harMetDaily.09.11, aes(date, airt)) +
 
 ```
 
-##Customize A Scatterplot
+## Customize A Scatterplot
 We can customize our plot in many ways. For instance, we can change the size and 
 color of the points using `size=`, shape `pch=`, and `color=` in the geom_point 
 element. 
@@ -196,7 +188,7 @@ ggplot(harMetDaily.09.11, aes(date, airt)) +
 
 ```
 
-##Modify Title & Axis Labels
+## Modify Title & Axis Labels
 We can modify plot attributes by adding elements using the `+` symbol.
 For example, we can add a title by using `+ ggtitle="XXX",` and axis
 labels using `+ xlab("XXX") + ylab("XXX")`.  
@@ -214,7 +206,7 @@ ggplot(harMetDaily.09.11, aes(date, airt)) +
 elements that can be defined and added to a `ggplot2` plot.
 {: .notice }
 
-###Name Plot Objects
+### Name Plot Objects
 We can create a `ggplot` object by assigning our plot to an object name.
 When we do this, the plot will not render automatically. To render the plot, we
 need to call it in the code.
@@ -234,7 +226,7 @@ AirTempDaily
 
 ```
 
-###Format Dates in Axis Labels
+### Format Dates in Axis Labels
 We can adjust the display format (e.g. 2009-07 vs. Jul 09) and the number of 
 major and minor ticks for axis date values using `scale_x_datetime`. Let's format 
 the axis ticks so they read "month year" (`%b %y`). To do this, we will use the syntax:
@@ -252,7 +244,7 @@ AirTempDailyb <- AirTempDaily +
 AirTempDailyb
 ```
 
-###Adjust Date Ticks
+### Adjust Date Ticks
 We can adjust the date ticks too. In this instance, having 1 tick per year may be
 enough. If we have the `scales` package loaded, we can use 
 `breaks=date_breaks("1 year")` to create a tick for every year.
@@ -273,7 +265,6 @@ AirTempDailyb <- AirTempDaily +
 
 AirTempDailyb
 
-
 ```
 
 <i class="fa fa-star"></i> **Data Tip:**  We can adjust the tick spacing and
@@ -281,7 +272,7 @@ format for x- and y-axes using `scale_x_continuous` or `scale_y_continuous` to
 format a continue variable. Check out `?scale_x_` (tab complete to view the various x and y scale options)
 {: .notice }
 
-##ggplot- Subset by Time
+## ggplot- Subset by Time
 Sometimes we want to zoom into a region of our plot without subsetting the 
 entire `data_frame`. To do this, we can define start and end times. We can then
 define the `limits` in the `scale_x_datetime` object as follows:
@@ -308,7 +299,7 @@ AirTempDailyb
 
 ```
 
-##ggplot() Themes
+## ggplot() Themes
 We can use the `theme()` element to adjust figure elements.
 There are some nice pre-defined themes that we can use as a starting place.
 
@@ -322,7 +313,7 @@ AirTempDaily
 
 Using the `theme_bw()` we now have a white background rather than the grey.
 
-###Import New Themes *Bonus* *Topic*
+### Import New Themes *Bonus* *Topic*
 There are externally developed themes built by the `R` community that are worth
 mentioning. Feel free to experiment with the code below to install `ggthemes`.
 
@@ -343,8 +334,7 @@ AirTempDaily
 
 ```
 
-
-###More on Themes
+### More on Themes
 
 * <a href="http://docs.ggplot2.org/0.9.2.1/theme.html" target="_blank"> 
 Hadley Wickham's documentation.</a>
@@ -352,7 +342,7 @@ Hadley Wickham's documentation.</a>
 *  <a href="https://github.com/jrnold/ggthemes" target="_blank">
 A list of themes loaded in the ggthemes library is found here</a>
 
-##Customize ggplot Themes
+## Customize ggplot Themes
 We can customize theme elements manually too. Let's customize the font size and 
 style. 
 
@@ -394,7 +384,7 @@ PrecipDaily <- ggplot(harMetDaily.09.11, aes(date, prec)) +
 PrecipDaily
 ```
 
-##Figures with Bars
+## Figures with Bars
 We can use ggplot to create bar plots too. Let's create a bar plot of total daily
 precipitation next. A bar plot might be a better way to represent a total daily 
 value. To create a bar plot, we change the `geom` element from `geom_point()` to 
@@ -439,7 +429,7 @@ PrecipDailyBarA + scale_x_datetime(limits=start.end)
 
 ```
 
-##Color
+## Color
 We can change the bar fill color by specifying color within the
 `geom_bar(colour="blue")` element. We can also specify a separate fill and line
 color using `fill=` and `line=`. Colors can be specified by name or hexadecimal 
@@ -486,7 +476,7 @@ to consider what type of plot best represents the type of data that you are
 presenting.
 
 <div id="challenge" markdown="1">
-##Challenge: Combine Points & Lines
+## Challenge: Combine Points & Lines
 You can combine geometries within one plot. For example, you can have a
 `geom_line()` and `geom_point` element in a plot. Add `geom_line(na.rm=TRUE)` to
 the `AirTempDaily`  plot. What happens?
@@ -497,7 +487,7 @@ the `AirTempDaily`  plot. What happens?
 AirTempDaily + geom_line(na.rm=TRUE) 
 ```
 
-##Trend Lines
+## Trend Lines
 We can add a trend line, which is a statistical transformation of our data to
 represent general patterns, using `stat_smooth()`. `stat_smooth()` requires a
 statistical method as follows:
@@ -524,7 +514,7 @@ AirTempDailyTrend
 ```
 
 <div id="challenge" markdown="1">
-##Challenge: A Trend in Percipitation? 
+## Challenge: A Trend in Percipitation? 
 
 Create a bar plot of total daily precipitation. Add a:
 
@@ -548,7 +538,7 @@ ggplot(harMetDaily.09.11, aes(date, prec)) +
 ```
 
 <div id="challenge" markdown="1">
-##Challenge: Plot Monthly Air Temperature
+## Challenge: Plot Monthly Air Temperature
 
 Plot the monthly air temperature across 2009-2011 using the
 `harTemp.monthly.09.11` data_frame. Name your plot "AirTempMonthly". Be sure to
@@ -569,7 +559,7 @@ AirTempMonthly
 
 ```
 
-##Display Multiple Figures in Same Panel
+## Display Multiple Figures in Same Panel
 It is often useful to arrange plots in a panel rather than displaying them 
 individually. In base `R`, we use `par(mfrow=())` to accomplish this. However
 the `grid.arrange()` function from the `gridExtra` package provides a more
@@ -592,7 +582,7 @@ grid.arrange(AirTempDaily, AirTempMonthly, ncol=1)
 ```
 
 <div id="challenge" markdown="1">
-#Challenge: Create Panel of Plots
+## Challenge: Create Panel of Plots
 
 Plot `AirTempMonthly` and `AirTempDaily` next to each other rather than stacked
 on top of each other.  
@@ -603,7 +593,7 @@ on top of each other.
 grid.arrange(AirTempDaily, AirTempMonthly, ncol=2)
 ```
 
-##Refine ggplot Figures
+## Refine ggplot Figures
 In this lesson, we've covered the basics of `ggplot`. There are many great 
 resources the cover refining `ggplot` figures. A few are below:
 
