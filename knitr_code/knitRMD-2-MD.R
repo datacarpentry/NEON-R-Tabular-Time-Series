@@ -10,7 +10,7 @@ require(knitr)
 
 #################### Set up Input Variables #############################
 #Inputs - Where the git repo is on your computer
-gitRepoPath <-"~/Documents/GitHub/NEON-R-Spatial-Vector/"
+gitRepoPath <-"~/Documents/GitHub/NEON-R-Tabular-Time-Series/"
 
 #jekyll will only render md posts that begin with a date. Add one.
 add.date <- "2015-10-26-L"
