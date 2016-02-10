@@ -11,15 +11,15 @@ categories: [self-paced-tutorial]
 mainTag: tabular-time-series
 tags: [time-series, phenology, R]
 tutorialSeries: [tabular-time-series]
-description: "This tutorial teaches how to conduct basic data manipulation using
-dplyr functions including group_by, summarize and mutate. The use of pipes
-is taught and used throughout the lesson. Finally the new data frames created in
-the previous manipulations will be plotted using ggplot(). "
+description: "In this tutorial, we will use the group_by, summarize and mutate
+functions in the `dplyr` package to efficiently manipulate atmospheric data 
+collected at the NEON Harvard Forest Field Site. We will use pipes to efficiently 
+perform multiple tasks within a single chunk of code."
 code1: TS04-Dplyr-For-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
-  creditlink: http://www.neoninc.org
+  creditlink:
 permalink: R/Time-Series-Subset-dplyr
 comments: false
 ---
@@ -85,10 +85,10 @@ commonly performed data "wrangling" (manipulation / processing) tasks. It uses
 the `data_frame` object as both an input and an output.
 
 ### Load the Data
-We will need the `lubridate` and the `dplyr` packages to complete this lesson.
+We will need the `lubridate` and the `dplyr` packages to complete this tutorial.
 
 We will also use the 15-minute average atmospheric data subsetted to 2009-2011 
-for the NEON Harvard Forest Field Site. This subset was created in the [Subsetting Time Series Data lesson]({{site.baseurl}}/R/Subset-Data-and-No-Data-Values/ "2009-2011 HarMet Data Subset"). 
+for the NEON Harvard Forest Field Site. This subset was created in the [Subsetting Time Series Data tutorial]({{site.baseurl}}/R/Subset-Data-and-No-Data-Values/ "2009-2011 HarMet Data Subset"). 
 
 If this object isn't already created, please load the `.csv` version: 
 `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_15min_2009_2011.csv`. Be
@@ -124,6 +124,10 @@ air temperature, precipitation, and PAR (photosynthetic active radiation - or
 the amount of visible light). Using the 15-minute averaged data, we could easily
 plot each of these variables.  
 
+However, summarizing the data at a coarser scale (e.g., daily, weekly, by season, 
+or by year) may be easier to visually interpret during initial stages of
+data exploration. 
+
 ```{r 15-min-plots, echo=FALSE}
 
 a <- ggplot(harMet15.09.11, aes(x=datetime, y=airt)) + 
@@ -148,9 +152,9 @@ c <- ggplot(harMet15.09.11, aes(x=datetime, y=parr))+
 grid.arrange(a,b,c, ncol=2)
 
 ```
-However, summarizing the data at a coarser scale (e.g., daily, weekly, by season, 
-or by year) may be easier to visually interpret during initial stages of
-data exploration. 
+
+
+
 
 ### Extract Year from a Date-Time Column
 To summarize by year efficiently, it is helpful to have a year column that we
@@ -161,7 +165,7 @@ the year only from a `date-time` class `R` column.
 harMet15.09.11$year <- year(harMet15.09.11$datetime)
 ```
 
-Using `names()` we can see that we now have a `year` column in our `data.frame`.
+Using `names()` we that we now have a `year` column in our `data_frame`.
 
 ```{r dplyr-lubridate-3}
 #check to make sure it worked
@@ -169,15 +173,15 @@ names(harMet15.09.11)
 str(harMet15.09.11$year)
 ```
 
-Now that we have added a year column to our data.frame, we can use `dplyr` to 
+Now that we have added a year column to our `data_frame`, we can use `dplyr` to 
 summarize our data.
 
 ## Manipulate Data using dplyr
 Let's start by extracting a yearly air temperature value for the Harvard Forest
 data. To calculate a yearly average, we need to:
 
-1. Group our data by year
-2. Calculate the mean precipitation value for each group
+1. Group our data by year.
+2. Calculate the mean precipitation value for each group (ie for each year).
 
 We will use `dplyr` functions `group_by` and `summarize` to perform these steps.
 
@@ -239,22 +243,23 @@ of our data. We then calculated a summary mean value per year using `summarize`.
 The above steps utilized several steps of `R` code and created 1 `R` object - 
 `HARV.grp.year`. We can combine these steps using `pipes` in the `dplyr` 
 package.
-`Pipes` allow us to create a string of functions where the output of each step
-is fed directly into the next step using the syntax: `%>%`. This means we don't 
-need to name the output of each intermediate step.
+We can use `Pipes` to string functions or processing steps together. The output 
+of each step is fed directly into the next step using the syntax: `%>%`. This 
+means we don't need to save the output of each intermediate step as a new `R`
+object.
 
 A few notes about piping syntax:
 
-1. A pipe begins with the object name that we will be manipulating, in our case
-`harMet15.09.11`
-2. it then links that object with first manipulation step using `%>%`
-3. finally, the first function is called, in our case `group_by(year)`. Note
+* A pipe begins with the object name that we will be manipulating, in our case
+`harMet15.09.11`.
+* It then links that object with first manipulation step using `%>%`.
+* Finally, the first function is called, in our case `group_by(year)`. Note
 that because we specified the object name in step one above, we can just use the
 column name
 
-so, we have: `harMet15.09.11 %>% group_by(year) `
+So, we have: `harMet15.09.11 %>% group_by(year) `
 
-4. We can then add an additional function (or more functions!) to our pipe. For
+* We can then add an additional function (or more functions!) to our pipe. For
 example, we can tell `R` to `tally` or count the number of measurements per
 year.
 
@@ -271,9 +276,9 @@ harMet15.09.11 %>%
 
 ```
 
-Piping allows us to efficiently perform operations on our `data.frame` in that:
+Piping allows us to efficiently perform operations on our `data_frame` in that:
 
-1. It allows us to condense our code, without naming intermediate steps
+1. It allows us to condense our code, without naming intermediate steps.
 2. The dplyr package is optimized to ensure fast processing!
 
 We can use pipes to summarize data by year too:
@@ -291,12 +296,11 @@ str(year.sum)
 ```
 
 
-<div id="challenge" markdown="1" >
+<div id="challenge" markdown="1">
 ## Challenge
 
-Using the piping syntax that we just learned, create a `data_frame` called
-jday.avg that contains the average `airt` per julian day (`harMet15.09.11$jd`).
-Plot the output using `qplot`.
+Use piping to create a `data_frame` called `jday.avg` that contains the average 
+`airt` per julian day (`harMet15.09.11$jd`). Plot the output using `qplot`.
 
 </div>
 
@@ -314,11 +318,10 @@ qplot(jday.avg$jday, jday.avg$meanAirTemp,
 ```
 
 <i class="fa fa-star"></i> **Data Tip:**  Older `dplyr` versions used the `%.%`
-syntax to designate a pipe. Pipes are occasionally sometimes referred to as
-chains. 
+syntax to designate a pipe. Pipes are sometimes referred to as chains. 
 {: .notice }
 
-##Other dplyr Functions
+## Other dplyr Functions
 
 `dplyr` works based on a series of *verb* functions that allow us to manipulate
 the data in different ways: 
@@ -337,8 +340,8 @@ the data in different ways:
 
 The syntax for all `dplyr` functions is similar: 
 
- * the first argument is the target `data.frame`, 
- * the subsequent arguments dictate what to do with that `data.frame` and 
+ * the first argument is the target `data_frame`, 
+ * the subsequent arguments dictate what to do with that `data_frame` and 
  * the output is a new data frame. 
 
 ### Group by a Variable (or Two)
@@ -390,7 +393,7 @@ We can use `sum` to calculate the total rather than mean value for each Julian
 Day. Using this information, do the following:
 
 1. Calculate total `prec` for each Julian Day over the 3 years - name your
-data.frame `total.prec`. 
+data_frame `total.prec`. 
 2. Create a plot of Daily Total Precipitation for 2009-2011. 
 3. Add a title and x and y axis labels.
 4. If you use `qplot` to create your plot, use
@@ -412,9 +415,9 @@ qplot(total.prec$jd, total.prec$sum_prec,
 
 ```
 
-### Mutate - Add Data.Frame Columns 2 dplyr Output
+### Mutate - Add data_frame Columns 2 dplyr Output
 We can use the `mutate()` function of `dplyr` to add additional columns of
-information to a data.frame. For instance, we added the year column
+information to a data_frame. For instance, we added the year column
 independently at the very beginning of the lesson. However, we can add the year
 using a `dplyr` pipe that also summarizes our data. To do this, we would use the
 syntax:
@@ -437,7 +440,7 @@ harMet15.09.11 %>%
 immediately use the variable (`year2`).
 {: .notice }
 
-## Save dplyr Output as Data.Frame
+## Save dplyr Output as data_frame
 We can save output from a `dplyr` pipe as a new `R` object to use for quick
 plotting. 
 
@@ -455,7 +458,7 @@ In the challenge above, we created a plot of daily precipitation data using
 `qplot`. 
 However, the x-axis ranged from 0-366 (Julian Days for the year). It would have 
 been easier to create a meaningful plot across all three years if we had a 
-continuous date variable in our data_frame representing the year and date for 
+continuous date variable in our `data_frame` representing the year and date for 
 each summary value. 
 
 We can add the the `datetime` column value to our `data_frame` by adding an
@@ -465,7 +468,7 @@ follows:
 
 `datetime = first(datetime)`
 
-Your new summarize statement in our pipe will look like this:
+Our new summarize statement in our pipe will look like this:
 
 `summarize(mean_airt = mean(airt, na.rm = TRUE), datetime = first(datetime))`
 
@@ -483,13 +486,13 @@ head(harTemp.daily.09.11)
 ```
 
 <div id="challenge" markdown="1">
-## Challenge: Applying dplyr Skills
+## Challenge: Use dplyr Skills
 
 1. Plot daily total precipitation from 2009-2011 as we did in the previous
 challenge. However this time, use the new syntax that you learned (mutate and
 summarize to add a datetime column to your output data_frame).
-2. Create a data.frame of the average *monthly* air temperature for 2009-2011.
-Name the new data frame "harTemp.monthly.09.11". Plot your output.
+2. Create a data_frame of the average *monthly* air temperature for 2009-2011.
+Name the new data frame `harTemp.monthly.09.11`. Plot your output.
 
 </div>
 
@@ -502,7 +505,7 @@ total.prec2 <- harMet15.09.11 %>%
 
 qplot(x=total.prec2$datetime, y=total.prec2$sum_prec,
     main="Total Daily Precipitation 2009-2011\nNEON Harvard Forest Field Site",
-    xlab="Date (Daily Values)", ylab=="Precip (mm)")
+    xlab="Date (Daily Values)", ylab="Precip (mm)")
 
 #####################
 #p2
