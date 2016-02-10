@@ -22,7 +22,7 @@ image:
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
 permalink: R/Brief-Tabular-Time-Series-qplot
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
