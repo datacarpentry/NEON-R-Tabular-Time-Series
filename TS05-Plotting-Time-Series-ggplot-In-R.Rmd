@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Time Series 05: Plotting Time Series with ggplot in R"
+title: "Time Series 05: Plot Time Series with ggplot2 in R"
 date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
@@ -11,7 +11,7 @@ categories: [self-paced-tutorial]
 mainTag: tabular-time-series
 tags: [time-series, phenology, R]
 tutorialSeries: [tabular-time-series]
-description: "This tutorial uses ggplot2 to create professional plots of time 
+description: "This tutorial uses ggplot2 to create customized plots of time 
 series data. We will learn how to adjust x- and y-axis ticks using the scales
 package, how to add trend lines to a scatter plot and how to customize plot
 labels, colors and overall theme."
@@ -27,10 +27,10 @@ comments: false
 {% include _toc.html %}
 
 ## About
-This tutorial uses `ggplot2` to create professional plots of time 
-series data. We will learn how to adjust x- and y-axis ticks using the scales
+This tutorial uses `ggplot2` to create customized plots of time 
+series data. We will learn how to adjust x- and y-axis ticks using the `scales`
 package, how to add trend lines to a scatter plot and how to customize plot
-labels, colors and overall theme.
+labels, colors and overall plot appearance using `ggthemes`.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
@@ -70,7 +70,7 @@ preferably RStudio, loaded on your computer.
 ## Additional Resources
 
 * Winston Chang's
- <a href="http://www.cookbook-r.com/Graphs/index.html"target="_blank"> 
+ <a href="http://www.cookbook-r.com/Graphs/index.html" target="_blank"> 
  _Cookbook for R_</a> site based on his *R Graphics Cookbook* text. 
 * The NEON Data Skills lesson on 
  <a href="http://neondataskills.org/R/Plotly/" target="_blank"> 
@@ -88,8 +88,8 @@ preferably RStudio, loaded on your computer.
 ## Plotting Time Series Data
 Plotting our data allows us to quickly see general patterns including 
 outlier points and trends. Plots are also a useful way to communicate the results
-of our research. `ggplot2` is a powerful `R` library that we use to create customized,
-professional plots.
+of our research. `ggplot2` is a powerful `R` package that we use to create 
+customized, professional plots.
 
 ### Load the Data
 We will use the `lubridate`, `ggplot2`, `scales` and `gridExtra` packages in
@@ -98,7 +98,7 @@ this lesson.
 Our data sample will be the daily meteorology data for 2009-2011 for the NEON
 Harvard Forest field site
 (`NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_Daily_2009_2011.csv`).
-If this subset is not already loaded in RStudio, please load it now.  
+If this subset is not already loaded in `RStudio`, please load it now.  
 
 ```{r load-data}
 #Remember it is good coding technique to add additional packages to the top of
@@ -132,7 +132,7 @@ harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
 ## Plot with qplot
 We can use the `qplot()` function in the `ggplot2` package to quickly plot a
 variable such as air temperature (`airt`) across all three years of our daily
-averaged time series data. 
+average time series data. 
 
 ``` {r qplot}
 qplot(x=date, y=airt,
@@ -143,12 +143,12 @@ qplot(x=date, y=airt,
 
 The resulting plot displays the pattern of air temperature increasing and 
 decreasing over three years. While `qplot()` is a quick way to plot data, our 
-ability to customize the output plot is limited.
+ability to customize the output is limited.
 
 ## Plot with ggplot
-The `ggplot()` function within `ggplot2` package gives us more control
+The `ggplot()` function within the `ggplot2` package gives us more control
 over plot appearance. However, to use `ggplot` we need to learn a slightly 
-different syntax. Three basic elements are needed:
+different syntax. Three basic elements are needed for `ggplot()` to work:
 
  1. The **data_frame:** containing the variables that we wish to plot,
  2. **aes (aesthetics):** which denotes which variables will map to the x-, y-
@@ -156,14 +156,14 @@ different syntax. Three basic elements are needed:
  3. **`geom_XXX` (geometry):** which defines the data's graphical representation
  (e.g. points (`geom_point`), bars (`geom_bar`), lines (`geom_line`), etc).
  
-The syntax begins with the base statement that includes the data.frame
+The syntax begins with the base statement that includes the `data_frame`
 (`harMetDaily.09.11`) and associated x (`date`) and y (`airt`) variables to be
 plotted:
 
 `ggplot(harMetDaily.09.11, aes(date, airt))`
 
 To successfully plot, the last piece that is needed is the `geom`etry type. In 
-this case, we want to create a scatterplot so we can add ` + geom_point()`.
+this case, we want to create a scatterplot so we can add `+ geom_point()`.
 
 Let's create an air temperature scatterplot. 
 
@@ -236,6 +236,12 @@ the axis ticks so they read "month year" (`%b %y`). To do this, we will use the 
 Rather than re-coding the entire plot, we can add the `scale_x_datetime` element
 to the plot object `AirTempDaily` that we just created. 
 
+<i class="fa fa-star"></i> **Data Tip:** You can type `?strptime` into the `R` 
+console to find a list of date format conversion specifications (e.g. %b = month).
+Type `scale_x_datetime` for a list of parameters that allow you to format dates 
+on the x axis.
+{: .notice }
+
 ```{r format-x-axis-labels }
 #format x-axis: dates
 AirTempDailyb <- AirTempDaily + 
@@ -247,8 +253,13 @@ AirTempDailyb
 ### Adjust Date Ticks
 We can adjust the date ticks too. In this instance, having 1 tick per year may be
 enough. If we have the `scales` package loaded, we can use 
-`breaks=date_breaks("1 year")` to create a tick for every year.
-We can adjust this as needed (e.g. 10 days, 30 days, 1 month, etc).
+`breaks=date_breaks("1 year")` within the `scale_x_datetime` element to create 
+a tick for every year. We can adjust this as needed (e.g. 10 days, 30 days, 1 
+month).
+
+> FROM R HELP (`?date_breaks`): width	an interval specification, one of "sec", 
+> "min", "hour", "day", "week", "month", "year". Can be by an integer and a 
+> space, or followed by "s".
 
 ```{r format-x-axis-label-ticks }
 #format x-axis: dates
@@ -273,9 +284,9 @@ format a continue variable. Check out `?scale_x_` (tab complete to view the vari
 {: .notice }
 
 ## ggplot- Subset by Time
-Sometimes we want to zoom into a region of our plot without subsetting the 
-entire `data_frame`. To do this, we can define start and end times. We can then
-define the `limits` in the `scale_x_datetime` object as follows:
+Sometimes we want to scale the x or y axis to a particular time subset without 
+subsetting the entire `data_frame`. To do this, we can define start and end 
+times. We can then define the `limits` in the `scale_x_datetime` object as follows:
 
 `scale_x_datetime(limits=start.end) +`
 
@@ -311,7 +322,7 @@ AirTempDaily<-AirTempDailyb +
 AirTempDaily
 ```
 
-Using the `theme_bw()` we now have a white background rather than the grey.
+Using the `theme_bw()` we now have a white background rather than grey.
 
 ### Import New Themes *Bonus* *Topic*
 There are externally developed themes built by the `R` community that are worth
@@ -363,8 +374,8 @@ AirTempDaily
 Create a plot of total daily precipitation using data in the `harMetDaily.09.11` 
 `data_frame`. 
 
-* Format the dates on the x-axis: "Month-Year".  
-* Create a plot object called 'PrecipDaily".
+* Format the dates on the x-axis: `Month-Year`.  
+* Create a plot object called `PrecipDaily`.
 * Be sure to add an appropriate title in addition to x and y axis labels.
 * Increase the font size of the plot text and adjust the number of ticks on the
 x-axis.
@@ -384,7 +395,7 @@ PrecipDaily <- ggplot(harMetDaily.09.11, aes(date, prec)) +
 PrecipDaily
 ```
 
-## Figures with Bars
+## Bar Plots with GGPLOT2
 We can use ggplot to create bar plots too. Let's create a bar plot of total daily
 precipitation next. A bar plot might be a better way to represent a total daily 
 value. To create a bar plot, we change the `geom` element from `geom_point()` to 
@@ -430,11 +441,11 @@ PrecipDailyBarA + scale_x_datetime(limits=start.end)
 ```
 
 ## Color
-We can change the bar fill color by specifying color within the
+We can change the bar fill color by within the
 `geom_bar(colour="blue")` element. We can also specify a separate fill and line
-color using `fill=` and `line=`. Colors can be specified by name or hexadecimal 
-color codes (e.g, #FF9999). There are many color cheatsheets out there to help 
-with color selection!
+color using `fill=` and `line=`. Colors can be specified by name (eg `"blue"`) 
+or hexadecimal color codes (e.g, #FF9999). There are many color cheatsheets out 
+there to help with color selection!
 
 <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" target="_blank">
 An R color cheatsheet</a>
@@ -514,7 +525,7 @@ AirTempDailyTrend
 ```
 
 <div id="challenge" markdown="1">
-## Challenge: A Trend in Percipitation? 
+## Challenge: A Trend in Precipitation? 
 
 Create a bar plot of total daily precipitation. Add a:
 

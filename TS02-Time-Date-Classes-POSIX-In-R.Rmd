@@ -11,16 +11,16 @@ categories: [self-paced-tutorial]
 mainTag: tabular-time-series
 tags: [time-series, phenology, R]
 tutorialSeries: [tabular-time-series]
-description: "This tutorial explores working with date and time field in R. We
+description: "This tutorial explores working with date and time classes in R. We
 will overview the differences between As.Date, POSIXct and POSIXlt as used to
 convert a date/time field in character (string) format to a date-time format
 that is recognized by R. This conversion supports efficient plotting, subsetting
-and analysis of time series data in R"
+and analysis of time series data."
 code1: TS02-Time-Date-Classes-POSIX-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
-  creditlink: http://www.neoninc.org
+  creditlink:
 permalink: R/Time-Series-Convert-Date-Time-Class-POSIX
 comments: false
 ---
@@ -32,7 +32,7 @@ This tutorial explores working with date and time field in R. We will overview t
 differences between `as.Date`, `POSIXct` and `POSIXlt` as used to convert
 a date / time field in character (string) format to a date-time format that is 
 recognized by `R`. This conversion supports efficient plotting, subsetting and
-analysis of time series data in `R`.
+analysis of time series data.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
@@ -224,7 +224,7 @@ stored differently. The `POSIXlt` class stores the hour, minute, second, day,
 month, and year separately.
 
 #### Months in POSIXlt 
-Yet, `POSIXlt` has a few quirks. First, the month values stored in the `POSIXlt`
+`POSIXlt` has a few quirks. First, the month values stored in the `POSIXlt`
 object use `zero-based indexing`. This means that month #1 (January) is stored
 as 0, and month #2 (February) is stored as 1. Notice in the output above,
 October is stored as the 9th month (`$mon = 9`).
@@ -236,8 +236,8 @@ using a base index value of 1900. Thus, 2015 is stored as 115 (`$year = 115`
 
 <i class="fa fa-star"></i> **Data Tip:** To learn more about how `R` stores
 information within date-time and other objects check out the `R` documentation
-by using `?` (E.G., `?POSIXlt`). NOTE: you can use this same syntax to learn
-about particular functions (E.G., `?ggplot`).  
+by using `?` (e.g., `?POSIXlt`). NOTE: you can use this same syntax to learn
+about particular functions (e.g., `?ggplot`).  
 {: .notice}
 
 Having dates classified as separate components makes `POSIXlt` computationally
@@ -320,18 +320,18 @@ Time). However, we know from the
 [metadata ]({{site.baseurl}}/R/Time-Series-Metadata/ "Time Series Metadata"),
 that these data were stored in Eastern Standard Time.
 
-Let's look at time zones, next.
-
 ### Assign Time Zone
 
 When we convert a date-time formatted column to `POSIXct` format, we need to
-assign an associated time zone. If we don't do that, `R` will default to the
-local time zone that is defined on your computer. 
+assign an associated **time zone**. If we don't assign a time zone,`R` will 
+default to the local time zone that is defined on your computer. 
 There are individual designations for different time zones and time zone 
-variants (e.g., does the time occur during daylight savings time). Codes for
-timezones can be found in this 
+variants (e.g., does the time occur during daylight savings time). 
+
+<i class="fa fa-star"></i> **Data Tip:** Codes for timezones can be found in this 
 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 target="_blank">time zone table</a>. 
+{: .notice}
 
 The code for the Eastern time zone that is the closest match to the NEON Harvard
 Forest field site is `America/New_York`. Let's convert our `datetime` field 

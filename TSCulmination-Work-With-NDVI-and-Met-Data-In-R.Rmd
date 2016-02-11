@@ -69,14 +69,14 @@ preferably RStudio, loaded on your computer.
 
 ****
 
-### Skills Needed
-This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
-the `ggplot2` package.  If you are not comfortable with either of these we
-recommend starting with the 
-[Subset & Manipulate Time Series Data with `dplyr` lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
-and the 
-[Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
-respectively, to gain familiarity.
+### Recommended Tutorials
+
+This lessons uses both `dplyr` and `ggplot2`. We recommend the following tutorials
+before working through this one, if you are new to either of the above `R` packages.
+
+* [Subset & Manipulate Time Series Data with dplyr lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
+
+* [Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
 
 </div>
 
@@ -126,12 +126,16 @@ NDVI.2011 <- read.csv(
 #check out the data
 str(NDVI.2011)
 head(NDVI.2011)
+
 ```
 
 <div id="challenge" markdown="1">
-## Challenge:  Convert Date in Character Class to a Date-Time Class
-The `Date` data is currently in the character class, convert the data to a date
-class. 
+## Challenge:  Class Conversion & Subset by Time
+
+1. `NDVI.2001$Date` imported into `R` as a character class. Convert the data to 
+a date class. 
+
+2. Subset just the data from 2011 from the `harmet.Daily` data. 
 </div>
 
 ``` {r challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE}
@@ -139,15 +143,8 @@ class.
 NDVI.2011$Date<- as.Date(NDVI.2011$Date)
 #double check
 str(NDVI.2011)
-```
 
-<div id="challenge" markdown="1">
-## Challenge: Subset Only the 2011 Micrometeology Data
-First lets get just 2011 from the `harmet.Daily` data since that is the only
-year for which we have NDVI data.
-</div>
-
-```{r dplyr-to-subset, include=TRUE, results="hide", echo=FALSE}
+##2
 #Use dplyr to subset only 2011 data
 harMet.daily2011 <- harMetDaily.09.11 %>% 
   mutate(year = year(date)) %>%   #need to create a year only column first
@@ -214,19 +211,21 @@ align.  We can also label the axes.
 
 ``` {r plot-same-xaxis}
 plot2.par.2011 <- plot.par.2011 +
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Total PAR") + xlab ("")
- 
+               scale_x_date(labels = date_format("%b %d"),
+               date_breaks = "3 months",
+               date_minor_breaks= "1 week",
+               limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date))) +
+                ylab("Total PAR") + xlab ("")
 
 plot2.NDVI.2011 <- plot.NDVI.2011 +
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
+          scale_x_date(labels = date_format("%b %d"),
+               date_breaks = "3 months", 
+               date_minor_breaks= "1 week",
                limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
   ylab("Total NDVI") + xlab ("Date")
 
 grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
+
 ```
 
 <div id="challenge" markdown="1">
@@ -241,7 +240,7 @@ plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
   geom_point(colour="darkblue", na.rm=TRUE) +
   ggtitle("Average Air Temperature\n Harvard Forest 2011")+
   scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
+               date_breaks = "3 months", date_minor_breaks= "1 week",
                limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
   ylab("Celcius") + xlab ("")+
   theme(legend.position = "none",
@@ -291,7 +290,7 @@ NDVI.harMet.facet.plot<-ggplot(
   facet_grid(variable~., scales="free") +   #specify facets & y-axis can vary
   ggtitle("Harvard Forest 2011") +
   scale_x_date(labels = date_format("%b %d"),  #abbreviated month & day
-               breaks = "3 months", minor_breaks= "1 month") +  #where grid is
+               date_breaks = "3 months", date_minor_breaks= "1 month") +  #where grid is
   xlab ("Date") + ylab ("Value") +
   theme(legend.position = "none",
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
