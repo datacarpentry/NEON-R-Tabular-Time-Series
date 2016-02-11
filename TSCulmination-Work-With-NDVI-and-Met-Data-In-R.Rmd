@@ -69,14 +69,14 @@ preferably RStudio, loaded on your computer.
 
 ****
 
-### Skills Needed
-This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
-the `ggplot2` package.  If you are not comfortable with either of these we
-recommend starting with the 
-[Subset & Manipulate Time Series Data with `dplyr` lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
-and the 
-[Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
-respectively, to gain familiarity.
+### Recommended Tutorials
+
+This lessons uses both `dplyr` and `ggplot2`. We recommend the following tutorials
+before working through this one, if you are new to either of the above `R` packages.
+
+* [Subset & Manipulate Time Series Data with dplyr lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
+
+* [Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
 
 </div>
 
