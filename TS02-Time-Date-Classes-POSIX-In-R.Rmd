@@ -63,12 +63,9 @@ preferably RStudio, loaded on your computer.
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
-
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
-
 </div>
 
 ## The Data Approach

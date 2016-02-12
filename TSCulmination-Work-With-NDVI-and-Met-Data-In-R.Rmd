@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Time Series Culmination Activity: Plot using Facets & Plot NDVI with Time Series Data"
-date:   2015-10-16
+date:   2015-10-18
 authors: [Megan A. Jones, Leah A. Wasser]
 contributors: []
 dateCreated: 2015-10-22
@@ -25,15 +25,16 @@ comments: false
 {% include _toc.html %}
 
 ## About
-This tutorial is a culmination activity for the end of the lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series) 
-and as part of a 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop). 
+This tutorial is a culmination activity for the series on 
+[working with tabular time series data in R ]({{ site.baseurl }}tutorial-series/tabular-time-series/) 
+and as part of a larger spatio-temporal tutorial series and Data Carpentry
+workshop on 
+[using spatio-temporal phenology-related data in R ]({{ site.baseurl }}tutorial-series/neon-dc-phenology-series/).
 The data used in this culmination activity has been extracted or previously
-worked with in the 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series)
-and  
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series).
+worked with in the tutorial series
+[working with tabular time series data in R ]({{ site.baseurl }}tutorial-series/tabular-time-series/)
+and 
+[working with raster time-series data in R ]({{ site.baseurl }}tutorial-series/raster-time-series/).
 
 **R Skill Level:** Advanced/ Intermediate - you've got the basics of `R` down
  and are comfortable using `ggplot2` and `dplyr`. 
@@ -43,7 +44,8 @@ and
 # Goals / Objectives
 After completing this activity, you will:
 
- * 
+ * have applied `ggplot2` and `dplyr` skills to a new data set.
+ * learn how to set min/max axis values in `ggplot()` to align data on multiple plots. 
 
 ## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
@@ -65,18 +67,17 @@ preferably RStudio, loaded on your computer.
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 ****
 
 ### Recommended Tutorials
+This tutorial relies on participants' familiarity with both `dplyr` and 
+`ggplot2`. Prior to working through this culmination activity, we recommend the
+following tutorials, if you are new to either of the `R` packages.
 
-This lessons uses both `dplyr` and `ggplot2`. We recommend the following tutorials
-before working through this one, if you are new to either of the above `R` packages.
+* [Subset & Manipulate Time Series Data with dplyr tutorial ]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
 
-* [Subset & Manipulate Time Series Data with dplyr lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
-
-* [Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
+* [Plotting Time Series with ggplot in R tutorial ]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
 
 </div>
 
@@ -84,9 +85,14 @@ before working through this one, if you are new to either of the above `R` packa
 
 ### NDVI Data
 Normalized Difference Vegetation Index (NDVI) is an indicator of how green
-vegetation is.  NDVI is derived from remote sensing data based on a ratio the
+vegetation is.  
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rxOMhQwApMc" frameborder="0" allowfullscreen></iframe>
+
+
+NDVI is derived from remote sensing data based on a ratio the
 reluctance of visible red spectra and near-infrared spectra.  The NDVI values
-vary from -1.0 to 1.0.  
+vary from -1.0 to 1.0.
 
 The imagery data used to create this NDVI data were collected over the National
 Ecological Observatory Network's
@@ -97,14 +103,15 @@ The imagery was created by the U.S. Geological Survey (USGS) using a
 on a
 <a href="http://landsat.usgs.gov" target="_blank" > Landsat Satellite </a>.
 The data files are Geographic Tagged Image-File Format (GeoTIFF).  
-A tutorial, [Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
-explains how to create this NDVI file from on Raster data. 
+The tutorial [Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
+explains how to create this NDVI file from raster data. 
 
-### Read In NDVI Data
-We need to read in the 2011 NDVI data for the Harvard Forest. A .csv file is
-within `HARV/NDVI` subdirectories in the `NEON-DS-Met-Time-Series` directory.
+### Read In the Data
+We need to read in two datasets: the 2009-2011 micrometeorological data and the
+2011 NDVI data for the Harvard Forest. 
 
-```{r read-NDVI}
+```{r read-in-files}
+
 #Remember it is good coding technique to add additional libraries to the top of
   #your script 
 library(lubridate) #for working with dates
@@ -117,7 +124,18 @@ library(dplyr)  #for subsetting by season
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
 
-#first read in the NDVI CSV data
+#read in the Harvard micro-meteorological data; if you don't already have it
+harMetDaily.09.11 <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_Daily_2009_2011.csv",
+  stringsAsFactors = FALSE
+  )
+
+#check out the data
+str(harMetDaily.09.11)
+head(harMetDaily.09.11)
+
+
+#read in the NDVI CSV data; if you dont' already have it 
 NDVI.2011 <- read.csv(
   file="NEON-DS-Met-Time-Series/HARV/NDVI/meanNDVI_HARV_2011.csv", 
   stringsAsFactors = FALSE
@@ -126,23 +144,46 @@ NDVI.2011 <- read.csv(
 #check out the data
 str(NDVI.2011)
 head(NDVI.2011)
-
 ```
+
+In the NDVI dataset, we have the following variables:
+
+* 'X': an integer identifying each row
+* meanNDVI: the daily total NDVI for that area. (It is a mean of all pixels in the original raster).
+* site: "HARV" means all NDVI values are from the Harvard Forest
+* year: "2011" all values are from 2011
+* julianDay: the numeric day of the year
+* Date: a date in format "YYYY-MM-DD"; currently in **chr** class
 
 <div id="challenge" markdown="1">
 ## Challenge:  Class Conversion & Subset by Time
+The goal of this challenge is to get our data sets ready so that we can work 
+with data from each, within the same plots or analyses.  
 
-1. `NDVI.2001$Date` imported into `R` as a character class. Convert the data to 
-a date class. 
+1. Ensure that date fields within both data sets are in the Date class. If not,
+convert the data to the Date class. 
 
-2. Subset just the data from 2011 from the `harmet.Daily` data. 
+2. The NDVI data is limited to 2011, however, the meteorological data is from
+2009-2011. Subset and retain only the 2011 meterorological data. Name it
+`harMet.daily2011`.
+
+HINT: If you are having trouble subsetting the data, refer back to
+[Subset & Manipulate Time Series Data with dplyr lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr")
 </div>
 
 ``` {r challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE}
+
+#check to see class of date field
+class(NDVI.2011$Date)
+class(harMetDaily.09.11$date)
+
 #convert chr class Date to date class Date
 NDVI.2011$Date<- as.Date(NDVI.2011$Date)
-#double check
-str(NDVI.2011)
+harMetDaily.09.11$date<- as.Date(harMetDaily.09.11$date)
+
+#confirm conversion
+class(NDVI.2011$Date)
+class(harMetDaily.09.11$date)
 
 ##2
 #Use dplyr to subset only 2011 data
@@ -154,38 +195,59 @@ harMet.daily2011 <- harMetDaily.09.11 %>%
 harMet.daily2011$date<-as.Date(harMet.daily2011$date)
 ```
 
-In this dataset, we have the following variables:  
+Now that we have our data sets with Date class dates and limited to 2011, we can
+begin working with both. 
 
-* 'X': an integer representing each row
-* meanNDVI: the daily total NDVI for that area.  ("Mean" comes from the fact
-   that the value is a mean of all pixels in the original raster).
-* site: all NDVI values are from the Harvard Forest
-* year: all values are from 2011
-* julianDay: the numeric day of the year
-* Date: a date in format "YYYY-MM-DD".
+## Plot NDVI Data from a .csv
+This NDVI data was derrived from a raster, however, now it is integers in a
+`data.frame` therefore we can plot it like any of our other values using
+`ggplot()`. Here we plot `meanNDVI` by `Date`.
+
+``` {r plot-NDVI}
+ggplot(NDVI.2011, aes(Date, meanNDVI))+
+  geom_point(colour = "forestgreen", size = 4) +
+  ggtitle("Daily NDVI at Harvard Forest, 2011")+
+  theme(legend.position = "none",
+        plot.title = element_text(lineheight=.8, face="bold",size = 20),
+        text = element_text(size=20))
+
+```
 
 ## Two y-axes or Side-by-Side Plots?
-When we have different types of data like NDVI (scale: 0-1 index units) and PAR
-(scale: 0-65.8 mole per meter squared) that we want to plot over time, we cannot
-simply plot them on the same plot as they have different y-axes.  
+When we have different types of data like NDVI (scale: 0-1 index units),
+Photossyntheically Active Radiation (PAR, scale: 0-65.8 mole per meter squared),
+or temperature (scale: -20 to 30 C) that we want to plot over time, we cannot
+simply plot them on the same plot as they have different y-axes.
 
 One option, would be to plot both data types in the same plot space but each
-having it's own axis.  However, there is a line of graphical representation 
-thought that this is not a good practice.  The creator of `ggplot2` ascribes to
-this dislike of different y-axes and so neither `qplot` nor `ggplot` have this
-functionality.  
+having it's own axis (one on left of plot and one on right of plot).  However, 
+there is a line of graphical representation thought that this is not a good
+practice.  The creator of `ggplot2` ascribes to this dislike of different y-axes
+and so neither `qplot` nor `ggplot` have this functionality. 
 
 Instead, plots of different types of data can be plotted next to each other to 
-allow for comparison.  Depending on how the plots are being viewed they can have
-a vertical or horizontal arrangement.  
+allow for comparison.  Depending on how the plots are being viewed, they can
+have a vertical or horizontal arrangement. 
 
-Following this second option, we will create a plot for each variable using the
-same time variable (Julian day) as our x-axis.
-
+<div id="challenge" markdown="1">
+## Challenge: Plot Air Temperature and NDVI
 Then we will plot the two plots in the same viewer so we can more easily compare
 them.  
 
+Hint: If you are having a hard time arranging the plots in a single grid, refer
+back to 
+[Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")
+</div>
+
 ``` {r plot-PAR-NDVI}
+#plot NDVI again
+plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
+  geom_point(colour = "forestgreen", size = 4) +
+  ggtitle("Daily NDVI at Harvard Forest, 2011")+
+  theme(legend.position = "none",
+        plot.title = element_text(lineheight=.8, face="bold",size = 20),
+        text = element_text(size=20))
+
 #create plot of julian day vs. PAR
 plot.par.2011 <- ggplot(harMet.daily2011, aes(date, part))+
   geom_point(na.rm=TRUE) +
@@ -194,20 +256,14 @@ plot.par.2011 <- ggplot(harMet.daily2011, aes(date, part))+
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
         text = element_text(size=20))
 
-plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
-  geom_point(colour = "forestgreen", size = 4) +
-  ggtitle("Daily NDVI at Harvard Forest, 2011")+
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=20))
- 
 #display the plots together
 grid.arrange(plot.par.2011, plot.NDVI.2011) 
 ```
 
-This is nice but a bit confusing as the time on our x-axis doesn't fully line
-up.  To fix this we can assign the same min and max to both x-axes so that they
-align.  We can also label the axes. 
+This is nice but a bit confusing as the date on our x-axis doesn't exactly line
+up. To fix this we can assign the same min and max to both x-axes so that they
+align.  We can assign the date format for the x-axis and clearly label both
+axes. 
 
 ``` {r plot-same-xaxis}
 plot2.par.2011 <- plot.par.2011 +
@@ -215,14 +271,14 @@ plot2.par.2011 <- plot.par.2011 +
                date_breaks = "3 months",
                date_minor_breaks= "1 week",
                limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date))) +
-                ylab("Total PAR") + xlab ("")
+               ylab("Total PAR") + xlab ("")
 
 plot2.NDVI.2011 <- plot.NDVI.2011 +
-          scale_x_date(labels = date_format("%b %d"),
+               scale_x_date(labels = date_format("%b %d"),
                date_breaks = "3 months", 
                date_minor_breaks= "1 week",
                limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Total NDVI") + xlab ("Date")
+               ylab("Total NDVI") + xlab ("Date")
 
 grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
 
@@ -230,12 +286,16 @@ grid.arrange(plot2.par.2011, plot2.NDVI.2011)
 
 <div id="challenge" markdown="1">
 ## Challenge: Plot Air Temperature and NDVI
-Create a complementary plot pairing with Air Temperature and NDVI.  Choose 
-colors and symbols that show the data well.  Finally, plot air temperature, PAR,
-and NDVI in a single window to ease comparisons.  
+Create a plot, complementary to those above, showing air temperature (`airt`)
+throughout 2011. Choose colors and symbols that show the data well. 
+
+Finally, plot PAR, air temperature, and NDVI in a single pane to ease
+comparisons.  
 </div>
 
 ``` {r challengeplot-same-xaxis, echo=FALSE}
+#part 1
+#plot air temp
 plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
   geom_point(colour="darkblue", na.rm=TRUE) +
   ggtitle("Average Air Temperature\n Harvard Forest 2011")+
@@ -246,8 +306,6 @@ plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
   theme(legend.position = "none",
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
         text = element_text(size=20))
-
-grid.arrange(plot.airt.2011, plot2.NDVI.2011) 
 
 grid.arrange(plot2.par.2011, plot.airt.2011, plot2.NDVI.2011) 
 ```
