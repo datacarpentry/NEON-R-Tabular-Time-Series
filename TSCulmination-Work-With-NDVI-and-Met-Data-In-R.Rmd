@@ -19,7 +19,7 @@ image:
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
 permalink: R/Work-With-NDVI-and-Met-Data-In-R
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
