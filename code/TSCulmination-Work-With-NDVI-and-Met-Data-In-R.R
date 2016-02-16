@@ -21,13 +21,14 @@ NDVI.2011 <- read.csv(
 str(NDVI.2011)
 head(NDVI.2011)
 
+
 ## ----challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE----
 #convert chr class Date to date class Date
 NDVI.2011$Date<- as.Date(NDVI.2011$Date)
 #double check
 str(NDVI.2011)
 
-## ----dplyr-to-subset, include=TRUE, results="hide", echo=FALSE-----------
+##2
 #Use dplyr to subset only 2011 data
 harMet.daily2011 <- harMetDaily.09.11 %>% 
   mutate(year = year(date)) %>%   #need to create a year only column first
@@ -57,26 +58,28 @@ grid.arrange(plot.par.2011, plot.NDVI.2011)
 
 ## ----plot-same-xaxis-----------------------------------------------------
 plot2.par.2011 <- plot.par.2011 +
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
-               limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Total PAR") + xlab ("")
- 
+               scale_x_date(labels = date_format("%b %d"),
+               date_breaks = "3 months",
+               date_minor_breaks= "1 week",
+               limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date))) +
+                ylab("Total PAR") + xlab ("")
 
 plot2.NDVI.2011 <- plot.NDVI.2011 +
-  scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
+          scale_x_date(labels = date_format("%b %d"),
+               date_breaks = "3 months", 
+               date_minor_breaks= "1 week",
                limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
   ylab("Total NDVI") + xlab ("Date")
 
 grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
+
 
 ## ----challengeplot-same-xaxis, echo=FALSE--------------------------------
 plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
   geom_point(colour="darkblue", na.rm=TRUE) +
   ggtitle("Average Air Temperature\n Harvard Forest 2011")+
   scale_x_date(labels = date_format("%b %d"),
-               breaks = "3 months", minor_breaks= "1 week",
+               date_breaks = "3 months", date_minor_breaks= "1 week",
                limits=c(min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
   ylab("Celcius") + xlab ("")+
   theme(legend.position = "none",
@@ -112,7 +115,7 @@ NDVI.harMet.facet.plot<-ggplot(
   facet_grid(variable~., scales="free") +   #specify facets & y-axis can vary
   ggtitle("Harvard Forest 2011") +
   scale_x_date(labels = date_format("%b %d"),  #abbreviated month & day
-               breaks = "3 months", minor_breaks= "1 month") +  #where grid is
+               date_breaks = "3 months", date_minor_breaks= "1 month") +  #where grid is
   xlab ("Date") + ylab ("Value") +
   theme(legend.position = "none",
         plot.title = element_text(lineheight=.8, face="bold",size = 20),

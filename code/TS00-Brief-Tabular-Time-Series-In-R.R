@@ -32,9 +32,21 @@ str(harMet.daily)
 
 a <- "mouse"
 b <- "sparrow"
+class(a)
+class(b)
 
 #subract a-b 
 a-b
+
+
+## ----data-class-num------------------------------------------------------
+
+c <- 2
+d <- 1
+class(c)
+class(d)
+#subract a-b 
+c-d
 
 
 ## ----data-class-example-2------------------------------------------------
@@ -56,15 +68,16 @@ class(prec)
 #calculate min value
 min(prec)
 
+
 ## ----plot-data-----------------------------------------------------------
-#quickly plot of air temperature
+#quickly plot air temperature
 qplot(x=date, y=airt, 
       data=harMet.daily,
       main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
 
 ## ----view-class----------------------------------------------------------
-# View data structure for each column that we wish to plot
+# View data class for each column that we wish to plot
 class(harMet.daily$date)
 
 class(harMet.daily$airt)
@@ -93,13 +106,15 @@ qplot(x=date,y=airt,
 #1
 qplot(x=date,y=prec, 
       data=harMet.daily,
-      main="Daily Precipitation \nNEON Harvard Forest")  
+      main="Daily Precipitation \nNEON Harvard Forest",
+      xlab="Date", ylab="Daily Precipitation")  
 
 #2 Precipiation does not appear to have the same striking annual pattern as air temperature does. 
 
 #3
 qplot(x=airt,y=prec, 
       data=harMet.daily,
-      main="Relationship between precipitation & air temperature \nNEON Harvard Forest")  
+      main="Relationship between precipitation & air temperature \nNEON Harvard Forest",
+      xlab="Air Temperature", ylab="Daily Precipitation")  
 
 

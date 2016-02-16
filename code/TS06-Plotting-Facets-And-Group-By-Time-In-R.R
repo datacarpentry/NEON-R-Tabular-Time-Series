@@ -211,8 +211,6 @@ airSoilTemp_Plot + facet_grid(. ~ season)
 airSoilTemp_Plot + facet_grid(season ~ .)
 
 
-
-
 ## ----assigning-level-to-season, include=TRUE, results="hide", echo=FALSE----
 #1
 #create factor / assign levels
@@ -247,13 +245,13 @@ met_monthly_HARV <- read.csv(
 
 # Plot 1: base R methods
 #convert to date time - add a day "01" to each date to support this in base R
-met_monthly_HARV$date <- as.Date(paste(met_monthly_HARV$date,"-01",sep=""))
+met_monthly_HARV$date_base <- as.Date(paste(met_monthly_HARV$date,"-01",sep=""))
 
 #add year
-met_monthly_HARV$year <- year(met_monthly_HARV$date)
+met_monthly_HARV$year <- year(met_monthly_HARV$date_base)
 
 #add month
-met_monthly_HARV$month <- factor(month(met_monthly_HARV$date))
+met_monthly_HARV$month <- factor(month(met_monthly_HARV$date_base))
 
 #create plot
 #rerun original par.precip code to incorporate the levels. 
@@ -272,16 +270,17 @@ long_term_temp + facet_wrap(~ year, nc=3)
 #load the zoo package
 library(zoo)
 
-#convert date column to date column
-met_monthly_HARV_zoo <- as.Date(as.yearmon(met_monthly_HARV$date))
+#convert date column to MONTH in a new column
+met_monthly_HARV$date_zoo <- as.Date(as.yearmon(met_monthly_HARV$date))
 
 #create plot
 #rerun original par.precip code to incorporate the levels. 
-long_term_temp_zoo <- ggplot(met_monthly_HARV_zoo,aes(date, airt)) +
+long_term_temp_zoo <- ggplot(met_monthly_HARV, aes(month, airt)) +
         geom_point(na.rm=TRUE) +    #removing the NA values
         ggtitle("Air Temperature 2001-2015 \n NEON Harvard Forest Site") +
         theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
         theme(text = element_text(size=20)) +
         xlab("Total Precipitation (mm)") + ylab("Mean Total PAR")
-long_term_temp_zoo
+
+long_term_temp_zoo + facet_wrap(~ year, nc=3)
 

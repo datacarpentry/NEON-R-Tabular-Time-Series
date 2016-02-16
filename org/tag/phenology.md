@@ -1,11 +1,12 @@
 ---
 layout: post_by_tag
-title: 'Lessons with a Phenology Theme'
+title: 'Tutorials About Phenology'
 tag: phenology
 permalink: phenology/
 image:
-  feature: NEONCarpentryHeader_2.png
-  credit: National Ecological Observatory Network (NEON)
-  creditlink: http://www.neoninc.org
+  feature: coding_R.jpg
+  credit:
+  creditlink: 
 ---
 
+Tutorials that discuss phenology and the data skills needed to ask phenology-related questions are listed below.

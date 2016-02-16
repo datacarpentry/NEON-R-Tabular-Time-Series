@@ -86,7 +86,6 @@ AirTempDailyb <- AirTempDaily +
 AirTempDailyb
 
 
-
 ## ----subset-ggplot-time--------------------------------------------------
 
 #Define Start and end times for the subset as R objects that are the time class
