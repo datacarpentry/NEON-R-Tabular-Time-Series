@@ -1,43 +1,45 @@
 ---
 layout: post
-title: "Lesson 02: Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt"
+title: "Time Series 02: Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt"
 date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2016-01-08
+lastModified: 2016-02-16
 packagesLibraries: [lubridate]
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-description: "This lesson explores working with date and time field in R. We
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial explores working with date and time classes in R. We
 will overview the differences between As.Date, POSIXct and POSIXlt as used to
 convert a date/time field in character (string) format to a date-time format
 that is recognized by R. This conversion supports efficient plotting, subsetting
-and analysis of time series data in R"
+and analysis of time series data."
 code1: TS02-Time-Date-Classes-POSIX-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
-  creditlink: http://www.neoninc.org
+  creditlink:
 permalink: R/Time-Series-Convert-Date-Time-Class-POSIX
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
 
-##About
-This lesson explores working with date and time field in R. We will overview the
+## About
+This tutorial explores working with date and time field in R. We will overview the
 differences between `as.Date`, `POSIXct` and `POSIXlt` as used to convert
 a date / time field in character (string) format to a date-time format that is 
 recognized by `R`. This conversion supports efficient plotting, subsetting and
-analysis of time series data in `R`.
+analysis of time series data.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down and 
 understand the general structure of tabular data.
 
 <div id="objectives" markdown="1">
 
-#Goals / Objectives
+# Goals / Objectives
 After completing this activity, you will:
 
 * Understand various date-time classes and data structure in `R`. 
@@ -49,34 +51,24 @@ format to a date-time `R` class.
 * Learn how to write out a date-time class object in different ways (month-day,
 month-day-year, etc). 
 
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-###Install R Packages
+### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 
 [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-###Download Data 
+### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series)
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
-
 </div>
 
-##The Data Approach
+## The Data Approach
 In the [Intro to Time-Series Data in R Lesson ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "Lesson 00")
 we imported a time series dataset in `.csv` format into `R`. We learned how to 
 quickly plot these data by converting the date column to an `R` `Date` class.
@@ -93,7 +85,7 @@ with date-time data classes.
     #set working directory to ensure R can find the file we wish to import
     #setwd("working-dir-path-here")
 
-##Import CSV File
+## Import CSV File
 First, let's import our time series data. We are interested in temperature, 
 precipitation and photosynthetically active radiation (PAR) - metrics that are 
 strongly associated with vegetation green-up and brown down (phenology or 
@@ -108,8 +100,7 @@ aggregated at 15-minute intervals.
       file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
       stringsAsFactors = FALSE)
 
-##Date and Time Data
-
+## Date and Time Data
 Let's revisit the data structure of our `harMet_15Min` object. What is the class
 of the `date-time` column?
 
@@ -143,9 +134,9 @@ tutorial?
 
 When we use `as.Date`, we lose the time stamp. 
 
-###Explore Date and Time Classes
+### Explore Date and Time Classes
 
-####R - Date Class - as.Date
+#### R - Date Class - as.Date
 As we just saw, the `as.Date` format doesn't store any time information. When we
 use the`as.Date` method to convert a date stored as a character class to an `R`
 `date` class, it will ignore all values after the date string.
@@ -167,12 +158,12 @@ As we can see above the `as.Date()` function will convert the characters that it
 recognizes to be part of a date into a date class and ignore all other 
 characters in the string. 
 
-####R - Date-Time - The POSIX classes
+#### R - Date-Time - The POSIX classes
 If we have a column containing both date and time we need to use a class that
 stores both date AND time. Base `R` offers two closely related classes for date
 and time: `POSIXct` and `POSIXlt`. 
 
-####POSIXct
+#### POSIXct
 
 The `as.POSIXct` method converts a date-time string into a `POSIXct` class. 
 
@@ -213,7 +204,7 @@ Here we see the number of seconds from 1 January 1970 to 9 October 2015
 to view how a particular `R` object is stored.
 {: .notice}
 
-####POSIXlt
+#### POSIXlt
 The `POSIXct` format is optimized for storage and computation. However, humans 
 aren't quite as computationally efficient as computers! Also, we often want to 
 quickly extract some portion of the data (e.g., months). The `POSIXlt` class 
@@ -272,13 +263,13 @@ similar to the `POSIXct` format. However, `unclass()` shows us that the data are
 stored differently. The `POSIXlt` class stores the hour, minute, second, day,
 month, and year separately.
 
-####Months in POSIXlt 
-Yet, `POSIXlt` has a few quirks. First, the month values stored in the `POSIXlt`
+#### Months in POSIXlt 
+`POSIXlt` has a few quirks. First, the month values stored in the `POSIXlt`
 object use `zero-based indexing`. This means that month #1 (January) is stored
 as 0, and month #2 (February) is stored as 1. Notice in the output above,
 October is stored as the 9th month (`$mon = 9`).
 
-####Years in POSIXlt 
+#### Years in POSIXlt 
 Years are also stored differently in the `POSIXlt` class. Year values are stored
 using a base index value of 1900. Thus, 2015 is stored as 115 (`$year = 115` 
 - 115 years since 1900).
@@ -297,7 +288,7 @@ thus use `POSIXct` for this tutorial.
 support date-time data classes, including `readr`, `zoo` and `chron`.  
 {: .notice}
 
-##Convert to Date-time Class
+## Convert to Date-time Class
 
 When we convert from a character to a date-time class we need to tell `R` how 
 the date and time information are stored in each string. To do this, we can use
@@ -367,7 +358,7 @@ Using the syntax we've learned, we can convert the entire `datetime` column into
     ## [1] "POSIXct" "POSIXt"
 
 
-###About Time Zones
+### About Time Zones
 Above, we successfully converted our data into a date-time class. However, what 
 `timezone` is the output `new.date.time` object that we created using? 
 
@@ -379,18 +370,18 @@ Time). However, we know from the
 [metadata ]({{site.baseurl}}/R/Time-Series-Metadata/ "Time Series Metadata"),
 that these data were stored in Eastern Standard Time.
 
-Let's look at time zones, next.
-
-###Assign Time Zone
+### Assign Time Zone
 
 When we convert a date-time formatted column to `POSIXct` format, we need to
-assign an associated time zone. If we don't do that, `R` will default to the
-local time zone that is defined on your computer. 
+assign an associated **time zone**. If we don't assign a time zone,`R` will 
+default to the local time zone that is defined on your computer. 
 There are individual designations for different time zones and time zone 
-variants (e.g., does the time occur during daylight savings time). Codes for
-timezones can be found in this 
+variants (e.g., does the time occur during daylight savings time). 
+
+<i class="fa fa-star"></i> **Data Tip:** Codes for timezones can be found in this 
 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 target="_blank">time zone table</a>. 
+{: .notice}
 
 The code for the Eastern time zone that is the closest match to the NEON Harvard
 Forest field site is `America/New_York`. Let's convert our `datetime` field 
@@ -406,7 +397,7 @@ one more time, and define the associated timezone (`tz=`).
 
 The output above, shows us that the time zone is now correctly set as EST.  
 
-###Convert to Date-time Data Class
+### Convert to Date-time Data Class
 
 Now, using the syntax that we learned above, we can convert the entire
 `datetime` column to a `POSIXct` class.

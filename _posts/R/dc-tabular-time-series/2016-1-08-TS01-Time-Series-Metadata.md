@@ -1,43 +1,41 @@
 ---
 layout: post
-title: "Lesson 01: Understanding Time Series Metadata"
+title: "Time Series 01: Why Metadata Are Important & How to Work with Metadata in Text & EML Format"
 date:   2015-10-24
-authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
-contributors: [ ]
+authors: [Leah A. Wasser, Megan A. Jones, Marisa Guarinello]
+contributors: []
 dateCreated:  2015-10-22
-lastModified: 2016-01-08
+lastModified: 2016-02-16
 packagesLibraries: []
-category: 
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-description: "This lesson teaches basic good practices for writing a script in R
-when importing tabular data from a .csv file, how to examine the structure of a 
-R object and the importance of collecting information from related metadata 
-text files or websites."
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [metadata, time-series, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial covers what metadata are, and why we need to work with
+metadata. It covers the 3 most common metadata formats: text file format, 
+web page format and Ecological Metadata Language (EML)."
 code1: TS01-Time-Series-Metadata.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
-  creditlink: http://www.neoninc.org
-permalink: R/Time-Series-Metadata
-comments: false
+  creditlink:
+permalink: R/Importance-of-Metadata-
+comments: true
 ---
 
 {% include _toc.html %}
 
+## About
+This tutorial covers what metadata are, and why we need to work with
+metadata. It covers the 3 most common metadata formats: text file format, 
+web page format and Ecological Metadata Language (EML).
 
-##About
-This lesson teaches good practices for writing a script in `R` when importing 
-tabular data from a .csv file, how to examine the structure of a `R object` and
-the importance of collecting information from related metadata text files and
-websites.
-
-**R Skill Level:** Intermediate - you've got the basics of `R` down and 
+**R Skill Level:** Introduction - you've got the basics of `R` down and 
 understand the general structure of tabular data.
 
 <div id="objectives" markdown="1">
 
-#Goals / Objectives
+# Goals / Objectives
 After completing this lesson, you will:
 
 * Know how to import a .csv file and examine the structure of the related `R`
@@ -46,233 +44,353 @@ object.
 * Understand the importance of including metadata details in your `R` script.
 * Know what an EML file is. 
 
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-###Install R Packages
+### Install R Packages
 No additional libraries are needed for this lesson.
 
-###Download Data 
+### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 </div>
 
-##The Data Approach
-If our goal were to exploring the relationships between air temperature, 
-precipitation,  
-photosynthetically active radiation (PAR) and plant phenology we would have to
-know how the data were collected and what units the variables were in prior to
-any plotting or further analysis. 
 
-###Good practices in R Script Writing
-When initiating a new script and workflow it is always a good idea to 
+## Understand Our Data
 
- 1) load all necessary packages,
- 2) set the working directory,
- 3) load the data and
- 4) figure out how `R` should interpret that data and how `R` actually interprets
-it.  
+In order to work with any data, we need to understand data:
 
-Let's go through these steps with our data. 
+* Structure 
+* Format
+* Processing methods
 
-Load any needed packages prior to importing and working with the data.  At this
-point we
-will only be working with base R and don't need additional packages. If we need 
-another package later, we will return to this section to add it so that at a 
-glance we can see all the packages in the script.  Including a short note in the 
-code allows us to denote each package's purpose in the script. This will help 
-later when we write new scripts for other projects.
+If the data are collected by other people and organizations we might also need 
+further information about:
 
+* Specifically what metrics are included in the dataset
+* The units those metrics were stored in
+* Explanation of where the metrics are stored in the data and what they are "called"
+(e.g. what are the column names in a spreadsheet)
+* The time range that it covers
+* The spatial extent that the data covers
 
-    # Load packages required for entire script
-    # library(PackageName)  #purpose of package
+The above information, and more are stored in **metadata** - data
+about the data. Metadata is information that describes a dataset and is integral
+to working with external data (data that we did not collect ourselves).
 
-Once the libraries are loaded, we need to set the working directory to the
-location where our data is stored. 
+## Metadata Formats
 
+Metadata come in different formats. We will discuss three of those in this tutorial:
 
-    #set working directory to ensure R can find the file we wish to import
-    #setwd("working-dir-path-here")
-
-We are now ready to import the data.  This data is a .csv or comma-separated
-value file.  This file format is an excellent way to store tabular data in a
-plain text format that can be read by many different programs including R. 
-
-We will use the `hf001-10-15min-m.csv` file that contains micro-meteorology
-data including our variables of interest: temperature, precipitation, and PAR 
-for Harvard Forest, aggregated at 15 minute intervals.
+* **Ecological Metadata Language (EML):** A standardized metadata format stored 
+in `xml` format which is machine readable. Metadata has some standards however it's
+common to encounter metadata stored differently in EML files created by different
+organizations.
+* **Text file:** Sometimes metadata files can be found in text files that are either
+downloaded with a data product OR that are available separately for the data. 
+* **Directly on a website (HTML / XML):** Sometimes data are documented directly
+in text format, on a web page. 
 
 
-    # Load csv file of 15 min meteorological data from Harvard Forest
-    #Factors=FALSE so strings, a series of letters/ words/ numerals, remain characters
-    harMet_15Min <- read.csv(
-      file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
-      stringsAsFactors = FALSE
-      )
+<i class="fa fa-star"></i> **Data Tip:** When you find metadata for a dataset 
+that you are working with, **DOWNLOAD AND SAVE IT** immediately to a directory 
+on your computer where you saved the data. It is also a good idea to document
+the URL where you found the metadata and the data in a "readme" text file!
+{: .notice}
 
-Now it is time to look at our data, metadata and information about how `R` 
-interprets the data.
-
-##Data Structure 
-We have three basic options for viewing the data structure.  We can view the
-first few lines of data using `head()`, we can use `str()` to see how
-`R` *interprets* the data or we could view the data in a spreadsheet format by
-opening the object using `View()` or clicking on the object in the Environment pane of RStudio.
+[More on metadata formats and structure.]({{ site-baseurl }}R/metadata-file-formats-structures)
 
 
-    #to see first few lines of data file
-    head(harMet_15Min)
+## Metadata Stored on a Web Page
 
-    ##           datetime jd airt f.airt rh f.rh dewp f.dewp prec f.prec slrr
-    ## 1 2005-01-01T00:15  1  5.1        84       2.5           0           0
-    ## 2 2005-01-01T00:30  1  5.0        84       2.5           0           0
-    ## 3 2005-01-01T00:45  1  4.9        85       2.6           0           0
-    ## 4 2005-01-01T01:00  1  4.7        86       2.6           0           0
-    ## 5 2005-01-01T01:15  1  4.5        87       2.6           0           0
-    ## 6 2005-01-01T01:30  1  4.6        87       2.7           0           0
-    ##   f.slrr parr f.parr netr f.netr  bar f.bar wspd f.wspd wres f.wres wdir
-    ## 1           0         -58        1017        2.6         2.4         205
-    ## 2           0         -59        1017        2.3         2.1         213
-    ## 3           0         -59        1017        2.1         1.8         217
-    ## 4           0         -58        1017        1.8         1.6         226
-    ## 5           0         -58        1017        1.4         1.2         224
-    ## 6           0         -58        1017        1.6         1.4         214
-    ##   f.wdir wdev f.wdev gspd f.gspd s10t f.s10t
-    ## 1          26         7.2         0.7       
-    ## 2          25         5.9         0.7       
-    ## 3          27         5.8         0.7       
-    ## 4          26         5.1         0.7       
-    ## 5          29         4.6         0.7       
-    ## 6          30         4.4         0.7
+The metadata for the data that we are working with for the Harvard Forest field 
+site are stored in both `EML` format and on a web page. Let's explore the web 
+page first.
 
-    #Check how R is interpreting the data. What is the structure (str) of the data? 
-    #Is it what we expect to see?  
-    str(harMet_15Min)
+* <a href="http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001" target="_blank">View Harvard Forest Fisher Tower Webpage.</a>
 
-    ## 'data.frame':	376800 obs. of  30 variables:
-    ##  $ datetime: chr  "2005-01-01T00:15" "2005-01-01T00:30" "2005-01-01T00:45" "2005-01-01T01:00" ...
-    ##  $ jd      : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ airt    : num  5.1 5 4.9 4.7 4.5 4.6 4.6 4.7 4.6 4.6 ...
-    ##  $ f.airt  : chr  "" "" "" "" ...
-    ##  $ rh      : int  84 84 85 86 87 87 87 88 88 88 ...
-    ##  $ f.rh    : chr  "" "" "" "" ...
-    ##  $ dewp    : num  2.5 2.5 2.6 2.6 2.6 2.7 2.7 2.8 2.8 2.8 ...
-    ##  $ f.dewp  : chr  "" "" "" "" ...
-    ##  $ prec    : num  0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ f.prec  : chr  "" "" "" "" ...
-    ##  $ slrr    : int  0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ f.slrr  : chr  "" "" "" "" ...
-    ##  $ parr    : int  0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ f.parr  : chr  "" "" "" "" ...
-    ##  $ netr    : int  -58 -59 -59 -58 -58 -58 -57 -57 -59 -62 ...
-    ##  $ f.netr  : chr  "" "" "" "" ...
-    ##  $ bar     : int  1017 1017 1017 1017 1017 1017 1017 1017 1017 1016 ...
-    ##  $ f.bar   : chr  "" "" "" "" ...
-    ##  $ wspd    : num  2.6 2.3 2.1 1.8 1.4 1.6 1.5 1.5 1.6 1.7 ...
-    ##  $ f.wspd  : chr  "" "" "" "" ...
-    ##  $ wres    : num  2.4 2.1 1.8 1.6 1.2 1.4 1.3 1.4 1.4 1.6 ...
-    ##  $ f.wres  : chr  "" "" "" "" ...
-    ##  $ wdir    : int  205 213 217 226 224 214 214 213 217 214 ...
-    ##  $ f.wdir  : chr  "" "" "" "" ...
-    ##  $ wdev    : int  26 25 27 26 29 30 30 27 27 25 ...
-    ##  $ f.wdev  : chr  "" "" "" "" ...
-    ##  $ gspd    : num  7.2 5.9 5.8 5.1 4.6 4.4 5 4.2 4.2 4.6 ...
-    ##  $ f.gspd  : chr  "" "" "" "" ...
-    ##  $ s10t    : num  0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 0.7 ...
-    ##  $ f.s10t  : chr  "" "" "" "" ...
+Let's begin by visiting that page above. At the top of the page, there is a list of 
+ data available for Harvard Forest. NOTE: **hf001-06: daily (metric) since 2001 
+ (preview)** is the data that we used in the [previous tutorial]({{ site.baseurl }}R/Brief-Tabular-Time-Series-qplot/).
 
-    #to see it in spreadsheet form and scroll
-    View(harMet_15Min)
+Scroll down to the **Overview** section. Take note of the information provided 
+in that section and answer the following questions in the challenge below:
 
-We can see that because we used the `stringsAsFactors=FALSE` command, data types 
-that are not numbers or integers are classified as characters (chr) rather than 
-as factors.
+<div id="challenge" markdown="1">
+## Challenge
 
-##Metadata
-There is information other than how `R` interprets our data that we need to
-know.
+Explore the metadata stored on the Harvard Forest LTER web page. Answer the 
+following questions. 
 
-Can you think of any examples? 
+1. What is the time span of the data available for this site? 
+2. You have some questions about these data. Who is the lead investigator / who 
+do you contact for more information? And how do you contact them? 
+3. Where is this field site located? How is the site location information stored
+in the metadata? Is there any information that may be useful to you viewing the location?
+(HINT: what if you were not familiar with Harvard as a site / from another country, 
+etc?)
+4. Field Site Information: What is the elevation for the site? What is the dominant
+vegetation cover for the site? HINT: is dominant vegetation easy to find in the
+metadata?
+5. How is snow dealt with in the precipitation data?
+6. Are there some metadata attributes that might be useful to access in a script
+in `R` or `Python` rather than viewed on a web page?
 
-When we are examining data that we've obtained from others, the extra step of
-metadata investigation is essential to visualizing, analyzing and interpreting
-the data properly for a project.
-
-###Open Associated Metadata Files
-To get some of this information, or clues to this information, we will open the
-metadata text file associated with this 15-min meteorology data that is in the 
-NEON-DS-Met-Time-Series folder. Navigate to this file and open it in a text
-editor.
-
-![Harvard Forest 15 min Atmospheric Data Screenshot]  ({{site.baseurl}}/images/tabTimeSeries/TS01_MetaDataScreenShot.png)
-
-Remember, we are currently interested in plant phenology so we'll be looking at
-air temperature, precipitation and PAR. Look for these variables and identify
-what information is available for each in this metadata file. 
-
-As we find pertinent information about our variables we will add it to the 
-script so that when revisiting the script in the future we don't have to look at
-the metadata file again. These notes are also helpful if sharing the script with 
-others, so we will make notes that are intuitive and intelligible not only to 
-ourselves, but also to colleagues and collaborators.
+HINT: Can you answer all of the questions above from the information provided
+on this website? Is there information that you might prefer to find on that page?
+</div>
 
 
-    #Metadata Notes from hf001_10-15-m_Metadata.txt
-    # column names for variables we are going to use: datetime, airt, prec, parr 
-    # units for quantitative variables: Celsius, millimeters, molePerMeterSquared
-    # airt and parr are averages of measurements taken every 1 sec; precip is total of each 15 min period 
-    # for quantitative variables missing values are given as NA
 
-###Metadata Sleuthing
-Questions: 
+### View Metadata For Metrics of Interest
 
-* Is there information provided here that doesn't match the data? 
-* Is there information we want to know that is not provided in this metadata
-file? 
-* Do you have ideas how we might find this information?
+For this tutorial series, we are interested in the drivers of plant phenology -
+specifically air temperature, precipitation and PAR. Let's look for descriptions
+ofthese variables in the metadata and determine several key attributes that we 
+will need prior to working with the data.
 
-We notice that no information is given for `datetime` besides that it is a date 
-and time. It would be nice to know if it was recorded in UTC/GMT or local time.
-We also noticed that there is a link to the source website at the top of the 
-text file. Let's check it out to see if we can get the answer to our question.
+<div id="challenge" markdown="1">
+## Challenge
 
-
-The website gives more information that we have in our metadata file. And it 
-gives us important information about `datetime` -- all values are in Eastern 
-Standard Time (see Methods: Observation Periods).
-
-Again, it is a good practice to make relevant notes from the metadata in the 
-script so that we can easily refer to it as we actually work with the data.
+View the metadata at the URL above. Answer the following questions about the 
+Harvard Forest LTER data - **hf001-10: 15-minute (metric) since 2005**: 
+1. What is the column heading name where each variable (air temperature, 
+precipitation and PAR) is stored?
+2. What are the units that each variable are stored in? 
+3. What is the frequency of measurement collected for each and how are noData values
+stored?
+4. Where is the date information stored (in what field) and what timezone are 
+the dates stored in? 
+</div>
 
 
-    # website for more information: http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
-    # date-times are in Eastern Standard Time
-    # preview tab give plots of all variables
-
-###Other Metadata File Formats
-Do you see anything else on the website that might be related to metadata? 
-
-An EML file! This is the official standards-based metadata file using the 
-Ecological Metadata Language (EML). Download this to your data folder (EML file:
-knb-lter-hfr.1.21). The Harvard Forest is an Long Term Ecological Research
-Network (LTER) site and LTER sites use EML extensively in their projects.
 
 
-    # EML file in the data folder now - all metadata information in there.
+### Why Metadata on a Web Page Is Not Ideal
 
-Now we have important information that will help us as we continue to use these
-data for time series analysis.
+It is nice to have a web page that displays metadata information, however accessing
+metadata on a web page is difficult:
+
+* If the web page URL changes or the site goes down, the information is lost. 
+* It's also more challenging to access metadata in text format, on a web page,
+programatically - through an interface like `R` which we often
+want to do when working with larger datasets. 
+
+A machine readable metadata file is better - especially when we are working with
+large data and we want to automate and carefully document workflows. The 
+Ecological Metadata Language (EML) is one machine readable metadata format.
+
+## Ecological Metadata Language (EML)
+
+
+While  much of the documentationthat we need to work with  at the Harvard Forest 
+field site is available directly on the 
+<a href="http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001" target="_blank">Harvard Forest Data Archive page</a>, the field site also
+offers metadata in `EML` format. 
+
+## Introduction to EML
+
+The Ecological Metadata Language (EML) is a data specification developed specifically
+to document ecological data. An EML file is created using a `XML` based format.
+This means that content is embedded within hierarchical tags. For example
+the title of a dataset might be embedded in a `<title>` tag as follows:
+
+`<title>Fisher Meteorological Station at Harvard Forest since 2001</title>`
+
+Similarly, the creator of a dataset is also be found in a hierarchical tag
+structure.
+
+
+    <creator>
+      <individualName>
+        <givenName>Emery</givenName>
+        <surName>Boose</surName>
+      </individualName>
+    </creator>
+    
+
+The `EML` package for `R` is designed to read and allow users to work with `EML`
+formatted metadata. In this tutorial, we will overview demonstrate how we can
+use EML in an automated workflow. NOTE: To save time, we will not explicetedly 
+teach the `EML` package given it is still being developed. But we will provide
+an example of how you can access `EML` programmatically below.
+
+## EML Terminology
+
+Let's first discuss some basic EML terminology. In the 
+context of `EML`, a file documents a `dataset`. This `dataset` may consist of one
+or more files that are documented in the `EML` document. In the case of our 
+tabular meteorology data, the structure of our `EML` file includes:
+
+1. The **dataset**. A dataset may contain
+one or more data tables associated with it that may contain different types of related
+information. For this Harvard meteorological data, the data tables contain tower
+measurements including precipitation and temperature, that are aggregated
+at various time intervales (15 minute, daily, etc) and that date back to 2001.
+2. The **data tables**. Data tables refer to the actual data that make up the dataset. 
+For the Harvard Data, each data table contains a suite of meterological metrics 
+including precipiation and temperature (and associated quality flags), that are 
+aggregated at a particular time interval. (e.g. one data table contains monthly
+average data, another contains 15 minute averaged data, etc)
+
+## Work With EML in R 
+
+To begin, we will load the `EML` package directly from ropensci's Git repository.
+
+
+
+    #install R EML tools
+    #library("devtools")
+    #install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))
+    
+    #load ROpenSci EML package
+    library("EML")
+    #load ggmap for mapping
+    library(ggmap)
+    
+    
+    #data location
+    #http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
+    #table 4 http://harvardforest.fas.harvard.edu/data/p00/hf001/hf001-04-monthly-m.csv
+
+Next, we will read in the LTER `EML` file - directly from the online URL using
+`eml_read`. This file documents multiple data products that can be downloaded.
+<a href="http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001" target="_blank">
+Check out the Harvard Forest Data Archive Page for Fisher Meteorological Station
+for more on this dataset and to download the archive files directly.</a>
+
+Note that because this eml file is large, it takes a few seconds for the file to 
+load.
+
+
+
+    #import EML from Harvard Forest Met Data
+    eml_HARV <- eml_read("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+    
+    #view size of object
+    object.size(eml_HARV)
+
+    ## 287015216 bytes
+
+    #view the object class
+    class(eml_HARV)
+
+    ## [1] "eml"
+    ## attr(,"package")
+    ## [1] "EML"
+
+The `eml_read` function creates an `EML` class object. This object can be accessed
+using `slots` in R (`@`) rather than a typical subset `[]` approach.
+
+#Explore Metadata Attributes
+
+We can begin to explore the contents of our EML file and associated data that it
+describes. Let's start at the dataset level. We can use `eml_get` to view the 
+contact information for the dataset, the keywords and it's associated temporal
+and spatial (if relevant) coverage.
+
+
+
+    #view the contact name listed in the file
+    #this works well!
+    eml_get(eml_HARV,"contact")
+
+    ## [1] "Emery Boose <boose@fas.harvard.edu>"
+
+    #grab all keywords in the file
+    eml_get(eml_HARV,"keywords")
+
+    ## $`LTER controlled vocabulary`
+    ##  [1] "air temperature"                    
+    ##  [2] "atmospheric pressure"               
+    ##  [3] "climate"                            
+    ##  [4] "relative humidity"                  
+    ##  [5] "meteorology"                        
+    ##  [6] "precipitation"                      
+    ##  [7] "net radiation"                      
+    ##  [8] "solar radiation"                    
+    ##  [9] "photosynthetically active radiation"
+    ## [10] "soil temperature"                   
+    ## [11] "wind direction"                     
+    ## [12] "wind speed"                         
+    ## 
+    ## $`LTER core area`
+    ## [1] "disturbance"
+    ## 
+    ## $`HFR default`
+    ## [1] "Harvard Forest" "HFR"            "LTER"           "USA"
+
+    #figure out the extent & temporal coverage of the data
+    eml_get(eml_HARV,"coverage")
+
+    ## geographicCoverage:
+    ##   geographicDescription: Prospect Hill Tract (Harvard Forest)
+    ##   boundingCoordinates:
+    ##     westBoundingCoordinate: '-72.18968'
+    ##     eastBoundingCoordinate: '-72.18968'
+    ##     northBoundingCoordinate: '42.53311'
+    ##     southBoundingCoordinate: '42.53311'
+    ##     boundingAltitudes:
+    ##       altitudeMinimum: '342'
+    ##       altitudeMaximum: '342'
+    ##       altitudeUnits: meter
+    ## temporalCoverage:
+    ##   rangeOfDates:
+    ##     beginDate:
+    ##       calendarDate: '2001-02-11'
+    ##     endDate:
+    ##       calendarDate: '2015-12-31'
+
+
+##Identify & Map Data Location
+
+Looking at the coverage for our data, there is only one unique x and y value. This 
+suggests that our data were collected at (x,y) one point location. We know this is a 
+tower so a point location makes sense. Let's grab the x and y coordinates and 
+create a quick context map. We will use `ggmap` to create our map.
+
+**NOTE: if this were a rectangular extent we'd want the bounding BOX. this is important
+if the data are for example, raster format, in HDF5 or something. we need the extent
+to properly geolocate and process the data.**
+
+<a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf" target="_blank">Learn More: A nice cheatsheet for GGMAP created by NCEAS</a>
+
+
+    # grab x coordinate
+    XCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@westBoundingCoordinate
+    #grab y coordinate
+    YCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@northBoundingCoordinate
+    
+    
+    #map <- get_map(location='Harvard', maptype = "terrain")
+    map <- get_map(location='massachusetts', maptype = "toner", zoom =8)
+    
+    ggmap(map, extent=TRUE) +
+      geom_point(aes(x=XCoord,y=YCoord), 
+                 color="darkred", size=6, pch=18)
+
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TS01-Time-Series-Metadata/map-location-1.png) 
+
+The above example, demonstated how we can extract information from an `EML` document
+and use it programatically in `R`! This is just the beginning of what we can do!
+
+## Metadata For Your Own Data 
+
+Now, imagine that you are working with someone elses data and you don't have a 
+metadata file associated with it? How do you know what units the data were in?
+How the data were collected? The location that the data covers? It is important
+to create metadata for your own data too to make your data more efficiently 
+"shareable". 
+
+
+
+
+
+
+

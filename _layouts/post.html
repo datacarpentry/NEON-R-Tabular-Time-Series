@@ -116,7 +116,28 @@
 <div class="footer-wrap">
   <div class="related-articles">
   <!-- <h4>You might also enjoy <small class="pull-right">(<a href="{{ site.url }}/posts/">View all activities</a>)</small></h4> -->
+
+<!-- This looks to see if there is a workshop tag, if there is, it will list related
+workshop pages rather than tagged pages -->
+
 <h2><a>Related Content: {{ page.mainTag }}</a></h2>
+
+{% if page.tutorialSeries  %} 
+<p>This lesson is a part of a larger workshop series:</p>
+{% for post in site.posts %}
+	{% if post.tutorialSeries contains page.mainTag %}
+	
+	<!-- Highlight the current post in the list -->
+	{% assign currentPermalink = page.permalink | downcase | split: '/'%}
+	{% assign current = post.url | downcase | split: '/'%}
+        <ul class="posts">
+		<li><a href="{{ site.baseurl }}{{ post.url }}" {% if current[2] == currentPermalink[1] %} class="post-link here" {% else %} class="post-link" {% endif %} >{{ post.title }}</a></li>
+		</ul>
+	{% endif %}
+{% endfor %}
+
+{% else %}
+
 {% for post in site.posts %}
     {% if post.tags contains page.mainTag  %}
         <ul class="posts">
@@ -124,6 +145,8 @@
         </ul>
     {% endif %}
 {% endfor %}
+
+{% endif %}
   </div><!-- /.related-articles -->
   <footer>
     {% include _footer.html %}
