@@ -122,11 +122,11 @@ workshop pages rather than tagged pages -->
 
 <h2><a>Related Content: {{ page.mainTag }}</a></h2>
 
-
 {% if page.tutorialSeries  %} 
 <p>This lesson is a part of a larger workshop series:</p>
 {% for post in site.posts %}
 	{% if post.tutorialSeries contains page.mainTag %}
+	
 	<!-- Highlight the current post in the list -->
 	{% assign currentPermalink = page.permalink | downcase | split: '/'%}
 	{% assign current = post.url | downcase | split: '/'%}
