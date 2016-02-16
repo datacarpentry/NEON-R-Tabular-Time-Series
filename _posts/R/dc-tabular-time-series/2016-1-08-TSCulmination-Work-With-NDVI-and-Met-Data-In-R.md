@@ -1,17 +1,18 @@
 ---
 layout: post
-title: "Culmination Activity: Plot using Facets and Plot Time Series with NDVI Data"
+title: "Time Series Culmination Activity: Plot using Facets & Plot NDVI with Time Series Data"
 date:   2015-10-16
 authors: [Megan A. Jones, Leah A. Wasser]
 contributors: []
 dateCreated: 2015-10-22
-lastModified: 2016-01-08
+lastModified: 2016-02-16
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
-category:  
-tags: [spatio-temporal, time-series, phenology]
-mainTag: time-series
-description: "This lesson is a data integration wrap-up culmination
-activity for the ."
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial is a data integration wrap-up culmination activity 
+for the spatio-temporal time series tutorials."
 code1: TSCulmination-Work-With-NDVI-and-Met-Data-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
@@ -23,8 +24,8 @@ comments: false
 
 {% include _toc.html %}
 
-##About
-This lesson is a culmination activity for the end of the lesson series on 
+## About
+This tutorial is a culmination activity for the end of the lesson series on 
 [tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series) 
 and as part of a 
 [spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop). 
@@ -39,12 +40,12 @@ and
 
 <div id="objectives" markdown="1">
 
-#Goals / Objectives
+# Goals / Objectives
 After completing this activity, you will:
 
  * 
 
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
@@ -58,38 +59,30 @@ preferably RStudio, loaded on your computer.
 
 [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-###Download Data 
+### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series) 
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
+{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 ****
 
-###Skills Needed
-This lessons assumes familiarity with both the `dplyr` package and `ggplot()` in
-the `ggplot2` package.  If you are not comfortable with either of these we
-recommend starting with the 
-[Subset & Manipulate Time Series Data with `dplyr` lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
-and the 
-[Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
-respectively, to gain familiarity.
+### Recommended Tutorials
+
+This lessons uses both `dplyr` and `ggplot2`. We recommend the following tutorials
+before working through this one, if you are new to either of the above `R` packages.
+
+* [Subset & Manipulate Time Series Data with dplyr lesson]({{site.baseurl}}/R/Time-Series-Subset-dplyr/ "Learn dplyr") 
+
+* [Plotting Time Series with ggplot in R lesson]({{site.baseurl}}/R/Time-Series-Plot-ggplot/ "Learn ggplot")  
 
 </div>
 
-##Plot NDVI & PAR using Daily Data
+## Plot NDVI & PAR using Daily Data
 
-###NDVI Data
+### NDVI Data
 Normalized Difference Vegetation Index (NDVI) is an indicator of how green
 vegetation is.  NDVI is derived from remote sensing data based on a ratio the
 reluctance of visible red spectra and near-infrared spectra.  The NDVI values
@@ -107,9 +100,10 @@ The data files are Geographic Tagged Image-File Format (GeoTIFF).
 A tutorial, [Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
 explains how to create this NDVI file from on Raster data. 
 
-###Read In NDVI Data
+### Read In NDVI Data
 We need to read in the 2011 NDVI data for the Harvard Forest. A .csv file is
 within `HARV/NDVI` subdirectories in the `NEON-DS-Met-Time-Series` directory.
+
 
     #Remember it is good coding technique to add additional libraries to the top of
       #your script 
@@ -151,17 +145,12 @@ within `HARV/NDVI` subdirectories in the `NEON-DS-Met-Time-Series` directory.
     ## 6 6 0.893250 HARV 2011       197 2011-07-16
 
 <div id="challenge" markdown="1">
-##Challenge:  Convert Date in Character Class to a Date-Time Class
-The `Date` data is currently in the character class, convert the data to a date
-class. 
-</div>
+## Challenge:  Class Conversion & Subset by Time
 
+1. `NDVI.2001$Date` imported into `R` as a character class. Convert the data to 
+a date class. 
 
-
-<div id="challenge" markdown="1">
-##Challenge: Subset Only the 2011 Micrometeology Data
-First lets get just 2011 from the `harmet.Daily` data since that is the only
-year for which we have NDVI data.
+2. Subset just the data from 2011 from the `harmet.Daily` data. 
 </div>
 
 
@@ -216,7 +205,7 @@ them.
     #display the plots together
     grid.arrange(plot.par.2011, plot.NDVI.2011) 
 
-![ ]({{ site.baseurl }}/images/rfigs/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/plot-PAR-NDVI-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/plot-PAR-NDVI-1.png) 
 
 This is nice but a bit confusing as the time on our x-axis doesn't fully line
 up.  To fix this we can assign the same min and max to both x-axes so that they
@@ -224,35 +213,33 @@ align.  We can also label the axes.
 
 
     plot2.par.2011 <- plot.par.2011 +
-      scale_x_date(labels = date_format("%b %d"),
-                   breaks = "3 months", minor_breaks= "1 week",
-                   limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-      ylab("Total PAR") + xlab ("")
-     
+                   scale_x_date(labels = date_format("%b %d"),
+                   date_breaks = "3 months",
+                   date_minor_breaks= "1 week",
+                   limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date))) +
+                    ylab("Total PAR") + xlab ("")
     
     plot2.NDVI.2011 <- plot.NDVI.2011 +
-      scale_x_date(labels = date_format("%b %d"),
-                   breaks = "3 months", minor_breaks= "1 week",
+              scale_x_date(labels = date_format("%b %d"),
+                   date_breaks = "3 months", 
+                   date_minor_breaks= "1 week",
                    limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
       ylab("Total NDVI") + xlab ("Date")
     
     grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
 
-    ## Error in strsplit(unitspec, " "): non-character argument
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/plot-same-xaxis-1.png) 
 
 <div id="challenge" markdown="1">
-##Challenge: Plot Air Temperature and NDVI
+## Challenge: Plot Air Temperature and NDVI
 Create a complementary plot pairing with Air Temperature and NDVI.  Choose 
 colors and symbols that show the data well.  Finally, plot air temperature, PAR,
 and NDVI in a single window to ease comparisons.  
 </div>
 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-1.png) ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-2.png) 
 
-    ## Error in strsplit(unitspec, " "): non-character argument
-
-    ## Error in strsplit(unitspec, " "): non-character argument
-
-##Two plots with One x-axis.  
+## Two Plots with One x-axis.  
 We are able to nicely see the three different variables.  However, we waste a
 lot of space to repeating the x-axes and the titles.  Instead of three separate
 plots we could alternatively, use facets and plot all the variables of interests
@@ -292,7 +279,7 @@ Once we have the data in the long form we can subset and then plot the data.
       facet_grid(variable~., scales="free") +   #specify facets & y-axis can vary
       ggtitle("Harvard Forest 2011") +
       scale_x_date(labels = date_format("%b %d"),  #abbreviated month & day
-                   breaks = "3 months", minor_breaks= "1 month") +  #where grid is
+                   date_breaks = "3 months", date_minor_breaks= "1 month") +  #where grid is
       xlab ("Date") + ylab ("Value") +
       theme(legend.position = "none",
             plot.title = element_text(lineheight=.8, face="bold",size = 20),
@@ -301,6 +288,6 @@ Once we have the data in the long form we can subset and then plot the data.
     
     NDVI.harMet.facet.plot
 
-    ## Error in strsplit(unitspec, " "): non-character argument
+    ## Warning: Removed 354 rows containing missing values (geom_point).
 
-![ ]({{ site.baseurl }}/images/rfigs/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/plot-same-x-axis-2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TSCulmination-Work-With-NDVI-and-Met-Data-In-R/plot-same-x-axis-2-1.png) 
