@@ -13,15 +13,15 @@ tags: [time-series, phenology, R]
 tutorialSeries: [tabular-time-series]
 description: "In this tutorial, we will use the group_by, summarize and mutate
 functions in the `dplyr` package to efficiently manipulate atmospheric data 
-collected at the NEON Harvard Forest Field Site. We will use pipes to efficiently 
-perform multiple tasks within a single chunk of code."
+collected at the NEON Harvard Forest Field Site. We will use pipes to
+efficiently perform multiple tasks within a single chunk of code."
 code1: TS04-Dplyr-For-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
 permalink: R/Time-Series-Subset-dplyr
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
@@ -63,7 +63,6 @@ preferably RStudio, loaded on your computer.
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 ****
 

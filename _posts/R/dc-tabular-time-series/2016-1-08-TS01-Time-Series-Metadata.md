@@ -2,8 +2,8 @@
 layout: post
 title: "Time Series 01: Why Metadata Are Important & How to Work with Metadata in Text & EML Format"
 date:   2015-10-24
-authors: [Leah A. Wasser, Carl Boettiger]
-contributors: [Megan A. Jones]
+authors: [Leah A. Wasser, Megan A. Jones, Marisa Guarinello]
+contributors: []
 dateCreated:  2015-10-22
 lastModified: 2016-02-16
 packagesLibraries: []
@@ -115,7 +115,7 @@ page first.
 
 * <a href="http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001" target="_blank">View Harvard Forest Fisher Tower Webpage.</a>
 
-Let's begin by visiting that page. At the top of the page, there is a list of 
+Let's begin by visiting that page above. At the top of the page, there is a list of 
  data available for Harvard Forest. NOTE: **hf001-06: daily (metric) since 2001 
  (preview)** is the data that we used in the [previous tutorial]({{ site.baseurl }}R/Brief-Tabular-Time-Series-qplot/).
 
@@ -128,17 +128,18 @@ in that section and answer the following questions in the challenge below:
 Explore the metadata stored on the Harvard Forest LTER web page. Answer the 
 following questions. 
 
-1. What is the time span of the data available for this site? What time zone is 
-the data collected in?
+1. What is the time span of the data available for this site? 
 2. You have some questions about these data. Who is the lead investigator / who 
 do you contact for more information? And how do you contact them? 
-3. Where is this site located? How is the site location information stored?
+3. Where is this field site located? How is the site location information stored
+in the metadata? Is there any information that may be useful to you viewing the location?
+(HINT: what if you were not familiar with Harvard as a site / from another country, 
+etc?)
 4. Field Site Information: What is the elevation for the site? What is the dominant
-vegetation cover for the site? 
+vegetation cover for the site? HINT: is dominant vegetation easy to find in the
+metadata?
 5. How is snow dealt with in the precipitation data?
-6. What **units** are the temperature data stored in for the dataset **hf001-06: 
-daily (metric)**?
-7. Are there some metadata attributes that might be useful to access in a script
+6. Are there some metadata attributes that might be useful to access in a script
 in `R` or `Python` rather than viewed on a web page?
 
 HINT: Can you answer all of the questions above from the information provided
@@ -147,27 +148,29 @@ on this website? Is there information that you might prefer to find on that page
 
 
 
+### View Metadata For Metrics of Interest
+
 For this tutorial series, we are interested in the drivers of plant phenology -
-specifically air temperature, precipitation and PAR. Let's look for these 
-variables in the metadata and determine several key attributes that we will need
-prior to working with the data.
+specifically air temperature, precipitation and PAR. Let's look for descriptions
+ofthese variables in the metadata and determine several key attributes that we 
+will need prior to working with the data.
 
 <div id="challenge" markdown="1">
+## Challenge
 
-View the metadata at the URL above. Answer the following questions: 
-1. What is the column heading name where each variable is stored?
-2. What are the units that each variable are stored in?
-3. What is the format of each variable as stored in the data?
-4. what timezone are the dates stored in in the dat.
+View the metadata at the URL above. Answer the following questions about the 
+Harvard Forest LTER data - **hf001-10: 15-minute (metric) since 2005**: 
+1. What is the column heading name where each variable (air temperature, 
+precipitation and PAR) is stored?
+2. What are the units that each variable are stored in? 
+3. What is the frequency of measurement collected for each and how are noData values
+stored?
+4. Where is the date information stored (in what field) and what timezone are 
+the dates stored in? 
 </div>
 
 
 
-    #Metadata Notes from hf001_10-15-m_Metadata.txt
-    # column names for variables we are going to use: datetime, airt, prec, parr 
-    # units for quantitative variables: Celsius, millimeters, molePerMeterSquared
-    # airt and parr are averages of measurements taken every 1 sec; precip is total of each 15 min period 
-    # for quantitative variables missing values are given as NA
 
 ### Why Metadata on a Web Page Is Not Ideal
 
