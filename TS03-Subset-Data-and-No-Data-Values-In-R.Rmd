@@ -21,7 +21,7 @@ image:
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
 permalink: R/Subset-Data-and-No-Data-Values
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
@@ -60,7 +60,6 @@ preferably RStudio, loaded on your computer.
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 </div>
 
