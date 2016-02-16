@@ -1,9 +1,25 @@
-## ----metadata-debrief----------------------------------------------------
+## ----metadata-challenge-1, echo=FALSE------------------------------------
+# Metadata Notes from hf001_10-15-m_Metadata.txt
+#  1. 2001-2015
+#  2. Emery Boos - located at the top of the document, email is available
+#  3. a lat long is available in the metadata at the top, we see the location described
+# as Prospect Hill Tract (Harvard Forest). 
+# 4. 342 m elevation, the veg type is not clear in the metadata
+# 5. Found in the methods: Delayed melting of snow and ice (caused by problems with rain gage heater or heavy precipitation) is noted in log - daily values are corrected if necessary but 15-minute values are not. The gage may underestimate actual precipitation under windy or cold conditions.
+# 6. this could be a discussion. things like units, time zone, etc are all useful
+# if accessed programmatically
+
+
+## ----metadata-challenge-2, echo=FALSE------------------------------------
 #Metadata Notes from hf001_10-15-m_Metadata.txt
-# column names for variables we are going to use: datetime, airt, prec, parr 
-# units for quantitative variables: Celsius, millimeters, molePerMeterSquared
-# airt and parr are averages of measurements taken every 1 sec; precip is total of each 15 min period 
-# for quantitative variables missing values are given as NA
+# 1. airt, prec, parr
+# 2. units for quantitative variables: Celsius, millimeters, molePerMeterSquared
+# 3. airt: average of 1-second measurements. (unit: celsius / missing value: NA)
+# prec: Total value for 15-minute period. Measured in increments of 0.01 inch. (unit: millimeter / missing value: NA)
+# parr: Average of 1-second measurements. (unit: micromolePerMeterSquaredPerSecond / missing value: NA)
+
+# 4. datetime field, Eastern Standard Time. - note this is found in the methods
+#towards the top of the document.
 
 ## ----install-EML-package, results="hide", warning=FALSE------------------
 #install R EML tools

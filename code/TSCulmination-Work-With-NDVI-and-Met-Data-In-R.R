@@ -1,4 +1,5 @@
-## ----read-NDVI-----------------------------------------------------------
+## ----read-in-files-------------------------------------------------------
+
 #Remember it is good coding technique to add additional libraries to the top of
   #your script 
 library(lubridate) #for working with dates
@@ -11,7 +12,18 @@ library(dplyr)  #for subsetting by season
 #set working directory to ensure R can find the file we wish to import
 #setwd("working-dir-path-here")
 
-#first read in the NDVI CSV data
+#read in the Harvard micro-meteorological data; if you don't already have it
+harMetDaily.09.11 <- read.csv(
+  file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_Daily_2009_2011.csv",
+  stringsAsFactors = FALSE
+  )
+
+#check out the data
+str(harMetDaily.09.11)
+head(harMetDaily.09.11)
+
+
+#read in the NDVI CSV data; if you dont' already have it 
 NDVI.2011 <- read.csv(
   file="NEON-DS-Met-Time-Series/HARV/NDVI/meanNDVI_HARV_2011.csv", 
   stringsAsFactors = FALSE
@@ -21,12 +33,19 @@ NDVI.2011 <- read.csv(
 str(NDVI.2011)
 head(NDVI.2011)
 
-
 ## ----challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE----
+
+#check to see class of date field
+class(NDVI.2011$Date)
+class(harMetDaily.09.11$date)
+
 #convert chr class Date to date class Date
 NDVI.2011$Date<- as.Date(NDVI.2011$Date)
-#double check
-str(NDVI.2011)
+harMetDaily.09.11$date<- as.Date(harMetDaily.09.11$date)
+
+#confirm conversion
+class(NDVI.2011$Date)
+class(harMetDaily.09.11$date)
 
 ##2
 #Use dplyr to subset only 2011 data
@@ -37,7 +56,24 @@ harMet.daily2011 <- harMetDaily.09.11 %>%
 #convert data from POSIX class to Date class; both "date" vars. now Date class
 harMet.daily2011$date<-as.Date(harMet.daily2011$date)
 
+## ----plot-NDVI-----------------------------------------------------------
+ggplot(NDVI.2011, aes(Date, meanNDVI))+
+  geom_point(colour = "forestgreen", size = 4) +
+  ggtitle("Daily NDVI at Harvard Forest, 2011")+
+  theme(legend.position = "none",
+        plot.title = element_text(lineheight=.8, face="bold",size = 20),
+        text = element_text(size=20))
+
+
 ## ----plot-PAR-NDVI-------------------------------------------------------
+#plot NDVI again
+plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
+  geom_point(colour = "forestgreen", size = 4) +
+  ggtitle("Daily NDVI at Harvard Forest, 2011")+
+  theme(legend.position = "none",
+        plot.title = element_text(lineheight=.8, face="bold",size = 20),
+        text = element_text(size=20))
+
 #create plot of julian day vs. PAR
 plot.par.2011 <- ggplot(harMet.daily2011, aes(date, part))+
   geom_point(na.rm=TRUE) +
@@ -46,13 +82,6 @@ plot.par.2011 <- ggplot(harMet.daily2011, aes(date, part))+
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
         text = element_text(size=20))
 
-plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
-  geom_point(colour = "forestgreen", size = 4) +
-  ggtitle("Daily NDVI at Harvard Forest, 2011")+
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=20))
- 
 #display the plots together
 grid.arrange(plot.par.2011, plot.NDVI.2011) 
 
@@ -62,19 +91,21 @@ plot2.par.2011 <- plot.par.2011 +
                date_breaks = "3 months",
                date_minor_breaks= "1 week",
                limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date))) +
-                ylab("Total PAR") + xlab ("")
+               ylab("Total PAR") + xlab ("")
 
 plot2.NDVI.2011 <- plot.NDVI.2011 +
-          scale_x_date(labels = date_format("%b %d"),
+               scale_x_date(labels = date_format("%b %d"),
                date_breaks = "3 months", 
                date_minor_breaks= "1 week",
                limits=c(min=min(NDVI.2011$Date),max=max(NDVI.2011$Date)))+
-  ylab("Total NDVI") + xlab ("Date")
+               ylab("Total NDVI") + xlab ("Date")
 
 grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
 
 
 ## ----challengeplot-same-xaxis, echo=FALSE--------------------------------
+#part 1
+#plot air temp
 plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
   geom_point(colour="darkblue", na.rm=TRUE) +
   ggtitle("Average Air Temperature\n Harvard Forest 2011")+
@@ -86,42 +117,5 @@ plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
         text = element_text(size=20))
 
-grid.arrange(plot.airt.2011, plot2.NDVI.2011) 
-
 grid.arrange(plot2.par.2011, plot.airt.2011, plot2.NDVI.2011) 
-
-## ----plot-same-x-axis-1--------------------------------------------------
-library(reshape2)  #allows us to "melt" dataframes from "wide" to "long"
-
-#merge the two data frames by date and retain all 'harMet.daily
-harMetNDVIall.daily.2011<- merge(harMet.daily2011, 
-                                 NDVI.2011, by.x = "date", 
-                                 by.y = "Date", all.x=TRUE)
-
-#convert from "wide" form to "long" form
-harMetNDVI.daily.2011.long<-melt(harMetNDVIall.daily.2011, id ="date")
-
-## ----plot-same-x-axis-2--------------------------------------------------
-#subset to retain just the variables of interest.  The vertical bar character
-# means "OR".
-harMetNDVI.daily.2011.select<-subset(harMetNDVI.daily.2011.long,
-                                variable=="meanNDVI"| variable== "prec"|
-                                variable == "airt" | variable == "part")
-
-NDVI.harMet.facet.plot<-ggplot(
-  harMetNDVI.daily.2011.select,
-  aes(date, value), group=variable) +
-  geom_point() +
-  facet_grid(variable~., scales="free") +   #specify facets & y-axis can vary
-  ggtitle("Harvard Forest 2011") +
-  scale_x_date(labels = date_format("%b %d"),  #abbreviated month & day
-               date_breaks = "3 months", date_minor_breaks= "1 month") +  #where grid is
-  xlab ("Date") + ylab ("Value") +
-  theme(legend.position = "none",
-        plot.title = element_text(lineheight=.8, face="bold",size = 20),
-        text = element_text(size=10)
-  ) 
-
-NDVI.harMet.facet.plot
-
 
