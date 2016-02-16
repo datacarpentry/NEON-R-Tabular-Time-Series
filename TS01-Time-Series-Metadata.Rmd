@@ -6,7 +6,7 @@ authors: [Leah A. Wasser, Megan A. Jones, Marisa Guarinello]
 contributors: []
 dateCreated:  2015-10-22
 lastModified: `r format(Sys.time(), "%Y-%m-%d")`
-packagesLibraries: []
+packagesLibraries: [eml]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
 tags: [metadata, time-series, R]
@@ -19,7 +19,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: R/Importance-of-Metadata-
+permalink: R/Why-Metadata-Are-Important
 comments: true
 ---
 
@@ -49,7 +49,13 @@ To complete this lesson: you will need the most current version of R, and
 preferably RStudio, loaded on your computer.
 
 ### Install R Packages
-No additional libraries are needed for this lesson.
+Optional: it is best to install EML from GitHub directly. You will need to install
+`devtools` to do this:
+
+* `install.packages("devtools")` 
+* `install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))`
+
+As presented in a workshop, the `eml` package will be presented as a demonstration!
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -123,7 +129,7 @@ Scroll down to the **Overview** section. Take note of the information provided
 in that section and answer the following questions in the challenge below:
 
 <div id="challenge" markdown="1">
-## Challenge
+## Challenge - Explore Metadata
 
 Explore the metadata stored on the Harvard Forest LTER web page. Answer the 
 following questions. 
@@ -171,6 +177,7 @@ will need prior to working with the data.
 
 View the metadata at the URL above. Answer the following questions about the 
 Harvard Forest LTER data - **hf001-10: 15-minute (metric) since 2005**: 
+
 1. What is the column heading name where each variable (air temperature, 
 precipitation and PAR) is stored?
 2. What are the units that each variable are stored in? 
@@ -178,6 +185,7 @@ precipitation and PAR) is stored?
 stored?
 4. Where is the date information stored (in what field) and what timezone are 
 the dates stored in? 
+
 </div>
 
 
