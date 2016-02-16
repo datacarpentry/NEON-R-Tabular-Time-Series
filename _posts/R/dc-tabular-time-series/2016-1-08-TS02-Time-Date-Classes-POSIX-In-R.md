@@ -279,8 +279,8 @@ using a base index value of 1900. Thus, 2015 is stored as 115 (`$year = 115`
 
 <i class="fa fa-star"></i> **Data Tip:** To learn more about how `R` stores
 information within date-time and other objects check out the `R` documentation
-by using `?` (E.G., `?POSIXlt`). NOTE: you can use this same syntax to learn
-about particular functions (E.G., `?ggplot`).  
+by using `?` (e.g., `?POSIXlt`). NOTE: you can use this same syntax to learn
+about particular functions (e.g., `?ggplot`).  
 {: .notice}
 
 Having dates classified as separate components makes `POSIXlt` computationally

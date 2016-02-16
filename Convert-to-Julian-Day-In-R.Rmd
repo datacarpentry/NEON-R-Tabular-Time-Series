@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Convert to Julian Day"
-date:   2015-10-18
+date:   2015-10-17
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [ ] 
 dateCreated: 2015-10-18
@@ -19,7 +19,7 @@ image:
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
 permalink: R/julian-day-conversion
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
