@@ -72,19 +72,18 @@ AirTempDailyb
 
 ## ----format-x-axis-label-ticks-------------------------------------------
 #format x-axis: dates
-AirTempDailyb <- AirTempDaily + 
+AirTempDaily_6mo <- AirTempDaily + 
     (scale_x_datetime(breaks=date_breaks("6 months"),
       labels=date_format("%b %y")))
 
-AirTempDailyb
+AirTempDaily_6mo
 
 #format x-axis: dates
-AirTempDailyb <- AirTempDaily + 
+AirTempDaily_1y <- AirTempDaily + 
     (scale_x_datetime(breaks=date_breaks("1 year"),
       labels=date_format("%b %y")))
 
-AirTempDailyb
-
+AirTempDaily_1y
 
 
 ## ----subset-ggplot-time--------------------------------------------------
@@ -98,46 +97,50 @@ start.end <- c(startTime,endTime)
 start.end
 
 #View data for 2011 only
-AirTempDailyb <- AirTempDaily + 
-    (scale_x_datetime(limits=start.end,
-                      breaks=date_breaks("1 year"),
-                      labels=date_format("%b %y")))
+#We will replot the entire plot as the title has now changed.
+AirTempDaily_2011 <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+           geom_point(na.rm=TRUE, color="purple", size=1) + 
+           ggtitle("Air Temperature\n 2011\n NEON Harvard Forest") +
+           xlab("Date") + ylab("Air Temperature (C)")+ 
+           (scale_x_datetime(limits=start.end,
+                             breaks=date_breaks("1 year"),
+                             labels=date_format("%b %y")))
 
-AirTempDailyb
+AirTempDaily_2011
 
 
 ## ----nice-font-----------------------------------------------------------
 #Apply a black and white stock ggplot theme
-AirTempDaily<-AirTempDailyb +
+AirTempDaily_bw<-AirTempDaily_1y +
   theme_bw()
 
-AirTempDaily
+AirTempDaily_bw
 
 ## ----install-new-themes--------------------------------------------------
 #install additional themes
 #install.packages('ggthemes', dependencies = TRUE)
 library(ggthemes)
-AirTempDaily<-AirTempDailyb +
+AirTempDaily_economist<-AirTempDaily_1y +
   theme_economist()
 
-AirTempDaily
+AirTempDaily_economist
 
 
-AirTempDaily<-AirTempDailyb +
+AirTempDaily_strata<-AirTempDaily_1y +
   theme_stata()
 
-AirTempDaily
+AirTempDaily_strata
 
 
 ## ----increase-font-size--------------------------------------------------
 #format x axis with dates
-AirTempDaily<-AirTempDailyb +
+AirTempDaily_custom<-AirTempDaily_1y +
   #theme(plot.title) allows to format the Title seperately from other text
   theme(plot.title = element_text(lineheight=.8, face="bold",size = 20)) +
   #theme(text) will format all text that isn't specifically formatted elsewhere
   theme(text = element_text(size=18)) 
 
-AirTempDaily
+AirTempDaily_custom
 
 
 ## ----challenge-code-ggplot-precip, echo=FALSE----------------------------
@@ -157,16 +160,31 @@ PrecipDailyBarA <- ggplot(harMetDaily.09.11, aes(date, prec)) +
     geom_bar(stat="identity", na.rm = TRUE) +
     ggtitle("Daily Precipitation\n Harvard Forest") +
     xlab("Date") + ylab("Precipitation (mm)") +
-    scale_x_datetime(labels=date_format ("%b-%y"),breaks=date_breaks("1 year")) +
+    scale_x_datetime(labels=date_format ("%b %y"), breaks=date_breaks("1 year")) +
     theme(plot.title = element_text(lineheight=.8, face="bold", size = 20)) +
     theme(text = element_text(size=18))
 
 PrecipDailyBarA
 
-## ----ggplot-geom_bar-subset, echo=FALSE, warning=FALSE-------------------
+## ----ggplot-geom_bar-subset, echo=FALSE----------------------------------
+#Define Start and end times for the subset as R objects that are the time class
+startTime2 <- as.POSIXct("2010-01-01 00:00:00")
+endTime2 <- as.POSIXct("2011-01-01 00:00:00")
 
-#plot year subset
-PrecipDailyBarA + scale_x_datetime(limits=start.end)
+#create a start and end time R object
+start.end2 <- c(startTime2,endTime2)
+start.end2
+
+#plot of precipitation
+#subset just the 2011 data by using scale_x_datetime(limits)
+ggplot(harMetDaily.09.11, aes(date, prec)) +
+    geom_bar(stat="identity", na.rm = TRUE) +
+    ggtitle("Daily Precipitation\n 2010\n Harvard Forest") +
+    xlab("") + ylab("Precipitation (mm)") +
+    scale_x_datetime(labels=date_format ("%B"),
+    								 breaks=date_breaks("4 months"), limits=start.end2) +
+    theme(plot.title = element_text(lineheight=.8, face="bold", size = 20)) +
+    theme(text = element_text(size=18))
 
 
 ## ----ggplot-color--------------------------------------------------------
@@ -178,23 +196,24 @@ PrecipDailyBarB
 
 
 ## ----ggplot-geom_lines---------------------------------------------------
-AirTempDailyline <- ggplot(harMetDaily.09.11, aes(date, airt)) +
+AirTempDaily_line <- ggplot(harMetDaily.09.11, aes(date, airt)) +
            geom_line(na.rm=TRUE) +  
            ggtitle("Air Temperature Harvard Forest\n 2009-2011") +
            xlab("Date") + ylab("Air Temperature (C)") +
-          theme(plot.title = element_text(lineheight=.8, face="bold", 
+           scale_x_datetime(labels=date_format ("%b %y")) +
+           theme(plot.title = element_text(lineheight=.8, face="bold", 
                                           size = 20)) +
            theme(text = element_text(size=18))
-AirTempDailyline
+AirTempDaily_line
 
 ## ----challenge-code-geom_lines&points, echo=FALSE------------------------
 AirTempDaily + geom_line(na.rm=TRUE) 
 
 ## ----ggplot-trend-line---------------------------------------------------
 #adding on a trend lin using loess
-AirTempDailyTrend <- AirTempDaily + stat_smooth(colour="green")
+AirTempDaily_trend <- AirTempDaily + stat_smooth(colour="green")
 
-AirTempDailyTrend
+AirTempDaily_trend
 
 ## ----challenge-code-linear-trend, echo=FALSE-----------------------------
 ggplot(harMetDaily.09.11, aes(date, prec)) +

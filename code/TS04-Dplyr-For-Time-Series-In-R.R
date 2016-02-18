@@ -44,7 +44,6 @@ c <- ggplot(harMet15.09.11, aes(x=datetime, y=parr))+
 grid.arrange(a,b,c, ncol=2)
 
 
-
 ## ----dplyr-lubridate-2---------------------------------------------------
 harMet15.09.11$year <- year(harMet15.09.11$datetime)
 
@@ -176,7 +175,7 @@ total.prec2 <- harMet15.09.11 %>%
 
 qplot(x=total.prec2$datetime, y=total.prec2$sum_prec,
     main="Total Daily Precipitation 2009-2011\nNEON Harvard Forest Field Site",
-    xlab="Date (Daily Values)", ylab=="Precip (mm)")
+    xlab="Date (Daily Values)", ylab="Precip (mm)")
 
 #####################
 #p2

@@ -1,108 +1,101 @@
 ---
 layout: post
-title: "Lesson 00: Intro to Time Series Data in R - Managing Date / Time Formats
-Simple Plots using ggplot2"
+title: "Time Series 00: Intro to Time Series Data in R - Managing Date/Time 
+Formats & Simple Plots using ggplot2"
 date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: []
 dateCreated:  2015-10-22
-lastModified: 2016-01-08
+lastModified: 2016-02-16
 packagesLibraries: [ggplot2]
-category: 
-tags: [spatio-temporal, time-series, phenology, R]
-mainTag: time-series
-description: "This lesson will demonstrate how to import a time series data set 
-stored in .csv format into `R`. It will explore data classes and will walk
+categories: [self-paced-tutorial]
+mainTag: tabular-time-series
+tags: [time-series, phenology, R]
+tutorialSeries: [tabular-time-series]
+description: "This tutorial will demonstrate how to import a time series data set 
+stored in .csv format into R. It will explore data classes and will walk
 through how to convert date data, stored as a character string, into a date 
 class that R can recognize and plot efficiently."
 code1: TS00-Brief-Tabular-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
-  creditlink: http://www.neoninc.org
+  creditlink:
 permalink: R/Brief-Tabular-Time-Series-qplot
-comments: false
+comments: true
 ---
 
 {% include _toc.html %}
 
-##About
-This lesson will demonstrate how to import a time series data set stored in .csv
-format into `R`. It will explore column data classes and will walk through how to 
-convert a date, stored as a character string, into a date class that R can
+## About
+This tutorial will demonstrate how to import a time series data set stored in `.csv`
+format into `R`. It will explore data classes for columns in a `data.frame` and 
+will walk through how to 
+convert a date, stored as a character string, into a date class that `R` can
 recognize and plot efficiently.
 
 **R Skill Level:** Intermediate - you've got the basics of `R` down.
 
 <div id="objectives" markdown="1">
 
-#Goals / Objectives
+# Goals / Objectives
 After completing this lesson, you will:
 
-  * Be able to open a .csv file in `R` using `read.csv()`and understand why we
+  * Be able to open a `.csv` file in `R` using `read.csv()`and understand why we
   are using that file type.
-  * Understand how to work with different columns within a `data.frame` in `R`.
-  * Understand how to examine data structures and data classes.
-  * Be able to convert date data, stored as a character, into an `R` date 
+  * Understand how to work data stored in different columns within a `data.frame` in `R`.
+  * Understand how to examine `R` object structures and data `classes`.
+  * Be able to convert dates, stored as a character class, into an `R` date 
   class.
   * Know how to create a quick plot of a time-series data set using `qplot`. 
   
-##Things You’ll Need To Complete This Lesson
+## Things You’ll Need To Complete This Lesson
 To complete this lesson: you will need the most current version of R, and 
 preferably RStudio, loaded on your computer.
 
-###Install R Packages
+### Install R Packages
 
 * **ggplot2:** `install.packages("ggplot2")`
 
  [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
 
-##Download Data
+## Download Data
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
 
 {% include/_greyBox-wd-rscript.html %}
 
-**Tabular Time Series Lesson Series:** This lesson is part of a lesson series on 
-[tabular time series data in R ]({{ site.baseurl }}self-paced-tutorials/tabular-time-series). 
-It is also part of a larger 
-[spatio-temporal Data Carpentry workshop ]({{ site.baseurl }}self-paced-tutorials/spatio-temporal-workshop)
-that includes working with
-[raster data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-raster-series)
-and  
-[vector data in R ]({{ site.baseurl }}self-paced-tutorials/spatial-vector-series).
-
 </div>
 
-##The Data Approach
+## Data Related to Phenology
 In this lesson, we will explore atmospheric data (including temperature,
-precipitation and other metrics) by sensors mounted on a 
+precipitation and other metrics) collected by sensors mounted on a 
 <a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
 flux tower</a> 
 at the NEON Harvard Forest field site. We are interested in exploring 
-patterns associated with changes in temperature, precipitation, PAR and day 
-length -- metrics that impact changes in plant 
-<a href=" http://budburst.org/phenology_defined" target="_blank">phenology</a>. 
+changes in temperature, precipitation, PAR and day 
+length throughout the year -- metrics that impact changes in the timing of plant 
+<a href=" http://budburst.org/phenology_defined" target="_blank">phenophases (phenology)</a>. 
 
 
-##About .csv File Format
-The data we will use is in `.csv` (comma-separated values) file format. The
+## About .csv Format
+The data that we will use is in `.csv` (comma-separated values) file format. The
 `.csv` format is a plain text format, where each value in the dataset is 
-separate by a comma. 
+separate by a comma and each "row" in the dataset is separated by a line break. 
 Plain text formats are ideal for working both across platforms (Mac, PC, LINUX, 
-etc) and also can be read by many different tools. Additionally, the plain file 
-format is less likely to become obsolete over time!
+etc) and also can be read by many different tools. The plain text 
+format is also less likely to become obsolete over time.
 
 <i class="fa fa-star"></i>**Data Tip:**
 <a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank"> 
 For more on .csv format see this Wikipedia article.</a>
 {: .notice}
 
-##Import the Data 
+## Import the Data 
 
-To begin, we need to import the data into `R`. We can use base `R` functionality
-to import a `.csv` file. We will use the `ggplot2` package to plots our data. 
+To begin, let's import the data into `R`. We can use base `R` functionality
+to import a `.csv` file. We will use the `ggplot2` package to plot our data. 
 
 
     # Load packages required for entire script. 
@@ -112,10 +105,10 @@ to import a `.csv` file. We will use the `ggplot2` package to plots our data.
     #set working directory to ensure R can find the file we wish to import
     #setwd("working-dir-path-here")
 
-<i class="fa fa-star"></i> **Data Tip:**  Good coding practice -- install and 
+<i class="fa fa-star"></i> **Data Tip:** Good coding practice -- install and 
 load all libraries at top of script.
 If you decide you need another package later on in the script, return to this
-area and add it.  That way, with a glance, you can see all packages used in a
+area and add it. That way, with a glance, you can see all packages used in a
 given script. 
 {: .notice }
 
@@ -128,32 +121,36 @@ Once our working directory is set, we can import the file using `read.csv()`.
           stringsAsFactors = FALSE
           )
 
-###stringsAsFactors=FALSE
+### stringsAsFactors=FALSE
 When reading in files we most often use `stringsAsFactors = FALSE`. This
-setting will ensure that non-numeric data (strings) are not converted to
-factors. Factors are non-numerical data that can be numerically interpreted and
-may have a level associated with them. 
+setting ensures that non-numeric data (strings) are not converted to
+factors. 
+
+#### What Is A Factor?
+
+A factor is similar to a category. However factors can be numerically interpreted 
+(they can have an order) and may have a level associated with them. 
 
 Examples of factors:
 
-* Month Names (an ordinal variable). Month names are non-numerical but we know 
+* **Month Names (an ordinal variable):** Month names are non-numerical but we know 
 that April (month 4) comes after March (month 3) and each could be represented
 by a number (4 & 3).
-* 1 and 2s to represent male and female sex (a nominal variable). Numerical
+* **1 and 2s to represent male and female sex (a nominal variable):** Numerical
 interpretation of non-numerical data but no order to the levels.  
 
-Many types of ecological data are not suitable for factors. An example of
-strings as non-factors are a hypothetical data set of `SpeciesObserved` 
-consisting of *mouse*, *grasshopper*, and *sparrow*. These are non-numerical
-data with no relevant level or numerical interpretation.  
+ 
+<i class="fa fa-star"></i> **Data Tip:** <a href="http://www.stat.berkeley.edu/~s133/factors.html" target="_blank">
+Read more about factors, here.</a>
+{: .notice }
 
-After loading the data it is easy to convert any data that should be a factor by
-using `as.factor()`, so it is almost always best to read in a file with
+After loading the data it is easy to convert any field that should be a factor by
+using `as.factor()`. Therefore it is often best to read in a file with
 `stringsAsFactors = FALSE`.
 
-##Data.Frames in R
-The `read.csv()` imports the data into a `data.frame`. `data.frame`s are 
-ideal for working with tabular data - they are similar to a spreadsheet.
+## Data.Frames in R
+The `read.csv()` imports our `.csv` into a `data.frame` object in `R`. `data.frame`s 
+are ideal for working with tabular data - they are similar to a spreadsheet.
 
 
     #what type of R object is our imported data?
@@ -161,8 +158,8 @@ ideal for working with tabular data - they are similar to a spreadsheet.
 
     ## [1] "data.frame"
 
-##Data Structure
-Once the data are imported, we can explore its structure. There are several ways
+## Data Structure
+Once the data are imported, we can explore their structure. There are several ways
 to examine the structure of a data frame: 
 
 * `head()`: shows us the first 6 rows of the data (`tail()` shows the last 6 
@@ -265,46 +262,72 @@ Let's use both to explore our data.
 
 <i class="fa fa-star"></i> **Data Tip:** You can adjust the number of rows
 returned when using the `head` and `tail` functions. For example you can use
-`head(harMet.daily,10)` to display the first 10 rows of your data rather than 6.
+`head(harMet.daily, 10)` to display the first 10 rows of your data rather than 6.
 {: .notice }
 
-###Data Classes in R
+### Classes in R
 
-The structure results above let us know that our data are stored as several
-different data types or classes in our `data.frame` as follows:
+The structure results above let us know that the attributes in our `data.frame`
+are stored as several different data types or `classes` as follows:
 
-* **chr** - Character. It holds strings that are composed of letters and
+* **chr - Character:** It holds strings that are composed of letters and
 words. Character class data can not be interpreted numerically - that is to say
 we can not perform math on these values even if they contain only numbers. 
-* **int** - Integer.  It holds numbers that are whole integers without decimals.
+* **int - Integer:**  It holds numbers that are whole integers without decimals.
 Mathematical operations can be performed on integers.
-* **num** - Numeric.  It accepts data that are a wide variety of numeric formats 
+* **num - Numeric:**  It accepts data that are a wide variety of numeric formats 
 including decimals (floating point values) and integers. Numeric also accept 
 larger numbers than **int** will.
 
-Storing variables as different data types is a strategic decision by `R` (and 
-other programming languages) that optimizes processing and storage:  
+Storing variables using different `classes` is a strategic decision by `R` (and 
+other programming languages) that optimizes processing and storage. It allows:
 
-* so it can be processed more quickly & efficiently.
-* to minimize the storage size.
+* data to be processed more quickly & efficiently.
+* the program (`R`) to minimize the storage size.
 
-Certain functions can be performed on certain data
-classes and not on others. 
+### Differences Between Classes 
+
+Certain functions can be performed on certain data classes and not on others. 
 
 For example:
 
 
     a <- "mouse"
     b <- "sparrow"
-    
+    class(a)
+
+    ## [1] "character"
+
+    class(b)
+
+    ## [1] "character"
+
     #subract a-b 
     a-b
 
     ## Error in a - b: non-numeric argument to binary operator
 
-Subtracting two **chr** data values makes no sense.
+You can not subtract two **chr** values given they are not numbers.
 
-Additionally, the attributes and properties of different data classes vary.
+
+    c <- 2
+    d <- 1
+    class(c)
+
+    ## [1] "numeric"
+
+    class(d)
+
+    ## [1] "numeric"
+
+    #subract a-b 
+    c-d
+
+    ## [1] 1
+
+Additionally, performing summary statistics and other calculations of different 
+types of classes can yield different results. 
+
 
     #create a new object
     speciesObserved <- c("speciesb","speciesc","speciesa")
@@ -334,29 +357,29 @@ Additionally, the attributes and properties of different data classes vary.
 
     ## [1] 1
 
-For example, we can calculate the minimum value for `SpeciesObserved`, a **chr** 
-class of data, however it does not return a quantitative minimum. It simply
-looks for the first element, using alphabetical order. Yet, we can calculate the
-quantitative minimum value for `prec` a **numeric** data class.  
+We can calculate the minimum value for `SpeciesObserved`, a **chr** 
+data class, however it does not return a quantitative minimum. It simply
+looks for the first element, using alphabetical (rather than numeric) order. 
+Yet, we can calculate the quantitative minimum value for `prec` a **numeric** data class.  
 
-##Plot Data Using qplot()
+## Plot Data Using qplot()
 
-Let's have a look at one of the metrics in our data, air temperature -- `airt`.
-Given this is a time series dataset, we might want to plot
+Now that we've got classes down, let's plot one of the metrics in our data, 
+air temperature -- `airt`. Given this is a time series dataset, we want to plot
 air temperature as it changes over time. We have a date-time column, `date`, so 
-let's use that as our x-axis variable and `airt` will be our y-axis variable.
+let's use that as our x-axis variable and `airt` as our y-axis variable.
 
 We will use the `qplot()` (for *quick plot*) function in the `ggplot2` package.
-The notation for `qplot()` requires the x- and y-axis variables and then the R
+The syntax for `qplot()` requires the x- and y-axis variables and then the R
 object that the variables are stored in. 
 
 
-    #quickly plot of air temperature
+    #quickly plot air temperature
     qplot(x=date, y=airt, 
           data=harMet.daily,
           main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
-![ ]({{ site.baseurl }}/images/rfigs/TS00-Brief-Tabular-Time-Series-In-R/plot-data-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TS00-Brief-Tabular-Time-Series-In-R/plot-data-1.png) 
 
 <i class="fa fa-star"></i>**Data Tip:** Add a title to the plot using 
 `main="Title string"`.
@@ -365,11 +388,11 @@ object that the variables are stored in.
 We have successfully plotted some data. However, what is happening on the 
 x-axis?
 
-`R` is trying to plot EVERY date value on the x-axis, so it was not readable. Why?
-Let's have a look at the class of the x-axis variable - date.
+`R` is trying to plot EVERY date value in our data, on the x-axis. This makes it
+hard to read. Why? Let's have a look at the class of the x-axis variable - date.
 
 
-    # View data structure for each column that we wish to plot
+    # View data class for each column that we wish to plot
     class(harMet.daily$date)
 
     ## [1] "character"
@@ -380,14 +403,15 @@ Let's have a look at the class of the x-axis variable - date.
 
 In this case, the `date` column is stored in our `data.frame` as a character
 class. Because it is a character, `R` does not know how to plot the dates as a
-continuous variable. Instead it tries to plot every date value. The `airt` data
-is numeric so that metric plots just fine.
+continuous variable. Instead it tries to plot every date value as a text string. 
+The `airt` data is numeric so that metric plots just fine.
 
-##Date as a Date-Time Class
+## Date as a Date-Time Class 
+
 We need to convert our `date` column, which is currently stored as a character 
-to an actual date-time class that can be displayed quantitatively. Lucky 
-for us, `R` has a `date` class.  We can reassign the `date` class using
-`as.Date`.
+to a `date-time` class that can be displayed as a continuous variable. Lucky 
+for us, `R` has a `date` class.  We can convert the `date` field to a `date class`
+using `as.Date()`.
 
 
     #convert column to date class
@@ -415,16 +439,20 @@ aggregate ticks on the x-axis by year instead of trying to plot every day!
           data=harMet.daily,
           main="Daily Air Temperature w/ Date Assigned\nNEON Harvard Forest Field Site")  
 
-![ ]({{ site.baseurl }}/images/rfigs/TS00-Brief-Tabular-Time-Series-In-R/qplot-data-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TS00-Brief-Tabular-Time-Series-In-R/qplot-data-1.png) 
 
 
 <div id="challenge" markdown="1">
-##Challenge: Using ggplot2's qplot function 
-1. Create a quick plot of the precipitation throughout all years of the study.
+## Challenge: Using ggplot2's qplot function 
+1. Create a quick plot of the precipitation. Use the full time frame of data available
+in the `harMet.daily` object. 
 2. Do precipitation and air temperature have similar annual patterns? 
 3. Create a quick plot examining the relationship between air temperature and precipitation. 
 
+Hint: you can modify the X and Y axis labels using `xlab="label here"` and 
+ylab="label here".
+
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/TS00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-1.png) ![ ]({{ site.baseurl }}/images/rfigs/TS00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TS00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-1.png) ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/TS00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-2.png) 
 

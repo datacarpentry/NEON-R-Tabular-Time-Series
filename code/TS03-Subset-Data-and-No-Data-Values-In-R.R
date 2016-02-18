@@ -25,17 +25,18 @@ harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
 harMet15.09.11 <- subset(harMet_15Min,
                          datetime >= as.POSIXct('2009-01-01 00:00',
                                                 tz = "America/New_York") &
-                        datetime <= as.POSIXct('2011-12-31 23:59',
+                         datetime <= as.POSIXct('2011-12-31 23:59',
                                                tz = "America/New_York"))
 
-# View first and last records in the object 
+#View first and last records in the object 
 head(harMet15.09.11[1])
 tail(harMet15.09.11[1])
 
 
 ## ----write-csv-----------------------------------------------------------
-#writing the subset of harMet15 data to .csv
-write.csv(harMet15.09.11, file="Met_HARV_15min_2009_2011.csv")
+#write harMet15 subset data to .csv
+write.csv(harMet15.09.11, 
+          file="Met_HARV_15min_2009_2011.csv")
 
 
 ## ----challenge-code-subsetting, include=TRUE, results="hide", echo=FALSE----
@@ -57,6 +58,24 @@ qplot (datetime, prec,
        main= "Precipitation: July 2010\nNEON Harvard Forest Field Site",
        xlab= "Date", ylab= "Precipitation (mm)")
 
+##2
+#subset out data points from July 2010
+harMet15_2011 <- subset(harMet15.09.11,
+                            datetime >= as.POSIXct('2011-01-01 00:00',
+                                                   tz = "America/New_York") &
+                            datetime <= as.POSIXct('2011-12-31 23:59', 
+                                                   tz = "America/New_York"))
+
+#view first and last rows of data.frame to ensure subset worked
+head(harMet15_2011$datetime)
+tail(harMet15_2011$datetime)
+
+#plot precip data for July 2010
+qplot (datetime, dewp,
+       data= harMet15_2011,
+       main= "Dew Point: 2011\nNEON Harvard Forest Field Site",
+       xlab= "Date", ylab= "Dew Point (C)")
+
 ## ----missing values------------------------------------------------------
 
 #Check for NA values
@@ -77,6 +96,9 @@ sum(is.na(harMet15.09.11$parr))
 
 #calculate mean of air temperature
 mean(harMet15.09.11$airt)
+
+#are there NA values in our data?
+sum(is.na(harMet15.09.11$airt))
 
 
 ## ----na-rm---------------------------------------------------------------

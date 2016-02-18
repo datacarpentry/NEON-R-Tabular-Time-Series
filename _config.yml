@@ -11,7 +11,7 @@ baseurl:   http://data-lessons.github.io/NEON-R-Tabular-Time-Series/
 #url: http://localhost:4000
 #baseurl: http://localhost:4000
 
-#we might not need comments here???
+#remove name to turn of disqus commenting
 disqus_shortname: 
 
 # Social networking links are used in author-bio sidebar. Update and remove as you like.
@@ -35,22 +35,29 @@ google_analytics:
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
 #bing_verify:        D81F4C18A6CB3018F64D7C827D953DFD
 
-# category: [using lidar data, working with field data, zcarbon links]
-# categories: [using lidar data, working with field data, zcarbon links]
+
 # Links to include in top navigation
 # For external links add external: true
 links:  
+  - title: Data Tutorials
+    url: /self-paced-tutorial/   
+
+  - title: Tutorial Series
+    url: /tutorial-series/
+    
+  - title: Events
+    url: /workshop-event/
+
+  - title: Science Videos
+    url: /science-video/ 
+        
   - title: About
-    url: /about/
+    url: /about/ 
     
   - title: NEON Website
-    url: http://www.neoninc.org
+    url: http://neonscience.org
     external: true
     
-  - title: Data Carpentry Website
-    url: http://www.datacarpentry.org
-    external: true  
-
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    America/Denver
 future:      true

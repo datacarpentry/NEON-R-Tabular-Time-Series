@@ -432,7 +432,7 @@ black.
 
 <div id="challenge" markdown="1">
 ## Challenge
-Without creating a subsetted dataframelot, plot the precipitation data for 
+Without creating a subsetted dataframe, plot the precipitation data for 
 *2010 only*.  Customize the plot with:
 
 * a descriptive title and axis labels,
@@ -633,7 +633,7 @@ on top of each other.
 grid.arrange(AirTempDaily, AirTempMonthly, ncol=2)
 ```
 
-## Refine ggplot Figures
+## Additional ggplot2 Resources
 In this lesson, we've covered the basics of `ggplot`. There are many great 
 resources the cover refining `ggplot` figures. A few are below:
 
