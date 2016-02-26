@@ -18,7 +18,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: R/julian-day-conversion
+permalink: /R/julian-day-conversion
 comments: true
 ---
 
@@ -38,14 +38,13 @@ After completing this activity, you will:
  * Be able to convert a Date or Date/Time class variable to a Julian day
  variable.
 
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial
+You will need the most current version of R and, preferably, RStudio loaded on your computer to complete this tutorial.
 
 ### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -114,7 +113,7 @@ tail(harMet_DailyNoJD$julian)
 
 ```
 
-<i class="fa fa-star"></i> **Data Tip:**  In this lesson we converted from
+<i class="fa fa-star"></i> **Data Tip:**  In this tutorial we converted from
 `Date` class to a Julian day, however, you can convert between any recognized
 date/time class (POSIXct, POSIXlt, etc) and Julian day using `yday`.  
 {: .notice}

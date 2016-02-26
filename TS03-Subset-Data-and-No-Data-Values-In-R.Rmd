@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: R/Subset-Data-and-No-Data-Values
+permalink: /R/subset-data-and-no-data-values
 comments: true
 ---
 
@@ -43,16 +43,16 @@ After completing this activity, you will:
  * Know how to search for NA or missing data values. 
  * Understand different possibilities on how to deal with missing data. 
 
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial 
+You will need the most current version of R and, preferably, RStudio loaded on
+your computer to complete this tutorial.
 
 ### Install R Packages
 
 * **lubridate:** `install.packages("lubridate")`
 * **ggplot2:** `install.packages("ggplot2")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -69,9 +69,9 @@ data than we need for our analysis. It is also common to encounter `NoData`
 values that we need to account for when analyzing our data. 
 
 In this tutorial, we'll learn how to both manage `NoData` values and also 
-subset and export a portion of an R object as a new `.CSV` file. 
+subset and export a portion of an R object as a new `.csv` file. 
 
-In this lesson, we will work with atmospheric data, containing air temperature, 
+In this tutorial, we will work with atmospheric data, containing air temperature, 
 precipitation, and photosynthetically active radiation (PAR) data  - metrics
 that are key drivers of phenology. Our study area is the 
 <a href="http://www.neonscience.org/science-design/field-sites/harvard-forest" target="_blank">NEON Harvard Forest Field Site.</a>
@@ -82,7 +82,7 @@ We will use the `lubridate` and `ggplot2` packages. Let's load those first.
 
 If you have not already done so, import the `hf001-10-15min-m.csv` file, which
 contains atmospheric data for Harvard Forest. Convert the `datetime` column
-to a `POSIXct` class as covered in the lesson: 
+to a `POSIXct` class as covered in the tutorial: 
 [Dealing With Dates & Times in R - as.Date, POSIXct, POSIXlt]({{ site.baseurl }}/R/Brief-Tabular-Time-Series-qplot/). 
 
 ```{r load-libraries}
@@ -242,7 +242,7 @@ recognized as an integer and processed accordingly. If you encounter a numeric
 {: .notice}
 
 In the
-[Time Series Metadata Lesson ]({{site.baseurl}}/R/Time-Series-Metadata/ "Time Series Metadata")
+[Why Metadata Are Important: How to Work with Metadata in Text & EML Format]({{site.baseurl}}/R/why-metadata-are-important/)
 we viewed the metadata for these data and discovered that missing values are
 designated using `NA` - a common `NoData` value placeholder. 
 
@@ -303,7 +303,7 @@ to ignore `NA` values in your data when performing calculations.
 
 Sometimes we might need to "gap fill" our data. This means we will interpolate 
 or estimate missing values often using statistical methods. Gap filling can be 
-complex and is beyond the scope of this lesson. The take away from this
+complex and is beyond the scope of this tutorial. The take away from this
 is simply that it is important to acknowledge missing values in your data and to 
 carefully consider how you wish to account for them during analysis. 
 
@@ -316,7 +316,7 @@ Other resources:
 <a href="http://www.ats.ucla.edu/stat/r/faq/missing.htm" target="_blank"> R FAQ on Missing Values</a>.
 
 ### Managing NoData Values in Our Data
-For this lesson, we are exploring the patterns of precipitation,
+For this tutorial, we are exploring the patterns of precipitation,
 and temperature as they relate to green-up and brown-down of vegetation at 
 Harvard Forest. To view overall trends during these early exploration stages, it 
 is okay for us to leave out the `NoData` values in our plots. 
@@ -367,7 +367,7 @@ Thus a daily summary is sufficient for us to see overall trends.
 
 1. Import the Daily Meteorological data from the Harvard Forest (if you haven't
 already done so in the
-[Intro to Time Series Data in R - Managing Date / Time Format and Simple Plots using ggplot2 lesson ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for HarMet_Daily").)
+[Intro to Time Series Data in R - Managing Date / Time Format and Simple Plots using ggplot2]({{site.baseurl}}/R/brief-tabular-time-series-qplot/ "for HarMet_Daily") tutorial.)
 2. Check the metadata to see what the column names are for the variable of
 interest (precipitation, air temperature, PAR, day and time ).
 3. If needed, convert the data class of different columns.

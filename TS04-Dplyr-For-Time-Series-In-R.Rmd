@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: R/Time-Series-Subset-dplyr
+permalink: /R/time-series-subset-dplyr
 comments: true
 ---
 
@@ -37,7 +37,7 @@ multiple tasks within a single chunk of code.
 <div id="objectives" markdown="1">
 
 # Goals / Objectives
-After completing this lesson, you will:
+After completing this tutorial, you will:
 
  * Know several ways to manipulate data using functions in the `dplyr` package
  in `R`.
@@ -46,16 +46,16 @@ After completing this lesson, you will:
  * Use the `year()` function from the `lubridate` package to extract year from a
  date-time class variable. 
 
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial
+You will need the most current version of R and, preferably, RStudio loaded on
+your computer to complete this tutorial.
 
 ###Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 * **dplyr:** `install.packages("dplyr")`
 * **ggplot2:** `install.packages("ggplot2")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ###Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -86,7 +86,8 @@ the `data_frame` object as both an input and an output.
 We will need the `lubridate` and the `dplyr` packages to complete this tutorial.
 
 We will also use the 15-minute average atmospheric data subsetted to 2009-2011 
-for the NEON Harvard Forest Field Site. This subset was created in the [Subsetting Time Series Data tutorial]({{site.baseurl}}/R/Subset-Data-and-No-Data-Values/ "2009-2011 HarMet Data Subset"). 
+for the NEON Harvard Forest Field Site. This subset was created in the
+[Subsetting Time Series Data tutorial]({{site.baseurl}}/R/subset-data-and-no-data-values/ "2009-2011 HarMet Data Subset"). 
 
 If this object isn't already created, please load the `.csv` version: 
 `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_15min_2009_2011.csv`. Be
@@ -345,7 +346,7 @@ The syntax for all `dplyr` functions is similar:
  * the output is a new data frame. 
 
 ### Group by a Variable (or Two)
-Our goal for this lesson is to view drivers of annual phenology patterns.
+Our goal for this tutorial is to view drivers of annual phenology patterns.
 Specifically, we want to explore daily average temperature throughout the year.
 This means we need to calculate average temperature, for each day, across three
 years. To do this we can use the `group_by()` function as we did earlier.
@@ -374,7 +375,7 @@ data we could use the `yday()` function
 from the `lubridate` package to create a new column containing julian day 
 values. 
 
-[More information in this NEON Data Skills lesson ]({{site.baseurl}}/R/julian-day-conversion/ "Julian Day Conversion"). 
+[More information in this NEON Data Skills tutorial ]({{site.baseurl}}/R/julian-day-conversion/ "Julian Day Conversion"). 
 {: .notice }
 
 ### Summarize by Group
@@ -420,7 +421,7 @@ qplot(total.prec$jd, total.prec$sum_prec,
 ### Mutate - Add data_frame Columns 2 dplyr Output
 We can use the `mutate()` function of `dplyr` to add additional columns of
 information to a data_frame. For instance, we added the year column
-independently at the very beginning of the lesson. However, we can add the year
+independently at the very beginning of the tutorial. However, we can add the year
 using a `dplyr` pipe that also summarizes our data. To do this, we would use the
 syntax:
 

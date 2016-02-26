@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Time Series 01: Why Metadata Are Important & How to Work with Metadata in Text & EML Format"
+title: "Time Series 01: Why Metadata Are Important: How to Work with Metadata in Text & EML Format"
 date:   2015-10-24
 authors: [Leah A. Wasser, Megan A. Jones, Marisa Guarinello]
 contributors: []
@@ -11,15 +11,15 @@ categories: [self-paced-tutorial]
 mainTag: tabular-time-series
 tags: [metadata, time-series, R]
 tutorialSeries: [tabular-time-series]
-description: "This tutorial covers what metadata are, and why we need to work with
-metadata. It covers the 3 most common metadata formats: text file format, 
+description: "This tutorial covers what metadata are, and why we need to work
+with metadata. It covers the 3 most common metadata formats: text file format, 
 web page format and Ecological Metadata Language (EML)."
 code1: TS01-Time-Series-Metadata.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: R/Why-Metadata-Are-Important
+permalink: /R/why-metadata-are-important
 comments: true
 ---
 
@@ -36,7 +36,7 @@ understand the general structure of tabular data.
 <div id="objectives" markdown="1">
 
 # Goals / Objectives
-After completing this lesson, you will:
+After completing this tutorial, you will:
 
 * Know how to import a .csv file and examine the structure of the related `R`
 object. 
@@ -44,9 +44,9 @@ object.
 * Understand the importance of including metadata details in your `R` script.
 * Know what an EML file is. 
 
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial
+You will need the most current version of R and, preferably, RStudio loaded on
+your computer to complete this tutorial.
 
 ### Install R Packages
 
@@ -61,8 +61,6 @@ yet on CRAN). You will need to install `devtools` to do this.
 * **devtools:** `install.packages("devtools")` 
 * **EML:** **must be installed AFTER `devtools` is loaded in `R`.
 `install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))`  
-
-
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}

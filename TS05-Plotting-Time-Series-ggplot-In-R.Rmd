@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: R/Time-Series-Plot-ggplot
+permalink: /R/time-series-plot-ggplot
 comments: true
 ---
 
@@ -37,16 +37,16 @@ labels, colors and overall plot appearance using `ggthemes`.
 <div id="objectives" markdown="1">
 
 # Goals / Objectives
-After completing this lesson, you will:
+After completing this tutorial, you will:
 
  * Be able to create basic time series plots using `ggplot()` in `R`.
  * Understand the syntax of `ggplot()` and know how to find out more about the
  package. 
  * Be able to plot data using scatter and bar plots.
  
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial
+You will need the most current version of R and, preferably, RStudio loaded on
+your computer to complete this tutorial.
 
 ### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
@@ -55,7 +55,7 @@ preferably RStudio, loaded on your computer.
 * **gridExtra:** `install.packages("gridExtra")`
 * **ggthemes:** `install.packages("ggthemes")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -71,7 +71,7 @@ preferably RStudio, loaded on your computer.
 * Winston Chang's
  <a href="http://www.cookbook-r.com/Graphs/index.html" target="_blank"> 
  _Cookbook for R_</a> site based on his *R Graphics Cookbook* text. 
-* The NEON Data Skills lesson on 
+* The NEON Data Skills tutorial on 
  <a href="http://neondataskills.org/R/Plotly/" target="_blank"> 
  Interactive Data Viz Using R, ggplot2 and PLOTLY</a>.
 * Data Carpentry's 
@@ -92,7 +92,7 @@ create customized, professional plots.
 
 ### Load the Data
 We will use the `lubridate`, `ggplot2`, `scales` and `gridExtra` packages in
-this lesson.
+this tutorial.
 
 Our data sample will be the daily meteorology data for 2009-2011 for the NEON
 Harvard Forest field site
@@ -540,7 +540,7 @@ statistical method as follows:
   additive model. 
 * We can specify a method such as linear regression (`method="lm"`). 
 
-For this lesson, we will use the default trend line model. The `gam` method will 
+For this tutorial, we will use the default trend line model. The `gam` method will 
 be used with given we have 1,095 measurements.
 
 <i class="fa fa-star"></i> **Data Tip:**  Remember a trend line is a statistical transformation of the data, so prior to
@@ -636,7 +636,7 @@ grid.arrange(AirTempDaily, AirTempMonthly, ncol=2)
 ```
 
 ## Additional ggplot2 Resources
-In this lesson, we've covered the basics of `ggplot`. There are many great 
+In this tutorial, we've covered the basics of `ggplot`. There are many great 
 resources the cover refining `ggplot` figures. A few are below:
 
 1. ggplot2 Cheatsheet from Zev Ross: <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" target="_blank"> ggplot2 Cheatsheet</a>  
