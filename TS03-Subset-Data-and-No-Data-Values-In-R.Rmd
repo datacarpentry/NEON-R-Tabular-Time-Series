@@ -401,7 +401,7 @@ sum(is.na(harMet.daily$date))
 sum(is.na(harMet.daily$airt))
 sum(is.na(harMet.daily$prec))
 sum(is.na(harMet.daily$part))
-# Ouput Note: PART is missing 1032 values
+# Output Note: PART is missing 1032 values
 
 # 5. subset out some of the data - 2009-2011
 harMetDaily.09.11 <- subset(harMet.daily, date >= as.Date('2009-01-01')
