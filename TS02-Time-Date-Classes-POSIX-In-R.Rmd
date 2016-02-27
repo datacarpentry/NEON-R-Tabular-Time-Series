@@ -325,7 +325,7 @@ default to the local time zone that is defined on your computer.
 There are individual designations for different time zones and time zone 
 variants (e.g., does the time occur during daylight savings time). 
 
-<i class="fa fa-star"></i> **Data Tip:** Codes for timezones can be found in this 
+<i class="fa fa-star"></i> **Data Tip:** Codes for time zones can be found in this 
 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 target="_blank">time zone table</a>. 
 {: .notice}

@@ -53,7 +53,7 @@ your computer to complete this tutorial.
 When presented in a workshop, the `EML` package will be presented as a
 demonstration! 
 
-If completing EML portion of tuturial on your own, you must
+If completing EML portion of tutorial on your own, you must
 install `EML` directly from GitHub (the package is in development and is not 
 yet on CRAN). You will need to install `devtools` to do this. 
  
@@ -68,22 +68,22 @@ yet on CRAN). You will need to install `devtools` to do this.
 ****
 
 {% include/_greyBox-wd-rscript.html %}
-{% include/tutorialSeries/_series_dc-tabular-time-series.html %}
 
 </div>
 
 ## Understand Our Data
 
-In order to work with any data, we need to understand data:
+In order to work with any data, we need to understand three things about the
+data:
 
 * Structure 
 * Format
 * Processing methods
 
-If the data are collected by other people and organizations we might also need 
+If the data are collected by other people and organizations, we might also need 
 further information about:
 
-* Specifically what metrics are included in the dataset
+* What metrics are included in the dataset
 * The units those metrics were stored in
 * Explanation of where the metrics are stored in the data and what they are "called"
 (e.g. what are the column names in a spreadsheet)
@@ -108,12 +108,10 @@ downloaded with a data product OR that are available separately for the data.
 in text format, on a web page. 
 
 <i class="fa fa-star"></i> **Data Tip:** When you find metadata for a dataset 
-that you are working with, **DOWNLOAD AND SAVE IT** immediately to a directory 
+that you are working with, immediately **DOWNLOAD AND SAVE IT** to the directory
 on your computer where you saved the data. It is also a good idea to document
-the URL where you found the metadata and the data in a "readme" text file!
+the URL where you found the metadata and data in a "readme" text file!
 {: .notice}
-
-* [More on metadata formats and structure.]({{ site-baseurl }}R/metadata-file-formats-structures)
 
 
 ## Metadata Stored on a Web Page
@@ -127,7 +125,7 @@ page first.
 Let's begin by visiting that page above. At the top of the page, there is a list
 of data available for Harvard Forest. NOTE: **hf001-06: daily (metric) since 
 2001 (preview)** is the data that we used in the
-[previous tutorial]({{ site.baseurl }}R/Brief-Tabular-Time-Series-qplot/).
+[previous tutorial]({{site.baseurl}}R/brief-tabular-time-series-qplot/).
 
 Scroll down to the **Overview** section on the website. Take note of the 
 information provided in that section and answer the questions in the
@@ -217,8 +215,8 @@ It is nice to have a web page that displays metadata information, however
 accessing metadata on a web page is difficult:
 
 * If the web page URL changes or the site goes down, the information is lost. 
-* It's also more challenging to access metadata in text format, on a web page,
-programatically - through an interface like `R` which we often
+* It's also more challenging to access metadata in text format on a web page
+programatically - like using `R` as an interface - which we often
 want to do when working with larger datasets. 
 
 A machine readable metadata file is better - especially when we are working with
@@ -227,14 +225,15 @@ Ecological Metadata Language (EML) is one machine readable metadata format.
 
 ## Ecological Metadata Language (EML)
 
-While  much of the documentationthat we need to work with  at the Harvard Forest 
+While  much of the documentation that we need to work with at the Harvard Forest
 field site is available directly on the 
-<a href="http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001" target="_blank">Harvard Forest Data Archive page</a>, the field site also
-offers metadata in `EML` format. 
+<a href="http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001" target="_blank">Harvard Forest Data Archive page</a>,
+the website also offers metadata in `EML` format. 
 
 ## Introduction to EML
 
-The Ecological Metadata Language (EML) is a data specification developed specifically
+The Ecological Metadata Language (EML) is a data specification developed
+specifically
 to document ecological data. An EML file is created using a `XML` based format.
 This means that content is embedded within hierarchical tags. For example,
 the title of a dataset might be embedded in a `<title>` tag as follows:
@@ -251,32 +250,32 @@ structure.
       </individualName>
     </creator>
 
-The `EML` package for `R` is designed to read and allow users to work with `EML`
+The `EML` package for `R` is designed to read and allow users to work with EML
 formatted metadata. In this tutorial, we demonstrate how we can use EML in an
 automated workflow. 
 
 NOTE: The `EML` package is still being developed, therefore we will not 
-explicetedly teach all details of how to use it. Instead, we will provide
-an example of how you can access `EML` programmatically and background 
+explicitly teach all details of how to use it. Instead, we will provide
+an example of how you can access EML files programmatically and background 
 information so that you can further explore EML and the `EML` package if you
 need to work with it further.
 
 ## EML Terminology
 
 Let's first discuss some basic EML terminology. In the 
-context of `EML`, each `EML` file documents a **dataset**. This **dataset** may 
+context of EML, each EML file documents a **dataset**. This **dataset** may 
 consist of one or more files that contain the data in **data tables**. In the 
-case of our tabular meteorology data, the structure of our `EML` file includes:
+case of our tabular meteorology data, the structure of our EML file includes:
 
 1. The **dataset**. A dataset may contain
 one or more data tables associated with it that may contain different types of
 related information. For this Harvard Forest meteorological data, the data 
 tables contain tower measurements including precipitation and temperature, that
-are aggregated at various time intervales (15 minute, daily, etc) and that date 
+are aggregated at various time intervals (15 minute, daily, etc) and that date 
 back to 2001.
 2. The **data tables**. Data tables refer to the actual data that make up the
 dataset. For the Harvard Forest data, each data table contains a suite of
-meterological metrics, including precipiation and temperature (and associated
+meteorological metrics, including precipitation and temperature (and associated
 quality flags), that are aggregated at a particular time interval (e.g. one 
 data table contains monthly average data, another contains 15 minute 
 averaged data, etc).
@@ -286,11 +285,12 @@ averaged data, etc).
 To begin, we will load the `EML` package directly from ROpenSci's Git repository.
 
 ```{r install-EML-package, results="hide", warning=FALSE }
-# install R EML tools 
+# install R EML tool 
 # load devtools
 library("devtools")
-# install EML from github -- package in development; not on CRAN
-install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))
+# IF YOU HAVE NOT DONE SO ALREADY: install EML from github -- package in
+# development; not on CRAN
+#install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))
 
 # load ROpenSci EML package
 library("EML")
@@ -314,7 +314,7 @@ load.
 # table 4 http://harvardforest.fas.harvard.edu/data/p00/hf001/hf001-04-monthly-m.csv
 
 # import EML from Harvard Forest Met Data
-eml_HARV <- eml_read("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
 
 # view size of object
 object.size(eml_HARV)
@@ -346,7 +346,6 @@ eml_get(eml_HARV,"coverage")
 
 ```
 
-
 ##Identify & Map Data Location
 
 Looking at the coverage for our data, there is only one unique x and y value.
@@ -355,7 +354,7 @@ this is a tower so a point location makes sense. Let's grab the x and y
 coordinates and create a quick context map. We will use `ggmap` to create our
 map.
 
-NOTE: If this were a rectangular extent, we'd want the bounding BOX not just
+NOTE: If this were a rectangular extent, we'd want the bounding box not just
 the point. This is important if the data in raster, HDF5, or a similar format. 
 We need the extent to properly geolocate and process the data.
 
@@ -379,13 +378,13 @@ ggmap(map, extent=TRUE) +
 * Learn more about `ggmap`:
 <a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf" target="_blank"> A nice cheatsheet created by NCEAS</a>
 
-The above example, demonstated how we can extract information from an `EML`
+The above example, demonstrated how we can extract information from an `EML`
 document and use it programatically in `R`! This is just the beginning of what
 we can do!
 
 ## Metadata For Your Own Data 
 
-Now, imagine that you are working with someone elses data and you don't have a 
+Now, imagine that you are working with someone else's data and you don't have a 
 metadata file associated with it? How do you know what units the data were in?
 How the data were collected? The location that the data covers? It is equally 
 important to create metadata for your own data, to make your data more

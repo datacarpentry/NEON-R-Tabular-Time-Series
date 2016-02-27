@@ -164,7 +164,7 @@ with data from each, within the same plots or analyses.
 convert the data to the Date class. 
 
 2. The NDVI data is limited to 2011, however, the meteorological data is from
-2009-2011. Subset and retain only the 2011 meterorological data. Name it
+2009-2011. Subset and retain only the 2011 meteorological data. Name it
 `harMet.daily2011`.
 
 HINT: If you are having trouble subsetting the data, refer back to
@@ -199,7 +199,7 @@ Now that we have our data sets with Date class dates and limited to 2011, we can
 begin working with both. 
 
 ## Plot NDVI Data from a .csv
-This NDVI data was derrived from a raster, however, now it is integers in a
+This NDVI data was derived from a raster, however, now it is integers in a
 `data.frame` therefore we can plot it like any of our other values using
 `ggplot()`. Here we plot `meanNDVI` by `Date`.
 
@@ -216,7 +216,7 @@ ggplot(NDVI.2011, aes(Date, meanNDVI))+
 
 ## Two y-axes or Side-by-Side Plots?
 When we have different types of data like NDVI (scale: 0-1 index units),
-Photossyntheically Active Radiation (PAR, scale: 0-65.8 mole per meter squared),
+Photosynthetically Active Radiation (PAR, scale: 0-65.8 mole per meter squared),
 or temperature (scale: -20 to 30 C) that we want to plot over time, we cannot
 simply plot them on the same plot as they have different y-axes.
 

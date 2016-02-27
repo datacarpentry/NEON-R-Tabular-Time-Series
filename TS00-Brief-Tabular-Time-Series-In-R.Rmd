@@ -144,7 +144,7 @@ interpretation of non-numerical data but no order to the levels.
 
  
 <i class="fa fa-star"></i> **Data Tip:** <a href="http://www.stat.berkeley.edu/~s133/factors.html" target="_blank">
-Read more about factors, here.</a>
+Read more about factors here.</a>
 {: .notice }
 
 After loading the data it is easy to convert any field that should be a factor by
@@ -182,7 +182,7 @@ str(harMet.daily)
 
 
 <i class="fa fa-star"></i> **Data Tip:** You can adjust the number of rows
-returned when using the `head` and `tail` functions. For example you can use
+returned when using the `head()` and `tail()` functions. For example you can use
 `head(harMet.daily, 10)` to display the first 10 rows of your data rather than 6.
 {: .notice }
 
@@ -224,7 +224,7 @@ a-b
 
 ```
 
-You can not subtract two **chr** values given they are not numbers.
+You can not subtract two **character** values given they are not numbers.
 
 ```{r data-class-num }
 
@@ -261,7 +261,7 @@ min(prec)
 
 ```
 
-We can calculate the minimum value for `SpeciesObserved`, a **chr** 
+We can calculate the minimum value for `SpeciesObserved`, a **character** 
 data class, however it does not return a quantitative minimum. It simply
 looks for the first element, using alphabetical (rather than numeric) order. 
 Yet, we can calculate the quantitative minimum value for `prec` a **numeric**
@@ -278,6 +278,10 @@ We will use the `qplot()` (for *quick plot*) function in the `ggplot2` package.
 The syntax for `qplot()` requires the x- and y-axis variables and then the R
 object that the variables are stored in. 
 
+<i class="fa fa-star"></i>**Data Tip:** Add a title to the plot using 
+`main="Title string"`.
+{: .notice }
+
 ```{r plot-data }
 # quickly plot air temperature
 qplot(x=date, y=airt, 
@@ -285,10 +289,6 @@ qplot(x=date, y=airt,
       main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
 ```
-
-<i class="fa fa-star"></i>**Data Tip:** Add a title to the plot using 
-`main="Title string"`.
-{: .notice }
 
 We have successfully plotted some data. However, what is happening on the 
 x-axis?
@@ -349,8 +349,8 @@ in the `harMet.daily` object.
 2. Do precipitation and air temperature have similar annual patterns? 
 3. Create a quick plot examining the relationship between air temperature and precipitation. 
 
-Hint: you can modify the X and Y axis labels using `xlab="label here"` and 
-ylab="label here".
+Hint: you can modify the X and Y axis labels using `xlab="label text"` and 
+`ylab="label text"`.
 
 </div>
 

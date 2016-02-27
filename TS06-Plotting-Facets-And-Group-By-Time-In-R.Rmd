@@ -196,7 +196,7 @@ Julian or year days rather than date. We have Julian days stored in our
 
 <i class="fa fa-star"></i> **Data Tip:** If you are unfamiliar with Julian or
 year day, see the 
-[Convert to Julian Day Tutorial ]({{site.baseurl}}/R/julian-day-conversion .)
+[Convert to Julian Day Tutorial ]({{site.baseurl}}/R/julian-day-conversion). 
 {: .notice}
 
 ```{r plot-precip-jd }

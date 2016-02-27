@@ -296,7 +296,7 @@ How we deal with `NoData` values will depend on:
 * the analysis we are conducting 
 * the significance of the gap or missing value
 
-Many funtions in `R` contains a `na.rm=` option which will allow you to tell R
+Many functions in `R` contains a `na.rm=` option which will allow you to tell R
 to ignore `NA` values in your data when performing calculations.
 
 ### To Gap Fill? Or Not?

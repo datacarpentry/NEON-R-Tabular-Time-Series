@@ -124,8 +124,8 @@ air temperature, precipitation, and PAR (photosynthetic active radiation - or
 the amount of visible light). Using the 15-minute averaged data, we could easily
 plot each of these variables.  
 
-However, summarizing the data at a coarser scale (e.g., daily, weekly, by season,
-or by year) may be easier to visually interpret during initial stages of
+However, summarizing the data at a coarser scale (e.g., daily, weekly, by
+season, or by year) may be easier to visually interpret during initial stages of
 data exploration. 
 
 ```{r 15-min-plots, echo=FALSE}
@@ -299,7 +299,7 @@ str(year.sum)
 <div id="challenge" markdown="1">
 ## Challenge
 Use piping to create a `data_frame` called `jday.avg` that contains the average 
-`airt` per julian day (`harMet15.09.11$jd`). Plot the output using `qplot`.
+`airt` per Julian day (`harMet15.09.11$jd`). Plot the output using `qplot`.
 
 </div>
 
@@ -372,10 +372,8 @@ The output shows we have 96 values for each day. Is that what we expect?
 <i class="fa fa-star"></i> **Data Tip:**  If Julian days weren't already in our 
 data we could use the `yday()` function
 <a href="http://www.inside-r.org/packages/cran/lubridate/docs/yday"/>
-from the `lubridate` package to create a new column containing julian day 
-values. 
-
-[More information in this NEON Data Skills tutorial ]({{site.baseurl}}/R/julian-day-conversion/ "Julian Day Conversion"). 
+from the `lubridate` package to create a new column containing Julian day 
+values. [More information in this NEON Data Skills tutorial ]({{site.baseurl}}/R/julian-day-conversion/). 
 {: .notice }
 
 ### Summarize by Group
@@ -421,9 +419,9 @@ qplot(total.prec$jd, total.prec$sum_prec,
 ### Mutate - Add data_frame Columns 2 dplyr Output
 We can use the `mutate()` function of `dplyr` to add additional columns of
 information to a data_frame. For instance, we added the year column
-independently at the very beginning of the tutorial. However, we can add the year
-using a `dplyr` pipe that also summarizes our data. To do this, we would use the
-syntax:
+independently at the very beginning of the tutorial. However, we can add the
+year using a `dplyr` pipe that also summarizes our data. To do this, we would
+use the syntax:
 
 `mutate(year2 = year(datetime))`
 
@@ -479,7 +477,7 @@ Our new summarize statement in our pipe will look like this:
 Let's try it!
 
 ```{r dplyr-dataframe}
-# 
+# add in a datatime column
 harTemp.daily.09.11 <- harMet15.09.11 %>%
   mutate(year3 = year(datetime)) %>%
   group_by(year3, jd) %>%
@@ -501,7 +499,7 @@ Name the new data frame `harTemp.monthly.09.11`. Plot your output.
 
 </div>
 
-``` {r challenge-code-dplyr, include=TRUE, echo=FALSE}
+``` {r challenge-code-dplyr, results="hide", include=TRUE, echo=FALSE}
 # 1
 total.prec2 <- harMet15.09.11 %>%
   group_by(year, jd) %>%

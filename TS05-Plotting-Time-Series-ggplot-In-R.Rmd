@@ -75,7 +75,7 @@ your computer to complete this tutorial.
  <a href="http://neondataskills.org/R/Plotly/" target="_blank"> 
  Interactive Data Viz Using R, ggplot2 and PLOTLY</a>.
 * Data Carpentry's 
- <a href="http://www.datacarpentry.org/R-ecology/05-visualisation-ggplot2.html"
+ <a href="http://www.datacarpentry.org/R-ecology/05-visualization-ggplot2.html"
  target="_blank"> 
  Data Visualization with ggplot2 lesson</a>.
 * Hadley Wickham's 
@@ -94,10 +94,10 @@ create customized, professional plots.
 We will use the `lubridate`, `ggplot2`, `scales` and `gridExtra` packages in
 this tutorial.
 
-Our data sample will be the daily meteorology data for 2009-2011 for the NEON
+Our data subset will be the daily meteorology data for 2009-2011 for the NEON
 Harvard Forest field site
 (`NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_Daily_2009_2011.csv`).
-If this subset is not already loaded in `RStudio`, please load it now.  
+If this subset is not already loaded, please load it now.  
 
 ```{r load-data}
 # Remember it is good coding technique to add additional packages to the top of
@@ -432,7 +432,7 @@ spaced to improve readability. If we zoom into the plot, all of the bars are
 black.
 
 <div id="challenge" markdown="1">
-## Challenge
+## Challenge: Plot with scale_x_datatime()
 Without creating a subsetted dataframe, plot the precipitation data for 
 *2010 only*.  Customize the plot with:
 
@@ -447,7 +447,7 @@ Bonus: Style your plot with a `ggtheme` of choice.
 
 </div>
 
-``` {r ggplot-geom_bar-subset, echo=FALSE}
+``` {r ggplot-geom_bar-subset, results="hide", include=TRUE, echo=FALSE}
 # Define Start and end times for the subset as R objects that are the time class
 startTime2 <- as.POSIXct("2010-01-01 00:00:00")
 endTime2 <- as.POSIXct("2011-01-01 00:00:00")
@@ -472,7 +472,7 @@ ggplot(harMetDaily.09.11, aes(date, prec)) +
 ## Color
 We can change the bar fill color by within the
 `geom_bar(colour="blue")` element. We can also specify a separate fill and line
-color using `fill=` and `line=`. Colors can be specified by name (eg `"blue"`) 
+color using `fill=` and `line=`. Colors can be specified by name (e.g., `"blue"`) 
 or hexadecimal color codes (e.g, #FF9999). There are many color cheatsheets out 
 there to help with color selection!
 
@@ -489,7 +489,7 @@ PrecipDailyBarB
 ```
 
 <i class="fa fa-star"></i> **Data Tip:**  For more information on color,
-including color blind friendly color palletes, checkout the 
+including color blind friendly color palettes, checkout the 
 <a href="http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/" target="_blank">
 ggplot2 color information</a> from Winston Chang's *Cookbook* *for* *R* site 
 based on the _R_ _Graphics_ _Cookbook_ text. 
@@ -534,11 +534,11 @@ We can add a trend line, which is a statistical transformation of our data to
 represent general patterns, using `stat_smooth()`. `stat_smooth()` requires a
 statistical method as follows:
 
-* For data with < 1000 observations: the default model is loess
-  (a non-parametric regression model`
-* for data with > 1,000 observations: the default model is or gam (a general
-  additive model. 
-* We can specify a method such as linear regression (`method="lm"`). 
+* For data with < 1000 observations: the default model is a loess model
+  (a non-parametric regression model)
+* For data with > 1,000 observations: the default model is a GAM (a general
+  additive model) 
+* A specific model/method can also be specified: for example a linear regression (`method="lm"`). 
 
 For this tutorial, we will use the default trend line model. The `gam` method will 
 be used with given we have 1,095 measurements.
@@ -639,8 +639,6 @@ grid.arrange(AirTempDaily, AirTempMonthly, ncol=2)
 In this tutorial, we've covered the basics of `ggplot`. There are many great 
 resources the cover refining `ggplot` figures. A few are below:
 
-1. ggplot2 Cheatsheet from Zev Ross: <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" target="_blank"> ggplot2 Cheatsheet</a>  
-2. ggplot2 documentation index: 
+* ggplot2 Cheatsheet from Zev Ross: <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" target="_blank"> ggplot2 Cheatsheet</a>  
+* ggplot2 documentation index: 
  <a href="http://docs.ggplot2.org/current/index.html#" target="_blank"> ggplot2 Documentation</a>    
-3. NEON's Publishable Maps Tutorial (Currently in draft, link will be updated
-when published)
