@@ -168,7 +168,7 @@ PrecipDailyBarA <- ggplot(harMetDaily.09.11, aes(date, prec)) +
 
 PrecipDailyBarA
 
-## ----ggplot-geom_bar-subset, echo=FALSE----------------------------------
+## ----ggplot-geom_bar-subset, results="hide", include=TRUE, echo=FALSE----
 # Define Start and end times for the subset as R objects that are the time class
 startTime2 <- as.POSIXct("2010-01-01 00:00:00")
 endTime2 <- as.POSIXct("2011-01-01 00:00:00")

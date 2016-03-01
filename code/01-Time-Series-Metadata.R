@@ -28,11 +28,12 @@
 # towards the top of the document.
 
 ## ----install-EML-package, results="hide", warning=FALSE------------------
-# install R EML tools 
+# install R EML tool 
 # load devtools
 library("devtools")
-# install EML from github -- package in development; not on CRAN
-install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))
+# IF YOU HAVE NOT DONE SO ALREADY: install EML from github -- package in
+# development; not on CRAN
+#install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))
 
 # load ROpenSci EML package
 library("EML")
@@ -46,7 +47,7 @@ library(ggmap)
 # table 4 http://harvardforest.fas.harvard.edu/data/p00/hf001/hf001-04-monthly-m.csv
 
 # import EML from Harvard Forest Met Data
-eml_HARV <- eml_read("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
 
 # view size of object
 object.size(eml_HARV)
@@ -67,6 +68,7 @@ eml_get(eml_HARV,"coverage")
 
 
 ## ----map-location, warning=FALSE, message=FALSE--------------------------
+
 # grab x coordinate from westBounding Coordinate
 XCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@westBoundingCoordinate
 # grab y coordinate from northBounding Coordinate

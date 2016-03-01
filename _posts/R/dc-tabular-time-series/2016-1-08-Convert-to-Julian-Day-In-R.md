@@ -5,7 +5,7 @@ date:   2015-10-17
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [ ] 
 dateCreated: 2015-10-18
-lastModified: 2016-02-16
+lastModified: 2016-03-01
 packagesLibraries: [lubridate]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -18,7 +18,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: R/julian-day-conversion
+permalink: /R/julian-day-conversion
 comments: true
 ---
 
@@ -38,14 +38,13 @@ After completing this activity, you will:
  * Be able to convert a Date or Date/Time class variable to a Julian day
  variable.
 
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial
+You will need the most current version of R and, preferably, RStudio loaded on your computer to complete this tutorial.
 
 ### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -74,22 +73,22 @@ with other types of data that include Julian day.
     # Load packages required for entire script
     library(lubridate)  #work with dates
     
-    #set working directory to ensure R can find the file we wish to import
-    #setwd("working-dir-path-here")
+    # set working directory to ensure R can find the file we wish to import
+    # setwd("working-dir-path-here")
     
-    #Load csv file of daily meterological data from Harvard Forest
-    #Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
+    # Load csv file of daily meterological data from Harvard Forest
+    # Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
     harMet_DailyNoJD <- read.csv(
       file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m-NoJD.csv",
       stringsAsFactors = FALSE
       )
     
-    #what data class is the date column? 
+    # what data class is the date column? 
     str(harMet_DailyNoJD$date)
 
     ##  chr [1:5345] "2/11/01" "2/12/01" "2/13/01" "2/14/01" ...
 
-    #convert "date" from chr to a Date class and specify current date format
+    # convert "date" from chr to a Date class and specify current date format
     harMet_DailyNoJD$date<- as.Date(harMet_DailyNoJD$date, "%m/%d/%y")
 
 ## Convert with yday
@@ -104,8 +103,10 @@ We want to create a new column in the existing data frame, titled `julian`, that
 contains the Julian day data.  
 
 
+    # convert with yday into a new column "julian"
     harMet_DailyNoJD$julian <- yday(harMet_DailyNoJD$date)  
-    #make sure it worked all the way through. 
+    
+    # make sure it worked all the way through. 
     head(harMet_DailyNoJD$julian) 
 
     ## [1] 42 43 44 45 46 47
@@ -114,7 +115,7 @@ contains the Julian day data.
 
     ## [1] 268 269 270 271 272 273
 
-<i class="fa fa-star"></i> **Data Tip:**  In this lesson we converted from
+<i class="fa fa-star"></i> **Data Tip:**  In this tutorial we converted from
 `Date` class to a Julian day, however, you can convert between any recognized
 date/time class (POSIXct, POSIXlt, etc) and Julian day using `yday`.  
 {: .notice}

@@ -165,7 +165,7 @@ harTemp.daily.09.11<-harMet15.09.11 %>%
 head(harTemp.daily.09.11)
 
 ## ----dplyr-dataframe-----------------------------------------------------
-# 
+# add in a datatime column
 harTemp.daily.09.11 <- harMet15.09.11 %>%
   mutate(year3 = year(datetime)) %>%
   group_by(year3, jd) %>%
@@ -175,7 +175,7 @@ harTemp.daily.09.11 <- harMet15.09.11 %>%
 str(harTemp.daily.09.11)
 head(harTemp.daily.09.11)
 
-## ----challenge-code-dplyr, include=TRUE, echo=FALSE----------------------
+## ----challenge-code-dplyr, results="hide", include=TRUE, echo=FALSE------
 # 1
 total.prec2 <- harMet15.09.11 %>%
   group_by(year, jd) %>%
