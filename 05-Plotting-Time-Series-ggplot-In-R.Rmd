@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/time-series-plot-ggplot
+permalink: /R/time-series-plot-ggplot/
 comments: true
 ---
 
@@ -55,7 +55,7 @@ your computer to complete this tutorial.
 * **gridExtra:** `install.packages("gridExtra")`
 * **ggthemes:** `install.packages("ggthemes")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}

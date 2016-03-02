@@ -21,7 +21,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: /R/brief-tabular-time-series-qplot
+permalink: /R/brief-tabular-time-series-qplot/
 comments: true
 ---
 
@@ -70,7 +70,7 @@ You will need the most current version of R and, preferably, RStudio loaded on y
 ## Data Related to Phenology
 In this tutorial, we will explore atmospheric data (including temperature,
 precipitation and other metrics) collected by sensors mounted on a 
-<a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
+<a href="http://www.neonscience.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
 flux tower</a> 
 at the NEON Harvard Forest field site. We are interested in exploring 
 changes in temperature, precipitation, PAR and day 
