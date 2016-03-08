@@ -5,7 +5,7 @@ date: 2015-10-22
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [ggplot2, lubridate]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: /R/subset-data-and-no-data-values
+permalink: /R/subset-data-and-no-data-values/
 comments: true
 ---
 
@@ -52,7 +52,7 @@ your computer to complete this tutorial.
 * **lubridate:** `install.packages("lubridate")`
 * **ggplot2:** `install.packages("ggplot2")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -182,7 +182,7 @@ Forest.  Be sure to label x and y axes. Also be sure to give your plot a title.
 2. Create a plot of dew point (`dewp`) for the year, 2011 at Harvard Forest.
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/03-Subset-Data-and-No-Data-Values-In-R/challenge-code-subsetting-1.png) ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/03-Subset-Data-and-No-Data-Values-In-R/challenge-code-subsetting-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/03-Subset-Data-and-No-Data-Values-In-R/challenge-code-subsetting-1.png)![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/03-Subset-Data-and-No-Data-Values-In-R/challenge-code-subsetting-2.png)
 
 ## Managing Missing Data: NoData values
 
@@ -217,7 +217,7 @@ recognized as an integer and processed accordingly. If you encounter a numeric
 {: .notice}
 
 In the
-[Why Metadata Are Important: How to Work with Metadata in Text & EML Format]({{site.baseurl}}/R/why-metadata-are-important/)
+[Why Metadata Are Important: How to Work with Metadata in Text & EML Format]({{ site.baseurl }}/R/why-metadata-are-important/)
 we viewed the metadata for these data and discovered that missing values are
 designated using `NA` - a common `NoData` value placeholder. 
 
@@ -351,7 +351,8 @@ Thus a daily summary is sufficient for us to see overall trends.
 
 1. Import the Daily Meteorological data from the Harvard Forest (if you haven't
 already done so in the
-[Intro to Time Series Data in R - Managing Date / Time Format and Simple Plots using ggplot2]({{site.baseurl}}/R/brief-tabular-time-series-qplot/ "for HarMet_Daily") tutorial.)
+[Intro to Time Series Data in R - Managing Date / Time Format and Simple Plots using ggplot2]({{ site.baseurl }}/R/brief-tabular-time-series-qplot/ "for HarMet_Daily")
+tutorial.)
 2. Check the metadata to see what the column names are for the variable of
 interest (precipitation, air temperature, PAR, day and time ).
 3. If needed, convert the data class of different columns.
@@ -364,4 +365,4 @@ and y-axes. Also give the plot a title!
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/03-Subset-Data-and-No-Data-Values-In-R/Challenge-code-harMet.daily-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/03-Subset-Data-and-No-Data-Values-In-R/Challenge-code-harMet.daily-1.png)

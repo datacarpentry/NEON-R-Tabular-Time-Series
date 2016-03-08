@@ -6,7 +6,7 @@ date:   2015-10-19
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah Wasser]
 contributors: [ ]
 dateCreated: 2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: /R/time-series-plot-facets-ndvi
+permalink: /R/time-series-plot-facets-ndvi/
 comments: true
 ---
 
@@ -53,7 +53,7 @@ your computer to complete this tutorial.
 * **reshape2:** `install.packages("reshape2")`
 * **zoo:** `install.packages("zoo")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -69,9 +69,9 @@ This tutorial uses both `dplyr` and `ggplot2`. We recommend the following
 tutorials before working through this one, if you are new to either of the 
 above `R` packages.
 
-* [Subset & Manipulate Time Series Data with dplyr tutorial ]({{site.baseurl}}/R/time-series-subset-dplyr/ "Learn dplyr") 
+* [Subset & Manipulate Time Series Data with dplyr tutorial ]({{ site.baseurl }}/R/time-series-subset-dplyr/ "Learn dplyr") 
 
-* [Plotting Time Series with ggplot in R tutorial]({{site.baseurl}}/R/time-series-plot-ggplot/ "Learn ggplot")  
+* [Plotting Time Series with ggplot in R tutorial]({{ site.baseurl }}/R/time-series-plot-ggplot/ "Learn ggplot")  
 
 ***
 </div>
@@ -129,7 +129,7 @@ object `AirTempDaily`.
     
     AirTempDaily
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-airt-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-airt-1.png)
  
 This plot tells us a lot about the annual increase and decrease of temperature
 at the NEON Harvard Forest field site. However, what if we want to plot each
@@ -140,7 +140,7 @@ plots that are grouped by a particular category or time period. To create a
 plot for each year, we will first need a **year** column in our data to use a
 subset factor. We created a year column using the `year` function in the 
 `lubridate` package in the 
-[Subset and Manipulate Time Series Data with dplyr Tutorial ]({{site.baseurl}}/R/time-series-subset-dplyr/ .)
+[Subset and Manipulate Time Series Data with dplyr Tutorial ]({{ site.baseurl }}/R/time-series-subset-dplyr/ .)
 
 
     # add year column to daily values
@@ -166,7 +166,7 @@ labelled panel.
 
     ## Error in layout_base(data, cols, drop = drop): At least one layer must contain all variables used for facetting
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-facet-year-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-facet-year-1.png)
 
 Oops - what happened? The plot did not render because we added the `year` column
 after creating the `ggplot` object `AirTempDaily`. Let's rerun the plotting code
@@ -185,7 +185,7 @@ to ensure our newly added column is recognized.
     # facet plot by year
     AirTempDaily + facet_grid(. ~ year)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-facet-year-2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-facet-year-2-1.png)
 
 The faceted plot is interesting, however the x-axis on each plot is formatted
 as: month-day-year starting in 2009 and ending in 2011. This means that the data
@@ -198,7 +198,7 @@ Julian or year days rather than date. We have Julian days stored in our
 
 <i class="fa fa-star"></i> **Data Tip:** If you are unfamiliar with Julian or
 year day, see the 
-[Convert to Julian Day Tutorial ]({{site.baseurl}}/R/julian-day-conversion). 
+[Convert to Julian Day Tutorial ]({{ site.baseurl }}/R/julian-day-conversion/). 
 {: .notice}
 
 
@@ -213,7 +213,7 @@ year day, see the
     # create faceted panel
     AirTempDaily_jd + facet_grid(. ~ year)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-precip-jd-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-precip-jd-1.png)
 
 Using Julian day, our plots are easier to visually compare. Arranging our plots 
 this way, side by side, allows us to quickly scan for differences along the
@@ -228,7 +228,7 @@ We can rearrange the facets in different ways, too.
     # move labels to the RIGHT and stack all plots
     AirTempDaily_jd + facet_grid(year ~ .)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-1.png)
 
 If we use `facet_wrap` we can specify the number of columns.
 
@@ -236,7 +236,7 @@ If we use `facet_wrap` we can specify the number of columns.
     # add columns
     AirTempDaily_jd + facet_wrap(~year, ncol = 2)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-columns-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-columns-1.png)
 
 ## Graph Two Variables on One Plot
 Next, let's explore the relationship between two variables - air temperature
@@ -257,7 +257,7 @@ the ground).
     
     airSoilTemp_Plot
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-airt-soilt-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-airt-soilt-1.png)
 
 The plot above suggests a relationship between the air and soil temperature as
 we might expect. However, it clumps all three years worth of data into one plot.
@@ -271,7 +271,7 @@ plot we created above.
     # create faceted panel
     airSoilTemp_Plot + facet_grid(year ~ .)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/faceted-temp-plots-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/faceted-temp-plots-1.png)
 
 Have a close look at the data. Are there any noticeable min/max temperature 
 differences between the three years?
@@ -287,7 +287,7 @@ a year column.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/challenge-answer-temp-month-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/challenge-answer-temp-month-1.png)
 
 ## Faceted Plots & Categorical Groups
 
@@ -329,7 +329,7 @@ which tells `R` to extract the month name (`%B`) from the date field.
     # create faceted panel
     airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/extract-month-name-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/extract-month-name-1.png)
 
 Great! We've created a nice set of plots by month. However, how are the plots 
 ordered? It looks like `R` is ordering things alphabetically, yet we know
@@ -369,7 +369,7 @@ need to rerun our `ggplot` code.
     # create faceted panel
     airSoilTemp_Plot + facet_wrap(~month_name, nc=3)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-month-levels-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-month-levels-1.png)
 
 ## Subset by Season - *Advanced Topic*
 Sometimes we want to group data by custom time periods. For example, we might
@@ -466,7 +466,7 @@ Now that we have a season column, we can plot our data by season!
     # run this code to plot the same plot as before but with one plot per season
     airSoilTemp_Plot + facet_grid(. ~ season)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-season-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-season-1.png)
 
 Note, that once again, we re-ran our `ggplot` code to make sure our new column
 is recognized by `R`. We can experiment with various facet layouts next.
@@ -476,7 +476,7 @@ is recognized by `R`. We can experiment with various facet layouts next.
     # facet_grid():
     airSoilTemp_Plot + facet_grid(season ~ .)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-season2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/plot-by-season2-1.png)
 
 Once again, `R` is arranging the plots in an alphabetical order not an order
 relevant to the data. 
@@ -498,7 +498,7 @@ neatly plot multiple variables using facets as follows:
 3. Create a plot of air vs soil temperature grouped by year and season.
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/assigning-level-to-season-1.png) ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/assigning-level-to-season-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/assigning-level-to-season-1.png)![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/assigning-level-to-season-2.png)
 
 ## Work with Year-Month Data: base R and zoo Package 
 Some data will have month formatted in `Year-Month` 
@@ -548,7 +548,7 @@ HINT: be sure to load the `zoo` package, if you have not already.
 
     ## 
     ## Attaching package: 'zoo'
-    ## 
+
     ## The following objects are masked from 'package:base':
     ## 
     ##     as.Date, as.Date.numeric
@@ -572,4 +572,4 @@ site.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/challenge-code-plot-yearmonth-data-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/challenge-code-plot-yearmonth-data-1.png)

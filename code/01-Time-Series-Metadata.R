@@ -47,7 +47,12 @@ library(ggmap)
 # table 4 http://harvardforest.fas.harvard.edu/data/p00/hf001/hf001-04-monthly-m.csv
 
 # import EML from Harvard Forest Met Data
-eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+# note, for this particular tutorial, we will work with an abridged version of the file
+# that you can access directly on the harvard forest website. (see comment below)
+# eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+
+# import a truncated version of the eml file for quicker demonstration
+eml_HARV <- read_eml("http://neon-workwithdata.github.io/NEON-R-Tabular-Time-Series/hf001-revised.xml")
 
 # view size of object
 object.size(eml_HARV)
@@ -55,32 +60,32 @@ object.size(eml_HARV)
 # view the object class
 class(eml_HARV)
 
+
 ## ----view-eml-content----------------------------------------------------
 # view the contact name listed in the file
-# this works well!
-eml_get(eml_HARV,"contact")
 
-# grab all keywords in the file
-eml_get(eml_HARV,"keywords")
+eml_HARV@dataset@creator
 
-# figure out the extent & temporal coverage of the data
-eml_get(eml_HARV,"coverage")
+# view information about the methods used to collect the data as described in EML
+eml_HARV@dataset@methods
+
 
 
 ## ----map-location, warning=FALSE, message=FALSE--------------------------
 
-# grab x coordinate from westBounding Coordinate
-XCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@westBoundingCoordinate
-# grab y coordinate from northBounding Coordinate
-YCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@northBoundingCoordinate
+# grab x coordinate from the coverage information
+XCoord <- eml_HARV@dataset@coverage@geographicCoverage[[1]]@boundingCoordinates@westBoundingCoordinate@.Data
 
-# get_map allows us to pull maps into R from a Google API
-map <- get_map(location='Harvard', maptype = "terrain")
+# grab y coordinate from the coverage information
+YCoord <- eml_HARV@dataset@coverage@geographicCoverage[[1]]@boundingCoordinates@northBoundingCoordinate@.Data
+
+# map <- get_map(location='Harvard', maptype = "terrain")
+
+# plot the NW corner of the site.
 map <- get_map(location='massachusetts', maptype = "toner", zoom =8)
 
-# plot our point on the map
 ggmap(map, extent=TRUE) +
-  geom_point(aes(x=XCoord,y=YCoord), 
+  geom_point(aes(x=as.numeric(XCoord),y=as.numeric(YCoord)), 
              color="darkred", size=6, pch=18)
 
 

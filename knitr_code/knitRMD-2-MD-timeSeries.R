@@ -9,14 +9,17 @@
 require(knitr)
 
 #################### Set up Input Variables #############################
-#Inputs - Where the git repo is on your computer
+# Set file paths to git repo and images
+
+# Inputs - Where the git repo is on your computer
 gitRepoPath <-"~/Documents/GitHub/NEON-R-Tabular-Time-Series/"
 
-#jekyll will only render md posts that begin with a date. Add one.
+# jekyll will only render md posts that begin with a date. Add one.
 add.date <- "2016-1-08-"
 
-#set working dir - this is where the data are located
-wd <- "~/Documents/data/Spatio_TemporalWorkshop"
+# set working dir - this is where the data are located
+# wd <- "~/Documents/data/Spatio_TemporalWorkshop"
+wd <- "~/Documents/data/1_DataPortal_Workshop/1_WorkshopData"
 
 
 ################### CONFIG BELOW IS REQUIRED BY JEKYLL - DON"T CHANGE ############
@@ -52,8 +55,8 @@ if (file.exists(paste0(wd,"/","images"))){
 
 #NOTE -- delete the image directory at the end!
 
-#make sure image subdir exists
-#note this will fail if the sub dir doesn't exist
+# make sure image subdir exists
+# note this will fail if the sub dir doesn't exist
 if (file.exists(paste0(gitRepoPath, imagePath))){
   print("image dir exists - all good")
 } else {
@@ -65,7 +68,7 @@ if (file.exists(paste0(gitRepoPath, imagePath))){
 #################### Get List of RMD files to Render #############################
 
 
-#get a list of files to knit / purl
+# get a list of files to knit / purl
 rmd.files <- list.files(gitRepoPath, pattern="*.Rmd", full.names = TRUE )
 
 #################### Set up Image Directory #############################

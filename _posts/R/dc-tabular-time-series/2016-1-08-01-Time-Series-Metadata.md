@@ -5,7 +5,7 @@ date:   2015-10-24
 authors: [Leah A. Wasser, Megan A. Jones, Marisa Guarinello]
 contributors: []
 dateCreated:  2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [eml, ggmap]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -19,7 +19,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: /R/why-metadata-are-important
+permalink: /R/why-metadata-are-important/
 comments: true
 ---
 
@@ -125,7 +125,7 @@ page first.
 Let's begin by visiting that page above. At the top of the page, there is a list
 of data available for Harvard Forest. NOTE: **hf001-06: daily (metric) since 
 2001 (preview)** is the data that we used in the
-[previous tutorial]({{site.baseurl}}R/brief-tabular-time-series-qplot/).
+[previous tutorial]({{ site.baseurl }}/R/brief-tabular-time-series-qplot/).
 
 Scroll down to the **Overview** section on the website. Take note of the 
 information provided in that section and answer the questions in the
@@ -270,9 +270,6 @@ To begin, we will load the `EML` package directly from ROpenSci's Git repository
     # load ggmap for mapping
     library(ggmap)
 
-    ## Google Maps API Terms of Service: http://developers.google.com/maps/terms.
-    ## Please cite ggmap if you use it: see citation('ggmap') for details.
-
 Next, we will read in the LTER `EML` file - directly from the online URL using
 `eml_read`. This file documents multiple data products that can be downloaded.
 Check out the 
@@ -288,15 +285,17 @@ load.
     # table 4 http://harvardforest.fas.harvard.edu/data/p00/hf001/hf001-04-monthly-m.csv
     
     # import EML from Harvard Forest Met Data
-    eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
-
-    ## Found more than one class "connection" in cache; using the first, from namespace 'EML'
-    ## Found more than one class "connection" in cache; using the first, from namespace 'EML'
-
+    # note, for this particular tutorial, we will work with an abridged version of the file
+    # that you can access directly on the harvard forest website. (see comment below)
+    # eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+    
+    # import a truncated version of the eml file for quicker demonstration
+    eml_HARV <- read_eml("http://neon-workwithdata.github.io/NEON-R-Tabular-Time-Series/hf001-revised.xml")
+    
     # view size of object
     object.size(eml_HARV)
 
-    ## 43659432 bytes
+    ## 5602744 bytes
 
     # view the object class
     class(eml_HARV)
@@ -311,26 +310,47 @@ accessed using `slots` in R (`@`) rather than a typical subset `[]` approach.
 # Explore Metadata Attributes
 
 We can begin to explore the contents of our EML file and associated data that it
-describes. Let's start at the dataset level. We can use `eml_get` to view the 
-contact information for the dataset, the keywords and it's associated temporal
-and spatial (if relevant) coverage.
+describes. Let's start at the **dataset** level. We can use `slots` to view 
+the contact information for the dataset and a description of the methods.
 
 
     # view the contact name listed in the file
-    # this works well!
-    eml_get(eml_HARV,"contact")
+    
+    eml_HARV@dataset@creator
 
-    ## Error in eval(expr, envir, enclos): could not find function "eml_get"
+    ## An object of class "ListOfcreator"
+    ## [[1]]
+    ## <creator>
+    ##   <individualName>
+    ##     <givenName>Emery</givenName>
+    ##     <surName>Boose</surName>
+    ##   </individualName>
+    ## </creator>
 
-    # grab all keywords in the file
-    eml_get(eml_HARV,"keywords")
+    # view information about the methods used to collect the data as described in EML
+    eml_HARV@dataset@methods
 
-    ## Error in eval(expr, envir, enclos): could not find function "eml_get"
-
-    # figure out the extent & temporal coverage of the data
-    eml_get(eml_HARV,"coverage")
-
-    ## Error in eval(expr, envir, enclos): could not find function "eml_get"
+    ## <methods>
+    ##   <methodStep>
+    ##     <description>
+    ##       <section>
+    ##         <title>Observation periods</title>
+    ##         <para>15-minute: 15 minutes, ending with given time. Hourly: 1 hour, ending with given time. Daily: 1 day, midnight to midnight. All times are Eastern Standard Time.</para>
+    ##       </section>
+    ##       <section>
+    ##         <title>Instruments</title>
+    ##         <para>Air temperature and relative humidity: Vaisala HMP45C (2.2m above ground). Precipitation: Met One 385 heated rain gage (top of gage 1.6m above ground). Global solar radiation: Licor LI200X pyranometer (2.7m above ground). PAR radiation: Licor LI190SB quantum sensor (2.7m above ground). Net radiation: Kipp and Zonen NR-LITE net radiometer (5.0m above ground). Barometric pressure: Vaisala CS105 barometer. Wind speed and direction: R.M. Young 05103 wind monitor (10m above ground). Soil temperature: Campbell 107 temperature probe (10cm below ground). Data logger: Campbell Scientific CR10X.</para>
+    ##       </section>
+    ##       <section>
+    ##         <title>Instrument and flag notes</title>
+    ##         <para>Air temperature. Daily air temperature is estimated from other stations as needed to complete record.</para>
+    ##         <para>Precipitation. Daily precipitation is estimated from other stations as needed to complete record. Delayed melting of snow and ice (caused by problems with rain gage heater or heavy precipitation) is noted in log - daily values are corrected if necessary but 15-minute values are not.  The gage may underestimate actual precipitation under windy or cold conditions.</para>
+    ##         <para>Radiation. Whenever possible, snow and ice are removed from radiation instruments after precipitation events.  Depth of snow or ice on instruments and time of removal are noted in log, but values are not corrected or flagged.</para>
+    ##         <para>Wind speed and direction. During ice storms, values are flagged as questionable when there is evidence (from direct observation or the 15-minute record) that ice accumulation may have affected the instrument's operation.</para>
+    ##       </section>
+    ##     </description>
+    ##   </methodStep>
+    ## </methods>
 
 ## Identify & Map Data Location
 
@@ -345,28 +365,22 @@ the point. This is important if the data in raster, HDF5, or a similar format.
 We need the extent to properly geolocate and process the data.
 
 
-    # grab x coordinate from westBounding Coordinate
-    XCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@westBoundingCoordinate
-
-    ## Error in eval(expr, envir, enclos): no slot of name "coverage" for this object of class "dataset"
-
-    # grab y coordinate from northBounding Coordinate
-    YCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@northBoundingCoordinate
-
-    ## Error in eval(expr, envir, enclos): no slot of name "coverage" for this object of class "dataset"
-
-    # get_map allows us to pull maps into R from a Google API
-    map <- get_map(location='Harvard', maptype = "terrain")
+    # grab x coordinate from the coverage information
+    XCoord <- eml_HARV@dataset@coverage@geographicCoverage[[1]]@boundingCoordinates@westBoundingCoordinate@.Data
+    
+    # grab y coordinate from the coverage information
+    YCoord <- eml_HARV@dataset@coverage@geographicCoverage[[1]]@boundingCoordinates@northBoundingCoordinate@.Data
+    
+    # map <- get_map(location='Harvard', maptype = "terrain")
+    
+    # plot the NW corner of the site.
     map <- get_map(location='massachusetts', maptype = "toner", zoom =8)
     
-    # plot our point on the map
     ggmap(map, extent=TRUE) +
-      geom_point(aes(x=XCoord,y=YCoord), 
+      geom_point(aes(x=as.numeric(XCoord),y=as.numeric(YCoord)), 
                  color="darkred", size=6, pch=18)
 
-    ## Error in eval(expr, envir, enclos): object 'XCoord' not found
-
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/01-Time-Series-Metadata/map-location-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/01-Time-Series-Metadata/map-location-1.png)
 
 * Learn more about `ggmap`:
 <a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf" target="_blank"> A nice cheatsheet created by NCEAS</a>
