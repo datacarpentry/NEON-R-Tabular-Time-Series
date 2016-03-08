@@ -12,8 +12,8 @@ categories: [self-paced-tutorial]
 mainTag: tabular-time-series
 tags: [time-series, phenology, R]
 tutorialSeries: [tabular-time-series]
-description: "This tutorial will demonstrate how to import a time series data set 
-stored in .csv format into R. It will explore data classes and will walk
+description: "This tutorial will demonstrate how to import a time series data 
+set stored in .csv format into R. It will explore data classes and will walk
 through how to convert date data, stored as a character string, into a date 
 class that R can recognize and plot efficiently."
 code1: TS00-Brief-Tabular-Time-Series-In-R.R
@@ -21,7 +21,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: R/Brief-Tabular-Time-Series-qplot
+permalink: /R/brief-tabular-time-series-qplot
 comments: true
 ---
 
@@ -39,7 +39,7 @@ recognize and plot efficiently.
 <div id="objectives" markdown="1">
 
 # Goals / Objectives
-After completing this lesson, you will:
+After completing this tutorial, you will:
 
   * Be able to open a `.csv` file in `R` using `read.csv()`and understand why we
   are using that file type.
@@ -49,15 +49,14 @@ After completing this lesson, you will:
   class.
   * Know how to create a quick plot of a time-series data set using `qplot`. 
   
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorial
+You will need the most current version of R and, preferably, RStudio loaded on your computer to complete this tutorial.
 
 ### Install R Packages
 
 * **ggplot2:** `install.packages("ggplot2")`
 
- [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+ [More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ## Download Data
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -69,7 +68,7 @@ preferably RStudio, loaded on your computer.
 </div>
 
 ## Data Related to Phenology
-In this lesson, we will explore atmospheric data (including temperature,
+In this tutorial, we will explore atmospheric data (including temperature,
 precipitation and other metrics) collected by sensors mounted on a 
 <a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
 flux tower</a> 
@@ -102,8 +101,8 @@ to import a `.csv` file. We will use the `ggplot2` package to plot our data.
 # library(PackageName)  #purpose of package
 library(ggplot2)   #efficient, pretty plotting - required for qplot function
 
-#set working directory to ensure R can find the file we wish to import
-#setwd("working-dir-path-here")
+# set working directory to ensure R can find the file we wish to import
+# setwd("working-dir-path-here")
 
 ```
 
@@ -118,7 +117,7 @@ Once our working directory is set, we can import the file using `read.csv()`.
 
 ```{r import-csv}
 
-#Load csv file of daily meteorological data from Harvard Forest
+# Load csv file of daily meteorological data from Harvard Forest
 harMet.daily <- read.csv(
       file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-06-daily-m.csv",
       stringsAsFactors = FALSE
@@ -145,7 +144,7 @@ interpretation of non-numerical data but no order to the levels.
 
  
 <i class="fa fa-star"></i> **Data Tip:** <a href="http://www.stat.berkeley.edu/~s133/factors.html" target="_blank">
-Read more about factors, here.</a>
+Read more about factors here.</a>
 {: .notice }
 
 After loading the data it is easy to convert any field that should be a factor by
@@ -157,14 +156,14 @@ The `read.csv()` imports our `.csv` into a `data.frame` object in `R`. `data.fra
 are ideal for working with tabular data - they are similar to a spreadsheet.
 
 ``` {r dataframe}
-#what type of R object is our imported data?
+# what type of R object is our imported data?
 class(harMet.daily)
 
 ```
 
 ## Data Structure
-Once the data are imported, we can explore their structure. There are several ways
-to examine the structure of a data frame: 
+Once the data are imported, we can explore their structure. There are several
+ways to examine the structure of a data frame: 
 
 * `head()`: shows us the first 6 rows of the data (`tail()` shows the last 6 
             rows). 
@@ -174,16 +173,16 @@ Let's use both to explore our data.
 
 ```{r view-data-structure}
 
-#view first 6 rows of the dataframe 
+# view first 6 rows of the dataframe 
 head(harMet.daily)
 
-#View the structure (str) of the data 
+# View the structure (str) of the data 
 str(harMet.daily)
 ```
 
 
 <i class="fa fa-star"></i> **Data Tip:** You can adjust the number of rows
-returned when using the `head` and `tail` functions. For example you can use
+returned when using the `head()` and `tail()` functions. For example you can use
 `head(harMet.daily, 10)` to display the first 10 rows of your data rather than 6.
 {: .notice }
 
@@ -220,12 +219,12 @@ b <- "sparrow"
 class(a)
 class(b)
 
-#subract a-b 
+# subract a-b 
 a-b
 
 ```
 
-You can not subtract two **chr** values given they are not numbers.
+You can not subtract two **character** values given they are not numbers.
 
 ```{r data-class-num }
 
@@ -233,7 +232,7 @@ c <- 2
 d <- 1
 class(c)
 class(d)
-#subract a-b 
+# subract a-b 
 c-d
 
 ```
@@ -243,29 +242,30 @@ types of classes can yield different results.
 
 ```{r data-class-example-2 }
 
-#create a new object
+# create a new object
 speciesObserved <- c("speciesb","speciesc","speciesa")
 speciesObserved
 
-#determine the class
+# determine the class
 class(speciesObserved)
 
-#calculate the minimum
+# calculate the minimum
 min(speciesObserved)
 
-#create numeric object
+# create numeric object
 prec <- c(1,2,5,3,6)
-#view class
+# view class
 class(prec)
-#calculate min value
+# calculate min value
 min(prec)
 
 ```
 
-We can calculate the minimum value for `SpeciesObserved`, a **chr** 
+We can calculate the minimum value for `SpeciesObserved`, a **character** 
 data class, however it does not return a quantitative minimum. It simply
 looks for the first element, using alphabetical (rather than numeric) order. 
-Yet, we can calculate the quantitative minimum value for `prec` a **numeric** data class.  
+Yet, we can calculate the quantitative minimum value for `prec` a **numeric**
+data class.  
 
 ## Plot Data Using qplot()
 
@@ -278,17 +278,17 @@ We will use the `qplot()` (for *quick plot*) function in the `ggplot2` package.
 The syntax for `qplot()` requires the x- and y-axis variables and then the R
 object that the variables are stored in. 
 
+<i class="fa fa-star"></i>**Data Tip:** Add a title to the plot using 
+`main="Title string"`.
+{: .notice }
+
 ```{r plot-data }
-#quickly plot air temperature
+# quickly plot air temperature
 qplot(x=date, y=airt, 
       data=harMet.daily,
       main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
 ```
-
-<i class="fa fa-star"></i>**Data Tip:** Add a title to the plot using 
-`main="Title string"`.
-{: .notice }
 
 We have successfully plotted some data. However, what is happening on the 
 x-axis?
@@ -318,13 +318,13 @@ using `as.Date()`.
 
 ```{r convert-date-time }
 
-#convert column to date class
+# convert column to date class
 harMet.daily$date <- as.Date(harMet.daily$date)
 
-#view R class of data
+# view R class of data
 class(harMet.daily$date)
 
-#view results
+# view results
 head(harMet.daily$date)
 ```
 
@@ -333,8 +333,8 @@ much more quickly now that R recognizes `date` as a date class. `R` can
 aggregate ticks on the x-axis by year instead of trying to plot every day!
 
 ```{r qplot-data}
-#quickly plot the data and include a title using main=""
-#In title string we can use '\n' to force the string to break onto a new line
+# quickly plot the data and include a title using main=""
+# In title string we can use '\n' to force the string to break onto a new line
 qplot(x=date,y=airt, 
       data=harMet.daily,
       main="Daily Air Temperature w/ Date Assigned\nNEON Harvard Forest Field Site")  
@@ -349,21 +349,22 @@ in the `harMet.daily` object.
 2. Do precipitation and air temperature have similar annual patterns? 
 3. Create a quick plot examining the relationship between air temperature and precipitation. 
 
-Hint: you can modify the X and Y axis labels using `xlab="label here"` and 
-ylab="label here".
+Hint: you can modify the X and Y axis labels using `xlab="label text"` and 
+`ylab="label text"`.
 
 </div>
 
 ```{r challenge-code-plotting, echo=FALSE}
-#1
+# 1
 qplot(x=date,y=prec, 
       data=harMet.daily,
       main="Daily Precipitation \nNEON Harvard Forest",
       xlab="Date", ylab="Daily Precipitation")  
 
-#2 Precipiation does not appear to have the same striking annual pattern as air temperature does. 
+# 2 Precipiation does not appear to have the same striking annual pattern as 
+# air temperature does. 
 
-#3
+# 3
 qplot(x=airt,y=prec, 
       data=harMet.daily,
       main="Relationship between precipitation & air temperature \nNEON Harvard Forest",

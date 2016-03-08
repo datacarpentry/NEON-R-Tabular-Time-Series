@@ -21,15 +21,15 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: R/Time-Series-Convert-Date-Time-Class-POSIX
+permalink: /R/time-series-convert-date-time-class-POSIX
 comments: true
 ---
 
 {% include _toc.html %}
 
 ## About
-This tutorial explores working with date and time field in R. We will overview the
-differences between `as.Date`, `POSIXct` and `POSIXlt` as used to convert
+This tutorial explores working with date and time field in R. We will overview
+the differences between `as.Date`, `POSIXct` and `POSIXlt` as used to convert
 a date / time field in character (string) format to a date-time format that is 
 recognized by `R`. This conversion supports efficient plotting, subsetting and
 analysis of time series data.
@@ -51,14 +51,14 @@ format to a date-time `R` class.
 * Learn how to write out a date-time class object in different ways (month-day,
 month-day-year, etc). 
 
-## Things You’ll Need To Complete This Lesson
-To complete this lesson: you will need the most current version of R, and 
-preferably RStudio, loaded on your computer.
+## Things You’ll Need To Complete This Tutorials
+You will need the most current version of R and, preferably, RStudio loaded on
+your computer to complete this tutorial.
 
 ### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -69,10 +69,10 @@ preferably RStudio, loaded on your computer.
 </div>
 
 ## The Data Approach
-In the [Intro to Time-Series Data in R Lesson ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "Lesson 00")
+In the [Intro to Time Series Data in R tutorial ]({{site.baseurl}}/R/brief-tabular-time-series-qplot/)
 we imported a time series dataset in `.csv` format into `R`. We learned how to 
 quickly plot these data by converting the date column to an `R` `Date` class.
-In this lesson we will explore how to work with a column that contains both a
+In this tutorial we will explore how to work with a column that contains both a
 date AND a time stamp.
 
 We will use functions from both base `R` and the `lubridate` package to work 
@@ -83,8 +83,8 @@ with date-time data classes.
 # Load packages required for entire script
 library(lubridate)  #work with dates
 
-#set working directory to ensure R can find the file we wish to import
-#setwd("working-dir-path-here")
+# set working directory to ensure R can find the file we wish to import
+# setwd("working-dir-path-here")
 
 ```
 
@@ -97,8 +97,8 @@ that contains atmospheric data for the NEON Harvard Forest field site,
 aggregated at 15-minute intervals. 
 
 ```{r read-data-csv }
-#Load csv file of 15 min meteorological data from Harvard Forest
-#Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
+# Load csv file of 15 min meteorological data from Harvard Forest
+# Factors=FALSE so strings, series of letters/ words/ numerals, remain characters
 harMet_15Min <- read.csv(
   file="NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv",
   stringsAsFactors = FALSE)
@@ -109,10 +109,10 @@ Let's revisit the data structure of our `harMet_15Min` object. What is the class
 of the `date-time` column?
 
 ```{r view-date-structure }
-#view column data class
+# view column data class
 class(harMet_15Min$datetime)
 
-#view sample data
+# view sample data
 head(harMet_15Min$datetime)
 
 ```
@@ -120,15 +120,15 @@ head(harMet_15Min$datetime)
 Our `datetime` column is stored as a `character` class. We need to convert it to 
 date-time class. What happens when we use the `as.Date` method that we learned
 about in the 
-[Intro to Time Series Data in R ]({{site.baseurl}}/R/Brief-Tabular-Time-Series-qplot/ "for as.Date") 
+[Intro to Time Series Data in R ]({{site.baseurl}}/R/brief-tabular-time-series-qplot/ "for as.Date") 
 tutorial?
 
 ```{r as-date-only }
 
-#convert column to date class
+# convert column to date class
 har_dateOnly <- as.Date(harMet_15Min$datetime)
 
-#view data
+# view data
 head(har_dateOnly)
 
 ```
@@ -143,11 +143,11 @@ use the`as.Date` method to convert a date stored as a character class to an `R`
 `date` class, it will ignore all values after the date string.
 
 ```{r explore-as_date }
-#Convert character data to date (no time) 
+# Convert character data to date (no time) 
 myDate <- as.Date("2015-10-19 10:15")   
 str(myDate)
 
-#what happens if the date has text at the end?
+# what happens if the date has text at the end?
 myDate2 <- as.Date("2015-10-19Hello")   
 str(myDate2)
 
@@ -167,7 +167,7 @@ and time: `POSIXct` and `POSIXlt`.
 The `as.POSIXct` method converts a date-time string into a `POSIXct` class. 
 
 ```{r explore-POSIXct }
-#Convert character data to date and time.
+# Convert character data to date and time.
 timeDate <- as.POSIXct("2015-10-19 10:15")   
 str(timeDate)
 timeDate
@@ -185,8 +185,8 @@ seconds. Storing the data this way, optimizes use in `data.frames` and speeds up
 computation, processing and conversion to other formats. 
 
 ```{r explore-POSIXct2 }
-#to see the data in this 'raw' format, i.e., not formatted according to the 
-#class type to show us a date we recognize, use the `unclass()` function.
+# to see the data in this 'raw' format, i.e., not formatted according to the 
+# class type to show us a date we recognize, use the `unclass()` function.
 unclass(timeDate)
 
 ```
@@ -207,7 +207,7 @@ second, min, hour, day of month, month, year, numeric day of year, etc).
 
 
 ```{r explore-POSIXlt }
-#Convert character data to POSIXlt date and time
+# Convert character data to POSIXlt date and time
 timeDatelt<- as.POSIXlt("2015-10-19 10:15")  
 str(timeDatelt)
 timeDatelt
@@ -253,7 +253,7 @@ the date and time information are stored in each string. To do this, we can use
 format.
 
 ```{r view-date }
-#view one date-time field
+# view one date-time field
 harMet_15Min$datetime[1]
 ```
 
@@ -277,12 +277,12 @@ it and interpret the correct date and time as follows:
 `format="%Y-%m-%dT%H:%M"`.  
 
 ```{r format-date}
-#convert single instance of date/time in format year-month-day hour:min:sec
+# convert single instance of date/time in format year-month-day hour:min:sec
 as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%dT%H:%M")
 
-##The format of date-time MUST match the specified format or the data will not
+## The format of date-time MUST match the specified format or the data will not
 # convert; see what happens when you try it a different way or without the "T"
-#specified
+# specified
 as.POSIXct(harMet_15Min$datetime[1],format="%d-%m-%Y%H:%M")
 as.POSIXct(harMet_15Min$datetime[1],format="%Y-%m-%d%H:%M")
 
@@ -296,10 +296,10 @@ new.date.time <- as.POSIXct(harMet_15Min$datetime,
                             format="%Y-%m-%dT%H:%M" #format time
                             )
 
-#view output
+# view output
 head(new.date.time)
 
-#what class is the output
+# what class is the output
 class(new.date.time)
 
 ```
@@ -312,9 +312,9 @@ Above, we successfully converted our data into a date-time class. However, what
 `2005-04-15 03:30:00 MDT`
 
 It appears as if our data were assigned MDT (which is the timezone of the
-computer where these lessons were processed originally - in Colorado - Mountain
-Time). However, we know from the
-[metadata ]({{site.baseurl}}/R/Time-Series-Metadata/ "Time Series Metadata"),
+computer where these tutorials were processed originally - in Colorado - Mountain
+Time). However, we know from the metadata, explored in the
+[Why Metadata Are Important: How to Work with Metadata in Text & EML Format tutorial ]({{site.baseurl}}/R/why-metadata-are-important/),
 that these data were stored in Eastern Standard Time.
 
 ### Assign Time Zone
@@ -325,7 +325,7 @@ default to the local time zone that is defined on your computer.
 There are individual designations for different time zones and time zone 
 variants (e.g., does the time occur during daylight savings time). 
 
-<i class="fa fa-star"></i> **Data Tip:** Codes for timezones can be found in this 
+<i class="fa fa-star"></i> **Data Tip:** Codes for time zones can be found in this 
 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 target="_blank">time zone table</a>. 
 {: .notice}
@@ -335,7 +335,7 @@ Forest field site is `America/New_York`. Let's convert our `datetime` field
 one more time, and define the associated timezone (`tz=`).
 
 ```{r assign-time-zone }
-#assign time zone to just the first entry
+# assign time zone to just the first entry
 as.POSIXct(harMet_15Min$datetime[1],
             format = "%Y-%m-%dT%H:%M",
             tz = "America/New_York")
@@ -349,12 +349,12 @@ Now, using the syntax that we learned above, we can convert the entire
 `datetime` column to a `POSIXct` class.
 
 ```{r POSIX-convert-best-practice-code}
-#convert to POSIXct date-time class
+# convert to POSIXct date-time class
 harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
                                 format = "%Y-%m-%dT%H:%M",
                                 tz = "America/New_York")
 
-#view structure and time zone of the newly defined datetime column
+# view structure and time zone of the newly defined datetime column
 str(harMet_15Min$datetime)
 tz(harMet_15Min$datetime)
 ```

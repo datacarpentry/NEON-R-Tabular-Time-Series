@@ -1,0 +1,86 @@
+## ----metadata-challenge-1, echo=FALSE------------------------------------
+# Metadata Notes from hf001_10-15-m_Metadata.txt
+#  1. 2001-2015
+#  2. Emery Boos - located at the top of the document, email is available
+#  3. a lat long is available in the metadata at the top, we see the location described
+# as Prospect Hill Tract (Harvard Forest). 
+# 4. 342 m elevation, the veg type is not clear in the metadata
+# 5. Found in the methods: Delayed melting of snow and ice (caused by problems with rain gage heater or heavy precipitation) is noted in log - daily values are corrected if necessary but 15-minute values are not. The gage may underestimate actual precipitation under windy or cold conditions.
+# 6. this could be a discussion. things like units, time zone, etc are all useful
+# if accessed programmatically
+
+
+## ----metadata-challenge-2, echo=FALSE------------------------------------
+# Metadata Notes from hf001_10-15-m_Metadata.txt
+# 1. airt, s10t, prec, parr
+
+# 2. units for quantitative variables: Celsius (both temps), millimeters,
+# molePerMeterSquared
+
+# 3. airt & s10t: average of 1-second measurements. (unit: celsius / missing
+# value: NA)
+# prec: Total value for 15-minute period. Measured in increments of 0.01 inch.
+# (unit: millimeter / missing value: NA)
+# parr: Average of 1-second measurements. (unit:
+# micromolePerMeterSquaredPerSecond / missing value: NA)
+
+# 4. datetime field, Eastern Standard Time. - note this is found in the methods
+# towards the top of the document.
+
+## ----install-EML-package, results="hide", warning=FALSE------------------
+# install R EML tool 
+# load devtools
+library("devtools")
+# IF YOU HAVE NOT DONE SO ALREADY: install EML from github -- package in
+# development; not on CRAN
+#install_github("ropensci/EML", build=FALSE, dependencies=c("DEPENDS", "IMPORTS"))
+
+# load ROpenSci EML package
+library("EML")
+# load ggmap for mapping
+library(ggmap)
+
+
+## ----read-eml------------------------------------------------------------
+# data location
+# http://harvardforest.fas.harvard.edu:8080/exist/apps/datasets/showData.html?id=hf001
+# table 4 http://harvardforest.fas.harvard.edu/data/p00/hf001/hf001-04-monthly-m.csv
+
+# import EML from Harvard Forest Met Data
+eml_HARV <- read_eml("http://harvardforest.fas.harvard.edu/data/eml/hf001.xml")
+
+# view size of object
+object.size(eml_HARV)
+
+# view the object class
+class(eml_HARV)
+
+## ----view-eml-content----------------------------------------------------
+# view the contact name listed in the file
+# this works well!
+eml_get(eml_HARV,"contact")
+
+# grab all keywords in the file
+eml_get(eml_HARV,"keywords")
+
+# figure out the extent & temporal coverage of the data
+eml_get(eml_HARV,"coverage")
+
+
+## ----map-location, warning=FALSE, message=FALSE--------------------------
+
+# grab x coordinate from westBounding Coordinate
+XCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@westBoundingCoordinate
+# grab y coordinate from northBounding Coordinate
+YCoord <- eml_HARV@dataset@coverage@geographicCoverage@boundingCoordinates@northBoundingCoordinate
+
+# get_map allows us to pull maps into R from a Google API
+map <- get_map(location='Harvard', maptype = "terrain")
+map <- get_map(location='massachusetts', maptype = "toner", zoom =8)
+
+# plot our point on the map
+ggmap(map, extent=TRUE) +
+  geom_point(aes(x=XCoord,y=YCoord), 
+             color="darkred", size=6, pch=18)
+
+
