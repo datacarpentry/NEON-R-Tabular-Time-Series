@@ -5,7 +5,7 @@ date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [ggplot2, dplyr, lubridate]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: /R/time-series-subset-dplyr
+permalink: /R/time-series-subset-dplyr/
 comments: true
 ---
 
@@ -55,7 +55,7 @@ your computer to complete this tutorial.
 * **dplyr:** `install.packages("dplyr")`
 * **ggplot2:** `install.packages("ggplot2")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ###Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -87,7 +87,7 @@ We will need the `lubridate` and the `dplyr` packages to complete this tutorial.
 
 We will also use the 15-minute average atmospheric data subsetted to 2009-2011 
 for the NEON Harvard Forest Field Site. This subset was created in the
-[Subsetting Time Series Data tutorial]({{site.baseurl}}/R/subset-data-and-no-data-values/ "2009-2011 HarMet Data Subset"). 
+[Subsetting Time Series Data tutorial]({{ site.baseurl }}/R/subset-data-and-no-data-values/ "2009-2011 HarMet Data Subset"). 
 
 If this object isn't already created, please load the `.csv` version: 
 `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/Met_HARV_15min_2009_2011.csv`. Be
@@ -102,15 +102,23 @@ loaded.
 
     ## 
     ## Attaching package: 'dplyr'
-    ## 
+
     ## The following objects are masked from 'package:lubridate':
     ## 
     ##     intersect, setdiff, union
+
+    ## The following objects are masked from 'package:rgeos':
     ## 
+    ##     intersect, setdiff, union
+
+    ## The following objects are masked from 'package:raster':
+    ## 
+    ##     intersect, select, union
+
     ## The following objects are masked from 'package:stats':
     ## 
     ##     filter, lag
-    ## 
+
     ## The following objects are masked from 'package:base':
     ## 
     ##     intersect, setdiff, setequal, union
@@ -142,7 +150,7 @@ However, summarizing the data at a coarser scale (e.g., daily, weekly, by
 season, or by year) may be easier to visually interpret during initial stages of
 data exploration. 
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/15-min-plots-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/15-min-plots-1.png)
 
 ### Extract Year from a Date-Time Column
 To summarize by year efficiently, it is helpful to have a year column that we
@@ -345,7 +353,7 @@ Use piping to create a `data_frame` called `jday.avg` that contains the average
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/pipe-demo-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/pipe-demo-1.png)
 
 <i class="fa fa-star"></i> **Data Tip:**  Older `dplyr` versions used the `%.%`
 syntax to designate a pipe. Pipes are sometimes referred to as chains. 
@@ -419,7 +427,7 @@ The output shows we have 96 values for each day. Is that what we expect?
 data we could use the `yday()` function
 <a href="http://www.inside-r.org/packages/cran/lubridate/docs/yday"/>
 from the `lubridate` package to create a new column containing Julian day 
-values. [More information in this NEON Data Skills tutorial ]({{site.baseurl}}/R/julian-day-conversion/). 
+values. [More information in this NEON Data Skills tutorial ]({{ site.baseurl }}/R/julian-day-conversion/). 
 {: .notice }
 
 ### Summarize by Group
@@ -464,7 +472,7 @@ data_frame `total.prec`.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-answer-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-answer-1.png)
 
 ### Mutate - Add data_frame Columns 2 dplyr Output
 We can use the `mutate()` function of `dplyr` to add additional columns of
@@ -594,5 +602,5 @@ Name the new data frame `harTemp.monthly.09.11`. Plot your output.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-code-dplyr-1.png) ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-code-dplyr-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-code-dplyr-1.png)![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-code-dplyr-2.png)
 

@@ -5,7 +5,7 @@ date:   2015-10-18
 authors: [Megan A. Jones, Leah A. Wasser]
 contributors: []
 dateCreated: 2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -18,7 +18,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: R/Work-With-NDVI-and-Met-Data-In-R
+permalink: /R/Work-With-NDVI-and-Met-Data-In-R/
 comments: true
 ---
 
@@ -26,15 +26,15 @@ comments: true
 
 ## About
 This tutorial is a culmination activity for the series on 
-[working with tabular time series data in R ]({{site.baseurl}}/tutorial-series/tabular-time-series/) 
+[working with tabular time series data in R ]({{ site.baseurl }}/tutorial-series/tabular-time-series/) 
 and as part of a larger spatio-temporal tutorial series and Data Carpentry
 workshop on 
-[using spatio-temporal phenology-related data in R ]({{site.baseurl}}/tutorial-series/neon-dc-phenology-series/).
+[using spatio-temporal phenology-related data in R ]({{ site.baseurl }}/tutorial-series/neon-dc-phenology-series/).
 The data used in this culmination activity has been extracted or previously
 worked with in the tutorial series
-[working with tabular time series data in R ]({{site.baseurl}}/tutorial-series/tabular-time-series/)
+[working with tabular time series data in R ]({{ site.baseurl }}/tutorial-series/tabular-time-series/)
 and 
-[working with raster time-series data in R ]({{site.baseurl}}/tutorial-series/raster-time-series/).
+[working with raster time-series data in R ]({{ site.baseurl }}/tutorial-series/raster-time-series/).
 
 **R Skill Level:** Advanced/ Intermediate - you've got the basics of `R` down
  and are comfortable using `ggplot2` and `dplyr`. 
@@ -59,7 +59,7 @@ your computer to complete this tutorial.
 * **dplyr:** `install.packages("dplyr")`
 * **reshape2:** `install.packages("reshape2")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -75,9 +75,9 @@ This tutorial relies on participants' familiarity with both `dplyr` and
 `ggplot2`. Prior to working through this culmination activity, we recommend the
 following tutorials, if you are new to either of the `R` packages.
 
-* [Subset & Manipulate Time Series Data with dplyr tutorial ]({{site.baseurl}}/R/time-series-subset-dplyr/ "Learn dplyr") 
+* [Subset & Manipulate Time Series Data with dplyr tutorial ]({{ site.baseurl }}/R/time-series-subset-dplyr/ "Learn dplyr") 
 
-* [Plotting Time Series with ggplot in R tutorial ]({{site.baseurl}}/R/time-series-plot-ggplot/ "Learn ggplot")  
+* [Plotting Time Series with ggplot in R tutorial ]({{ site.baseurl }}/R/time-series-plot-ggplot/ "Learn ggplot")  
 
 </div>
 
@@ -95,7 +95,7 @@ vary from -1.0 to 1.0.
 
 The imagery data used to create this NDVI data were collected over the National
 Ecological Observatory Network's
-<a href="http://www.neoninc.org/science-design/field-sites/harvard-forest" target="_blank" >Harvard Forest</a>
+<a href="http://www.neonscience.org/science-design/field-sites/harvard-forest" target="_blank" >Harvard Forest</a>
 field site.  
 The imagery was created by the U.S. Geological Survey (USGS) using a 
 <a href="http://eros.usgs.gov/#/Find_Data/Products_and_Data_Available/MSS" target="_blank" >  multispectral scanner</a>
@@ -103,7 +103,7 @@ on a
 <a href="http://landsat.usgs.gov" target="_blank" > Landsat Satellite </a>.
 The data files are Geographic Tagged Image-File Format (GeoTIFF).  
 The tutorial 
-[Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl}}/R/Extract-NDVI-From-Rasters-In-R/), 
+[Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl }}/R/Extract-NDVI-From-Rasters-In-R/), 
 explains how to create this NDVI file from raster data. 
 
 ### Read In the Data
@@ -270,7 +270,7 @@ convert the data to the Date class.
 `harMet.daily2011`.
 
 HINT: If you are having trouble subsetting the data, refer back to
-[Subset & Manipulate Time Series Data with dplyr tutorial]({{site.baseurl}}/R/time-series-subset-dplyr/ "Learn dplyr")
+[Subset & Manipulate Time Series Data with dplyr tutorial]({{ site.baseurl }}/R/time-series-subset-dplyr/ "Learn dplyr")
 </div>
 
 
@@ -292,7 +292,7 @@ This NDVI data was derived from a raster, however, now it is integers in a
             plot.title = element_text(lineheight=.8, face="bold",size = 20),
             text = element_text(size=20))
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-NDVI-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-NDVI-1.png)
 
 ## Two y-axes or Side-by-Side Plots?
 When we have different types of data like NDVI (scale: 0-1 index units),
@@ -317,7 +317,7 @@ them.
 
 Hint: If you are having a hard time arranging the plots in a single grid, refer
 back to 
-[Plotting Time Series with ggplot in R tutorial]({{site.baseurl}}/R/time-series-plot-ggplot/ "Learn ggplot")
+[Plotting Time Series with ggplot in R tutorial]({{ site.baseurl }}/R/time-series-plot-ggplot/ "Learn ggplot")
 </div>
 
 
@@ -340,7 +340,7 @@ back to
     # display the plots together
     grid.arrange(plot.par.2011, plot.NDVI.2011) 
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-PAR-NDVI-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-PAR-NDVI-1.png)
 
 This is nice but a bit confusing as the date on our x-axis doesn't exactly line
 up. To fix this we can assign the same min and max to both x-axes so that they
@@ -367,7 +367,7 @@ axes.
     # Output with both plots
     grid.arrange(plot2.par.2011, plot2.NDVI.2011) 
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-same-xaxis-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-same-xaxis-1.png)
 
 <div id="challenge" markdown="1">
 ## Challenge: Plot Air Temperature and NDVI
@@ -378,4 +378,4 @@ Finally, plot PAR, air temperature, and NDVI in a single pane to ease
 comparisons.  
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-1.png)

@@ -5,7 +5,7 @@ date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [ggplot2, scales, gridExtra, lubridate, ggthemes]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -20,7 +20,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/time-series-plot-ggplot
+permalink: /R/time-series-plot-ggplot/
 comments: true
 ---
 
@@ -55,7 +55,7 @@ your computer to complete this tutorial.
 * **gridExtra:** `install.packages("gridExtra")`
 * **ggthemes:** `install.packages("ggthemes")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
@@ -139,7 +139,7 @@ average time series data.
           main="Air temperature Harvard Forest\n 2009-2011",
           xlab="Date", ylab="Temperature (°C)")
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/qplot-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/qplot-1.png)
 
 The resulting plot displays the pattern of air temperature increasing and 
 decreasing over three years. While `qplot()` is a quick way to plot data, our 
@@ -172,7 +172,7 @@ Let's create an air temperature scatterplot.
     ggplot(harMetDaily.09.11, aes(date, airt)) +
                geom_point(na.rm=TRUE)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-1.png)
 
 ## Customize A Scatterplot
 We can customize our plot in many ways. For instance, we can change the size and 
@@ -186,7 +186,7 @@ element.
     ggplot(harMetDaily.09.11, aes(date, airt)) +
                geom_point(na.rm=TRUE, color="blue", size=3, pch=18)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-colors-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-colors-1.png)
 
 ## Modify Title & Axis Labels
 We can modify plot attributes by adding elements using the `+` symbol.
@@ -200,7 +200,7 @@ labels using `+ xlab("XXX") + ylab("XXX")`.
                ggtitle("Air Temperature 2009-2011\n NEON Harvard Forest Field Site") +
                xlab("Date") + ylab("Air Temperature (C)")
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-labels-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-labels-1.png)
 
 <i class="fa fa-star"></i> **Data Tip:**  Use `help(ggplot2)` to review the many
 elements that can be defined and added to a `ggplot2` plot.
@@ -224,7 +224,7 @@ and modify the plot later. Let's create a new plot and call it `AirTempDaily`.
     # render the plot
     AirTempDaily
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-labels-named-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/basic-ggplot2-labels-named-1.png)
 
 ### Format Dates in Axis Labels
 We can adjust the date display format (e.g. 2009-07 vs. Jul 09) and the number 
@@ -250,7 +250,7 @@ on the x axis.
     
     AirTempDailyb
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/format-x-axis-labels-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/format-x-axis-labels-1.png)
 
 ### Adjust Date Ticks
 We can adjust the date ticks too. In this instance, having 1 tick per year may 
@@ -271,7 +271,7 @@ month).
     
     AirTempDaily_6mo
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/format-x-axis-label-ticks-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/format-x-axis-label-ticks-1.png)
 
     # format x-axis: dates
     AirTempDaily_1y <- AirTempDaily + 
@@ -280,7 +280,7 @@ month).
     
     AirTempDaily_1y
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/format-x-axis-label-ticks-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/format-x-axis-label-ticks-2.png)
 
 <i class="fa fa-star"></i> **Data Tip:**  We can adjust the tick spacing and
 format for x- and y-axes using `scale_x_continuous` or `scale_y_continuous` to
@@ -319,7 +319,7 @@ follows:
     
     AirTempDaily_2011
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/subset-ggplot-time-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/subset-ggplot-time-1.png)
 
 ## ggplot() Themes
 We can use the `theme()` element to adjust figure elements.
@@ -332,7 +332,7 @@ There are some nice pre-defined themes that we can use as a starting place.
     
     AirTempDaily_bw
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/nice-font-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/nice-font-1.png)
 
 Using the `theme_bw()` we now have a white background rather than grey.
 
@@ -349,14 +349,14 @@ mentioning. Feel free to experiment with the code below to install `ggthemes`.
     
     AirTempDaily_economist
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/install-new-themes-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/install-new-themes-1.png)
 
     AirTempDaily_strata<-AirTempDaily_1y +
       theme_stata()
     
     AirTempDaily_strata
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/install-new-themes-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/install-new-themes-2.png)
 
 ### More on Themes
 
@@ -380,7 +380,7 @@ style.
     
     AirTempDaily_custom
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/increase-font-size-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/increase-font-size-1.png)
 
 <div id="challenge" markdown="1">
 ##Challenge: Plot Total Daily Precipitation
@@ -395,7 +395,7 @@ x-axis.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-ggplot-precip-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-ggplot-precip-1.png)
 
 ## Bar Plots with ggplot
 We can use ggplot to create bar plots too. Let's create a bar plot of total 
@@ -420,7 +420,7 @@ plot actual values.
     
     PrecipDailyBarA
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_bar-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_bar-1.png)
 
 Note that some of the bars in the resulting plot appear grey rather than black.
 This is because `R` will do it's best to adjust colors of bars that are closely
@@ -446,7 +446,7 @@ Bonus: Style your plot with a `ggtheme` of choice.
 
     ## Warning: Removed 729 rows containing missing values (position_stack).
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_bar-subset-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_bar-subset-1.png)
 
 ## Color
 We can change the bar fill color by within the
@@ -465,7 +465,7 @@ An R color cheatsheet</a>
     
     PrecipDailyBarB
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-color-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-color-1.png)
 
 <i class="fa fa-star"></i> **Data Tip:**  For more information on color,
 including color blind friendly color palettes, checkout the 
@@ -490,7 +490,7 @@ instead of `bar` or `point`.
     
     AirTempDaily_line
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_lines-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-geom_lines-1.png)
 
 Note that lines may not be the best way to represent air temperature data given
 lines suggest that the connecting points are directly related. It is important
@@ -505,7 +505,7 @@ the `AirTempDaily`, a `geom_point` plot. What happens?
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-geom_lines&points-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-geom_lines&points-1.png)
 
 ## Trend Lines
 We can add a trend line, which is a statistical transformation of our data to
@@ -532,7 +532,7 @@ is appropriate for the data.
     
     AirTempDaily_trend
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-trend-line-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-trend-line-1.png)
 
 <div id="challenge" markdown="1">
 ## Challenge: A Trend in Precipitation? 
@@ -547,7 +547,7 @@ Create a bar plot of total daily precipitation. Add a:
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-linear-trend-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-linear-trend-1.png)
 
 <div id="challenge" markdown="1">
 ## Challenge: Plot Monthly Air Temperature
@@ -558,7 +558,7 @@ label axes and adjust the plot ticks as you see fit.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/plot-airtemp-Monthly-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/plot-airtemp-Monthly-1.png)
 
 ## Display Multiple Figures in Same Panel
 It is often useful to arrange plots in a panel rather than displaying them 
@@ -581,7 +581,7 @@ we'll specify one column..
     # stack plots in one column 
     grid.arrange(AirTempDaily, AirTempMonthly, ncol=1)
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/compare-precip-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/compare-precip-1.png)
 
 <div id="challenge" markdown="1">
 ## Challenge: Create Panel of Plots
@@ -591,7 +591,7 @@ on top of each other.
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-grid-arrange-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/challenge-code-grid-arrange-1.png)
 
 ## Additional ggplot2 Resources
 In this tutorial, we've covered the basics of `ggplot`. There are many great 

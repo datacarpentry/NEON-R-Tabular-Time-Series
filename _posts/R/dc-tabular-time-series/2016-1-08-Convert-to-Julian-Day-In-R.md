@@ -5,7 +5,7 @@ date:   2015-10-17
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [ ] 
 dateCreated: 2015-10-18
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [lubridate]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -18,7 +18,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink: http://www.neoninc.org
-permalink: /R/julian-day-conversion
+permalink: /R/julian-day-conversion/
 comments: true
 ---
 
@@ -44,7 +44,7 @@ You will need the most current version of R and, preferably, RStudio loaded on y
 ### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 
-[More on Packages in R - Adapted from Software Carpentry.]({{site.baseurl}}/R/Packages-In-R/)
+[More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
 ### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}

@@ -6,7 +6,7 @@ date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: []
 dateCreated:  2015-10-22
-lastModified: 2016-03-01
+lastModified: 2016-03-08
 packagesLibraries: [ggplot2]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -21,7 +21,7 @@ image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
   creditlink:
-permalink: /R/brief-tabular-time-series-qplot
+permalink: /R/brief-tabular-time-series-qplot/
 comments: true
 ---
 
@@ -70,7 +70,7 @@ You will need the most current version of R and, preferably, RStudio loaded on y
 ## Data Related to Phenology
 In this tutorial, we will explore atmospheric data (including temperature,
 precipitation and other metrics) collected by sensors mounted on a 
-<a href="http://www.neoninc.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
+<a href="http://www.neonscience.org/science-design/collection-methods/flux-tower-measurements" target="_blank">
 flux tower</a> 
 at the NEON Harvard Forest field site. We are interested in exploring 
 changes in temperature, precipitation, PAR and day 
@@ -100,10 +100,7 @@ to import a `.csv` file. We will use the `ggplot2` package to plot our data.
     # Load packages required for entire script. 
     # library(PackageName)  #purpose of package
     library(ggplot2)   #efficient, pretty plotting - required for qplot function
-
-    ## Stackoverflow is a great place to get help:
-    ## http://stackoverflow.com/tags/ggplot2.
-
+    
     # set working directory to ensure R can find the file we wish to import
     # setwd("working-dir-path-here")
 
@@ -386,7 +383,7 @@ object that the variables are stored in.
           data=harMet.daily,
           main="Daily Air Temperature\nNEON Harvard Forest Field Site")
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/plot-data-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/plot-data-1.png)
 
 We have successfully plotted some data. However, what is happening on the 
 x-axis?
@@ -442,7 +439,7 @@ aggregate ticks on the x-axis by year instead of trying to plot every day!
           data=harMet.daily,
           main="Daily Air Temperature w/ Date Assigned\nNEON Harvard Forest Field Site")  
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/qplot-data-1.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/qplot-data-1.png)
 
 
 <div id="challenge" markdown="1">
@@ -457,5 +454,5 @@ Hint: you can modify the X and Y axis labels using `xlab="label text"` and
 
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-1.png) ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-2.png) 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-1.png)![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R/challenge-code-plotting-2.png)
 
