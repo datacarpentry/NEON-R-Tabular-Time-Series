@@ -20,7 +20,6 @@ harMetDaily.09.11 <- read.csv(
 
 #check out the data
 str(harMetDaily.09.11)
-head(harMetDaily.09.11)
 
 # read in the NDVI CSV data; if you dont' already have it 
 NDVI.2011 <- read.csv(
@@ -30,7 +29,6 @@ NDVI.2011 <- read.csv(
 
 # check out the data
 str(NDVI.2011)
-head(NDVI.2011)
 
 ## ----challenge-code-convert-date, include=TRUE, results="hide", echo=FALSE----
 
@@ -56,7 +54,7 @@ harMet.daily2011 <- harMetDaily.09.11 %>%
 harMet.daily2011$date<-as.Date(harMet.daily2011$date)
 
 ## ----plot-NDVI-----------------------------------------------------------
-# plot NDVI
+# plot NDVI by date
 ggplot(NDVI.2011, aes(Date, meanNDVI))+
   geom_point(colour = "forestgreen", size = 4) +
   ggtitle("Daily NDVI at Harvard Forest, 2011")+
@@ -65,7 +63,7 @@ ggplot(NDVI.2011, aes(Date, meanNDVI))+
         text = element_text(size=20))
 
 
-## ----plot-PAR-NDVI-------------------------------------------------------
+## ----plot-PAR-NDVI, echo=FALSE-------------------------------------------
 
 # plot NDVI again
 plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
@@ -121,6 +119,8 @@ plot.airt.2011 <- ggplot(harMet.daily2011, aes(date, airt))+
         plot.title = element_text(lineheight=.8, face="bold",size = 20),
         text = element_text(size=20))
 
-# output with all 3 together
+plot.airt.2011
+
+# 2 output with all 3 together
 grid.arrange(plot2.par.2011, plot.airt.2011, plot2.NDVI.2011) 
 

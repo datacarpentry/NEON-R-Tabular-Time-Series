@@ -5,7 +5,7 @@ date:   2015-10-18
 authors: [Megan A. Jones, Leah A. Wasser]
 contributors: []
 dateCreated: 2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -13,7 +13,7 @@ tags: [time-series, phenology, R]
 tutorialSeries: [tabular-time-series]
 description: "This tutorial is a data integration wrap-up culmination activity 
 for the spatio-temporal time series tutorials."
-code1: TSCulmination-Work-With-NDVI-and-Met-Data-In-R.R
+code1: /R/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -51,7 +51,8 @@ After completing this activity, you will:
 You will need the most current version of R and, preferably, RStudio loaded on
 your computer to complete this tutorial.
 
-###Install R Packages
+### Install R Packages
+
 * **ggplot2:** `install.packages("ggplot2")`
 * **scales:** `install.packages("scales")`
 * **gridExtra:** `install.packages("gridExtra")`
@@ -96,12 +97,13 @@ vary from -1.0 to 1.0.
 The imagery data used to create this NDVI data were collected over the National
 Ecological Observatory Network's
 <a href="http://www.neonscience.org/science-design/field-sites/harvard-forest" target="_blank" >Harvard Forest</a>
-field site.  
+field site. 
+
 The imagery was created by the U.S. Geological Survey (USGS) using a 
 <a href="http://eros.usgs.gov/#/Find_Data/Products_and_Data_Available/MSS" target="_blank" >  multispectral scanner</a>
 on a
 <a href="http://landsat.usgs.gov" target="_blank" > Landsat Satellite </a>.
-The data files are Geographic Tagged Image-File Format (GeoTIFF).  
+The data files are Geographic Tagged Image-File Format (GeoTIFF). 
 The tutorial 
 [Extract NDVI Summary Values from a Raster Time Series]({{ site.baseurl }}/R/Extract-NDVI-From-Rasters-In-R/), 
 explains how to create this NDVI file from raster data. 
@@ -182,44 +184,6 @@ We need to read in two datasets: the 2009-2011 micrometeorological data and the
     ##  $ s10tmin  : num  1 1 1 1 1 1 1 1.1 1.3 1.2 ...
     ##  $ f.s10tmin: logi  NA NA NA NA NA NA ...
 
-    head(harMetDaily.09.11)
-
-    ##      X       date jd  airt f.airt airtmax f.airtmax airtmin f.airtmin rh
-    ## 1 2882 2009-01-01  1 -15.1           -9.2             -19.1           58
-    ## 2 2883 2009-01-02  2  -9.1           -3.7             -15.8           75
-    ## 3 2884 2009-01-03  3  -5.5           -1.6              -9.5           69
-    ## 4 2885 2009-01-04  4  -6.4            0.0             -11.4           59
-    ## 5 2886 2009-01-05  5  -2.4            0.7              -6.4           77
-    ## 6 2887 2009-01-06  6  -4.9            0.0             -10.1           65
-    ##   f.rh rhmax f.rhmax rhmin f.rhmin  dewp f.dewp dewpmax f.dewpmax dewpmin
-    ## 1         76            33         -21.9          -20.4             -23.5
-    ## 2         97            47         -12.9           -6.2             -21.0
-    ## 3         97            41         -10.9           -6.4             -14.3
-    ## 4         78            40         -13.3           -9.1             -16.3
-    ## 5         97            45          -6.2           -1.7             -12.1
-    ## 6         88            38         -10.9           -7.5             -13.0
-    ##   f.dewpmin prec f.prec slrt f.slrt part f.part  netr f.netr  bar f.bar
-    ## 1              0         8.4        16.7        -39.4        1011      
-    ## 2              0         3.7         7.3        -16.6        1005      
-    ## 3              0         8.1        14.8        -35.3        1004      
-    ## 4              0         8.3        16.2        -24.7        1008      
-    ## 5              1         2.9         5.4        -19.4        1006      
-    ## 6              0         6.3        11.7        -18.9        1009      
-    ##   wspd f.wspd wres f.wres wdir f.wdir wdev f.wdev gspd f.gspd s10t f.s10t
-    ## 1  2.4         2.1         294          29        13.4           1     NA
-    ## 2  1.4         1.0         237          42         8.1           1     NA
-    ## 3  2.7         2.5         278          24        13.9           1     NA
-    ## 4  1.9         1.6         292          31         8.0           1     NA
-    ## 5  2.1         1.9         268          26        11.6           1     NA
-    ## 6  1.0         0.7         257          44         5.1           1     NA
-    ##   s10tmax f.s10tmax s10tmin f.s10tmin
-    ## 1     1.1        NA       1        NA
-    ## 2     1.0        NA       1        NA
-    ## 3     1.0        NA       1        NA
-    ## 4     1.0        NA       1        NA
-    ## 5     1.1        NA       1        NA
-    ## 6     1.1        NA       1        NA
-
     # read in the NDVI CSV data; if you dont' already have it 
     NDVI.2011 <- read.csv(
       file="NEON-DS-Met-Time-Series/HARV/NDVI/meanNDVI_HARV_2011.csv", 
@@ -237,16 +201,6 @@ We need to read in two datasets: the 2009-2011 micrometeorological data and the
     ##  $ julianDay: int  5 37 85 133 181 197 213 229 245 261 ...
     ##  $ Date     : chr  "2011-01-05" "2011-02-06" "2011-03-26" "2011-05-13" ...
 
-    head(NDVI.2011)
-
-    ##   X meanNDVI site year julianDay       Date
-    ## 1 1 0.365150 HARV 2011         5 2011-01-05
-    ## 2 2 0.242645 HARV 2011        37 2011-02-06
-    ## 3 3 0.251390 HARV 2011        85 2011-03-26
-    ## 4 4 0.599300 HARV 2011       133 2011-05-13
-    ## 5 5 0.878725 HARV 2011       181 2011-06-30
-    ## 6 6 0.893250 HARV 2011       197 2011-07-16
-
 In the NDVI dataset, we have the following variables:
 
 * 'X': an integer identifying each row
@@ -258,7 +212,7 @@ the original raster).
 * Date: a date in format "YYYY-MM-DD"; currently in **chr** class
 
 <div id="challenge" markdown="1">
-## Challenge:  Class Conversion & Subset by Time
+## Challenge: Class Conversion & Subset by Time
 The goal of this challenge is to get our data sets ready so that we can work 
 with data from each, within the same plots or analyses.  
 
@@ -279,12 +233,12 @@ Now that we have our data sets with Date class dates and limited to 2011, we can
 begin working with both. 
 
 ## Plot NDVI Data from a .csv
-This NDVI data was derived from a raster, however, now it is integers in a
-`data.frame` therefore we can plot it like any of our other values using
+These NDVI data were derived from a raster and are now integers in a
+`data.frame`, therefore we can plot it like any of our other values using
 `ggplot()`. Here we plot `meanNDVI` by `Date`.
 
 
-    # plot NDVI
+    # plot NDVI by date
     ggplot(NDVI.2011, aes(Date, meanNDVI))+
       geom_point(colour = "forestgreen", size = 4) +
       ggtitle("Daily NDVI at Harvard Forest, 2011")+
@@ -312,40 +266,28 @@ have a vertical or horizontal arrangement.
 
 <div id="challenge" markdown="1">
 ## Challenge: Plot Air Temperature and NDVI
-Then we will plot the two plots in the same viewer so we can more easily compare
-them.  
+
+Plot the NDVI vs Date (previous plot) and PAR vs Date (create a new plot) in the
+same viewer so we can more easily compare them. 
 
 Hint: If you are having a hard time arranging the plots in a single grid, refer
 back to 
 [Plotting Time Series with ggplot in R tutorial]({{ site.baseurl }}/R/time-series-plot-ggplot/ "Learn ggplot")
 </div>
 
-
-    # plot NDVI again
-    plot.NDVI.2011 <- ggplot(NDVI.2011, aes(Date, meanNDVI))+
-      geom_point(colour = "forestgreen", size = 4) +
-      ggtitle("Daily NDVI at Harvard Forest, 2011")+
-      theme(legend.position = "none",
-            plot.title = element_text(lineheight=.8, face="bold",size = 20),
-            text = element_text(size=20))
-    
-    # create plot of julian day vs. PAR
-    plot.par.2011 <- ggplot(harMet.daily2011, aes(date, part))+
-      geom_point(na.rm=TRUE) +
-      ggtitle("Daily PAR at Harvard Forest, 2011")+
-      theme(legend.position = "none",
-            plot.title = element_text(lineheight=.8, face="bold",size = 20),
-            text = element_text(size=20))
-    
-    # display the plots together
-    grid.arrange(plot.par.2011, plot.NDVI.2011) 
-
 ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/plot-PAR-NDVI-1.png)
 
-This is nice but a bit confusing as the date on our x-axis doesn't exactly line
-up. To fix this we can assign the same min and max to both x-axes so that they
-align.  We can assign the date format for the x-axis and clearly label both
-axes. 
+The figures from this Challenge are nice but a bit confusing as the dates on the
+x-axis don't exactly line up. To fix this we can **assign the same min and max 
+to both x-axes** so that they align. The syntax for this is: 
+
+`limits=c(min=VALUE,max=VALUE)`. 
+
+In our case we want the min and max values to 
+be based on the min and max of the `NDVI.2011$Date` so we'll use a function 
+specifying this instead of a single value.
+
+We can also assign the date format for the x-axis and clearly label both axes. 
 
 
     # plot PAR
@@ -374,8 +316,8 @@ axes.
 Create a plot, complementary to those above, showing air temperature (`airt`)
 throughout 2011. Choose colors and symbols that show the data well. 
 
-Finally, plot PAR, air temperature, and NDVI in a single pane to ease
-comparisons.  
+Second, plot PAR, air temperature and NDVI in a single pane for ease of
+comparison.  
 </div>
 
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-1.png)
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-1.png)![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/07-Culmination-Work-With-NDVI-and-Met-Data-In-R/challengeplot-same-xaxis-2.png)

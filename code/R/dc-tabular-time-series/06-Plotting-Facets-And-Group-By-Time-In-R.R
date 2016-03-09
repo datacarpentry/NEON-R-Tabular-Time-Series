@@ -67,7 +67,7 @@ AirTempDaily + facet_grid(. ~ year)
 
 AirTempDaily_jd <- ggplot(harMetDaily.09.11, aes(jd, airt)) +
            geom_point() +
-           ggtitle("Daily Precipitation\n NEON Harvard Forest") +
+           ggtitle("Air Temperature\n NEON Harvard Forest Field Site") +
            xlab("Julian Day") + ylab("Temperature (C)") +
            theme(plot.title = element_text(lineheight=.8, face="bold",
                  size = 20)) +
@@ -85,7 +85,7 @@ AirTempDaily_jd + facet_grid(year ~ .)
 
 ## ----rearrange-facets-columns--------------------------------------------
 
-# add columns
+# display in two columns
 AirTempDaily_jd + facet_wrap(~year, ncol = 2)
 
 
@@ -251,7 +251,7 @@ met_monthly_HARV <- read.csv(
 # view header of date
 head(met_monthly_HARV$date)
 
-## ----challenge-code-convert-monthly-data, include=TRUE, results="hide", echo=FALSE----
+## ----challenge-code-convert-monthly-data, results="hide", echo=FALSE, message=FALSE----
 
 # read in the data
 met_monthly_HARV <- read.csv(
