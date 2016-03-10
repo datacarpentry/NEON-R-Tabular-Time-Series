@@ -1,7 +1,7 @@
 ## ----load-packages-------------------------------------------------------
 # Load packages required for entire script. 
-# library(PackageName)  #purpose of package
-library(ggplot2)   #efficient, pretty plotting - required for qplot function
+# library(PackageName)  # purpose of package
+library(ggplot2)   # efficient, pretty plotting - required for qplot function
 
 # set working directory to ensure R can find the file we wish to import
 # setwd("working-dir-path-here")

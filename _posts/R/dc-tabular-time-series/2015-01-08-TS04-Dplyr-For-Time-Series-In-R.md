@@ -5,7 +5,7 @@ date:   2015-10-21
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [ggplot2, dplyr, lubridate]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -15,7 +15,7 @@ description: "In this tutorial, we will use the group_by, summarize and mutate
 functions in the `dplyr` package to efficiently manipulate atmospheric data 
 collected at the NEON Harvard Forest Field Site. We will use pipes to
 efficiently perform multiple tasks within a single chunk of code."
-code1: TS04-Dplyr-For-Time-Series-In-R.R
+code1: /R/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -50,14 +50,14 @@ After completing this tutorial, you will:
 You will need the most current version of R and, preferably, RStudio loaded on
 your computer to complete this tutorial.
 
-###Install R Packages
+### Install R Packages
 * **lubridate:** `install.packages("lubridate")`
 * **dplyr:** `install.packages("dplyr")`
 * **ggplot2:** `install.packages("ggplot2")`
 
 [More on Packages in R - Adapted from Software Carpentry.]({{ site.baseurl }}/R/Packages-In-R/)
 
-###Download Data 
+### Download Data 
 {% include/dataSubsets/_data_Met-Time-Series.html %}
 
 ****
@@ -99,30 +99,6 @@ loaded.
     
     library(lubridate) # work with dates
     library(dplyr)     # data manipulation (filter, summarize, mutate)
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:lubridate':
-    ## 
-    ##     intersect, setdiff, union
-
-    ## The following objects are masked from 'package:rgeos':
-    ## 
-    ##     intersect, setdiff, union
-
-    ## The following objects are masked from 'package:raster':
-    ## 
-    ##     intersect, select, union
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
     library(ggplot2)   # graphics
     library(gridExtra) # tile several plots next to each other
     library(scales)
@@ -146,11 +122,11 @@ air temperature, precipitation, and PAR (photosynthetic active radiation - or
 the amount of visible light). Using the 15-minute averaged data, we could easily
 plot each of these variables.  
 
+![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/15-min-plots-1.png)
+
 However, summarizing the data at a coarser scale (e.g., daily, weekly, by
 season, or by year) may be easier to visually interpret during initial stages of
 data exploration. 
-
-![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/15-min-plots-1.png)
 
 ### Extract Year from a Date-Time Column
 To summarize by year efficiently, it is helpful to have a year column that we
@@ -192,8 +168,8 @@ We will use `dplyr` functions `group_by` and `summarize` to perform these steps.
 
 
     # Create a group_by object using the year column 
-    HARV.grp.year <- group_by(harMet15.09.11, #data_frame object
-                              year) #column name to group by
+    HARV.grp.year <- group_by(harMet15.09.11, # data_frame object
+                              year) # column name to group by
     
     # view class of the grouped object
     class(HARV.grp.year)
@@ -220,7 +196,8 @@ the mean air temperature value each year.
 
     # what is the mean airt value per year?
     summarize(HARV.grp.year, 
-              mean(airt)) #calculate the annual mean of airt
+              mean(airt)   # calculate the annual mean of airt
+    					) 
 
     ## Source: local data frame [3 x 2]
     ## 
@@ -258,7 +235,8 @@ the final mean value.
 
     # calculate mean but remove NA values
     summarize(HARV.grp.year, 
-              mean(airt, na.rm = TRUE))
+              mean(airt, na.rm = TRUE)
+    					)
 
     ## Source: local data frame [3 x 2]
     ## 
@@ -324,7 +302,7 @@ We can use pipes to summarize data by year too:
 
     # what was the annual air temperature average 
     year.sum <- harMet15.09.11 %>% 
-      group_by(year) %>%  #group by year
+      group_by(year) %>%  # group by year
       summarize(mean(airt, na.rm=TRUE))
     
     # what is the class of the output?
@@ -347,7 +325,7 @@ We can use pipes to summarize data by year too:
 
 
 <div id="challenge" markdown="1">
-## Challenge
+## Challenge: Using Pipes
 Use piping to create a `data_frame` called `jday.avg` that contains the average 
 `airt` per Julian day (`harMet15.09.11$jd`). Plot the output using `qplot`.
 
@@ -459,7 +437,7 @@ temperature for each Julian day per year. Note that we are still using
     ## ..   ...   ...        ...
 
 <div id="challenge" markdown="1">
-## Challenge
+## Challenge: Summarization & Calculations with dplyr
 We can use `sum` to calculate the total rather than mean value for each Julian
 Day. Using this information, do the following:
 
@@ -474,7 +452,7 @@ data_frame `total.prec`.
 
 ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/04-Dplyr-For-Time-Series-In-R/challenge-answer-1.png)
 
-### Mutate - Add data_frame Columns 2 dplyr Output
+### Mutate - Add data_frame Columns to dplyr Output
 We can use the `mutate()` function of `dplyr` to add additional columns of
 information to a data_frame. For instance, we added the year column
 independently at the very beginning of the tutorial. However, we can add the
@@ -592,7 +570,7 @@ Let's try it!
     ## 6  2009     6  -4.915625 2009-01-06 00:15:00
 
 <div id="challenge" markdown="1">
-## Challenge: Use dplyr Skills
+## Challenge: Combined dplyr Skills
 
 1. Plot daily total precipitation from 2009-2011 as we did in the previous
 challenge. However this time, use the new syntax that you learned (mutate and

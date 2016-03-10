@@ -39,7 +39,7 @@ b <- ggplot(harMet15.09.11, aes(x=datetime, y=prec)) +
 c <- ggplot(harMet15.09.11, aes(x=datetime, y=parr))+
           geom_point(na.rm=TRUE, size = .1) +
            scale_x_datetime(breaks=date_breaks("1 year")) +
-           ggtitle("Air Temp \n NEON Harvard Forest Field Site") +
+           ggtitle("PAR \n NEON Harvard Forest Field Site") +
            xlab("Date") + ylab("Total PAR-Daily Mean")
 
 grid.arrange(a,b,c, ncol=2)
@@ -58,8 +58,8 @@ str(harMet15.09.11$year)
 ## ----group-by-dplyr------------------------------------------------------
 
 # Create a group_by object using the year column 
-HARV.grp.year <- group_by(harMet15.09.11, #data_frame object
-                          year) #column name to group by
+HARV.grp.year <- group_by(harMet15.09.11, # data_frame object
+                          year) # column name to group by
 
 # view class of the grouped object
 class(HARV.grp.year)
@@ -70,7 +70,8 @@ tally(HARV.grp.year)
 
 # what is the mean airt value per year?
 summarize(HARV.grp.year, 
-          mean(airt)) #calculate the annual mean of airt
+          mean(airt)   # calculate the annual mean of airt
+					) 
 
 
 ## ----check-data----------------------------------------------------------
@@ -85,7 +86,8 @@ HARV.grp.year[is.na(HARV.grp.year$airt),1:6]
 ## ----calculate-mean-value------------------------------------------------
 # calculate mean but remove NA values
 summarize(HARV.grp.year, 
-          mean(airt, na.rm = TRUE))
+          mean(airt, na.rm = TRUE)
+					)
 
 
 ## ----using-pipes---------------------------------------------------------
@@ -99,7 +101,7 @@ harMet15.09.11 %>%
 ## ----summ-data-----------------------------------------------------------
 # what was the annual air temperature average 
 year.sum <- harMet15.09.11 %>% 
-  group_by(year) %>%  #group by year
+  group_by(year) %>%  # group by year
   summarize(mean(airt, na.rm=TRUE))
 
 # what is the class of the output?

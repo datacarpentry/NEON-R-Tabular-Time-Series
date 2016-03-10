@@ -6,7 +6,7 @@ date:   2015-10-19
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah Wasser]
 contributors: [ ]
 dateCreated: 2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [ggplot2, scales, gridExtra, grid, dplyr, reshape2]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -15,7 +15,7 @@ tutorialSeries: [tabular-time-series]
 description: "This tutorial covers how to plot subsetted time series data 
 (e.g., plot by season) using facets() and ggplot2. It also covers how to plot 
 multiple metrics in one display panel."
-code1: TS06-Plotting-Facets-And-Group-By-Time-In-R.R
+code1: /R/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -137,10 +137,10 @@ year's worth of data individually?
 
 We can use the `facet()` element in `ggplot` to create facets or a panel of 
 plots that are grouped by a particular category or time period. To create a 
-plot for each year, we will first need a **year** column in our data to use a
+plot for each year, we will first need a **year** column in our data to use as a
 subset factor. We created a year column using the `year` function in the 
 `lubridate` package in the 
-[Subset and Manipulate Time Series Data with dplyr Tutorial ]({{ site.baseurl }}/R/time-series-subset-dplyr/ .)
+[Subset and Manipulate Time Series Data with dplyr Tutorial ]({{ site.baseurl }}/R/time-series-subset-dplyr).
 
 
     # add year column to daily values
@@ -198,13 +198,13 @@ Julian or year days rather than date. We have Julian days stored in our
 
 <i class="fa fa-star"></i> **Data Tip:** If you are unfamiliar with Julian or
 year day, see the 
-[Convert to Julian Day Tutorial ]({{ site.baseurl }}/R/julian-day-conversion/). 
+[Convert to Julian Day tutorial ]({{ site.baseurl }}/R/julian-day-conversion/). 
 {: .notice}
 
 
     AirTempDaily_jd <- ggplot(harMetDaily.09.11, aes(jd, airt)) +
                geom_point() +
-               ggtitle("Daily Precipitation\n NEON Harvard Forest") +
+               ggtitle("Air Temperature\n NEON Harvard Forest Field Site") +
                xlab("Julian Day") + ylab("Temperature (C)") +
                theme(plot.title = element_text(lineheight=.8, face="bold",
                      size = 20)) +
@@ -220,7 +220,7 @@ this way, side by side, allows us to quickly scan for differences along the
 y-axis. Notice any differences in min vs max air temperature across the three
 years?
 
-##Arrange Facets
+## Arrange Facets
 
 We can rearrange the facets in different ways, too.
 
@@ -233,7 +233,7 @@ We can rearrange the facets in different ways, too.
 If we use `facet_wrap` we can specify the number of columns.
 
 
-    # add columns
+    # display in two columns
     AirTempDaily_jd + facet_wrap(~year, ncol = 2)
 
 ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/06-Plotting-Facets-And-Group-By-Time-In-R/rearrange-facets-columns-1.png)
@@ -277,7 +277,8 @@ Have a close look at the data. Are there any noticeable min/max temperature
 differences between the three years?
 
 <div id="challenge" markdown="1">
-##Challenge: Faceted Plot
+## Challenge: Faceted Plot
+
 Create a faceted plot of air temperature vs soil temperature by *month* rather 
 than year.
 
@@ -532,8 +533,8 @@ syntax would be:
 The goal of this challenge is to use both the base `R` and the `zoo` package
 methods for working with year-month data.  
 
-Using the `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv`
-file (name = `met_monthly_HARV`):
+Load the `NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-04-monthly-m.csv`
+file and give it the name `met_monthly_HARV`. Then:
 
 1. Convert the date field into a date/time class using both base `R` and the 
 `zoo` package. Name the new fields `date_base` and `ymon_zoo` respectively.  
@@ -546,12 +547,6 @@ HINT: be sure to load the `zoo` package, if you have not already.
 </div>
 
 
-    ## 
-    ## Attaching package: 'zoo'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     as.Date, as.Date.numeric
 
 Do you prefer to use base `R` or `zoo` to convert these data to a date/time
 class?
@@ -560,7 +555,7 @@ class?
 directly with ggplot2. If you deal with date formats that make sense to
 primarily use `zoo` date/time classes, you can use ggplot2 with the addition of 
 other functions. For details see the 
-<a href="http://search.r-project.org/library/zoo/html/ggplot2.zoo.html" target="_blank" > documentation.</a>
+<a href="http://search.r-project.org/library/zoo/html/ggplot2.zoo.html" target="_blank" > ggplot2.zoo documentation.</a>
 {: .notice}
 
 <div id="challenge" markdown="1">

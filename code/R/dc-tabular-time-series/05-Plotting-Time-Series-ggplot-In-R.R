@@ -24,7 +24,7 @@ harTemp.monthly.09.11<-read.csv(
   )
 
 # convert datetime from chr to datetime class & rename date for clarification
-harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
+harTemp.monthly.09.11$datetime <- as.POSIXct(harTemp.monthly.09.11$datetime)
 
 ## ----qplot---------------------------------------------------------------
 # plot air temp
@@ -229,7 +229,7 @@ ggplot(harMetDaily.09.11, aes(date, prec)) +
       stat_smooth(method="lm", colour="grey")
 
 ## ----plot-airtemp-Monthly, echo=FALSE------------------------------------
-AirTempMonthly <- ggplot(harTemp.monthly.09.11, aes(date, mean_airt)) +
+AirTempMonthly <- ggplot(harTemp.monthly.09.11, aes(datetime, mean_airt)) +
     geom_point() +
     ggtitle("Average Monthly Air Temperature\n 2009-2011\n NEON Harvard Forest") +
     theme(plot.title = element_text(lineheight=.8, face="bold", size = 20)) +

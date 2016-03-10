@@ -5,7 +5,7 @@ date:   2015-10-24
 authors: [Leah A. Wasser, Megan A. Jones, Marisa Guarinello]
 contributors: []
 dateCreated:  2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [eml, ggmap]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -14,7 +14,7 @@ tutorialSeries: [tabular-time-series]
 description: "This tutorial covers what metadata are, and why we need to work
 with metadata. It covers the 3 most common metadata formats: text file format, 
 web page format and Ecological Metadata Language (EML)."
-code1: TS01-Time-Series-Metadata.R
+code1: /R/dc-tabular-time-series/01-Time-Series-Metadata.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry

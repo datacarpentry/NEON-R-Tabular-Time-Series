@@ -5,7 +5,7 @@ date: 2015-10-23
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Leah A. Wasser]
 dateCreated: 2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [lubridate]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -16,7 +16,7 @@ will overview the differences between As.Date, POSIXct and POSIXlt as used to
 convert a date/time field in character (string) format to a date-time format
 that is recognized by R. This conversion supports efficient plotting, subsetting
 and analysis of time series data."
-code1: TS02-Time-Date-Classes-POSIX-In-R.R
+code1: /R/dc-tabular-time-series/02-Time-Date-Classes-POSIX-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry

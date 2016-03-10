@@ -1,6 +1,6 @@
 ## ----load-libraries------------------------------------------------------
 # Load packages required for entire script
-library(lubridate)  #work with dates
+library(lubridate)  # work with dates
 library(ggplot2)  # plotting
 
 # set working directory to ensure R can find the file we wish to import

@@ -6,7 +6,7 @@ date:   2015-10-25
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: []
 dateCreated:  2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [ggplot2]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -16,7 +16,7 @@ description: "This tutorial will demonstrate how to import a time series data
 set stored in .csv format into R. It will explore data classes and will walk
 through how to convert date data, stored as a character string, into a date 
 class that R can recognize and plot efficiently."
-code1: TS00-Brief-Tabular-Time-Series-In-R.R
+code1: /R/dc-tabular-time-series/00-Brief-Tabular-Time-Series-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -98,8 +98,8 @@ to import a `.csv` file. We will use the `ggplot2` package to plot our data.
 
 
     # Load packages required for entire script. 
-    # library(PackageName)  #purpose of package
-    library(ggplot2)   #efficient, pretty plotting - required for qplot function
+    # library(PackageName)  # purpose of package
+    library(ggplot2)   # efficient, pretty plotting - required for qplot function
     
     # set working directory to ensure R can find the file we wish to import
     # setwd("working-dir-path-here")

@@ -5,7 +5,7 @@ date:   2015-10-20
 authors: [Megan A. Jones, Marisa Guarinello, Courtney Soderberg, Leah A. Wasser]
 contributors: [Michael Patterson]
 dateCreated: 2015-10-22
-lastModified: 2016-03-08
+lastModified: 2016-03-09
 packagesLibraries: [ggplot2, scales, gridExtra, lubridate, ggthemes]
 categories: [self-paced-tutorial]
 mainTag: tabular-time-series
@@ -15,7 +15,7 @@ description: "This tutorial uses ggplot2 to create customized plots of time
 series data. We will learn how to adjust x- and y-axis ticks using the scales
 package, how to add trend lines to a scatter plot and how to customize plot
 labels, colors and overall theme."
-code1: TS05-Plotting-Time-Series-ggplot-In-R.R
+code1: /R/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R.R
 image:
   feature: NEONCarpentryHeader_2.png
   credit: A collaboration between the National Ecological Observatory Network (NEON) and Data Carpentry
@@ -125,7 +125,7 @@ If this subset is not already loaded, please load it now.
       )
     
     # convert datetime from chr to datetime class & rename date for clarification
-    harTemp.monthly.09.11$date <- as.POSIXct(harTemp.monthly.09.11$datetime)
+    harTemp.monthly.09.11$datetime <- as.POSIXct(harTemp.monthly.09.11$datetime)
 
 ## Plot with qplot
 We can use the `qplot()` function in the `ggplot2` package to quickly plot a
@@ -383,7 +383,7 @@ style.
 ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/increase-font-size-1.png)
 
 <div id="challenge" markdown="1">
-##Challenge: Plot Total Daily Precipitation
+## Challenge: Plot Total Daily Precipitation
 Create a plot of total daily precipitation using data in the `harMetDaily.09.11` 
 `data_frame`. 
 
@@ -451,12 +451,12 @@ Bonus: Style your plot with a `ggtheme` of choice.
 ## Color
 We can change the bar fill color by within the
 `geom_bar(colour="blue")` element. We can also specify a separate fill and line
-color using `fill=` and `line=`. Colors can be specified by name (e.g., `"blue"`) 
-or hexadecimal color codes (e.g, #FF9999). There are many color cheatsheets out 
-there to help with color selection!
+color using `fill=` and `line=`. Colors can be specified by name (e.g., 
+`"blue"`) or hexadecimal color codes (e.g, #FF9999). 
 
-<a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" target="_blank">
-An R color cheatsheet</a>
+* <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" target="_blank">An R color cheatsheet</a>
+
+There are many color cheatsheets out there to help with color selection!
 
 
     # specifying color by name
@@ -467,6 +467,7 @@ An R color cheatsheet</a>
 
 ![ ]({{ site.baseurl }}/images/rfigs/dc-tabular-time-series/05-Plotting-Time-Series-ggplot-In-R/ggplot-color-1.png)
 
+
 <i class="fa fa-star"></i> **Data Tip:**  For more information on color,
 including color blind friendly color palettes, checkout the 
 <a href="http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/" target="_blank">
@@ -474,7 +475,7 @@ ggplot2 color information</a> from Winston Chang's *Cookbook* *for* *R* site
 based on the _R_ _Graphics_ _Cookbook_ text. 
 {: .notice }
  
-##Figures with Lines
+## Figures with Lines
 We can create line plots too using `ggplot`. To do this, we use `geom_line()`
 instead of `bar` or `point`.
 
@@ -516,7 +517,7 @@ statistical method as follows:
   (a non-parametric regression model)
 * For data with > 1,000 observations: the default model is a GAM (a general
   additive model) 
-* A specific model/method can also be specified: for example a linear regression (`method="lm"`). 
+* A specific model/method can also be specified: for example, a linear regression (`method="lm"`). 
 
 For this tutorial, we will use the default trend line model. The `gam` method will 
 be used with given we have 1,095 measurements.
