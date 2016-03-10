@@ -190,7 +190,7 @@ ggplot(harMetDaily.09.11, aes(date, airt)) +
 
 ## Modify Title & Axis Labels
 We can modify plot attributes by adding elements using the `+` symbol.
-For example, we can add a title by using `+ ggtitle="TEXT,` and axis
+For example, we can add a title by using `+ ggtitle="TEXT",` and axis
 labels using `+ xlab("TEXT") + ylab("TEXT")`.  
 
 ``` {r basic-ggplot2-labels }
