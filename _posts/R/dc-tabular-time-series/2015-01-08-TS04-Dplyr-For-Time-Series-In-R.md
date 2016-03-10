@@ -137,7 +137,7 @@ the year only from a `date-time` class `R` column.
     # create a year column
     harMet15.09.11$year <- year(harMet15.09.11$datetime)
 
-Using `names()` we that we now have a `year` column in our `data_frame`.
+Using `names()` we see that we now have a `year` column in our `data_frame`.
 
 
     # check to make sure it worked
@@ -197,7 +197,7 @@ the mean air temperature value each year.
     # what is the mean airt value per year?
     summarize(HARV.grp.year, 
               mean(airt)   # calculate the annual mean of airt
-    					) 
+              ) 
 
     ## Source: local data frame [3 x 2]
     ## 
@@ -236,7 +236,7 @@ the final mean value.
     # calculate mean but remove NA values
     summarize(HARV.grp.year, 
               mean(airt, na.rm = TRUE)
-    					)
+              )
 
     ## Source: local data frame [3 x 2]
     ## 
@@ -254,7 +254,7 @@ The above steps utilized several steps of `R` code and created 1 `R` object -
 `HARV.grp.year`. We can combine these steps using `pipes` in the `dplyr` 
 package.
 
-We can use `Pipes` to string functions or processing steps together. The output 
+We can use `pipes` to string functions or processing steps together. The output 
 of each step is fed directly into the next step using the syntax: `%>%`. This 
 means we don't need to save the output of each intermediate step as a new `R`
 object.

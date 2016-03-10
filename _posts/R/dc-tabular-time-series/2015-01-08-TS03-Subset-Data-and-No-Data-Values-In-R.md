@@ -193,7 +193,7 @@ specified
 in the metadata. No data values can be stored differently:
 
 * **NA / nan:** Sometimes this value is `NA` or `nan` (not a number). 
-* **A Designated numeric value (e.g. -9999):** Character strings such as `NA` can 
+* **A Designated Numeric Value (e.g. -9999):** Character strings such as `NA` can 
 not always be stored along side of numeric values in some file formats. Sometimes 
 you'll encounter numeric placeholders for `noData` values such as
 `-9999` (a value often used in the GIS / Remote Sensing and Micrometerology 
