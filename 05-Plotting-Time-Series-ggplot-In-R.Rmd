@@ -151,9 +151,9 @@ over plot appearance. However, to use `ggplot` we need to learn a slightly
 different syntax. Three basic elements are needed for `ggplot()` to work:
 
  1. The **data_frame:** containing the variables that we wish to plot,
- 2. **aes (aesthetics):** which denotes which variables will map to the x-, y-
+ 2. **`aes` (aesthetics):** which denotes which variables will map to the x-, y-
  (and other) axes,  
- 3. **`geom_XXX` (geometry):** which defines the data's graphical representation
+ 3. **`geom_XXXX` (geometry):** which defines the data's graphical representation
  (e.g. points (`geom_point`), bars (`geom_bar`), lines (`geom_line`), etc).
  
 The syntax begins with the base statement that includes the `data_frame`
@@ -190,8 +190,8 @@ ggplot(harMetDaily.09.11, aes(date, airt)) +
 
 ## Modify Title & Axis Labels
 We can modify plot attributes by adding elements using the `+` symbol.
-For example, we can add a title by using `+ ggtitle="XXX",` and axis
-labels using `+ xlab("XXX") + ylab("XXX")`.  
+For example, we can add a title by using `+ ggtitle="TEXT",` and axis
+labels using `+ xlab("TEXT") + ylab("TEXT")`.  
 
 ``` {r basic-ggplot2-labels }
 # plot Air Temperature Data across 2009-2011 using 15-minute data

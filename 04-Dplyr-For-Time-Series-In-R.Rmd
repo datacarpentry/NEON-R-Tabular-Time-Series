@@ -68,8 +68,7 @@ your computer to complete this tutorial.
 ### Additional Resources
 
 * NEON Data Skills tutorial on 
-<a href="http://neondataskills.org/R/GREPL-Filter-Piping-in-DPLYR-Using-R/" target="_blank"> spatial data and piping with dplyr</a> 
-or 
+<a href="http://neondataskills.org/R/GREPL-Filter-Piping-in-DPLYR-Using-R/" target="_blank"> spatial data and piping with dplyr</a>  
 * Data Carpentry lesson's on 
 <a href="http://www.datacarpentry.org/R-ecology/04-dplyr.html" target="_blank">Aggregating and Analyzing Data with dplyr</a> 
 * <a href="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf" target="_blank"> `dplyr` package description</a>.
@@ -163,7 +162,7 @@ the year only from a `date-time` class `R` column.
 harMet15.09.11$year <- year(harMet15.09.11$datetime)
 ```
 
-Using `names()` we that we now have a `year` column in our `data_frame`.
+Using `names()` we see that we now have a `year` column in our `data_frame`.
 
 ```{r dplyr-lubridate-3}
 
@@ -207,7 +206,7 @@ tally(HARV.grp.year)
 # what is the mean airt value per year?
 summarize(HARV.grp.year, 
           mean(airt)   # calculate the annual mean of airt
-					) 
+          ) 
 
 ```
 
@@ -233,7 +232,7 @@ the final mean value.
 # calculate mean but remove NA values
 summarize(HARV.grp.year, 
           mean(airt, na.rm = TRUE)
-					)
+          )
 
 ```
 
@@ -245,7 +244,7 @@ The above steps utilized several steps of `R` code and created 1 `R` object -
 `HARV.grp.year`. We can combine these steps using `pipes` in the `dplyr` 
 package.
 
-We can use `Pipes` to string functions or processing steps together. The output 
+We can use `pipes` to string functions or processing steps together. The output 
 of each step is fed directly into the next step using the syntax: `%>%`. This 
 means we don't need to save the output of each intermediate step as a new `R`
 object.
